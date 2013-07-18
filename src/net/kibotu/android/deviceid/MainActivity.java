@@ -1,6 +1,7 @@
 package net.kibotu.android.deviceid;
 
 import android.app.Activity;
+import android.opengl.GLES20;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -25,6 +26,7 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				try {
 					idView.setText("");
+					idView.append("GL_MAX_TEXTURE_SIZE : " + getTextureSize() + "\n"); 
 					idView.append("IMEI No : " + UIDeviceId.getDeviceIdFromTelephonyManager() + "\n");
 					idView.append("IMSI No : " + UIDeviceId.getSubscriberIdFromTelephonyManager() + "\n");
 					idView.append("hwID: " + UIDeviceId.getSerialNummer() + "\n");
@@ -64,6 +66,12 @@ public class MainActivity extends Activity {
 				} catch(Exception e) {
 					Log.e("Device", e.getMessage());
 				}
+			}
+
+			private int getTextureSize() {
+				int [] size =  new int[1];
+				GLES20.glGetIntegerv(GLES20.GL_MAX_TEXTURE_SIZE,size,0);
+				return size[0];
 			}
 		});
 	}
