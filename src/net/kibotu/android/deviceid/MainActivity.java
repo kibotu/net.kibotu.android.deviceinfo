@@ -1,7 +1,19 @@
 package net.kibotu.android.deviceid;
 
+import java.nio.IntBuffer;
+
+import javax.microedition.khronos.opengles.GL;
+import javax.microedition.khronos.opengles.GL10;
+
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.Context;
+import android.content.pm.ConfigurationInfo;
+import android.content.pm.FeatureInfo;
+import android.content.pm.PackageManager;
+import android.opengl.GLES10;
 import android.opengl.GLES20;
+import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -25,13 +37,29 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				try {
-					idView.setText("");
-					idView.append("GL_MAX_TEXTURE_SIZE : " + getTextureSize() + "\n"); 
+										
+					// http://developer.apple.com/library/ios/#documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/DeterminingOpenGLESCapabilities/DeterminingOpenGLESCapabilities.html
+					idView.append("GL_VERSION : " + getOpenGLVersion() + "\n"); 
+					idView.append("getVersionFromPackageManager : " + getVersionFromPackageManager() + "\n"); 
+					idView.append("supportsOpenGLES2 : " + supportsOpenGLES2() + "\n"); 
+					idView.append("GL_MAX_TEXTURE_SIZE : " + glGetIntegerv(GL10.GL_MAX_TEXTURE_SIZE) + "\n"); 
+					idView.append("GL_DEPTH_BITS : " + glGetIntegerv(GL10.GL_DEPTH_BITS) + "\n"); 
+					idView.append("GL_STENCIL_BITS : " + glGetIntegerv(GL10.GL_STENCIL_BITS) + "\n"); 
+					idView.append("GL_MAX_VERTEX_ATTRIBS : " + glGetIntegerv(GLES20.GL_MAX_VERTEX_ATTRIBS) + "\n"); 
+					idView.append("GL_MAX_VERTEX_UNIFORM_VECTORS : " + glGetIntegerv(GLES20.GL_MAX_VERTEX_UNIFORM_VECTORS) + "\n"); 
+					idView.append("GL_MAX_FRAGMENT_UNIFORM_VECTORS : " + glGetIntegerv(GLES20.GL_MAX_FRAGMENT_UNIFORM_VECTORS) + "\n"); 
+					idView.append("GL_MAX_VARYING_VECTORS : " + glGetIntegerv(GLES20.GL_MAX_VARYING_VECTORS) + "\n"); 
+					idView.append("GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS : " + glGetIntegerv(GLES20.GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS) + "\n"); 
+					idView.append("GL_MAX_TEXTURE_IMAGE_UNITS : " + glGetIntegerv(GLES20.GL_MAX_TEXTURE_IMAGE_UNITS) + "\n"); 
+					idView.append("GL_MAX_TEXTURE_UNITS : " + glGetIntegerv(GLES10.GL_MAX_TEXTURE_UNITS) + "\n"); 
+					idView.append("GL_EXTENSIONS : \n" + getExtensions() + "\n"); 
+					//idView.append("GL_MAX_CLIP_PLANES : " + glGetIntegerv(GL10.GL_MAX_CLIP_PLANES) + "\n"); 
+					
+					
 					idView.append("IMEI No : " + UIDeviceId.getDeviceIdFromTelephonyManager() + "\n");
 					idView.append("IMSI No : " + UIDeviceId.getSubscriberIdFromTelephonyManager() + "\n");
 					idView.append("hwID: " + UIDeviceId.getSerialNummer() + "\n");
 					idView.append("AndroidID: " + UIDeviceId.getAndroidId() + "\n");
-	//				idView.append("MAC Adress: " + UIDeviceId.getMacAdress() + "\n");
 					idView.append("MAC Adress (wlan0): " + UIDeviceId.getMACAddress("wlan0") + "\n");
 					idView.append("MAC Adress (eth0): " + UIDeviceId.getMACAddress("eth0") + "\n");
 					idView.append("IP4 Adress: " + UIDeviceId.getIPAddress(true) + "\n");
@@ -67,12 +95,50 @@ public class MainActivity extends Activity {
 					Log.e("Device", e.getMessage());
 				}
 			}
-
-			private int getTextureSize() {
-				int [] size =  new int[1];
-				GLES20.glGetIntegerv(GLES20.GL_MAX_TEXTURE_SIZE,size,0);
-				return size[0];
-			}
 		});
+	}
+	
+	static IntBuffer size =  IntBuffer.allocate(1);
+	
+	private static int glGetIntegerv(int value) {
+		size =  IntBuffer.allocate(1);
+		GLES10.glGetIntegerv(value,size);
+		return size.get(0);
+	}
+	private static int getOpenGLVersion() {
+		final ActivityManager activityManager = (ActivityManager)mActivity.getSystemService(Context.ACTIVITY_SERVICE);
+		final ConfigurationInfo configurationInfo = activityManager.getDeviceConfigurationInfo();
+		return configurationInfo.reqGlEsVersion;
+	}
+	
+	private static boolean supportsOpenGLES2() {
+		return getOpenGLVersion() >= 0x20000;
+	}
+	
+	private static int getVersionFromPackageManager() {
+	    PackageManager packageManager = mActivity.getPackageManager();
+	    FeatureInfo[] featureInfos = packageManager.getSystemAvailableFeatures();
+	    if (featureInfos != null && featureInfos.length > 0) {
+	        for (FeatureInfo featureInfo : featureInfos) {
+	            // Null feature name means this feature is the open gl es version feature.
+	            if (featureInfo.name == null) {
+	                if (featureInfo.reqGlEsVersion != FeatureInfo.GL_ES_VERSION_UNDEFINED) {
+	                    return getMajorVersion(featureInfo.reqGlEsVersion);
+	                } else {
+	                    return 1; // Lack of property means OpenGL ES version 1
+	                }
+	            }
+	        }
+	    }
+	    return 1;
+	}
+
+	/** @see FeatureInfo#getGlEsVersion() */
+	private static int getMajorVersion(int glEsVersion) {
+	    return ((glEsVersion & 0xffff0000) >> 16);
+	}
+	
+	public String getExtensions() {
+		return GLES10.glGetString(GL10.GL_EXTENSIONS);
 	}
 }
