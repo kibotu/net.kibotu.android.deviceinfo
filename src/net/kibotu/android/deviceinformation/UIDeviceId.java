@@ -1,4 +1,4 @@
-package net.kibotu.android.deviceid;
+package net.kibotu.android.deviceinformation;
 
 import android.content.Context;
 import android.net.wifi.WifiManager;

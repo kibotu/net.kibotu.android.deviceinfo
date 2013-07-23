@@ -1,4 +1,4 @@
-package net.kibotu.android.deviceid;
+package net.kibotu.android.deviceinformation;
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -18,6 +18,7 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
+import net.kibotu.android.deviceid.R;
 
 import javax.microedition.khronos.opengles.GL10;
 import java.io.File;
@@ -27,7 +28,7 @@ import java.util.Calendar;
 public class MainActivity extends Activity {
 
     public static Activity mActivity;
-
+    private static final long UPDATE_INTERVAL = 750L;
     private static final long BYTES_TO_MB = 1024 * 1024;
     private static final String BR = "---------------------------------------------------";
     private boolean updateThreadIsRunning = true;
@@ -55,7 +56,7 @@ public class MainActivity extends Activity {
                     idView.append("Used Memory by this App\n" + getUsedMemorySize() + "  Bytes (" + getUsedMemorySize() / BYTES_TO_MB + " MB)\n");
                     idView.append("Free Runtime Memory by this App\n" + getRuntimeFreeMemory() + "  Bytes (" + getRuntimeFreeMemory() / BYTES_TO_MB + " MB)\n");
                     // http://developer.apple.com/library/ios/#documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/DeterminingOpenGLESCapabilities/DeterminingOpenGLESCapabilities.html
-                    idView.append("----------------------------------------------");
+                    idView.append(BR);
                     idView.append("GL_VERSION: " + getOpenGLVersion() + "\n");
                     idView.append("getVersionFromPackageManager: " + getVersionFromPackageManager() + "\n");
                     idView.append("supportsOpenGLES2: " + supportsOpenGLES2() + "\n");
@@ -122,7 +123,7 @@ public class MainActivity extends Activity {
             public void run() {
                 while (updateThreadIsRunning) {
                     try {
-                        Thread.sleep(500);
+                        Thread.sleep(UPDATE_INTERVAL);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
