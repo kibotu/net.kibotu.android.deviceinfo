@@ -4,17 +4,18 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-<Button 
-    android:text="GetDeviceID" 
-    android:id="@+id/button1" 
-    android:layout_width="wrap_content" 
-    android:layout_height="wrap_content">
-</Button>
-<TextView     
+<TextView
     android:maxLines = "100"
 	android:scrollbars = "vertical"
     android:id="@+id/textView1"    
     android:layout_width="fill_parent" 
     android:layout_height="wrap_content">
 </TextView>
+<Button
+        android:text="Update"
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible">
+</Button>
 </LinearLayout>
