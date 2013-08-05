@@ -1,11 +1,14 @@
 package net.kibotu.android.deviceinformation;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ConfigurationInfo;
 import android.content.pm.FeatureInfo;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.opengl.GLES10;
 import android.opengl.GLES20;
 import android.os.Bundle;
@@ -16,7 +19,13 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.webkit.WebSettings;
+import android.webkit.WebSettings.PluginState;
+import android.webkit.WebSettings.RenderPriority;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import net.kibotu.android.deviceid.R;
 
@@ -25,9 +34,10 @@ import java.io.File;
 import java.nio.IntBuffer;
 import java.util.Calendar;
 
+
 public class MainActivity extends Activity {
 
-    public static Activity mActivity;
+    public static MainActivity mActivity;
     private static final long UPDATE_INTERVAL = 750L;
     private static final long BYTES_TO_MB = 1024 * 1024;
     private static final String BR = "---------------------------------------------------";
@@ -35,11 +45,82 @@ public class MainActivity extends Activity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_main);
+        Log.i("Device", "starting");
         mActivity = this;
-        final Button bt = (Button) findViewById(R.id.button1);
-        final TextView idView = (TextView) findViewById(R.id.textView1);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        startDeviceInfoUpdates();
+
+        // String website = "https://github.com/kibotu/net.kibotu.android.deviceinfo";
+        // startWebView(this, website, R.layout.webview, R.id.webview, R.id.imageView, R.drawable.bg);
+    }
+
+    public static void startWebView(Activity activity, String url, int webViewLayoutId, int webViewResourceId, int imageViewId, int backgroundImageResourceId) {
+
+        // set active content view
+        activity.setContentView(webViewLayoutId);
+
+        // imageview
+        ImageView imgView = (ImageView) mActivity.findViewById(imageViewId);
+        imgView.setImageBitmap(BitmapFactory.decodeFile("pathToImageFile"));
+        imgView.setImageResource(backgroundImageResourceId);
+
+        // webview
+        WebView webView = (WebView) activity.findViewById(webViewResourceId);
+        webView.setWebViewClient(new WebViewClient());
+        setWebViewSettings(activity, webView);
+        webView.loadUrl(url);
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    public static void setWebViewSettings(final Activity activtiy, final WebView webView) {
+        final String internalFilePath = activtiy.getFilesDir().getPath();
+        // http://stackoverflow.com/questions/10097233/optimal-webview-settings-for-html5-support
+        final WebSettings s = webView.getSettings();
+        webView.setFocusable(true);
+        webView.setFocusableInTouchMode(true);
+        s.setJavaScriptEnabled(true);
+        s.setJavaScriptCanOpenWindowsAutomatically(true);
+        s.setPluginState(PluginState.ON_DEMAND);
+        s.setRenderPriority(RenderPriority.HIGH);
+        s.setCacheMode(WebSettings.LOAD_NO_CACHE); // WebSettings.LOAD_DEFAULT
+        s.setDomStorageEnabled(true);
+        s.setDatabaseEnabled(true);
+        s.setDatabasePath(internalFilePath + "databases/");
+        s.setAppCacheEnabled(true);
+        s.setAppCachePath(internalFilePath + "cache/");
+        webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+        // Configure the webview https://code.google.com/p/html5webview/source/browse/trunk/HTML5WebView/src/org/itri/html5webview/HTML5WebView.java
+        s.setBuiltInZoomControls(true);
+        s.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
+        s.setUseWideViewPort(true);
+        s.setLoadWithOverviewMode(true);
+        s.setSavePassword(true);
+        s.setSaveFormData(true);
+    }
+
+    public static void logUrlInfo(String url) {
+        Log.i("Device getAuthority", "" + Uri.parse(url).getAuthority());
+        Log.i("Device getEncodedFragment", "" + Uri.parse(url).getEncodedFragment());
+        Log.i("Device getEncodedPath", "" + Uri.parse(url).getEncodedPath());
+        Log.i("Device getEncodedQuery", "" + Uri.parse(url).getEncodedQuery());
+        Log.i("Device getEncodedSchemeSpecificPart", "" + Uri.parse(url).getEncodedSchemeSpecificPart());
+        Log.i("Device getEncodedUserInfo", "" + Uri.parse(url).getEncodedUserInfo());
+        Log.i("Device getFragment", "" + Uri.parse(url).getFragment());
+        Log.i("Device getHost", "" + Uri.parse(url).getHost());
+        Log.i("Device getLastPathSegment", "" + Uri.parse(url).getLastPathSegment());
+        Log.i("Device getPath", "" + Uri.parse(url).getPath());
+        Log.i("Device getPort", "" + Uri.parse(url).getPort());
+        Log.i("Device getQuery", "" + Uri.parse(url).getQuery());
+        Log.i("Device getPathSegments", "" + Uri.parse(url).getPathSegments());
+        Log.i("Device getQueryParameterNames", "" + Uri.parse(url).getQueryParameterNames());
+    }
+
+    public static void startDeviceInfoUpdates() {
+        mActivity.setContentView(R.layout.activity_main);
+        final Button bt = (Button) mActivity.findViewById(R.id.button1);
+        final TextView idView = (TextView) mActivity
+                .findViewById(R.id.textView1);
         idView.setMovementMethod(new ScrollingMovementMethod());
 
         final OnClickListener clicker = new OnClickListener() {
@@ -55,6 +136,8 @@ public class MainActivity extends Activity {
                     idView.append("Total Memory by this App\n" + getRuntimeTotalMemory() + "  Bytes (" + getRuntimeTotalMemory() / BYTES_TO_MB + " MB)\n");
                     idView.append("Used Memory by this App\n" + getUsedMemorySize() + "  Bytes (" + getUsedMemorySize() / BYTES_TO_MB + " MB)\n");
                     idView.append("Free Runtime Memory by this App\n" + getRuntimeFreeMemory() + "  Bytes (" + getRuntimeFreeMemory() / BYTES_TO_MB + " MB)\n");
+                    idView.append("Internal Storage Path\n" + mActivity.getFilesDir().getPath() + "\n");
+                    idView.append("External Storage Path\n" + Environment.getExternalStorageDirectory() + "\n");
                     // http://developer.apple.com/library/ios/#documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/DeterminingOpenGLESCapabilities/DeterminingOpenGLESCapabilities.html
                     idView.append(BR);
                     idView.append("GL_VERSION: " + getOpenGLVersion() + "\n");
@@ -109,7 +192,7 @@ public class MainActivity extends Activity {
                     idView.append("USER: " + android.os.Build.USER + "\n");
                     idView.append("getRadioVersion: " + android.os.Build.getRadioVersion() + "\n");
                     idView.append(BR);
-                    idView.append("GL_EXTENSIONS\n" + getExtensions() + "\n");
+                    idView.append("GL_EXTENSIONS\n" + mActivity.getExtensions() + "\n");
                 } catch (Exception e) {
                     Log.e("Device", e.getMessage());
                 }
@@ -121,13 +204,13 @@ public class MainActivity extends Activity {
         final Thread updateThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                while (updateThreadIsRunning) {
+                while (mActivity.updateThreadIsRunning) {
                     try {
                         Thread.sleep(UPDATE_INTERVAL);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    runOnUiThread(new Runnable() {
+                    mActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             clicker.onClick(idView);
@@ -153,8 +236,10 @@ public class MainActivity extends Activity {
     }
 
     private static int getOpenGLVersion() {
-        final ActivityManager activityManager = (ActivityManager) mActivity.getSystemService(Context.ACTIVITY_SERVICE);
-        final ConfigurationInfo configurationInfo = activityManager.getDeviceConfigurationInfo();
+        final ActivityManager activityManager = (ActivityManager) mActivity
+                .getSystemService(Context.ACTIVITY_SERVICE);
+        final ConfigurationInfo configurationInfo = activityManager
+                .getDeviceConfigurationInfo();
         return configurationInfo.reqGlEsVersion;
     }
 
@@ -164,10 +249,12 @@ public class MainActivity extends Activity {
 
     private static int getVersionFromPackageManager() {
         PackageManager packageManager = mActivity.getPackageManager();
-        FeatureInfo[] featureInfos = packageManager.getSystemAvailableFeatures();
+        FeatureInfo[] featureInfos = packageManager
+                .getSystemAvailableFeatures();
         if (featureInfos != null && featureInfos.length > 0) {
             for (FeatureInfo featureInfo : featureInfos) {
-                // Null feature name means this feature is the open gl es version feature.
+                // Null feature name means this feature is the open gl es
+                // version feature.
                 if (featureInfo.name == null) {
                     if (featureInfo.reqGlEsVersion != FeatureInfo.GL_ES_VERSION_UNDEFINED) {
                         return getMajorVersion(featureInfo.reqGlEsVersion);
@@ -192,11 +279,14 @@ public class MainActivity extends Activity {
     }
 
     /**
-     * credits:  http://stackoverflow.com/questions/3170691/how-to-get-current-memory-usage-in-android
+     * credits:
+     * http://stackoverflow.com/questions/3170691/how-to-get-current-memory
+     * -usage-in-android
      */
     public static long getFreeMemoryByActivityService() {
         ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
-        ActivityManager activityManager = (ActivityManager) mActivity.getSystemService(ACTIVITY_SERVICE);
+        ActivityManager activityManager = (ActivityManager) mActivity
+                .getSystemService(ACTIVITY_SERVICE);
         activityManager.getMemoryInfo(mi);
         return mi.availMem;
     }
