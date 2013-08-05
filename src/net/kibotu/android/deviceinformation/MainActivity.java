@@ -199,7 +199,8 @@ public class MainActivity extends Activity {
                     idView.append(mActivity.getExtensions() + "\n");
                     idView.append(BR);
                     idView.append(Html.fromHtml("<h1>Environment</h1>"));
-                    idView.append("Internal Storage Path\n" + mActivity.getFilesDir().getPath() + "\n");
+                    idView.append("Internal Storage Path\n" + mActivity.getFilesDir().getParent() + "/\n");
+                    idView.append("APK Storage Path\n" + mActivity.getPackageCodePath() + "\n");
                     idView.append("Root Directory\n" + Environment.getRootDirectory() + "\n");
                     idView.append("Data Directory\n" + Environment.getDataDirectory() + "\n");
                     idView.append("External Storage Directory\n" + Environment.getExternalStorageDirectory() + "\n");
