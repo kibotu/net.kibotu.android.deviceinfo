@@ -8,14 +8,18 @@ import android.content.pm.ConfigurationInfo;
 import android.content.pm.FeatureInfo;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.net.Uri;
 import android.opengl.GLES10;
 import android.opengl.GLES20;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StatFs;
+import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -136,9 +140,7 @@ public class MainActivity extends Activity {
                     idView.append("Total Memory by this App\n" + getRuntimeTotalMemory() + "  Bytes (" + getRuntimeTotalMemory() / BYTES_TO_MB + " MB)\n");
                     idView.append("Used Memory by this App\n" + getUsedMemorySize() + "  Bytes (" + getUsedMemorySize() / BYTES_TO_MB + " MB)\n");
                     idView.append("Free Runtime Memory by this App\n" + getRuntimeFreeMemory() + "  Bytes (" + getRuntimeFreeMemory() / BYTES_TO_MB + " MB)\n");
-                    idView.append("Internal Storage Path\n" + mActivity.getFilesDir().getPath() + "\n");
-                    idView.append("External Storage Path\n" + Environment.getExternalStorageDirectory() + "\n");
-                    // http://developer.apple.com/library/ios/#documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/DeterminingOpenGLESCapabilities/DeterminingOpenGLESCapabilities.html
+                   // http://developer.apple.com/library/ios/#documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/DeterminingOpenGLESCapabilities/DeterminingOpenGLESCapabilities.html
                     idView.append(BR);
                     idView.append("GL_VERSION: " + getOpenGLVersion() + "\n");
                     idView.append("getVersionFromPackageManager: " + getVersionFromPackageManager() + "\n");
@@ -163,6 +165,7 @@ public class MainActivity extends Activity {
                     idView.append("IP4 Adress: " + UIDeviceId.getIPAddress(true) + "\n");
                     idView.append("IP6 Adress: " + UIDeviceId.getIPAddress(false) + "\n");
                     idView.append(BR);
+                    idView.append(Html.fromHtml("<h1>Build</h1>"));
                     idView.append("CODENAME: " + android.os.Build.VERSION.CODENAME + "\n");
                     idView.append("INCREMENTAL: " + android.os.Build.VERSION.INCREMENTAL + "\n");
                     idView.append("RELEASE: " + android.os.Build.VERSION.RELEASE + "\n");
@@ -192,7 +195,46 @@ public class MainActivity extends Activity {
                     idView.append("USER: " + android.os.Build.USER + "\n");
                     idView.append("getRadioVersion: " + android.os.Build.getRadioVersion() + "\n");
                     idView.append(BR);
-                    idView.append("GL_EXTENSIONS\n" + mActivity.getExtensions() + "\n");
+                    idView.append(Html.fromHtml("<h1>GL_EXTENSIONS</h1>"));
+                    idView.append(mActivity.getExtensions() + "\n");
+                    idView.append(BR);
+                    idView.append(Html.fromHtml("<h1>Environment</h1>"));
+                    idView.append("Internal Storage Path\n" + mActivity.getFilesDir().getPath() + "\n");
+                    idView.append("Root Directory\n" + Environment.getRootDirectory() + "\n");
+                    idView.append("Data Directory\n" + Environment.getDataDirectory() + "\n");
+                    idView.append("External Storage Directory\n" + Environment.getExternalStorageDirectory() + "\n");
+                    idView.append("Download Cache Directory\n" + Environment.getDownloadCacheDirectory() + "\n");
+                    idView.append("External Storage State\n" + Environment.getExternalStorageState() + "\n");
+                    idView.append("Directory Alarms\n" + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_ALARMS) + "\n");
+                    idView.append("Directory DCIM\n" + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM) + "\n");
+                    idView.append("Directory Downloads\n" + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "\n");
+                    idView.append("Directory Movies\n" + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES) + "\n");
+                    idView.append("Directory Music\n" + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC) + "\n");
+                    idView.append("Directory Notifications\n" + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_NOTIFICATIONS) + "\n");
+                    idView.append("Directory Pictures\n" + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "\n");
+                    idView.append("Directory Podcasts\n" + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PODCASTS) + "\n");
+                    idView.append("Directory Ringtones\n" + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_RINGTONES) + "\n");
+                    idView.append(BR);
+                    idView.append(Html.fromHtml("<h1>Display</h1>"));
+                    idView.append("ID: " + mActivity.getWindowManager().getDefaultDisplay().getDisplayId() + "\n");
+                    idView.append("Width: " +getSize().x+ "\n");
+                    idView.append("Height: " +getSize().y+ "\n");
+                    idView.append("Rotation: " + mActivity.getWindowManager().getDefaultDisplay().getRotation() + "\n");
+                    idView.append("PixelFormat: " + mActivity.getWindowManager().getDefaultDisplay().getPixelFormat() + "\n");
+                    idView.append("RefreshRate: " + mActivity.getWindowManager().getDefaultDisplay().getRefreshRate() + "\n");
+                    // idView.append("Density\n" + getDisplayMetrics().density + "\n");
+                    // idView.append("DensityDpi\n" + getDisplayMetrics().densityDpi + "\n");
+                    // idView.append("ScaledDensity\n" + getDisplayMetrics().scaledDensity + "\n");
+                    // idView.append("WidthPixels\n" + getDisplayMetrics().widthPixels + "\n");
+                    // idView.append("HeightPixels\n" + getDisplayMetrics().heightPixels + "\n");
+                    idView.append("Density: " + getRealDisplayMetrics().density + "\n");
+                    idView.append("DensityDpi: " + getRealDisplayMetrics().densityDpi + "\n");
+                    idView.append("ScaledDensity: " + getRealDisplayMetrics().scaledDensity + "\n");
+                    //idView.append("WidthPixels: " + getRealDisplayMetrics().widthPixels + "\n");
+                    //idView.append("HeightPixels: " + getRealDisplayMetrics().heightPixels + "\n");
+                    idView.append("X DPI: " + getRealDisplayMetrics().xdpi + "\n");
+                    idView.append("Y DPI: " + getRealDisplayMetrics().ydpi + "\n");
+
                 } catch (Exception e) {
                     Log.e("Device", e.getMessage());
                 }
@@ -220,6 +262,24 @@ public class MainActivity extends Activity {
             }
         });
         updateThread.start();
+    }
+
+    public static DisplayMetrics getDisplayMetrics() {
+        DisplayMetrics metrics = new DisplayMetrics();
+        mActivity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        return metrics;
+    }
+
+    public static DisplayMetrics getRealDisplayMetrics() {
+        DisplayMetrics metrics = new DisplayMetrics();
+        mActivity.getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
+        return metrics;
+    }
+
+    public static Point getSize() {
+        Point ret = new Point();
+        mActivity.getWindowManager().getDefaultDisplay().getSize(ret);
+        return ret;
     }
 
     public void onPause() {
