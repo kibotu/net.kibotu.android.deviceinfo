@@ -3,12 +3,16 @@ package net.kibotu.android.deviceinformation;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.ConfigurationInfo;
 import android.content.pm.FeatureInfo;
 import android.content.pm.PackageManager;
-import android.graphics.BitmapFactory;
-import android.graphics.Point;
+import android.graphics.*;
+import android.graphics.drawable.ColorDrawable;
+import android.hardware.Camera;
 import android.net.Uri;
 import android.opengl.GLES10;
 import android.opengl.GLES20;
@@ -19,32 +23,68 @@ import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
-import android.view.View;
+import android.view.*;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.PluginState;
 import android.webkit.WebSettings.RenderPriority;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.*;
 import net.kibotu.android.deviceid.R;
 
 import javax.microedition.khronos.opengles.GL10;
-import java.io.File;
+import java.io.*;
 import java.nio.IntBuffer;
 import java.util.Calendar;
+import java.util.LinkedList;
+
+import static android.view.ViewGroup.*;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements TextureView.SurfaceTextureListener {
+
+    private Camera mCamera;
+    private TextureView mTextureView;
+
+    @Override
+    public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+        mCamera = Camera.open();
+
+        Camera.Size previewSize = mCamera.getParameters().getPreviewSize();
+        mTextureView.setLayoutParams(new FrameLayout.LayoutParams(previewSize.width, previewSize.height, Gravity.CENTER));
+
+        mTextureView.setDrawingCacheEnabled(true);
+
+        try {
+            mCamera.setPreviewTexture(surface);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        mCamera.startPreview();
+    }
+
+    @Override
+    public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
+        // Ignored, the Camera does all the work for us
+    }
+
+    @Override
+    public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
+        mCamera.stopPreview();
+        mCamera.release();
+        return true;
+    }
+
+    @Override
+    public void onSurfaceTextureUpdated(SurfaceTexture surface) {
+        // Update your view here!
+    }
 
     public static MainActivity mActivity;
     private static final long UPDATE_INTERVAL = 750L;
     private static final long BYTES_TO_MB = 1024 * 1024;
-    private static final String BR = "---------------------------------------------------";
+    private static final String BR = "-------------------------------------------------------";
     private boolean updateThreadIsRunning = true;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -52,11 +92,196 @@ public class MainActivity extends Activity {
         Log.i("Device", "starting");
         mActivity = this;
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.layout);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
 
         startDeviceInfoUpdates();
+        //startWebViewWithFaq2();
+        //ExpensionHelper.checkExpension();
+        //startTextureView();
+    }
 
-        // String website = "https://github.com/kibotu/net.kibotu.android.deviceinfo";
-        // startWebView(this, website, R.layout.webview, R.id.webview, R.id.imageView, R.drawable.bg);
+    public void saveBitmap(Bitmap b, String filepath, String filename) {
+        try {
+            FileOutputStream out = new FileOutputStream(new File(filepath, filename));
+            b.compress(Bitmap.CompressFormat.PNG, 100, out);
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void explodeMemory() {
+
+        explodeMemory = new LinkedList<Bitmap>();
+
+        long i = 0;
+        while(true) {
+            i++;
+            Log.v("explode-counter", "allocating screenshot " + i);
+            //explodeMemory.add(mTextureView.getBitmap());
+            explodeMemory.add(save(mTextureView));
+        }
+    }
+
+    private LinkedList<Bitmap> explodeMemory;
+
+    /**
+     * http://stackoverflow.com/a/18489243
+     */
+    private Bitmap save(View v)
+    {
+        Bitmap b = Bitmap.createBitmap(v.getWidth(), v.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(b);
+        v.draw(c);
+        return b;
+    }
+
+    /**
+     * @see <a href="http://stackoverflow.com/a/12457895">save-bitmap-to-location</a>
+     */
+    public void startTextureView() {
+        mTextureView = new TextureView(this);
+        mTextureView.setSurfaceTextureListener(this);
+        mTextureView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                // saveBitmap(mTextureView.getBitmap(),Environment.getExternalStorageDirectory().getAbsolutePath(),"cameraScreenshot.png");
+                explodeMemory();
+            }
+        });
+        setContentView(mTextureView);
+    }
+
+    public static void startWebViewWithFaq2() {
+        startWebView2("http://www.woogamops.com/support/?game=js");
+    }
+
+    public static void startWebView2(final String url) {
+        if(mActivity == null) return;
+        DisplayMetrics dm = mActivity.getResources().getDisplayMetrics();
+        int width = dm.widthPixels;
+        int height = dm.heightPixels;
+        width = 480;
+        height = (int)(height-(0.3f*height));
+        Log.d("WebView", "Loading " + url + " [width=" + width + "|height=" + height + "]");
+        startWebView2(mActivity, url, 0, 0, width, height);
+    }
+
+    public static void startWebView2(final Activity activity, final String url, final int x, final int y, final int width, final int height) {
+
+        activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        RelativeLayout viewGroup = new RelativeLayout(activity);
+        RelativeLayout.LayoutParams viewGroupParams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        viewGroup.setLayoutParams(viewGroupParams);
+
+        final ImageView topShadow = new ImageView(activity);
+        Bitmap topShadowBitmap = BitmapFactory.decodeResource(activity.getResources(),R.drawable.imgfaqtopcut);
+        topShadow.setImageBitmap(topShadowBitmap);
+        topShadow.setAdjustViewBounds(false);
+        topShadow.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        topShadow.bringToFront();
+        RelativeLayout.LayoutParams topShadowParams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        topShadowParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
+        topShadow.setLayoutParams(topShadowParams);
+
+        final ImageView bottomShadow = new ImageView(activity);
+        Bitmap bottomShadowBitmap = BitmapFactory.decodeResource(activity.getResources(),R.drawable.imgfaqbottomcut);
+        bottomShadow.setImageBitmap(bottomShadowBitmap);
+        bottomShadow.setAdjustViewBounds(false);
+        bottomShadow.bringToFront();
+        bottomShadow.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        RelativeLayout.LayoutParams bottomShadowParams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        bottomShadowParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
+        bottomShadow.setLayoutParams(bottomShadowParams);
+
+        WebView webView = new WebView(activity);
+        RelativeLayout.LayoutParams webViewParams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        webView.setLayoutParams(webViewParams);
+        webView.loadUrl(url);
+        setWebViewSettings(activity,webView);
+
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+            @Override
+            public void onPageFinished(WebView view, String url) {
+            }
+        });
+
+        AlertDialog dialog = new AlertDialog.Builder(activity, android.R.style.Theme_Translucent_NoTitleBar_Fullscreen).create();
+
+        WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setCanceledOnTouchOutside(true);
+        params.gravity = Gravity.CENTER;
+        params.x = x;
+        params.y = y;
+        dialog.getWindow().setAttributes(params);
+
+        viewGroup.addView(webView);
+        viewGroup.addView(topShadow);
+        viewGroup.addView(bottomShadow);
+
+        dialog.setView(viewGroup, 0,0,0,0);
+        dialog.show();
+
+        // important! call after dialog.show()
+        dialog.getWindow().setLayout(width,height);
+    }
+
+    public void testImageViewSize() {
+        final ImageView iv = (ImageView) findViewById(R.id.imageView);
+        final TextView tv = (TextView) findViewById(R.id.textView);
+        ViewTreeObserver vto = iv.getViewTreeObserver();
+        vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            public boolean onPreDraw() {
+                final int finalHeight = iv.getMeasuredHeight();
+                final int finalWidth = iv.getMeasuredWidth();
+                tv.setText("Height: " + finalHeight + " Width: " + finalWidth);
+                return true;
+            }
+        });
+    }
+
+    public static void displayDialog() {
+
+        // http://stackoverflow.com/questions/9172805/android-webview-inside-dialog-or-popup
+        AlertDialog.Builder alert = new AlertDialog.Builder(mActivity);
+
+        alert.setTitle("Title here");
+
+        String website = "https://github.com/kibotu/net.kibotu.android.deviceinfo";
+
+        WebView wv = new WebView(mActivity);
+
+        wv.loadUrl(website);
+
+        wv.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+
+                return true;
+            }
+        });
+
+        alert.setView(wv);
+        alert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+            }
+        });
+
+        alert.show();
     }
 
     public static void startWebView(Activity activity, String url, int webViewLayoutId, int webViewResourceId, int imageViewId, int backgroundImageResourceId) {
@@ -137,10 +362,14 @@ public class MainActivity extends Activity {
                     idView.append("Available Memory by ActivityService\n" + getFreeMemoryByActivityService() + "  Bytes (" + getFreeMemoryByActivityService() / BYTES_TO_MB + " MB)\n");
                     idView.append("Available Memory by Environment\n" + getFreeMemoryByEnvironment() + "  Bytes (" + getFreeMemoryByEnvironment() / BYTES_TO_MB + " MB)\n");
                     idView.append(BR);
+                    idView.append("Max Memory\n" + getMaxMemory() + " Bytes (" + getMaxMemory() / BYTES_TO_MB + " MB)\n");
+                    idView.append("Memory Class\n" + getMemoryClass() + " MB \n");
+                    idView.append("Large Memory Class\n" + getLargeMemoryClass() + " MB \n");
+                    idView.append(BR);
                     idView.append("Total Memory by this App\n" + getRuntimeTotalMemory() + "  Bytes (" + getRuntimeTotalMemory() / BYTES_TO_MB + " MB)\n");
                     idView.append("Used Memory by this App\n" + getUsedMemorySize() + "  Bytes (" + getUsedMemorySize() / BYTES_TO_MB + " MB)\n");
                     idView.append("Free Runtime Memory by this App\n" + getRuntimeFreeMemory() + "  Bytes (" + getRuntimeFreeMemory() / BYTES_TO_MB + " MB)\n");
-                   // http://developer.apple.com/library/ios/#documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/DeterminingOpenGLESCapabilities/DeterminingOpenGLESCapabilities.html
+                    // http://developer.apple.com/library/ios/#documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/DeterminingOpenGLESCapabilities/DeterminingOpenGLESCapabilities.html
                     idView.append(BR);
                     idView.append("GL_VERSION: " + getOpenGLVersion() + "\n");
                     idView.append("getVersionFromPackageManager: " + getVersionFromPackageManager() + "\n");
@@ -193,7 +422,7 @@ public class MainActivity extends Activity {
                     idView.append("TYPE: " + android.os.Build.TYPE + "\n");
                     idView.append("UNKNOWN: " + android.os.Build.UNKNOWN + "\n");
                     idView.append("USER: " + android.os.Build.USER + "\n");
-                    idView.append("getRadioVersion: " + android.os.Build.getRadioVersion() + "\n");
+                    //idView.append("getRadioVersion: " + android.os.Build.getRadioVersion() + "\n");
                     idView.append(BR);
                     idView.append(Html.fromHtml("<h1>GL_EXTENSIONS</h1>"));
                     idView.append(mActivity.getExtensions() + "\n");
@@ -218,21 +447,21 @@ public class MainActivity extends Activity {
                     idView.append(BR);
                     idView.append(Html.fromHtml("<h1>Display</h1>"));
                     idView.append("ID: " + mActivity.getWindowManager().getDefaultDisplay().getDisplayId() + "\n");
-                    idView.append("Width: " +getSize().x+ "\n");
-                    idView.append("Height: " +getSize().y+ "\n");
+                    idView.append("Width: " + getSize().x + "\n");
+                    idView.append("Height: " + getSize().y + "\n");
                     idView.append("Rotation: " + mActivity.getWindowManager().getDefaultDisplay().getRotation() + "\n");
                     idView.append("PixelFormat: " + mActivity.getWindowManager().getDefaultDisplay().getPixelFormat() + "\n");
                     idView.append("RefreshRate: " + mActivity.getWindowManager().getDefaultDisplay().getRefreshRate() + "\n");
-                    // idView.append("Density\n" + getDisplayMetrics().density + "\n");
-                    // idView.append("DensityDpi\n" + getDisplayMetrics().densityDpi + "\n");
-                    // idView.append("ScaledDensity\n" + getDisplayMetrics().scaledDensity + "\n");
-                    // idView.append("WidthPixels\n" + getDisplayMetrics().widthPixels + "\n");
-                    // idView.append("HeightPixels\n" + getDisplayMetrics().heightPixels + "\n");
+                    idView.append("Density\n" + getDisplayMetrics().density + "\n");
+                    idView.append("DensityDpi\n" + getDisplayMetrics().densityDpi + "\n");
+                    idView.append("ScaledDensity\n" + getDisplayMetrics().scaledDensity + "\n");
+                    idView.append("WidthPixels\n" + getDisplayMetrics().widthPixels + "\n");
+                    idView.append("HeightPixels\n" + getDisplayMetrics().heightPixels + "\n");
                     idView.append("Density: " + getRealDisplayMetrics().density + "\n");
                     idView.append("DensityDpi: " + getRealDisplayMetrics().densityDpi + "\n");
                     idView.append("ScaledDensity: " + getRealDisplayMetrics().scaledDensity + "\n");
-                    //idView.append("WidthPixels: " + getRealDisplayMetrics().widthPixels + "\n");
-                    //idView.append("HeightPixels: " + getRealDisplayMetrics().heightPixels + "\n");
+                    idView.append("WidthPixels: " + getRealDisplayMetrics().widthPixels + "\n");
+                    idView.append("HeightPixels: " + getRealDisplayMetrics().heightPixels + "\n");
                     idView.append("X DPI: " + getRealDisplayMetrics().xdpi + "\n");
                     idView.append("Y DPI: " + getRealDisplayMetrics().ydpi + "\n");
 
@@ -403,5 +632,21 @@ public class MainActivity extends Activity {
             e.printStackTrace();
         }
         return memory;
+    }
+
+    /**
+     * @see <a href="http://stackoverflow.com/questions/2630158/detect-application-heap-size-in-android">detect-application-heap-size-in-android</a>
+     * @return
+     */
+    public static long getMaxMemory() {
+        return Runtime.getRuntime().maxMemory();
+    }
+
+    public static int getMemoryClass() {
+        return ((ActivityManager) mActivity.getSystemService(ACTIVITY_SERVICE)).getMemoryClass();
+    }
+
+    public static int getLargeMemoryClass() {
+        return ((ActivityManager) mActivity.getSystemService(ACTIVITY_SERVICE)).getLargeMemoryClass();
     }
 }
