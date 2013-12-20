@@ -2,5 +2,10 @@
 <resources>
     <string name="app_name">Device Information</string>
     <string name="action_settings">Settings</string>
-        <string name="imageviewdescription">Header</string>
+    <string name="imageviewdescription">Header</string>
+
+    <string name="resolution">Unknown</string>
+    <string name="orientation">Unknown</string>
+    <string name="density">Unknown</string>
+    <string name="screen_size">Unknown</string>
 </resources>
