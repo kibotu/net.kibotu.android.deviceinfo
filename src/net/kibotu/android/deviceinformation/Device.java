@@ -453,9 +453,9 @@ public class Device {
                 l.add("GL_MAX_MODELVIEW_STACK_DEPTH: "      + glGetIntegerv(GLES10.GL_MAX_MODELVIEW_STACK_DEPTH));
                 l.add("GL_MAX_PROJECTION_STACK_DEPTH: "     + glGetIntegerv(GLES10.GL_MAX_PROJECTION_STACK_DEPTH));
                 l.add("GL_MAX_TEXTURE_STACK_DEPTH: "        + glGetIntegerv(GLES10.GL_MAX_TEXTURE_STACK_DEPTH));
-                l.add("GL_MAX_TEXTURE_SIZE: "               + glGetIntegerv(GL10.GL_MAX_TEXTURE_SIZE));
-                l.add("GL_DEPTH_BITS: "                     + glGetIntegerv(GL10.GL_DEPTH_BITS));
-                l.add("GL_STENCIL_BITS: "                   + glGetIntegerv(GL10.GL_STENCIL_BITS));
+                l.add("GL_MAX_TEXTURE_SIZE: "               + glGetIntegerv(GLES10.GL_MAX_TEXTURE_SIZE));
+                l.add("GL_DEPTH_BITS: "                     + glGetIntegerv(GLES10.GL_DEPTH_BITS));
+                l.add("GL_STENCIL_BITS: "                   + glGetIntegerv(GLES10.GL_STENCIL_BITS));
 
 //                l.add("GL_VERTEX_SHADER: " + glGetIntegerv(gl, GLES20.GL_VERTEX_SHADER));
 //                l.add("GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS: " + glGetIntegerv(gl, GLES20.GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS));
@@ -479,8 +479,8 @@ public class Device {
 
                         for(int i = 0; i < listOfMaps.size(); ++i) {
                             for( Map.Entry<String, ?> map: listOfMaps.get(i).entrySet()) {
-                                if( map.getValue().equals("OpenGL Shader Constraints")) {
-                                    listOfMaps.get(i).put("data", buildLineItem("OpenGL Shader Constraints", l).mData);
+                                if( map.getValue().equals("OpenGL Constraints")) {
+                                    listOfMaps.get(i).put("data", buildLineItem("OpenGL Constraints", l).mData);
                                 }
                             }
                         }
@@ -523,6 +523,20 @@ public class Device {
                 int size[] = new int[2];
                 gl.glGetIntegerv(GLES10.GL_MAX_VIEWPORT_DIMS,size, 0);
                 l.add("GL_MAX_VIEWPORT_DIMS: " + size[0] + "x" + size[1]);
+
+
+                List<Map<String, String>> listOfMaps = MainActivity.fragment.listOfMaps;
+
+                for(int i = 0; i < listOfMaps.size(); ++i) {
+                    for( Map.Entry<String, ?> map: listOfMaps.get(i).entrySet()) {
+                        if( map.getValue().equals("OpenGL Constraints")) {
+                            Map<String, String> extensions = new HashMap<>();
+                            extensions.put("header", "OpenGL Extensions");
+                            extensions.put("data", gl.glGetString(GLES10.GL_EXTENSIONS));
+                            listOfMaps.add(i+1,extensions);
+                        }
+                    }
+                }
 
                 mActivity.runOnUiThread(new Runnable() {
 
@@ -833,7 +847,7 @@ public class Device {
 //        result.add(buildLineItem("supportsOpenGLES2: " + supportsOpenGLES2());
         result.add(buildLineItem("OpenGL Version", Device.getOpenGLVersion()));
 
-        result.add(buildLineItem("OpenGL Shader Constraints", Device.getOpenGLShaderConstraints()));
+        result.add(buildLineItem("OpenGL Constraints", Device.getOpenGLShaderConstraints()));
 
         // hardware
         result.add(buildLineItem("SDK", Build.VERSION.SDK));
