@@ -13,9 +13,11 @@ import net.kibotu.android.deviceid.R;
 
 public class MainActivity extends FragmentActivity {
 
+    public static final String TAG = MainActivity.class.getSimpleName();
 
     public static MainActivity mActivity;
     public boolean updateThreadIsRunning = true;
+    public static InfoFragment fragment;
 
     public void onCreate(Bundle savedInstanceState) {
         // enable opengl calls
@@ -30,7 +32,6 @@ public class MainActivity extends FragmentActivity {
         //startTextureView();
 
         // startDeviceInfoUpdates();
-
         setContentView(R.layout.main);
     }
 
@@ -45,6 +46,7 @@ public class MainActivity extends FragmentActivity {
         super.onWindowFocusChanged(hasFocus);
         final ViewPager mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
+        mPager.getAdapter().notifyDataSetChanged();
     }
 
     public class PagerAdapter extends FragmentStatePagerAdapter {
@@ -59,9 +61,7 @@ public class MainActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return new InfoFragment(Device.generateDeviceInfoList(MainActivity.this));
+            return fragment = new InfoFragment(Device.generateDeviceInfoList(MainActivity.this));
         }
     }
-
-
 }

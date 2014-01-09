@@ -18,6 +18,7 @@ public class InfoFragment extends ListFragment {
 
     private ArrayList<Row> mData;
     private SimpleAdapter mAdapter;
+    public List<Map<String, String>> listOfMaps;
 
     public InfoFragment(final ArrayList<Row> mData) {
         this.mData = mData;
@@ -37,7 +38,8 @@ public class InfoFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View result = inflater.inflate(R.layout.fragment_list, container, false);
-        mAdapter = new SimpleAdapter(getActivity(), generateListMap(), android.R.layout.simple_list_item_2, new String[]{"header", "data"}, new int[]{android.R.id.text1, android.R.id.text2});
+        listOfMaps = generateListMap();
+        mAdapter = new SimpleAdapter(getActivity(), listOfMaps, android.R.layout.simple_list_item_2, new String[]{"header", "data"}, new int[]{android.R.id.text1, android.R.id.text2});
         return result;
     }
 
@@ -51,8 +53,8 @@ public class InfoFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
     }
 
-    protected List<Map<String, ?>> generateListMap() {
-        List<Map<String, ?>> result = new ArrayList<>();
+    protected List<Map<String, String>> generateListMap() {
+        List<Map<String, String>> result = new ArrayList<>();
         for (Row r : mData) {
             HashMap<String, String> map = new HashMap<>();
             map.put("header", r.mHeader);

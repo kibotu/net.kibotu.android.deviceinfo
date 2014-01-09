@@ -12,10 +12,12 @@ import android.graphics.Point;
 import android.net.wifi.WifiManager;
 import android.opengl.GLES10;
 import android.opengl.GLES20;
+import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
 import android.provider.Settings;
+import android.support.v4.view.ViewPager;
 import android.telephony.TelephonyManager;
 import android.text.format.Formatter;
 import android.util.DisplayMetrics;
@@ -23,9 +25,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.WebView;
+import android.widget.LinearLayout;
 import net.kibotu.android.deviceid.R;
 import org.apache.http.conn.util.InetAddressUtils;
 
+import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -34,6 +38,11 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.nio.IntBuffer;
 import java.util.*;
+
+import static android.opengl.GLSurfaceView.Renderer;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+import static net.kibotu.android.deviceinformation.MainActivity.mActivity;
 
 /**
  * Variety ways to retrieve device id in Android.
@@ -65,9 +74,9 @@ public class Device {
      * and passes it on to another person.
      */
     public static String getDeviceIdFromTelephonyManager() {
-        if (MainActivity.mActivity == null)
+        if (mActivity == null)
             throw new IllegalStateException("'LinesActivity.mActivity' must not be null.");
-        return ((TelephonyManager) MainActivity.mActivity.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
+        return ((TelephonyManager) mActivity.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
     }
 
     /**
@@ -82,9 +91,9 @@ public class Device {
      * and passes it on to another person.
      */
     public static String getSubscriberIdFromTelephonyManager() {
-        if (MainActivity.mActivity == null)
+        if (mActivity == null)
             throw new IllegalStateException("'LinesActivity.mActivity' must not be null.");
-        return ((TelephonyManager) MainActivity.mActivity.getSystemService(Context.TELEPHONY_SERVICE)).getSubscriberId();
+        return ((TelephonyManager) mActivity.getSystemService(Context.TELEPHONY_SERVICE)).getSubscriberId();
     }
 
     /**
@@ -97,9 +106,9 @@ public class Device {
      * - If Wi-Fi present in Device should be turned on otherwise does not report the MAC address
      */
     public static String getMacAdress() {
-        if (MainActivity.mActivity == null)
+        if (mActivity == null)
             throw new IllegalStateException("'LinesActivity.mActivity' must not be null.");
-        return ((WifiManager) MainActivity.mActivity.getSystemService(Context.WIFI_SERVICE)).getConnectionInfo().getMacAddress();
+        return ((WifiManager) mActivity.getSystemService(Context.WIFI_SERVICE)).getConnectionInfo().getMacAddress();
     }
 
 
@@ -203,27 +212,27 @@ public class Device {
      * handset from a major manufacturer, where every instance has the same ANDROID_ID.
      */
     public static String getAndroidId() {
-        if (MainActivity.mActivity == null)
+        if (mActivity == null)
             throw new IllegalStateException("'LinesActivity.mActivity' must not be null.");
-        return Settings.Secure.getString(MainActivity.mActivity.getContentResolver(), Settings.Secure.ANDROID_ID);
+        return Settings.Secure.getString(mActivity.getContentResolver(), Settings.Secure.ANDROID_ID);
     }
 
 
     public static DisplayMetrics getDisplayMetrics() {
         DisplayMetrics metrics = new DisplayMetrics();
-        MainActivity.mActivity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        mActivity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
         return metrics;
     }
 
-    public static DisplayMetrics getRealDisplayMetrics() {
+    public static DisplayMetrics getRealDisplayMetrics() throws NoSuchMethodError {
         DisplayMetrics metrics = new DisplayMetrics();
-        MainActivity.mActivity.getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
+        mActivity.getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
         return metrics;
     }
 
-    public static Point getSize() {
+    public static Point getSize() throws NoSuchMethodError{
         Point ret = new Point();
-        MainActivity.mActivity.getWindowManager().getDefaultDisplay().getSize(ret);
+        mActivity.getWindowManager().getDefaultDisplay().getSize(ret);
         return ret;
     }
 
@@ -235,8 +244,14 @@ public class Device {
         return size.get(0);
     }
 
+    public static int glGetIntegerv(GL10 gl, int value) {
+        size = IntBuffer.allocate(1);
+        gl.glGetIntegerv(value, size);
+        return size.get(0);
+    }
+
     public static int getOpenGLVersion() {
-        final ActivityManager activityManager = (ActivityManager) MainActivity.mActivity
+        final ActivityManager activityManager = (ActivityManager) mActivity
                 .getSystemService(Context.ACTIVITY_SERVICE);
         final ConfigurationInfo configurationInfo = activityManager
                 .getDeviceConfigurationInfo();
@@ -248,7 +263,7 @@ public class Device {
     }
 
     public static int getVersionFromPackageManager() {
-        PackageManager packageManager = MainActivity.mActivity.getPackageManager();
+        PackageManager packageManager = mActivity.getPackageManager();
         FeatureInfo[] featureInfos = packageManager
                 .getSystemAvailableFeatures();
         if (featureInfos != null && featureInfos.length > 0) {
@@ -285,7 +300,7 @@ public class Device {
      */
     public static long getFreeMemoryByActivityService() {
         ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
-        ActivityManager activityManager = (ActivityManager) MainActivity.mActivity
+        ActivityManager activityManager = (ActivityManager) mActivity
                 .getSystemService(Context.ACTIVITY_SERVICE);
         activityManager.getMemoryInfo(mi);
         return mi.availMem;
@@ -353,11 +368,11 @@ public class Device {
     }
 
     public static int getMemoryClass() {
-        return ((ActivityManager) MainActivity.mActivity.getSystemService(Context.ACTIVITY_SERVICE)).getMemoryClass();
+        return ((ActivityManager) mActivity.getSystemService(Context.ACTIVITY_SERVICE)).getMemoryClass();
     }
 
-    public static int getLargeMemoryClass() {
-        return ((ActivityManager) MainActivity.mActivity.getSystemService(Context.ACTIVITY_SERVICE)).getLargeMemoryClass();
+    public static int getLargeMemoryClass() throws NoSuchMethodError {
+        return ((ActivityManager) mActivity.getSystemService(Context.ACTIVITY_SERVICE)).getLargeMemoryClass();
     }
 
     /**
@@ -392,7 +407,7 @@ public class Device {
     }
 
     public static TreeSet<String> getSharedLibraries() {
-        PackageManager pm = MainActivity.mActivity.getPackageManager();
+        PackageManager pm = mActivity.getPackageManager();
         String[] libraries = pm.getSystemSharedLibraryNames();
         TreeSet<String> l = new TreeSet<>();
         for (String lib : libraries) {
@@ -404,7 +419,7 @@ public class Device {
     }
 
     public static TreeSet<String> getFeatures() {
-        PackageManager pm = MainActivity.mActivity.getPackageManager();
+        PackageManager pm = mActivity.getPackageManager();
         FeatureInfo[] features = pm.getSystemAvailableFeatures();
         TreeSet<String> l = new TreeSet<>();
         for (FeatureInfo f : features) {
@@ -415,25 +430,157 @@ public class Device {
         return l;
     }
 
+    /**
+     * http://stackoverflow.com/questions/18447875/print-gpu-info-renderer-version-vendor-on-textview-on-android
+     * @return
+     */
     public static TreeSet<String> getOpenGLShaderConstraints() {
-        TreeSet<String> l = new TreeSet<>();
-        l.add("GL_MAX_TEXTURE_SIZE: " + glGetIntegerv(GL10.GL_MAX_TEXTURE_SIZE));
-        l.add("GL_DEPTH_BITS: " + glGetIntegerv(GL10.GL_DEPTH_BITS));
-        l.add("GL_STENCIL_BITS: " + glGetIntegerv(GL10.GL_STENCIL_BITS));
-        l.add("GL_MAX_VERTEX_ATTRIBS: " + glGetIntegerv(GLES20.GL_MAX_VERTEX_ATTRIBS));
-        l.add("GL_MAX_VERTEX_UNIFORM_VECTORS: " + glGetIntegerv(GLES20.GL_MAX_VERTEX_UNIFORM_VECTORS));
-        l.add("GL_MAX_FRAGMENT_UNIFORM_VECTORS: " + glGetIntegerv(GLES20.GL_MAX_FRAGMENT_UNIFORM_VECTORS));
-        l.add("GL_MAX_VARYING_VECTORS: " + glGetIntegerv(GLES20.GL_MAX_VARYING_VECTORS));
-        l.add("GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS: " + glGetIntegerv(GLES20.GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS));
-        l.add("GL_MAX_TEXTURE_IMAGE_UNITS: " + glGetIntegerv(GLES20.GL_MAX_TEXTURE_IMAGE_UNITS));
-        l.add("GL_MAX_TEXTURE_UNITS: " + glGetIntegerv(GLES10.GL_MAX_TEXTURE_UNITS));
+
+        final TreeSet<String> l = new TreeSet<>();
+        final GLSurfaceView gles10view = new GLSurfaceView(mActivity);
+        final GLSurfaceView gles20view = new GLSurfaceView(mActivity);
+
+        final Renderer gles10 = new Renderer() {
+
+            @Override
+            public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+
+                l.add("GL_MAX_TEXTURE_UNITS: "              + glGetIntegerv(GLES10.GL_MAX_TEXTURE_UNITS));
+                l.add("GL_MAX_LIGHTS: "                     + glGetIntegerv(GLES10.GL_MAX_LIGHTS));
+                l.add("GL_SUBPIXEL_BITS: "                  + glGetIntegerv(GLES10.GL_SUBPIXEL_BITS));
+                l.add("GL_MAX_ELEMENTS_INDICES: "           + glGetIntegerv(GLES10.GL_MAX_ELEMENTS_INDICES));
+                l.add("GL_MAX_ELEMENTS_VERTICES: "          + glGetIntegerv(GLES10.GL_MAX_ELEMENTS_VERTICES));
+                l.add("GL_MAX_MODELVIEW_STACK_DEPTH: "      + glGetIntegerv(GLES10.GL_MAX_MODELVIEW_STACK_DEPTH));
+                l.add("GL_MAX_PROJECTION_STACK_DEPTH: "     + glGetIntegerv(GLES10.GL_MAX_PROJECTION_STACK_DEPTH));
+                l.add("GL_MAX_TEXTURE_STACK_DEPTH: "        + glGetIntegerv(GLES10.GL_MAX_TEXTURE_STACK_DEPTH));
+                l.add("GL_MAX_TEXTURE_SIZE: "               + glGetIntegerv(GL10.GL_MAX_TEXTURE_SIZE));
+                l.add("GL_DEPTH_BITS: "                     + glGetIntegerv(GL10.GL_DEPTH_BITS));
+                l.add("GL_STENCIL_BITS: "                   + glGetIntegerv(GL10.GL_STENCIL_BITS));
+
+//                l.add("GL_VERTEX_SHADER: " + glGetIntegerv(gl, GLES20.GL_VERTEX_SHADER));
+//                l.add("GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS: " + glGetIntegerv(gl, GLES20.GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS));
+//                l.add("GL_SHADER_TYPE: " + glGetIntegerv(gl, GLES20.GL_SHADER_TYPE));
+//                l.add("GL_DELETE_STATUS: " + glGetIntegerv(gl, GLES20.GL_DELETE_STATUS));
+//                l.add("GL_LINK_STATUS: " + glGetIntegerv(gl, GLES20.GL_LINK_STATUS));
+//                l.add("GL_VALIDATE_STATUS: " + glGetIntegerv(gl, GLES20.GL_VALIDATE_STATUS));
+//                l.add("GL_ATTACHED_SHADERS: " + glGetIntegerv(gl, GLES20.GL_ATTACHED_SHADERS));
+//                l.add("GL_ACTIVE_UNIFORMS: " + glGetIntegerv(gl, GLES20.GL_ACTIVE_UNIFORMS));
+//                l.add("GL_ACTIVE_UNIFORM_MAX_LENGTH: " + glGetIntegerv(gl, GLES20.GL_ACTIVE_UNIFORM_MAX_LENGTH));
+//                l.add("GL_ACTIVE_ATTRIBUTES: " + glGetIntegerv(gl, GLES20.GL_ACTIVE_ATTRIBUTES));
+//                l.add("GL_ACTIVE_ATTRIBUTE_MAX_LENGTH: " + glGetIntegerv(gl, GLES20.GL_ACTIVE_ATTRIBUTE_MAX_LENGTH));
+//                l.add("GL_CURRENT_PROGRAM: " + glGetIntegerv(gl, GLES20.GL_CURRENT_PROGRAM));
+
+                mActivity.runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        List<Map<String, String>> listOfMaps = MainActivity.fragment.listOfMaps;
+
+                        for(int i = 0; i < listOfMaps.size(); ++i) {
+                            for( Map.Entry<String, ?> map: listOfMaps.get(i).entrySet()) {
+                                if( map.getValue().equals("OpenGL Shader Constraints")) {
+                                    listOfMaps.get(i).put("data", buildLineItem("OpenGL Shader Constraints", l).mData);
+                                }
+                            }
+                        }
+
+                        // remove view after getting all required infos
+                        final LinearLayout layout = (LinearLayout) mActivity.findViewById(R.id.mainlayout);
+                        layout.removeView(gles10view);
+                        layout.findViewById(R.id.pager).setVisibility(VISIBLE);
+
+                        // update fragment adapter about changes
+                        final ViewPager mPager = (ViewPager) mActivity.findViewById(R.id.pager);
+                        mPager.getAdapter().notifyDataSetChanged();
+                    }
+                });
+            }
+
+            @Override
+            public void onSurfaceChanged(GL10 gl, int width, int height) {
+            }
+
+            @Override
+            public void onDrawFrame(GL10 gl) {
+            }
+        };
+
+        final Renderer gles20 = new Renderer() {
+
+            @Override
+            public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+
+                l.add("GL_RENDERER: "                       + gl.glGetString(GLES10.GL_RENDERER));
+                l.add("GL_VENDOR: "                         + gl.glGetString(GLES10.GL_VENDOR));
+                l.add("GL_VERSION: "                        + gl.glGetString(GLES10.GL_VERSION));
+                l.add("GL_MAX_VERTEX_ATTRIBS: "             + glGetIntegerv(gl, GLES20.GL_MAX_VERTEX_ATTRIBS));
+                l.add("GL_MAX_VERTEX_UNIFORM_VECTORS: "     + glGetIntegerv(gl, GLES20.GL_MAX_VERTEX_UNIFORM_VECTORS));
+                l.add("GL_MAX_FRAGMENT_UNIFORM_VECTORS: "   + glGetIntegerv(gl, GLES20.GL_MAX_FRAGMENT_UNIFORM_VECTORS));
+                l.add("GL_MAX_VARYING_VECTORS: "            + glGetIntegerv(gl, GLES20.GL_MAX_VARYING_VECTORS));
+                l.add("Vertex Texture Fetch: "              + isVTFSupported(gl));
+                l.add("GL_MAX_TEXTURE_IMAGE_UNITS: "        + glGetIntegerv(gl, GLES20.GL_MAX_TEXTURE_IMAGE_UNITS));
+                int size[] = new int[2];
+                gl.glGetIntegerv(GLES10.GL_MAX_VIEWPORT_DIMS,size, 0);
+                l.add("GL_MAX_VIEWPORT_DIMS: " + size[0] + "x" + size[1]);
+
+                mActivity.runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        // remove view after getting all required infos
+                        final LinearLayout layout = (LinearLayout) mActivity.findViewById(R.id.mainlayout);
+                        layout.removeView(gles20view);
+
+                        layout.addView(gles10view);
+                    }
+                });
+            }
+
+            @Override
+            public void onSurfaceChanged(GL10 gl, int width, int height) {
+            }
+
+            @Override
+            public void onDrawFrame(GL10 gl) {
+            }
+        };
+
+        mActivity.runOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+                gles20view.setEGLConfigChooser(true);
+                gles20view.setZOrderOnTop(true);
+
+                gles10view.setEGLConfigChooser(true);
+                gles10view.setZOrderOnTop(true);
+
+                // Check if the system supports OpenGL ES 2.0.
+                final ActivityManager activityManager = (ActivityManager) mActivity.getSystemService(Context.ACTIVITY_SERVICE);
+                final ConfigurationInfo configurationInfo = activityManager.getDeviceConfigurationInfo();
+                final boolean supportsEs2 = configurationInfo.reqGlEsVersion >= 0x20000;
+
+                if (supportsEs2)
+                    gles20view.setEGLContextClientVersion(2);
+                gles10view.setEGLContextClientVersion(1);
+
+                gles10view.setRenderer(gles10);
+                gles20view.setRenderer(gles20);
+                final LinearLayout layout = (LinearLayout) mActivity.findViewById(R.id.mainlayout);
+                layout.addView(gles20view);
+                layout.findViewById(R.id.pager).setVisibility(GONE);
+            }
+        });
+
         return l;
     }
 
     public static TreeSet<String> getFolder() {
         TreeSet<String> l = new TreeSet<>();
-        l.add("Internal Storage Path\n" + MainActivity.mActivity.getFilesDir().getParent() + "/");
-        l.add("APK Storage Path\n" + MainActivity.mActivity.getPackageCodePath());
+        l.add("Internal Storage Path\n" + mActivity.getFilesDir().getParent() + "/");
+        l.add("APK Storage Path\n" + mActivity.getPackageCodePath());
         l.add("Root Directory\n" + Environment.getRootDirectory());
         l.add("Data Directory\n" + Environment.getDataDirectory());
         l.add("External Storage Directory\n" + Environment.getExternalStorageDirectory());
@@ -452,7 +599,7 @@ public class Device {
     }
 
     private String getOpenGLVersion2() {
-        Context context = MainActivity.mActivity;
+        Context context = mActivity;
         PackageManager packageManager = context.getPackageManager();
         FeatureInfo[] featureInfos = packageManager.getSystemAvailableFeatures();
         if (featureInfos != null && featureInfos.length > 0) {
@@ -470,9 +617,15 @@ public class Device {
         return "1.0";
     }
 
+    public static boolean isVTFSupported(GL10 gl) {
+        int[] arr = new int[1];
+        gl.glGetIntegerv(GLES20.GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS, arr, 0);
+        return arr[0] != 0;
+    }
+
     public static String getUserAgent() {
         String result = "Unknown";
-        WebView wv = new WebView(MainActivity.mActivity);
+        WebView wv = new WebView(mActivity);
         result = wv.getSettings().getUserAgentString();
         return result;
     }
@@ -519,7 +672,7 @@ public class Device {
     public static String getAvailableFileSize(String path) {
         try {
             StatFs fs = new StatFs(path);
-            return Formatter.formatFileSize(MainActivity.mActivity, fs.getAvailableBlocks() * fs.getBlockSize());
+            return Formatter.formatFileSize(mActivity, fs.getAvailableBlocks() * fs.getBlockSize());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -637,7 +790,13 @@ public class Device {
         result.add(buildLineItem("Available Memory by Environment", Device.getFreeMemoryByEnvironment() + "  Bytes (" + Device.getFreeMemoryByEnvironment() / BYTES_TO_MB + " MB)"));
         result.add(buildLineItem("Max Heap Memory", Device.getMaxMemory() + " Bytes (" + Device.getMaxMemory() / BYTES_TO_MB + " MB)"));
         result.add(buildLineItem("Memory Class", Device.getMemoryClass() + " MB"));
-        result.add(buildLineItem("Large Memory Class", Device.getLargeMemoryClass() + " MB"));
+
+        try {
+            result.add(buildLineItem("Large Memory Class", Device.getLargeMemoryClass() + " MB"));
+        } catch (Error error) {
+            error.printStackTrace();
+        }
+
         result.add(buildLineItem("Total Memory by this App", Device.getRuntimeTotalMemory() + "  Bytes (" + Device.getRuntimeTotalMemory() / BYTES_TO_MB + " MB)"));
         result.add(buildLineItem("Used Memory by this App", Device.getUsedMemorySize() + "  Bytes (" + Device.getUsedMemorySize() / BYTES_TO_MB + " MB)"));
         result.add(buildLineItem("Free Runtime Memory by this App", Device.getRuntimeFreeMemory() + "  Bytes (" + Device.getRuntimeFreeMemory() / BYTES_TO_MB + " MB)"));
@@ -645,13 +804,25 @@ public class Device {
         // display
         result.add(buildLineItem("Density", context.getString(R.string.density) + " (" + Device.getDisplayMetrics().density +")"));
         result.add(buildLineItem("DensityDpi", Device.getDisplayMetrics().densityDpi + " (" + Device.getDisplayMetrics().scaledDensity + ")"));
-        result.add(buildLineItem("DPI X/Y", Device.getRealDisplayMetrics().xdpi + " / " + Device.getRealDisplayMetrics().ydpi));
+
+        try {
+            result.add(buildLineItem("DPI X/Y", Device.getRealDisplayMetrics().xdpi + " / " + Device.getRealDisplayMetrics().ydpi));
+        } catch (Error error) {
+            error.printStackTrace();
+        }
+
         result.add(buildLineItem("Screen size", context.getString(R.string.screen_size)));
-        result.add(buildLineItem("Screen resolution", Device.getSize().x + "x" + Device.getSize().y));
+
+        try {
+            result.add(buildLineItem("Screen resolution", Device.getSize().x + "x" + Device.getSize().y));
+        } catch (Error error) {
+            error.printStackTrace();
+        }
+
         result.add(buildLineItem("Orientation", context.getString(R.string.orientation)));
-        result.add(buildLineItem("Rotation", MainActivity.mActivity.getWindowManager().getDefaultDisplay().getRotation()));
-        result.add(buildLineItem("PixelFormat", MainActivity.mActivity.getWindowManager().getDefaultDisplay().getPixelFormat()));
-        result.add(buildLineItem("RefreshRate", MainActivity.mActivity.getWindowManager().getDefaultDisplay().getRefreshRate()));
+        result.add(buildLineItem("Rotation", mActivity.getWindowManager().getDefaultDisplay().getRotation()));
+        result.add(buildLineItem("PixelFormat", mActivity.getWindowManager().getDefaultDisplay().getPixelFormat()));
+        result.add(buildLineItem("RefreshRate", mActivity.getWindowManager().getDefaultDisplay().getRefreshRate()));
         result.add(buildLineItem("Locale", context.getResources().getConfiguration().locale.toString()));
         result.add(buildLineItem("Mobile County/Network code", context.getResources().getConfiguration().mcc + "/" + context.getResources().getConfiguration().mnc));
         result.add(buildLineItem("UserAgent", Device.getUserAgent()));
@@ -661,11 +832,12 @@ public class Device {
 //        result.add(buildLineItem(""getVersionFromPackageManager: " + getVersionFromPackageManager());
 //        result.add(buildLineItem("supportsOpenGLES2: " + supportsOpenGLES2());
         result.add(buildLineItem("OpenGL Version", Device.getOpenGLVersion()));
+
         result.add(buildLineItem("OpenGL Shader Constraints", Device.getOpenGLShaderConstraints()));
 
         // hardware
         result.add(buildLineItem("SDK", Build.VERSION.SDK));
-        result.add(buildLineItem("ID", MainActivity.mActivity.getWindowManager().getDefaultDisplay().getDisplayId()));
+        result.add(buildLineItem("ID", mActivity.getWindowManager().getDefaultDisplay().getDisplayId()));
         result.add(buildLineItem("SDK_INT", android.os.Build.VERSION.SDK_INT));
         result.add(buildLineItem("CODENAME", android.os.Build.VERSION.CODENAME));
         result.add(buildLineItem("INCREMENTAL", android.os.Build.VERSION.INCREMENTAL));
@@ -715,8 +887,8 @@ public class Device {
 
         // internal storage
         result.add(buildLineItem("External Storage State", Environment.getExternalStorageState()));
-        result.add(buildLineItem("Internal Storage Path", getFileSize(MainActivity.mActivity.getFilesDir().getParent())));
-        result.add(buildLineItem("APK Storage Path", getFileSize(MainActivity.mActivity.getPackageCodePath())));
+        result.add(buildLineItem("Internal Storage Path", getFileSize(mActivity.getFilesDir().getParent())));
+        result.add(buildLineItem("APK Storage Path", getFileSize(mActivity.getPackageCodePath())));
         result.add(buildLineItem("Root Directory", getFileSize(Environment.getRootDirectory())));
         result.add(buildLineItem("Data Directory", getFileSize(Environment.getDataDirectory())));
         result.add(buildLineItem("External Storage Director", getFileSize(Environment.getExternalStorageDirectory())));
