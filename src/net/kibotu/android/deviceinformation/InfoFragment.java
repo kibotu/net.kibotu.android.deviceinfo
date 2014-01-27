@@ -54,9 +54,9 @@ public class InfoFragment extends ListFragment {
     }
 
     protected List<Map<String, String>> generateListMap() {
-        List<Map<String, String>> result = new ArrayList<>();
+        List<Map<String, String>> result = new ArrayList<Map<String,String>>();
         for (Row r : mData) {
-            HashMap<String, String> map = new HashMap<>();
+            HashMap<String, String> map = new HashMap<String,String>();
             map.put("header", r.mHeader);
             map.put("data", r.mData);
             result.add(map);

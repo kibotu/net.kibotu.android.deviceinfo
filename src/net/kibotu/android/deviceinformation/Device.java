@@ -409,7 +409,7 @@ public class Device {
     public static TreeSet<String> getSharedLibraries() {
         PackageManager pm = mActivity.getPackageManager();
         String[] libraries = pm.getSystemSharedLibraryNames();
-        TreeSet<String> l = new TreeSet<>();
+        TreeSet<String> l = new TreeSet<String>();
         for (String lib : libraries) {
             if (lib != null) {
                 l.add(lib);
@@ -421,7 +421,7 @@ public class Device {
     public static TreeSet<String> getFeatures() {
         PackageManager pm = mActivity.getPackageManager();
         FeatureInfo[] features = pm.getSystemAvailableFeatures();
-        TreeSet<String> l = new TreeSet<>();
+        TreeSet<String> l = new TreeSet<String>();
         for (FeatureInfo f : features) {
             if (f.name != null) {
                 l.add(f.name);
@@ -436,7 +436,7 @@ public class Device {
      */
     public static TreeSet<String> getOpenGLShaderConstraints() {
 
-        final TreeSet<String> l = new TreeSet<>();
+        final TreeSet<String> l = new TreeSet<String>();
         final GLSurfaceView gles10view = new GLSurfaceView(mActivity);
         final GLSurfaceView gles20view = new GLSurfaceView(mActivity);
 
@@ -530,7 +530,7 @@ public class Device {
                 for(int i = 0; i < listOfMaps.size(); ++i) {
                     for( Map.Entry<String, ?> map: listOfMaps.get(i).entrySet()) {
                         if( map.getValue().equals("OpenGL Constraints")) {
-                            Map<String, String> extensions = new HashMap<>();
+                            Map<String, String> extensions = new HashMap<String,String>();
                             extensions.put("header", "OpenGL Extensions");
                             extensions.put("data", gl.glGetString(GLES10.GL_EXTENSIONS));
                             listOfMaps.add(i+1,extensions);
@@ -592,7 +592,7 @@ public class Device {
     }
 
     public static TreeSet<String> getFolder() {
-        TreeSet<String> l = new TreeSet<>();
+        TreeSet<String> l = new TreeSet<String>();
         l.add("Internal Storage Path\n" + mActivity.getFilesDir().getParent() + "/");
         l.add("APK Storage Path\n" + mActivity.getPackageCodePath());
         l.add("Root Directory\n" + Environment.getRootDirectory());
@@ -764,7 +764,7 @@ public class Device {
     private static HashMap<File,String> cache;
 
     public static String getFileSize(File file) {
-        if(cache == null) cache = new HashMap<>();
+        if(cache == null) cache = new HashMap<File,String>();
         if(cache.containsKey(file)) return cache.get(file);
         long size = Device.getFileSizeDir(file.toString());
         String ret = size == 0 ? file.toString() : file + " (" + size + " MB)";
@@ -792,7 +792,7 @@ public class Device {
     }
 
     public static ArrayList<Row> generateDeviceInfoList(Activity context) {
-        ArrayList<Row> result = new ArrayList<>();
+        ArrayList<Row> result = new ArrayList<Row>();
 
         final long BYTES_TO_MB = 1024 * 1024;
 
