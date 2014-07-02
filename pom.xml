@@ -12,7 +12,7 @@
 
     <modules>
         <module>deviceinfo-lib</module>
-        <!--<module>androidexample-app</module>-->
+        <module>deviceinfo-app</module>
         <module>deviceinfo-tests</module>
     </modules>
 
@@ -43,6 +43,7 @@
                 <plugin>
                     <groupId>com.jayway.maven.plugins.android.generation2</groupId>
                     <artifactId>android-maven-plugin</artifactId>
+                    <!--<version>3.8.3-SNAPSHOT</version>-->
                     <version>3.9.0-rc.2</version>
                     <extensions>true</extensions>
                     <configuration>
@@ -54,6 +55,7 @@
                         <deleteConflictingFiles>true</deleteConflictingFiles>
                     </configuration>
                 </plugin>
+
                 <plugin>
                     <artifactId>maven-source-plugin</artifactId>
                     <version>2.2</version>
@@ -75,14 +77,18 @@
         </pluginManagement>
 
         <plugins>
+
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
                 <configuration>
+                    <encoding>UTF-8</encoding>
                     <source>1.6</source>
                     <target>1.6</target>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>

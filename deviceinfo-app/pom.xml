@@ -2,39 +2,32 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.wooga.sbs.error.tracking.android.UnitTestActivity</groupId>
-    <artifactId>SBS-Error-Tracking-Android-TestActivity</artifactId>
+    <parent>
+        <groupId>net.kibotu.android.deviceinfo</groupId>
+        <artifactId>deviceinfo</artifactId>
+        <version>1.0.0</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>deviceinfo-app</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
     <dependencies>
 
-        <!-- <dependency>
-            <groupId>com.android.support</groupId>
-            <artifactId>support-v4</artifactId>
-            <version>18.0.0</version>
+        <dependency>
+            <groupId>net.kibotu.android.deviceinfo</groupId>
+            <artifactId>deviceinfo-lib</artifactId>
+            <version>1.0.0</version>
             <scope>compile</scope>
-        </dependency> -->
-
-        <!--<dependency>-->
-            <!--<groupId>com.google.android</groupId>-->
-            <!--<artifactId>android</artifactId>-->
-            <!--<version>2.3.3</version>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>com.wooga.sbs.error.tracking.android</groupId>-->
-            <!--<artifactId>SBS-Error-Tracking-Android-Library</artifactId>-->
-            <!--<version>1.0.0</version>-->
-            <!--<scope>compile</scope>-->
-            <!--<type>apklib</type>-->
-        <!--</dependency>-->
+        </dependency>
 
         <dependency>
-            <groupId>com.intellij</groupId>
-            <artifactId>annotations</artifactId>
-            <version>12.0</version>
+            <groupId>com.google.android</groupId>
+            <artifactId>android</artifactId>
+            <version>2.3.3</version>
         </dependency>
+
     </dependencies>
 
     <repositories>

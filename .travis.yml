@@ -55,6 +55,7 @@ before_install:
   #- gem install travis-lint
   #- travis-lint
 
+  # - echo no | android create avd --force -n test -t android-10 --abi armeabi
   - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
   - emulator -avd test -no-skin -no-audio -no-window & #-dns-server 8.8.8.8 &
 
