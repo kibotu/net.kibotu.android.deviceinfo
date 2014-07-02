@@ -1,0 +1,26 @@
+<!-- package name must be unique so suffix with "tests" so package loader doesn't ignore us --><manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1000000" android:versionName="1.0.0" package="net.kibotu.android.deviceinfo">
+    <!-- We add an application tag here just so that we can indicate that
+         this package needs to link against the android.test library,
+         which is needed when building test cases. -->
+    <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="19"/>
+    <application>
+        <uses-library android:name="android.test.runner"/>
+
+        <activity android:configChanges="keyboard|keyboardHidden|orientation" android:exported="false" android:name="com.wooga.sbs.error.tracking.android.intern.JNICrashHandlerActivity" android:process=":JNICrashHandlerActivity" android:stateNotNeeded="true" android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.BUG_REPORT"/>
+                <category android:name="android.intent.category.BUG_REPORT"/>
+            </intent-filter>
+        </activity>
+    </application>
+    <!--
+    This declares that this application uses the instrumentation test runner targeting
+    the package of net.kibotu.android.deviceinfo.  To run the tests use the command:
+    "adb shell am instrument -w net.kibotu.android.deviceinfo.tests/android.test.InstrumentationTestRunner"
+    -->
+    <instrumentation android:label="Tests for net.kibotu.android.deviceinfo" android:name="android.test.InstrumentationTestRunner" android:targetPackage="net.kibotu.android.deviceinfo"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+</manifest>
