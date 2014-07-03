@@ -5,41 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac29e572-50bf-4121-b2c4-6f74c649a384" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/deviceinfo.iml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/deviceinfo-tests/target/generated-sources/r/net/kibotu/android/deviceinfo/BuildConfig.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/deviceinfo-tests/target/generated-sources/r/net/kibotu/android/deviceinfo/Manifest.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/deviceinfo-tests/target/generated-sources/r/net/kibotu/android/deviceinfo/R.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\deviceinfo-app\target\generated-sources\r\net\kibotu\android\deviceinfo\BuildConfig.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\deviceinfo-app\target\generated-sources\r\net\kibotu\android\deviceinfo\Manifest.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\deviceinfo-app\target\generated-sources\r\net\kibotu\android\deviceinfo\R.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\deviceinfo-app\target\maven-archiver\pom.properties" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\deviceinfo-lib\target\R.txt" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\deviceinfo-lib\target\maven-archiver\pom.properties" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\deviceinfo-lib\target\maven-status\maven-compiler-plugin\compile\default-compile\createdFiles.lst" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\deviceinfo-lib\target\maven-status\maven-compiler-plugin\compile\default-compile\inputFiles.lst" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\deviceinfo-tests\target\AndroidManifest.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\deviceinfo-tests\target\R.txt" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\deviceinfo-tests\target\maven-archiver\pom.properties" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\deviceinfo-tests\target\maven-status\maven-compiler-plugin\compile\default-compile\createdFiles.lst" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\deviceinfo-tests\target\maven-status\maven-compiler-plugin\compile\default-compile\inputFiles.lst" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\deviceinfo-tests\target\surefire-reports\TEST-emulator-5554_test_unknown_sdk.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\deviceinfo-tests\target\unpacked-libs\nkad_deviceinfo-lib\AndroidManifest.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\deviceinfo-tests\target\unpacked-libs\nkad_deviceinfo-lib\META-INF\MANIFEST.MF" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\deviceinfo-tests\target\unpacked-libs\nkad_deviceinfo-lib\R.txt" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\deviceinfo-tests\target\unpacked-libs\nkad_deviceinfo-lib\res\layout\main.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\deviceinfo-tests\target\unpacked-libs\nkad_deviceinfo-lib\res\values\strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\deviceinfo-tests\target\unpacked-libs\nkad_deviceinfo-lib\src\net\kibotu\android\deviceinfo\Async.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\deviceinfo-tests\target\unpacked-libs\nkad_deviceinfo-lib\src\net\kibotu\android\deviceinfo\AsyncCallback.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\deviceinfo-tests\target\unpacked-libs\nkad_deviceinfo-lib\src\net\kibotu\android\deviceinfo\Device.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\deviceinfo-tests\target\unpacked-libs\nkad_deviceinfo-lib\src\net\kibotu\android\deviceinfo\LogcatLogger.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\deviceinfo-tests\target\unpacked-libs\nkad_deviceinfo-lib\src\net\kibotu\android\deviceinfo\Logger.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\deviceinfo-tests\target\unpacked-libs\nkad_deviceinfo-lib\src\net\kibotu\android\deviceinfo\ShellUtils.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo-app/pom.xml" afterPath="$PROJECT_DIR$/deviceinfo-app/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo-lib/pom.xml" afterPath="$PROJECT_DIR$/deviceinfo-lib/pom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo-lib/deviceinfo-lib.iml" afterPath="$PROJECT_DIR$/deviceinfo-lib/deviceinfo-lib.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo-tests/pom.xml" afterPath="$PROJECT_DIR$/deviceinfo-tests/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo-app/project.properties" afterPath="$PROJECT_DIR$/deviceinfo-app/project.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo-tests/project.properties" afterPath="$PROJECT_DIR$/deviceinfo-tests/project.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="android-device.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -144,10 +112,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pom.xml" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="49" column="29" selection-start="1660" selection-end="1660" vertical-scroll-proportion="0.3615257" vertical-offset="615" max-vertical-offset="2499">
+            <state line="49" column="29" selection-start="1660" selection-end="1660" vertical-scroll-proportion="0.0" vertical-offset="1935" max-vertical-offset="2499">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".travis.yml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.travis.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="20" column="18" selection-start="431" selection-end="431" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1462">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Device.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/deviceinfo-lib/src/net/kibotu/android/deviceinfo/Device.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="65" column="55" selection-start="2167" selection-end="2167" vertical-scroll-proportion="0.0" vertical-offset="67" max-vertical-offset="31654">
               <folding />
             </state>
           </provider>
@@ -162,10 +148,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="pom.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/deviceinfo-tests/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="210" column="70" selection-start="7137" selection-end="7137" vertical-scroll-proportion="0.0" vertical-offset="3170" max-vertical-offset="4029">
+            <state line="210" column="67" selection-start="7134" selection-end="7134" vertical-scroll-proportion="0.6023392" vertical-offset="3261" max-vertical-offset="4029">
               <folding />
             </state>
           </provider>
@@ -174,7 +160,7 @@
       <file leaf-file-name="deviceinfo-lib.iml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/deviceinfo-lib/deviceinfo-lib.iml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="0" selection-start="154" selection-end="154" vertical-scroll-proportion="0.0" vertical-offset="34" max-vertical-offset="714">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="697">
               <folding />
             </state>
           </provider>
@@ -203,8 +189,8 @@
         <option value="$PROJECT_DIR$/deviceinfo-lib/src/net/kibotu/android/deviceinfo/LogcatLogger.java" />
         <option value="$PROJECT_DIR$/deviceinfo-lib/pom.xml" />
         <option value="$PROJECT_DIR$/deviceinfo-app/pom.xml" />
-        <option value="$PROJECT_DIR$/deviceinfo-tests/pom.xml" />
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/deviceinfo-tests/pom.xml" />
       </list>
     </option>
   </component>
@@ -264,6 +250,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -371,7 +358,6 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -724,12 +710,14 @@
       <workItem from="1404369950301" duration="1470000" />
       <workItem from="1404371423424" duration="52000" />
       <workItem from="1404371476949" duration="529000" />
-      <workItem from="1404373366640" duration="190000" />
+      <workItem from="1404373366640" duration="251000" />
+      <workItem from="1404373647197" duration="416000" />
+      <workItem from="1404374091400" duration="151000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6505000" />
+    <option name="totallyTimeSpent" value="7133000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="22" width="1936" height="1066" extended-state="6" />
@@ -749,7 +737,6 @@
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960597" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3283582" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32905984" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -757,13 +744,14 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16453674" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19542067" sideWeight="0.67064846" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32799146" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.42537314" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3283582" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39978677" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -788,20 +776,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/deviceinfo-lib/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="0" selection-start="634" selection-end="634" vertical-scroll-proportion="0.0" vertical-offset="138" max-vertical-offset="1071">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deviceinfo-app/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="54" selection-start="773" selection-end="773" vertical-scroll-proportion="0.0" vertical-offset="340" max-vertical-offset="901">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="20" column="58" selection-start="666" selection-end="666" vertical-scroll-proportion="0.0" vertical-offset="340" max-vertical-offset="2499">
@@ -1099,7 +1073,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/deviceinfo-lib/deviceinfo-lib.iml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="0" selection-start="154" selection-end="154" vertical-scroll-proportion="0.0" vertical-offset="34" max-vertical-offset="714">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="697">
           <folding />
         </state>
       </provider>
@@ -1125,16 +1099,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/deviceinfo-tests/pom.xml">
+    <entry file="file://$PROJECT_DIR$/.travis.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="210" column="70" selection-start="7137" selection-end="7137" vertical-scroll-proportion="0.0" vertical-offset="3170" max-vertical-offset="4029">
+        <state line="20" column="18" selection-start="431" selection-end="431" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1462">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deviceinfo-lib/src/net/kibotu/android/deviceinfo/Device.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="65" column="55" selection-start="2167" selection-end="2167" vertical-scroll-proportion="0.0" vertical-offset="67" max-vertical-offset="31654">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="29" selection-start="1660" selection-end="1660" vertical-scroll-proportion="0.3615257" vertical-offset="615" max-vertical-offset="2499">
+        <state line="49" column="29" selection-start="1660" selection-end="1660" vertical-scroll-proportion="0.0" vertical-offset="615" max-vertical-offset="2499">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deviceinfo-tests/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="210" column="67" selection-start="7134" selection-end="7134" vertical-scroll-proportion="0.6023392" vertical-offset="3261" max-vertical-offset="4029">
           <folding />
         </state>
       </provider>
@@ -1230,6 +1218,8 @@
   </component>
   <component name="mavenExecuteGoalHistory">
     <option value="$PROJECT_DIR$" />
+    <option value="install" />
+    <option value="path" />
     <option value="clean install" />
     <option value="android:clean" />
     <option value="install:install" />
