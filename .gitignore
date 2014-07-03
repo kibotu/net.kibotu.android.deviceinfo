@@ -1,7 +1,5 @@
-*.iml
 *.ipr
 *.iws
-.idea/
 
 # built application files
 *.apk
@@ -28,10 +26,8 @@ local.properties
 proguard/
 
 # Intellij project files
-*.iml
 *.ipr
 *.iws
-.idea/
 
 *.class
 

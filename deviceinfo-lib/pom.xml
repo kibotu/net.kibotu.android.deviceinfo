@@ -5,8 +5,8 @@
     <parent>
         <artifactId>deviceinfo</artifactId>
         <groupId>net.kibotu.android.deviceinfo</groupId>
-        <version>1.0.0</version>
-        <relativePath>../pom.xml</relativePath>
+        <version>1.0.0-SNAPSHOT</version>
+        <!--<relativePath>../pom.xml</relativePath>-->
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -49,6 +49,9 @@
                     <sdk>
                         <platform>10</platform>
                     </sdk>
+                    <extractDuplicates>true</extractDuplicates>
+                    <undeployBeforeDeploy>true</undeployBeforeDeploy>
+                    <deleteConflictingFiles>true</deleteConflictingFiles>
                 </configuration>
             </plugin>
 
