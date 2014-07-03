@@ -51,43 +51,42 @@
             <scope>compile</scope>
         </dependency>
 
-        <dependency>
-            <groupId>net.kibotu.android.deviceinfo</groupId>
-            <artifactId>deviceinfo-lib</artifactId>
-            <version>1.0.0</version>
-            <scope>compile</scope>
-            <type>apklib</type>
-            <exclusions>
+        <!--<dependency>-->
+            <!--<groupId>net.kibotu.android.deviceinfo</groupId>-->
+            <!--<artifactId>deviceinfo-lib</artifactId>-->
+            <!--<version>1.0.0</version>-->
+            <!--<scope>compile</scope>-->
+            <!--<type>apklib</type>-->
+            <!--<exclusions>-->
 
-                <exclusion>
-                    <groupId>com.google.android</groupId>
-                    <artifactId>annotations</artifactId>
-                </exclusion>
+                <!--&lt;!&ndash;<exclusion>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<groupId>com.google.android</groupId>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<artifactId>annotations</artifactId>&ndash;&gt;-->
+                <!--&lt;!&ndash;</exclusion>&ndash;&gt;-->
 
-                <exclusion>
-                    <groupId>com.intellij</groupId>
-                    <artifactId>annotations</artifactId>
-                </exclusion>
+                <!--&lt;!&ndash;<exclusion>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<groupId>com.intellij</groupId>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<artifactId>annotations</artifactId>&ndash;&gt;-->
+                <!--&lt;!&ndash;</exclusion>&ndash;&gt;-->
 
-            </exclusions>
-        </dependency>
+            <!--</exclusions>-->
+        <!--</dependency>-->
 
         <!-- @NotNull, etc. annotations -->
 
-        <!--<dependency>-->
-            <!--<groupId>com.intellij</groupId>-->
-            <!--<artifactId>annotations</artifactId>-->
-            <!--<version>12.0</version>-->
-            <!--<scope>provided</scope>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>com.intellij</groupId>
+            <artifactId>annotations</artifactId>
+            <version>12.0</version>
+            <scope>provided</scope>
+        </dependency>
 
-        <!-- target api annotations -->
-        <!--<dependency>-->
-            <!--<groupId>com.google.android</groupId>-->
-            <!--<artifactId>annotations</artifactId>-->
-            <!--<version>4.1.1.4</version>-->
-            <!--<scope>provided</scope>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>com.google.android</groupId>
+            <artifactId>annotations</artifactId>
+            <version>4.1.1.4</version>
+            <scope>provided</scope>
+        </dependency>
 
         <dependency>
             <groupId>junit</groupId>
@@ -120,6 +119,13 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <version>1.9.5</version>
+
+            <exclusions>
+                <exclusion>
+                    <artifactId>hamcrest-core</artifactId>
+                    <groupId>org.hamcrest</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>

@@ -3,7 +3,9 @@
 # http://gmariotti.blogspot.de/2014/04/integrating-android-github-repo-with.html
 
 branches:
+
   only:
+
     - master
 
 language: android
@@ -35,16 +37,16 @@ env:
   matrix:
 
     - ANDROID_SDKS=android-10,build-tools-19.1.0                      ANDROID_TARGET=android-10  ANDROID_ABI=armeabi
-    - ANDROID_SDKS=android-11,sysimg-11,build-tools-19.1.0            ANDROID_TARGET=android-11  ANDROID_ABI=armeabi
-    - ANDROID_SDKS=android-12,sysimg-12,build-tools-19.1.0            ANDROID_TARGET=android-12  ANDROID_ABI=armeabi
-    - ANDROID_SDKS=android-13,sysimg-13,build-tools-19.1.0            ANDROID_TARGET=android-13  ANDROID_ABI=armeabi
+    #- ANDROID_SDKS=android-11,sysimg-11,build-tools-19.1.0            ANDROID_TARGET=android-11  ANDROID_ABI=armeabi
+    #- ANDROID_SDKS=android-12,sysimg-12,build-tools-19.1.0            ANDROID_TARGET=android-12  ANDROID_ABI=armeabi
+    #- ANDROID_SDKS=android-13,sysimg-13,build-tools-19.1.0            ANDROID_TARGET=android-13  ANDROID_ABI=armeabi
 
-    - ANDROID_SDKS=android-14,sysimg-14,build-tools-19.1.0            ANDROID_TARGET=android-14  ANDROID_ABI=armeabi
-    - ANDROID_SDKS=android-15,build-tools-19.1.0                      ANDROID_TARGET=android-15  ANDROID_ABI=armeabi-v7a
-    - ANDROID_SDKS=android-16,build-tools-19.1.0                      ANDROID_TARGET=android-16  ANDROID_ABI=armeabi-v7a
-    - ANDROID_SDKS=android-17,build-tools-19.1.0                      ANDROID_TARGET=android-17  ANDROID_ABI=armeabi-v7a
-    - ANDROID_SDKS=android-18,build-tools-19.1.0                      ANDROID_TARGET=android-18  ANDROID_ABI=armeabi-v7a
-    - ANDROID_SDKS=android-19,build-tools-19.1.0                      ANDROID_TARGET=android-19  ANDROID_ABI=armeabi-v7a
+    #- ANDROID_SDKS=android-14,sysimg-14,build-tools-19.1.0            ANDROID_TARGET=android-14  ANDROID_ABI=armeabi
+    #- ANDROID_SDKS=android-15,build-tools-19.1.0                      ANDROID_TARGET=android-15  ANDROID_ABI=armeabi-v7a
+    #- ANDROID_SDKS=android-16,build-tools-19.1.0                      ANDROID_TARGET=android-16  ANDROID_ABI=armeabi-v7a
+    #- ANDROID_SDKS=android-17,build-tools-19.1.0                      ANDROID_TARGET=android-17  ANDROID_ABI=armeabi-v7a
+    #- ANDROID_SDKS=android-18,build-tools-19.1.0                      ANDROID_TARGET=android-18  ANDROID_ABI=armeabi-v7a
+    #- ANDROID_SDKS=android-19,build-tools-19.1.0                      ANDROID_TARGET=android-19  ANDROID_ABI=armeabi-v7a
 
 before_install:
 

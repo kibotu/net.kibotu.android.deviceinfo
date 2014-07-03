@@ -27,7 +27,7 @@
         <module name="deviceinfo-tests" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="1.8">
+    <bytecodeTargetLevel>
       <module name="deviceinfo" target="1.6" />
       <module name="deviceinfo-app" target="1.6" />
       <module name="deviceinfo-lib" target="1.6" />

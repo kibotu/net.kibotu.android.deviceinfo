@@ -49,9 +49,6 @@
                     <sdk>
                         <platform>10</platform>
                     </sdk>
-                    <extractDuplicates>true</extractDuplicates>
-                    <undeployBeforeDeploy>true</undeployBeforeDeploy>
-                    <deleteConflictingFiles>true</deleteConflictingFiles>
                 </configuration>
             </plugin>
 

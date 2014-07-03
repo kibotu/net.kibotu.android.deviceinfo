@@ -6,8 +6,6 @@ import org.junit.Test;
 
 public class BlaTest extends ActivityInstrumentationImpl {
 
-    private Device d;
-
     @Before
     public void setUp() throws Exception {
         super.setUp();
@@ -15,19 +13,18 @@ public class BlaTest extends ActivityInstrumentationImpl {
         // api 19 tests fail without setting it @see http://stackoverflow.com/questions/12267572/mockito-dexmaker-on-android
         System.setProperty("dexmaker.dexcache", getInstrumentation().getTargetContext().getCacheDir().getPath());
 
-        d = new Device();
-        d.x = 100;
-
+//        Logger.init(new LogcatLogger(getActivity()));
+//        Logger.v("test");
     }
 
     @After
     public void tearDown() throws Exception {
         super.tearDown();
     }
-
+//
     @Test
     public void testBuildPayload() throws Exception {
 
-        assertTrue(d.x == 100);
+//        assertTrue(d.x == 100);
     }
 }
