@@ -79,6 +79,10 @@ public class Device {
     public Device() {
     }
 
+    public static void setContext(Context context){
+        Device.context = context;
+    }
+
     public static Activity context() {
         if (context == null) context = null;
         return (Activity) context;
@@ -1530,7 +1534,7 @@ public class Device {
         }
     }
 
-    public static void restart() {
+    public static void restartScheduled() {
         // We restart the application and force to reload everything in order to clean all memory variables, etc..
         Intent mStartActivity = new Intent(context(), MAIN_CLASS);
         int mPendingIntentId = 51459;
@@ -1538,6 +1542,12 @@ public class Device {
         AlarmManager mgr = (AlarmManager) context().getSystemService(Context.ALARM_SERVICE);
         mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 1000, mPendingIntent);
         System.exit(0);
+    }
+
+    public static void Restart() {
+        Intent intent = context().getIntent();
+        context().finish();
+        context().startActivity(intent);
     }
 
     // region experimental

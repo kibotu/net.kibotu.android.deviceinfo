@@ -1,29 +1,42 @@
 package net.kibotu.android.deviceinfo;
 
 
-import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
-import net.kibotu.android.deviceinfo.fragments.list.DeviceInfoFragment;
+import com.parse.*;
 import net.kibotu.android.deviceinfo.fragments.menu.MenuFragment;
 
 public class MainActivity extends FragmentActivity {
 
-    private SlidingMenu menu;
+    public static SlidingMenu menu;
     private MenuFragment arcList;
-    private DeviceInfoFragment displayList;
-
-    public static Context context;
+    public static final String THEME_PREFERENCE = "themePreference";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        context = this;
+        // FlurryAgent.onStartSession(this, "YOUR_API_KEY");
 
-        arcList = new MenuFragment();
-        displayList = new DeviceInfoFragment();
+        // set theme
+        setTheme(PreferenceManager.getDefaultSharedPreferences(this).getInt(THEME_PREFERENCE, R.style.light_theme));
+
+        // init device
+        Device.setContext(this);
+
+        // init logger
+        Logger.init(new LogcatLogger(this), "DeviceInfo", Logger.Level.VERBOSE);
+
+        arcList = new MenuFragment(this);
+
+        for (Registry item : Registry.values()) {
+            arcList.addItem(item.name(), item.iconR);
+        }
 
         setTitle(R.string.attach);
 
@@ -31,7 +44,7 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.content_frame);
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.content_frame, displayList)
+                .replace(R.id.content_frame, Registry.General.getFragmentList())
                 .commit();
 
         // configure the SlidingMenu
@@ -43,20 +56,67 @@ public class MainActivity extends FragmentActivity {
         menu.setFadeDegree(0.35f);
         menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
         menu.setMenu(R.layout.menu_frame);
+
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.menu_frame, arcList)
                 .commit();
 
-        arcList.addItem("General", android.R.drawable.ic_menu_search);
-        arcList.addItem("Hardware", android.R.drawable.ic_menu_search);
-        arcList.addItem("Software", android.R.drawable.ic_menu_search);
-        arcList.addItem("Display", android.R.drawable.ic_menu_search);
-        arcList.addItem("Sensor", android.R.drawable.ic_menu_search);
-        arcList.addItem("Battery", android.R.drawable.ic_menu_search);
-        arcList.addItem("Network", android.R.drawable.ic_menu_search);
+        menu.showMenu();
+//        menu.showContent();
+    }
 
-        displayList.addItem("Width", "800", "Screen Width");
-        displayList.addItem("Height", "480", "Screen Height");
+    // region Option Menu
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.daynighttheme:
+
+                // toggle preference
+                SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+                editor.putInt(THEME_PREFERENCE, (R.style.dark_theme == pref.getInt(THEME_PREFERENCE, R.style.dark_theme)) ? R.style.light_theme : R.style.dark_theme);
+                editor.commit();
+
+                // restart device
+                Device.Restart();
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    // endregion
+
+    public void doParseStuff() {
+        Parse.initialize(this, "JDbBWkOOUksLw7EefanIfckq4Rme9A62pF6uz4Qb", "y6dVB0I6RKCMiKjPxF3el2O1ErZp2MdCgIygu6RQ");
+
+        ParseObject testObject = new ParseObject("TestObject");
+        testObject.put("foo", "bar");
+        testObject.saveInBackground();
+        testObject.getObjectId();
+
+        ParseQuery query = ParseQuery.getQuery("TestObject");
+
+
+        query.getInBackground(testObject.getObjectId(), new GetCallback() {
+
+            @Override
+            public void done(ParseObject parseObject, ParseException e) {
+                if (e == null) {
+                    // object will be your game score
+                } else {
+                    // something went wrong
+                }
+            }
+        });
     }
 }

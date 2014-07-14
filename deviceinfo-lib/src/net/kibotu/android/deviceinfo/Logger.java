@@ -1,6 +1,7 @@
 package net.kibotu.android.deviceinfo;
 
 
+import android.util.Log;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -165,7 +166,7 @@ final public class Logger {
      * @param message - Actual logging message.
      */
     public static void v(@NotNull final String message) {
-        if (allowLogging(Level.VERBOSE)) logger.verbose(tag + SEPARATOR, message);
+        if (allowLogging(Level.VERBOSE)) logger.verbose(tag, message);
     }
 
     /**
@@ -174,7 +175,7 @@ final public class Logger {
      * @param message - Actual logging message.
      */
     public static void d(@NotNull final String message) {
-        if (allowLogging(Level.DEBUG)) logger.debug(tag + SEPARATOR, message);
+        if (allowLogging(Level.DEBUG)) logger.debug(tag, message);
     }
 
     /**
@@ -183,7 +184,7 @@ final public class Logger {
      * @param message - Actual logging message.
      */
     public static void w(@NotNull final String message) {
-        if (allowLogging(Level.WARNING)) logger.warning(tag + SEPARATOR, message);
+        if (allowLogging(Level.WARNING)) logger.warning(tag, message);
     }
 
     /**
@@ -192,7 +193,7 @@ final public class Logger {
      * @param message - Actual logging message.
      */
     public static void e(@NotNull final String message) {
-        if (allowLogging(Level.ERROR)) logger.error(tag + SEPARATOR, message);
+        if (allowLogging(Level.ERROR)) logger.error(tag, message);
     }
 
     /**
@@ -201,7 +202,7 @@ final public class Logger {
      * @param message - Actual logging message.
      */
     public static void f(@NotNull final String message) {
-        if (allowLogging(Level.FATAL)) logger.fatal(tag + SEPARATOR, message);
+        if (allowLogging(Level.FATAL)) logger.fatal(tag, message);
     }
 
 
@@ -212,7 +213,7 @@ final public class Logger {
      * @param e       Additional Throwable.
      */
     public static void i(@NotNull final String message, @NotNull final Throwable e) {
-        if (allowLogging(Level.ERROR)) logger.error(tag + SEPARATOR, message, e);
+        if (allowLogging(Level.ERROR)) logger.error(tag, message, e);
     }
 
     /**
@@ -222,7 +223,7 @@ final public class Logger {
      * @param e       Additional Throwable.
      */
     public static void v(@NotNull final String message, @NotNull final Throwable e) {
-        if (allowLogging(Level.VERBOSE)) logger.verbose(tag + SEPARATOR, message, e);
+        if (allowLogging(Level.VERBOSE)) logger.verbose(tag, message, e);
     }
 
     /**
@@ -232,7 +233,7 @@ final public class Logger {
      * @param e       Additional Throwable.
      */
     public static void d(@NotNull final String message, @NotNull final Throwable e) {
-        if (allowLogging(Level.DEBUG)) logger.debug(tag + SEPARATOR, message, e);
+        if (allowLogging(Level.DEBUG)) logger.debug(tag, message, e);
     }
 
     /**
@@ -242,7 +243,7 @@ final public class Logger {
      * @param e       Additional Throwable.
      */
     public static void w(@NotNull final String message, @NotNull final Throwable e) {
-        if (allowLogging(Level.WARNING)) logger.warning(tag + SEPARATOR, message, e);
+        if (allowLogging(Level.WARNING)) logger.warning(tag, message, e);
     }
 
     /**
@@ -252,7 +253,7 @@ final public class Logger {
      * @param e       Additional Throwable.
      */
     public static void e(@NotNull final String message, @NotNull final Throwable e) {
-        if (allowLogging(Level.ERROR)) logger.error(tag + SEPARATOR, message, e);
+        if (allowLogging(Level.ERROR)) logger.error(tag, message, e);
     }
 
     /**
@@ -262,7 +263,7 @@ final public class Logger {
      * @param e       Additional Throwable.
      */
     public static void f(@NotNull final String message, @NotNull final Throwable e) {
-        if (allowLogging(Level.FATAL)) logger.fatal(tag + SEPARATOR, message, e);
+        if (allowLogging(Level.FATAL)) logger.fatal(tag, message, e);
     }
 
     /**
@@ -344,6 +345,7 @@ final public class Logger {
      * @see <a href="http://developer.android.com/tools/debugging/debugging-log.html" target="_blank">Filtering Log Output</a>
      */
     public static enum Level {
+
         VERBOSE("V"), DEBUG("D"), INFO("I"), WARNING("W"), ERROR("E"), FATAL("F"), SILENT("");
         public final String TAG;
 

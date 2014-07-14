@@ -30,6 +30,9 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.json:json:20080701" level="project" />
     <orderEntry type="module" module-name="library" />
     <orderEntry type="library" name="Maven: com.android.support:support-v4:18.0.0" level="project" />
+    <orderEntry type="library" name="android-support-v7-appcompat" level="project" />
+    <orderEntry type="library" name="FlurryAnalytics-4.1.0" level="project" />
+    <orderEntry type="library" name="Parse-1.5.1" level="project" />
   </component>
 </module>
 

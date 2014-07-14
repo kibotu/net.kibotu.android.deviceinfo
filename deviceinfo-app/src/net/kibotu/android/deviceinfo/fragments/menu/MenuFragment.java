@@ -1,16 +1,25 @@
 package net.kibotu.android.deviceinfo.fragments.menu;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import net.kibotu.android.deviceinfo.MainActivity;
-import net.kibotu.android.deviceinfo.R;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import net.kibotu.android.deviceinfo.*;
 
 public class MenuFragment extends ListFragment {
 
-    public MenuAdapter list;
+    private MenuAdapter list;
+    private Context context;
+
+    public MenuFragment(Context context) {
+        this.context = context;
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.list, null);
@@ -22,10 +31,24 @@ public class MenuFragment extends ListFragment {
     }
 
     public MenuAdapter getFragmentListAdapter() {
-        return (list == null) ? (list = new MenuAdapter(MainActivity.context)) : list;
+        return (list == null) ? (list = new MenuAdapter(context)) : list;
     }
 
     public void addItem(final String name, int iconRId) {
         getFragmentListAdapter().add(new MenuItem(name, iconRId));
+    }
+
+    @Override
+    public void onListItemClick(ListView lv, View v, int position, long id) {
+        Registry item = Registry.values()[position];
+
+        ((FragmentActivity) Device.context()).getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content_frame, item.getFragmentList())
+                .commit();
+
+        super.onListItemClick(lv, v, position, id);
+        MainActivity.menu.showContent();
+        Device.context().setTitle(item.name());
     }
 }
