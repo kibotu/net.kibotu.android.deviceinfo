@@ -6,6 +6,7 @@ import net.kibotu.android.deviceinfo.fragments.list.DeviceInfoItemAsync;
 import net.kibotu.android.deviceinfo.fragments.list.IGetInfoFragment;
 import net.kibotu.android.deviceinfo.utils.Utils;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -18,11 +19,8 @@ public enum Registry implements IGetInfoFragment {
         @Override
         public void createFragmentList() {
 
-            cachedList.addItem("BOARD", "description", BOARD);
             cachedList.addItem("BOOTLOADER", "description", BOOTLOADER);
             cachedList.addItem("BRAND", "description", BRAND);
-            cachedList.addItem("CPU_ABI", "description", CPU_ABI);
-            cachedList.addItem("CPU_ABI2", "description", CPU_ABI2);
             cachedList.addItem("DEVICE", "description", DEVICE);
             cachedList.addItem("FINGERPRINT", "description", FINGERPRINT);
             cachedList.addItem("HOST", "description", HOST);
@@ -35,7 +33,6 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("UNKNOWN", "description", UNKNOWN);
             cachedList.addItem("USER", "description", USER);
 
-            cachedList.addItem("IMEI No", "description", Device.getDeviceIdFromTelephonyManager());
             cachedList.addItem("IMSI No", "description", Device.getSubscriberIdFromTelephonyManager());
             cachedList.addItem("hwID", "description", Device.getSerialNummer());
             cachedList.addItem("AndroidID", "description", Device.getAndroidId());
@@ -53,6 +50,11 @@ public enum Registry implements IGetInfoFragment {
                     value = String.valueOf(Calendar.getInstance().getTime());
                 }
             });
+
+            cachedList.addItem("MANUFACTURER", "description", MANUFACTURER);
+            cachedList.addItem("MODEL", "description", MODEL);
+            cachedList.addItem("PRODUCT", "description", PRODUCT);
+            cachedList.addItem("IMEI No", "description", Device.getDeviceIdFromTelephonyManager());
         }
     },
 
@@ -133,19 +135,61 @@ public enum Registry implements IGetInfoFragment {
         @Override
         public void createFragmentList() {
 
-            cachedList.addItem("Total Memory Environment", "description",  Utils.formatBytes(Device.getTotalMemoryByEnvironment()));
-            cachedList.addItem("Available Memory Activity", "description", Utils.formatBytes(Device.getFreeMemoryByActivityService()));
-            cachedList.addItem("Available Memory Environment", "description", Utils.formatBytes(Device.getFreeMemoryByEnvironment()));
+            cachedList.addItem("Total Memory Environment", "description", Utils.formatBytes(Device.getTotalMemoryByEnvironment()));
+
+            cachedList.addItem("Available Memory Activity", "description", 1f, true, new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Utils.formatBytes(Device.getFreeMemoryByActivityService());
+                }
+            });
+
+            cachedList.addItem("Available Memory Environment", "description", 1f, true, new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Utils.formatBytes(Device.getFreeMemoryByEnvironment());
+                }
+            });
+
             cachedList.addItem("Max Heap Memory", "description", Utils.formatBytes(Device.getMaxMemory()));
-            cachedList.addItem("Low Memory", "description", "" + Device.isLowMemory());
+
+            cachedList.addItem("Low Memory", "description", 1f, true, new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value =  "" + Device.isLowMemory();
+                }
+            });
+
             cachedList.addItem("Memory Class", "description", Device.getMemoryClass() + " MB");
 //            cachedList.addItem("Large Memory Class", "description", Device.getLargeMemoryClass() + " MB");
 
-            cachedList.addItem("Total Memory by this App", "description",Utils.formatBytes( Device.getRuntimeTotalMemory()));
-            cachedList.addItem("Used Memory by this App", "description", Utils.formatBytes(Device.getUsedMemorySize()));
-            cachedList.addItem("Free Runtime Memory by this App", "description", Utils.formatBytes(Device.getRuntimeFreeMemory()));
+            cachedList.addItem("Total Memory by this App", "description", 1f, true, new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Utils.formatBytes(Device.getRuntimeTotalMemory());
+                }
+            });
 
-            cachedList.addItem("Free Disc Space", "description", Utils.formatBytes(Device.getFreeDiskSpace()));
+            cachedList.addItem("Used Memory by this App", "description", 1f, true, new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Utils.formatBytes(Device.getUsedMemorySize());
+                }
+            });
+
+            cachedList.addItem("Free Runtime Memory by this App", "description", 1f, true, new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Utils.formatBytes(Device.getRuntimeFreeMemory());
+                }
+            });
+
+            cachedList.addItem("Free Disc Space", "description", 1f, true, new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Utils.formatBytes(Device.getFreeDiskSpace());
+                }
+            });
 
             cachedList.addItem("External Storage State", "description", Environment.getExternalStorageState());
 
@@ -260,12 +304,56 @@ public enum Registry implements IGetInfoFragment {
         @Override
         public void createFragmentList() {
 
-            cachedList.addItem("Rooted", "description", "" + Device.isPhoneRooted());
-
+            cachedList.addItem("BOARD", "description", BOARD);
             cachedList.addItem("HARDWARE", "description", HARDWARE);
-            cachedList.addItem("MANUFACTURER", "description", MANUFACTURER);
-            cachedList.addItem("MODEL", "description", MODEL);
-            cachedList.addItem("PRODUCT", "description", PRODUCT);
+            cachedList.addItem("CPU_ABI", "description", CPU_ABI);
+            cachedList.addItem("CPU_ABI2", "description", CPU_ABI2);
+
+            cachedList.addItem("CPU Cores", "description", new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = ""+Device.getNumCores();
+
+                    cachedList.addItem("CPU Usage All Cores", "description", 1f, true, new DeviceInfoItemAsync() {
+                        @Override
+                        protected void async() {
+                            value = "" + Device.getCpuUsage()[0] + " %";
+                        }
+                    });
+
+                    for(int i = 1; i < Device.getNumCores() + 1; ++i) {
+                        final int finalI = i;
+                        cachedList.addItem("CPU Usage Core " + i, "description", 1f, true, new DeviceInfoItemAsync() {
+                            @Override
+                            protected void async() {
+                                value = "" + Device.getCpuUsage()[finalI] + " %";
+                                Logger.v(finalI + " " +  Device.getCpuUsage()[finalI]);
+                            }
+                        });
+                    }
+                }
+            });
+
+            cachedList.addItem("Min Frequency", "description", 1f, true, new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Utils.formatFrequency(Device.getMinCpuFreq());
+                }
+            });
+
+            cachedList.addItem("Max Frequency", "description", 1f, true, new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Utils.formatFrequency(Device.getMaxCpuFreq());
+                }
+            });
+
+            cachedList.addItem("Current Frequency", "description", 1f, true, new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Utils.formatFrequency(Device.getCurrentCpuFreq());
+                }
+            });
 
             cachedList.addItem("SDK", "description", VERSION.SDK);
             cachedList.addItem("ID", "description", "" + context().getWindowManager().getDefaultDisplay().getDisplayId());
@@ -278,7 +366,6 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("Device", "description", DEVICE);
             cachedList.addItem("Product", "description", PRODUCT);
             cachedList.addItem("Brand", "description", BRAND);
-            cachedList.addItem("CPU+ABI", "description", CPU_ABI);
             cachedList.addItem("Build (Tags)", "description", DISPLAY + " (" + TAGS + ")");
             cachedList.addItem("Features", "description", Utils.jsonArrayToString(Device.getFeatures()));
             cachedList.addItem("Shared Libraries", "description", Utils.jsonArrayToString(Device.getSharedLibraries()));
@@ -295,7 +382,7 @@ public enum Registry implements IGetInfoFragment {
         @Override
         public void createFragmentList() {
             cachedList = new DeviceInfoFragment(context());
-            cachedList.addItem("Software", "description", "Value");
+            cachedList.addItem("Rooted", "description", "" + Device.isPhoneRooted());
         }
     },
 
@@ -331,6 +418,7 @@ public enum Registry implements IGetInfoFragment {
             cachedList = new DeviceInfoFragment(context());
             createFragmentList();
         }
+
         return cachedList;
     }
 

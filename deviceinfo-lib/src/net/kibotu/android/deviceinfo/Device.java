@@ -40,6 +40,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Pattern;
 
 import static android.os.Build.*;
 
@@ -365,6 +366,218 @@ public class Device {
 
     public static String getExtensions() {
         return GLES10.glGetString(GL10.GL_EXTENSIONS);
+    }
+
+    /**
+     *
+     * @return integer Array with 4 elements: user, system, idle and other cpu
+     *         usage in percentage.
+     */
+    public static int[] getCpuUsageStatistic() {
+
+        String tempString = executeTop();
+
+        tempString = tempString.replaceAll(",", "");
+        tempString = tempString.replaceAll("User", "");
+        tempString = tempString.replaceAll("System", "");
+        tempString = tempString.replaceAll("IOW", "");
+        tempString = tempString.replaceAll("IRQ", "");
+        tempString = tempString.replaceAll("%", "");
+        for (int i = 0; i < 10; i++) {
+            tempString = tempString.replaceAll("  ", " ");
+        }
+        tempString = tempString.trim();
+        String[] myString = tempString.split(" ");
+        int[] cpuUsageAsInt = new int[myString.length];
+        for (int i = 0; i < myString.length; i++) {
+            myString[i] = myString[i].trim();
+            cpuUsageAsInt[i] = Integer.parseInt(myString[i]);
+        }
+        return cpuUsageAsInt;
+    }
+
+    private static String executeTop() {
+        java.lang.Process p = null;
+        BufferedReader in = null;
+        String returnString = null;
+        try {
+            p = Runtime.getRuntime().exec("top -n 1");
+            in = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            while (returnString == null || returnString.contentEquals("")) {
+                returnString = in.readLine();
+            }
+        } catch (IOException e) {
+            Log.e("executeTop", "error in getting first line of top");
+            e.printStackTrace();
+        } finally {
+            try {
+                in.close();
+                p.destroy();
+            } catch (IOException e) {
+                Log.e("executeTop",
+                        "error in closing and destroying top process");
+                e.printStackTrace();
+            }
+        }
+        return returnString;
+    }
+
+    private static float[] cpuUsage = new float[] { 0, 0 };
+
+    /**
+     * @credits to https://github.com/takke/cpustats
+     */
+    public synchronized static float[] getCpuUsage() {
+
+        if(lastPs == null) {
+            lastPs = ProcStat.loadProcStat();
+            return cpuUsage;
+        }
+
+        final ProcStat ps = ProcStat.loadProcStat();
+
+        int usedCores = Math.min(ps.cpu.size(), lastPs.cpu.size());
+        cpuUsage = new float[usedCores+1];
+        for(int i = 0; i < usedCores; ++i) {
+            cpuUsage[i] = 0;
+            final Cpu cpuC = ps.cpu.get(i);
+            final Cpu cpuL = lastPs.cpu.get(i);
+
+            int totalC = cpuC.total();
+            int totalL = cpuL.total();
+
+            final int totalDiff = totalC - totalL;
+            if (totalDiff > 0) {
+                final int idleDiff = cpuC.idle - cpuL.idle;
+
+                cpuUsage[i] = 100 - idleDiff * 100 / (float)totalDiff;
+            }
+        }
+        return cpuUsage;
+    }
+
+    private static ProcStat lastPs;
+
+    private static int numCores = 0;
+
+    /**
+    * Gets the number of cores available in this device, across all processors.
+    * Requires: Ability to peruse the filesystem at "/sys/devices/system/cpu"
+    * @return The number of cores, or 1 if failed to get result
+    */
+    public static int getNumCores() {
+
+        if(numCores != 0)
+            return numCores;
+
+        //Private Class to display only CPU devices in the directory listing
+        class CpuFilter implements FileFilter {
+            @Override
+            public boolean accept(File pathname) {
+                //Check if filename is "cpu", followed by a single digit number
+                if(Pattern.matches("cpu[0-9]+", pathname.getName())) {
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        try {
+            //Get directory containing CPU info
+            File dir = new File("/sys/devices/system/cpu/");
+            //Filter to only list the devices we care about
+            File[] files = dir.listFiles(new CpuFilter());
+            //Return the number of cores (virtual CPU devices)
+            return numCores = files.length;
+        } catch(Exception e) {
+            //Default to return 1 core
+            return numCores = 1;
+        }
+    }
+
+    public static int getCurrentCpuFreq() {
+        return readIntegerFile("/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq");
+    }
+
+    public static int getMinCpuFreq() {
+        return readIntegerFile("/sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_min_freq");
+    }
+
+    public static int getMaxCpuFreq() {
+        return readIntegerFile("/sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq");
+    }
+
+
+    private static int readIntegerFile(final String filePath) {
+
+        try {
+            final BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)), 1000);
+            final String line = reader.readLine();
+            reader.close();
+
+            return Integer.parseInt(line);
+        } catch (Exception e) {
+            Logger.e(""+e.getMessage(), e);
+            return 0;
+        }
+    }
+
+    public static String getContentRandomAccessFile(String file) {
+
+        final StringBuffer buffer = new StringBuffer();
+
+        try {
+            final RandomAccessFile reader = new RandomAccessFile(file, "r");
+            String load = reader.readLine();
+            while (load != null) {
+                Logger.v(reader.readLine());
+                load = reader.readLine();
+                buffer.append(load);
+            }
+        }
+        catch (final IOException ex) {
+            Logger.e(""+ex.getMessage(), ex);
+        }
+
+        return buffer.toString();
+    }
+
+    public static float[] readUsage() {
+        try {
+            RandomAccessFile reader = new RandomAccessFile("/proc/stat", "r");
+//            RandomAccessFile reader = new RandomAccessFile("/proc/cpuinfo", "r");
+            String load = reader.readLine();
+
+            String[] toks = load.split(" ");
+
+            long idle1 = Long.parseLong(toks[4]);
+            long cpu1 = Long.parseLong(toks[2]) + Long.parseLong(toks[3]) + Long.parseLong(toks[5]) + Long.parseLong(toks[6]) + Long.parseLong(toks[7]) + Long.parseLong(toks[8]);
+
+            try {
+                Thread.sleep(360);
+            } catch (Exception e) {}
+
+            reader.seek(0);
+            load = reader.readLine();
+            reader.close();
+
+            toks = load.split(" ");
+
+            long idle2 = Long.parseLong(toks[4]);
+            long cpu2 = Long.parseLong(toks[2]) + Long.parseLong(toks[3]) + Long.parseLong(toks[5]) + Long.parseLong(toks[6]) + Long.parseLong(toks[7]) + Long.parseLong(toks[8]);
+
+            float[] cpus = new float[2];
+            cpus[0] = (float)cpu1 /  ((float)cpu1 + (float)idle1);
+            cpus[1] = (float)cpu2 / ((float)cpu2 + (float)idle2);
+
+//            return (float)(cpu2 - cpu1) / ((cpu2 + idle2) - (cpu1 + idle1));
+            return cpus;
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
     }
 
     /**

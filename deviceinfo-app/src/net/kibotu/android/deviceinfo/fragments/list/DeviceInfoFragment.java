@@ -55,7 +55,12 @@ public class DeviceInfoFragment extends ListFragment {
 
                 asyncValue.tag = tag;
                 asyncValue.description = description;
-                getFragmentListAdapter().add(asyncValue);
+                Device.context().runOnUiThread(new Runnable() {
+                   @Override
+                   public void run() {
+                       getFragmentListAdapter().add(asyncValue);
+                   }
+                });
 
                 do {
                     try {
