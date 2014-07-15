@@ -11,4 +11,7 @@ public class DeviceInfoItem {
         this.description = description;
         this.value = value;
     }
+
+    public DeviceInfoItem() {
+    }
 }

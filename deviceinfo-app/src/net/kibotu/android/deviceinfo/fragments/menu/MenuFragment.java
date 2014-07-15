@@ -2,15 +2,16 @@ package net.kibotu.android.deviceinfo.fragments.menu;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
-import net.kibotu.android.deviceinfo.*;
+import net.kibotu.android.deviceinfo.Device;
+import net.kibotu.android.deviceinfo.MainActivity;
+import net.kibotu.android.deviceinfo.R;
+import net.kibotu.android.deviceinfo.Registry;
 
 public class MenuFragment extends ListFragment {
 

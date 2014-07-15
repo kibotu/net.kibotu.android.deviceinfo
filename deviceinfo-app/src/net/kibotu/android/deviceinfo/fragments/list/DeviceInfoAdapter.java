@@ -6,9 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import net.kibotu.android.deviceinfo.Logger;
 import net.kibotu.android.deviceinfo.R;
-import sun.security.ssl.Debug;
 
 public class DeviceInfoAdapter extends ArrayAdapter<DeviceInfoItem> {
 

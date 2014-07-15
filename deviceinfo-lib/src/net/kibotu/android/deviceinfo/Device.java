@@ -369,14 +369,20 @@ public class Device {
 
     /**
      * credits:
-     * http://stackoverflow.com/questions/3170691/how-to-get-current-memory
-     * -usage-in-android
+     * http://stackoverflow.com/questions/3170691/how-to-get-current-memory-usage-in-android
      */
     public static long getFreeMemoryByActivityService() {
         ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
         ActivityManager activityManager = (ActivityManager) context().getSystemService(Context.ACTIVITY_SERVICE);
         activityManager.getMemoryInfo(mi);
         return mi.availMem;
+    }
+
+    public static boolean isLowMemory() {
+        ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
+        ActivityManager activityManager = (ActivityManager) context().getSystemService(Context.ACTIVITY_SERVICE);
+        activityManager.getMemoryInfo(mi);
+        return mi.lowMemory;
     }
 
     public static long getFreeMemoryByEnvironment() {
@@ -889,135 +895,6 @@ public class Device {
         String ret = size == 0 ? file.toString() : file + " (" + size + " MB)";
         cache.put(file, ret);
         return ret;
-    }
-
-    public static ArrayList<String> generateDeviceInfoList(Activity context) {
-        ArrayList<String> result = new ArrayList<String>();
-//
-//        final long BYTES_TO_MB = 1024 * 1024;
-//
-//        // memory
-//        result.add(buildLineItem("Rooted", Device.isPhoneRooted()));
-//        result.add(buildLineItem("Time", Calendar.getInstance().getTime()));
-//        result.add(buildLineItem("Total Memory by Environment", Device.getTotalMemoryByEnvironment() + "  Bytes (" + Device.getTotalMemoryByEnvironment() / BYTES_TO_MB + " MB)"));
-//        result.add(buildLineItem("Available Memory by ActivityService", Device.getFreeMemoryByActivityService() + "  Bytes (" + Device.getFreeMemoryByActivityService() / BYTES_TO_MB + " MB)"));
-//        result.add(buildLineItem("Available Memory by Environment", Device.getFreeMemoryByEnvironment() + "  Bytes (" + Device.getFreeMemoryByEnvironment() / BYTES_TO_MB + " MB)"));
-//        result.add(buildLineItem("Max Heap Memory", Device.getMaxMemory() + " Bytes (" + Device.getMaxMemory() / BYTES_TO_MB + " MB)"));
-//        result.add(buildLineItem("Memory Class", Device.getMemoryClass() + " MB"));
-//
-//        try {
-//            result.add(buildLineItem("Large Memory Class", Device.getLargeMemoryClass() + " MB"));
-//        } catch (Error error) {
-//            error.printStackTrace();
-//        }
-//
-//        result.add(buildLineItem("Total Memory by this App", Device.getRuntimeTotalMemory() + "  Bytes (" + Device.getRuntimeTotalMemory() / BYTES_TO_MB + " MB)"));
-//        result.add(buildLineItem("Used Memory by this App", Device.getUsedMemorySize() + "  Bytes (" + Device.getUsedMemorySize() / BYTES_TO_MB + " MB)"));
-//        result.add(buildLineItem("Free Runtime Memory by this App", Device.getRuntimeFreeMemory() + "  Bytes (" + Device.getRuntimeFreeMemory() / BYTES_TO_MB + " MB)"));
-//
-//        // display
-//        result.add(buildLineItem("Density", context.getString(R.string.density) + " (" + Device.getDisplayMetrics().density + ")"));
-//        result.add(buildLineItem("DensityDpi", Device.getDisplayMetrics().densityDpi + " (" + Device.getDisplayMetrics().scaledDensity + ")"));
-//
-//        try {
-//            result.add(buildLineItem("DPI X/Y", Device.getRealDisplayMetrics().xdpi + " / " + Device.getRealDisplayMetrics().ydpi));
-//        } catch (Error error) {
-//            error.printStackTrace();
-//        }
-//
-//        result.add(buildLineItem("Screen size", context.getString(R.string.screen_size)));
-//
-//        try {
-//            result.add(buildLineItem("Screen resolution", Device.getSize().x + "x" + Device.getSize().y));
-//        } catch (Error error) {
-//            error.printStackTrace();
-//        }
-//
-//        result.add(buildLineItem("Orientation", context.getString(R.string.orientation)));
-//        result.add(buildLineItem("Rotation", Device.context.getWindowManager().getDefaultDisplay().getRotation()));
-//        result.add(buildLineItem("PixelFormat", Device.context.getWindowManager().getDefaultDisplay().getPixelFormat()));
-//        result.add(buildLineItem("RefreshRate", Device.context.getWindowManager().getDefaultDisplay().getRefreshRate()));
-//        result.add(buildLineItem("Locale", context.getResources().getConfiguration().locale.toString()));
-//        result.add(buildLineItem("Mobile County/Network code", context.getResources().getConfiguration().mcc + "/" + context.getResources().getConfiguration().mnc));
-//        result.add(buildLineItem("UserAgent", Device.getUserAgent()));
-//
-//        // opengl
-//        // http://developer.apple.com/library/ios/#documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/DeterminingOpenGLESCapabilities/DeterminingOpenGLESCapabilities.html
-////        result.add(buildLineItem(""getVersionFromPackageManager: " + getVersionFromPackageManager());
-////        result.add(buildLineItem("supportsOpenGLES2: " + supportsOpenGLES2());
-//        result.add(buildLineItem("OpenGL Version", Device.getOpenGLVersion()));
-//
-//        result.add(buildLineItem("OpenGL Constraints", Device.getOpenGLShaderConstraints()));
-//
-//        // hardware
-//        result.add(buildLineItem("SDK", Build.VERSION.SDK));
-//        result.add(buildLineItem("ID", Device.context.getWindowManager().getDefaultDisplay().getDisplayId()));
-//        result.add(buildLineItem("SDK_INT", android.os.Build.VERSION.SDK_INT));
-//        result.add(buildLineItem("CODENAME", android.os.Build.VERSION.CODENAME));
-//        result.add(buildLineItem("INCREMENTAL", android.os.Build.VERSION.INCREMENTAL));
-//        result.add(buildLineItem("RELEASE", android.os.Build.VERSION.RELEASE));
-//        result.add(buildLineItem("Manufacturer", Build.MANUFACTURER));
-//        result.add(buildLineItem("Model", Build.MODEL));
-//        result.add(buildLineItem("Device", Build.DEVICE));
-//        result.add(buildLineItem("Product", Build.PRODUCT));
-//        result.add(buildLineItem("Brand", Build.BRAND));
-//        result.add(buildLineItem("CPU+ABI", Build.CPU_ABI));
-//        result.add(buildLineItem("Build (Tags)", Build.DISPLAY + " (" + Build.TAGS + ")"));
-//        result.add(buildLineItem("Features", Device.getFeatures()));
-//        result.add(buildLineItem("Shared Libraries", Device.getSharedLibraries()));
-//
-//        // address
-//        result.add(buildLineItem("IMEI No", Device.getDeviceIdFromTelephonyManager()));
-//        result.add(buildLineItem("IMSI No", Device.getSubscriberIdFromTelephonyManager()));
-//        result.add(buildLineItem("hwID", Device.getSerialNummer()));
-//        result.add(buildLineItem("AndroidID", Device.getAndroidId()));
-//        result.add(buildLineItem("MAC Address (wlan0)", Device.getMACAddress("wlan0")));
-//        result.add(buildLineItem("MAC Address (eth0)", Device.getMACAddress("eth0")));
-//        result.add(buildLineItem("IP4 Address", Device.getIPAddress(true)));
-//        result.add(buildLineItem("IP6 Address", Device.getIPAddress(false)));
-//
-//        // build
-//        result.add(buildLineItem("BOARD", android.os.Build.BOARD));
-//        result.add(buildLineItem("BOOTLOADER", android.os.Build.BOOTLOADER));
-//        result.add(buildLineItem("BRAND", android.os.Build.BRAND));
-//        result.add(buildLineItem("CPU_ABI", android.os.Build.CPU_ABI));
-//        result.add(buildLineItem("CPU_ABI2", android.os.Build.CPU_ABI2));
-//        result.add(buildLineItem("DEVICE", android.os.Build.DEVICE));
-//        result.add(buildLineItem("DISPLAY", android.os.Build.DISPLAY));
-//        result.add(buildLineItem("FINGERPRINT", android.os.Build.FINGERPRINT));
-//        result.add(buildLineItem("HARDWARE", android.os.Build.HARDWARE));
-//        result.add(buildLineItem("HOST", android.os.Build.HOST));
-//        result.add(buildLineItem("ID", android.os.Build.ID));
-//        result.add(buildLineItem("MANUFACTURER", android.os.Build.MANUFACTURER));
-//        result.add(buildLineItem("MODEL", android.os.Build.MODEL));
-//        result.add(buildLineItem("PRODUCT", android.os.Build.PRODUCT));
-//        result.add(buildLineItem("RADIO", android.os.Build.RADIO));
-//        result.add(buildLineItem("SERIAL", android.os.Build.SERIAL));
-//        result.add(buildLineItem("TAGS", android.os.Build.TAGS));
-//        result.add(buildLineItem("TIME", android.os.Build.TIME));
-//        result.add(buildLineItem("TYPE", android.os.Build.TYPE));
-//        result.add(buildLineItem("UNKNOWN", android.os.Build.UNKNOWN));
-//        result.add(buildLineItem("USER", android.os.Build.USER));
-//
-//        // internal storage
-//        result.add(buildLineItem("External Storage State", Environment.getExternalStorageState()));
-//        result.add(buildLineItem("Internal Storage Path", getFileSize(Device.context.getFilesDir().getParent())));
-//        result.add(buildLineItem("APK Storage Path", getFileSize(Device.context.getPackageCodePath())));
-//        result.add(buildLineItem("Root Directory", getFileSize(Environment.getRootDirectory())));
-//        result.add(buildLineItem("Data Directory", getFileSize(Environment.getDataDirectory())));
-//        result.add(buildLineItem("External Storage Director", getFileSize(Environment.getExternalStorageDirectory())));
-//        result.add(buildLineItem("Download Cache Directory", getFileSize(Environment.getDownloadCacheDirectory())));
-//        result.add(buildLineItem("Directory Alarms", getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_ALARMS))));
-//        result.add(buildLineItem("Directory DCIM", getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM))));
-//        result.add(buildLineItem("Directory Downloads", getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS))));
-//        result.add(buildLineItem("Directory Movies", getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES))));
-//        result.add(buildLineItem("Directory Music", getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC))));
-//        result.add(buildLineItem("Directory Notifications", getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_NOTIFICATIONS))));
-//        result.add(buildLineItem("Directory Pictures", getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES))));
-//        result.add(buildLineItem("Directory Podcasts", getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PODCASTS))));
-//        result.add(buildLineItem("Directory Ringtones", getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_RINGTONES))));
-
-        return result;
     }
 
     public static String getReleaseVersion() {

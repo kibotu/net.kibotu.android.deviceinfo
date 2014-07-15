@@ -1,12 +1,12 @@
 package net.kibotu.android.deviceinfo;
 
-
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import com.flurry.android.FlurryAgent;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.parse.*;
 import net.kibotu.android.deviceinfo.fragments.menu.MenuFragment;
@@ -18,11 +18,20 @@ public class MainActivity extends FragmentActivity {
     public static final String THEME_PREFERENCE = "themePreference";
 
     @Override
+    public void onStart() {
+        super.onStart();
+        FlurryAgent.onStartSession(this, "HXN4YB6BKTKQT76NDHSR");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        FlurryAgent.onEndSession(this);
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // FlurryAgent.onStartSession(this, "YOUR_API_KEY");
-
         // set theme
         setTheme(PreferenceManager.getDefaultSharedPreferences(this).getInt(THEME_PREFERENCE, R.style.light_theme));
 
@@ -37,8 +46,6 @@ public class MainActivity extends FragmentActivity {
         for (Registry item : Registry.values()) {
             arcList.addItem(item.name(), item.iconR);
         }
-
-        setTitle(R.string.attach);
 
         // set the Above View
         setContentView(R.layout.content_frame);
