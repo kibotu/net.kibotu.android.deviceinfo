@@ -4,8 +4,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import com.flurry.android.FlurryAgent;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.parse.*;
@@ -14,7 +16,7 @@ import net.kibotu.android.deviceinfo.fragments.menu.MenuFragment;
 public class MainActivity extends FragmentActivity {
 
     public static SlidingMenu menu;
-    private MenuFragment arcList;
+    private volatile MenuFragment arcList;
     public static final String THEME_PREFERENCE = "themePreference";
 
     @Override
@@ -74,6 +76,16 @@ public class MainActivity extends FragmentActivity {
     }
 
     // region Option Menu
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            menu.showMenu();
+            // moveTaskToBack(true);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

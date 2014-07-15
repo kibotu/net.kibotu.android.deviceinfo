@@ -47,7 +47,7 @@ public enum Registry implements IGetInfoFragment {
         @Override
         public void createFragmentList() {
 
-            cachedList.addItemSavelyAsync("Time", "description", 1f, true, new DeviceInfoItemAsync(cachedList) {
+            cachedList.addItem("Time", "description", 1f, true, new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
                     value = String.valueOf(Calendar.getInstance().getTime());
@@ -62,14 +62,14 @@ public enum Registry implements IGetInfoFragment {
 
             cachedList = new DeviceInfoFragment(context());
 
-            cachedList.addItemSavelyAsync("Charging", "description", 1f, true, new DeviceInfoItemAsync(cachedList) {
+            cachedList.addItem("Charging", "description", 1f, true, new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
                     value = "" + Device.getCharging();
                 }
             });
 
-            cachedList.addItemSavelyAsync("Charge Level", "description", 1f, true, new DeviceInfoItemAsync(cachedList) {
+            cachedList.addItem("Charge Level", "description", 1f, true, new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
                     value = "" + Device.getChargeLevel();
@@ -87,15 +87,44 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("Density", "description", context().getString(R.string.density) + " (" + Device.getDisplayMetrics().density + ")");
             cachedList.addItem("DensityDpi", "description", Device.getDisplayMetrics().densityDpi + " (" + Device.getDisplayMetrics().scaledDensity + ")");
 
-            cachedList.addItem("DPI X/Y", "description", Device.getRealDisplayMetrics().xdpi + " / " + Device.getRealDisplayMetrics().ydpi);
+//            cachedList.addItem("DPI X/Y", "description", Device.getRealDisplayMetrics().xdpi + " / " + Device.getRealDisplayMetrics().ydpi);
 
             cachedList.addItem("Screen size", "description", context().getString(R.string.screen_size));
 
-            cachedList.addItem("Screen resolution", "description", Device.getResolution());
-            cachedList.addItem("Orientation", "description", context().getString(R.string.orientation));
-            cachedList.addItem("Rotation", "description", "" + context().getWindowManager().getDefaultDisplay().getRotation());
-            cachedList.addItem("PixelFormat", "description", "" + context().getWindowManager().getDefaultDisplay().getPixelFormat());
-            cachedList.addItem("RefreshRate", "description", "" + context().getWindowManager().getDefaultDisplay().getRefreshRate());
+            cachedList.addItem("Screen resolution", "description", new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Device.getResolution();
+                }
+            });
+
+            cachedList.addItem("Orientation", "description", 1f, true, new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = context().getString(R.string.orientation);
+                }
+            });
+
+            cachedList.addItem("Rotation", "description", 1f, true, new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = "" + context().getWindowManager().getDefaultDisplay().getRotation();
+                }
+            });
+
+            cachedList.addItem("PixelFormat", "description", new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = "" + context().getWindowManager().getDefaultDisplay().getPixelFormat();
+                }
+            });
+
+            cachedList.addItem("RefreshRate", "description", new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = "" + context().getWindowManager().getDefaultDisplay().getRefreshRate();
+                }
+            });
             cachedList.addItem("Locale", "description", context().getResources().getConfiguration().locale.toString());
         }
     },
@@ -104,36 +133,126 @@ public enum Registry implements IGetInfoFragment {
         @Override
         public void createFragmentList() {
 
-            cachedList.addItem("Total Memory by Environment", "description", Device.getTotalMemoryByEnvironment() + "  Bytes (" + Device.getTotalMemoryByEnvironment() / BYTES_TO_MB + " MB)");
-            cachedList.addItem("Available Memory by ActivityService", "description", Device.getFreeMemoryByActivityService() + "  Bytes (" + Device.getFreeMemoryByActivityService() / BYTES_TO_MB + " MB)");
-            cachedList.addItem("Available Memory by Environment", "description", Device.getFreeMemoryByEnvironment() + "  Bytes (" + Device.getFreeMemoryByEnvironment() / BYTES_TO_MB + " MB)");
-            cachedList.addItem("Max Heap Memory", "description", Device.getMaxMemory() + " Bytes (" + Device.getMaxMemory() / BYTES_TO_MB + " MB)");
+            cachedList.addItem("Total Memory Environment", "description",  Utils.formatBytes(Device.getTotalMemoryByEnvironment()));
+            cachedList.addItem("Available Memory Activity", "description", Utils.formatBytes(Device.getFreeMemoryByActivityService()));
+            cachedList.addItem("Available Memory Environment", "description", Utils.formatBytes(Device.getFreeMemoryByEnvironment()));
+            cachedList.addItem("Max Heap Memory", "description", Utils.formatBytes(Device.getMaxMemory()));
             cachedList.addItem("Low Memory", "description", "" + Device.isLowMemory());
             cachedList.addItem("Memory Class", "description", Device.getMemoryClass() + " MB");
 //            cachedList.addItem("Large Memory Class", "description", Device.getLargeMemoryClass() + " MB");
 
-            cachedList.addItem("Total Memory by this App", "description", Device.getRuntimeTotalMemory() + "  Bytes (" + Device.getRuntimeTotalMemory() / BYTES_TO_MB + " MB)");
-            cachedList.addItem("Used Memory by this App", "description", Device.getUsedMemorySize() + "  Bytes (" + Device.getUsedMemorySize() / BYTES_TO_MB + " MB)");
-            cachedList.addItem("Free Runtime Memory by this App", "description", Device.getRuntimeFreeMemory() + "  Bytes (" + Device.getRuntimeFreeMemory() / BYTES_TO_MB + " MB)");
+            cachedList.addItem("Total Memory by this App", "description",Utils.formatBytes( Device.getRuntimeTotalMemory()));
+            cachedList.addItem("Used Memory by this App", "description", Utils.formatBytes(Device.getUsedMemorySize()));
+            cachedList.addItem("Free Runtime Memory by this App", "description", Utils.formatBytes(Device.getRuntimeFreeMemory()));
 
-            cachedList.addItem("Free Disc Space", "description", Device.getFreeDiskSpace() + " MB");
+            cachedList.addItem("Free Disc Space", "description", Utils.formatBytes(Device.getFreeDiskSpace()));
 
             cachedList.addItem("External Storage State", "description", Environment.getExternalStorageState());
-            cachedList.addItem("Internal Storage Path", "description", Device.getFileSize(context().getFilesDir().getParent()));
-            cachedList.addItem("APK Storage Path", "description", Device.getFileSize(context().getPackageCodePath()));
-            cachedList.addItem("Root Directory", "description", Device.getFileSize(Environment.getRootDirectory()));
-            cachedList.addItem("Data Directory", "description", Device.getFileSize(Environment.getDataDirectory()));
-            cachedList.addItem("External Storage Director", "description", Device.getFileSize(Environment.getExternalStorageDirectory()));
-            cachedList.addItem("Download Cache Directory", "description", Device.getFileSize(Environment.getDownloadCacheDirectory()));
-            cachedList.addItem("Directory Alarms", "description", Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_ALARMS)));
-            cachedList.addItem("Directory DCIM", "description", Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)));
-            cachedList.addItem("Directory Downloads", "description", Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)));
-            cachedList.addItem("Directory Movies", "description", Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES)));
-            cachedList.addItem("Directory Music", "description", Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC)));
-            cachedList.addItem("Directory Notifications", "description", Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_NOTIFICATIONS)));
-            cachedList.addItem("Directory Pictures", "description", Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)));
-            cachedList.addItem("Directory Podcasts", "description", Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PODCASTS)));
-            cachedList.addItem("Directory Ringtones", "description", Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_RINGTONES)));
+
+            cachedList.addItem("Internal Storage Path", "description", new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Device.getFileSize(context().getFilesDir().getParent());
+                }
+            });
+
+            cachedList.addItem("APK Storage Path", "description", new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Device.getFileSize(context().getPackageCodePath());
+                }
+            });
+
+            cachedList.addItem("Root Directory", "description", new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Device.getFileSize(Environment.getRootDirectory());
+                }
+            });
+
+            cachedList.addItem("Data Directory", "description", new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Device.getFileSize(Environment.getDataDirectory());
+                }
+            });
+
+            cachedList.addItem("External Storage Director", "description", new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Device.getFileSize(Environment.getExternalStorageDirectory());
+                }
+            });
+
+            cachedList.addItem("Download Cache Directory", "description", new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Device.getFileSize(Environment.getDownloadCacheDirectory());
+                }
+            });
+
+            cachedList.addItem("Directory Alarms", "description", new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_ALARMS));
+                }
+            });
+
+            cachedList.addItem("Directory DCIM", "description", new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM));
+                }
+            });
+
+            cachedList.addItem("Directory Downloads", "description", new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
+                }
+            });
+
+            cachedList.addItem("Directory Movies", "description", new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES));
+                }
+            });
+
+            cachedList.addItem("Directory Music", "description", new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC));
+                }
+            });
+
+            cachedList.addItem("Directory Notifications", "description", new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_NOTIFICATIONS));
+                }
+            });
+
+            cachedList.addItem("Directory Pictures", "description", new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES));
+                }
+            });
+
+            cachedList.addItem("Directory Podcasts", "description", new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PODCASTS));
+                }
+            });
+
+            cachedList.addItem("Directory Ringtones", "description", new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_RINGTONES));
+                }
+            });
         }
     },
 
@@ -204,7 +323,6 @@ public enum Registry implements IGetInfoFragment {
         }
     };
 
-    public static final int BYTES_TO_MB = 1024 * 1024;
     public int iconR;
     protected DeviceInfoFragment cachedList;
 

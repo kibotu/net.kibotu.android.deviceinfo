@@ -10,7 +10,6 @@ import android.widget.ListView;
 import net.kibotu.android.deviceinfo.Device;
 import net.kibotu.android.deviceinfo.Logger;
 import net.kibotu.android.deviceinfo.R;
-import net.kibotu.android.deviceinfo.utils.CustomWebView;
 
 public class DeviceInfoFragment extends ListFragment {
 
@@ -48,7 +47,7 @@ public class DeviceInfoFragment extends ListFragment {
      * @param loop
      * @param asyncValue
      */
-    public void addItemSavelyAsync(final String tag, final String description, final float delay, final boolean loop, final DeviceInfoItemAsync asyncValue) {
+    public void addItem(final String tag, final String description, final float delay, final boolean loop, final DeviceInfoItemAsync asyncValue) {
 
         new Thread(new Runnable() {
             @Override
@@ -64,38 +63,23 @@ public class DeviceInfoFragment extends ListFragment {
                     } catch (final InterruptedException e) {
                         Logger.e("" + e.getMessage(), e);
                     }
-                    Device.context().runOnUiThread(asyncValue);
+
+                    asyncValue.run();
+
+                    Device.context().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            list.notifyDataSetChanged();
+                        }
+                    });
 
                 } while (loop);
             }
         }).start();
     }
 
-    public void addItemSavelyAsync(final String tag, final String description, final DeviceInfoItemAsync asyncValue) {
-        addItemSavelyAsync(tag, description, 0f, false, asyncValue);
-    }
-
-    private void updateDeviceInfoItemAsync(final DeviceInfoItem item, final String tag, final String description, final String value, final int delay) {
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(delay);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                Device.context().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        item.tag = tag;
-                        item.description = description;
-                        item.value = value;
-                        list.notifyDataSetChanged();
-                    }
-                });
-            }
-        }).start();
+    public void addItem(final String tag, final String description, final DeviceInfoItemAsync asyncValue) {
+        addItem(tag, description, 0f, false, asyncValue);
     }
 
     @Override

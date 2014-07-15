@@ -6,6 +6,8 @@ import org.json.JSONException;
 
 final public class Utils {
 
+    public static final int BYTES_TO_MB = 1024 * 1024;
+
     private Utils() throws IllegalAccessException {
         throw new IllegalAccessException("'Utils' cannot be instantiated.");
     }
@@ -22,5 +24,9 @@ final public class Utils {
         }
 
         return buffer.toString();
+    }
+
+    public static String formatBytes(long bytes) {
+        return bytes / BYTES_TO_MB + " MB \t" + "[" + bytes + " bytes]";
     }
 }

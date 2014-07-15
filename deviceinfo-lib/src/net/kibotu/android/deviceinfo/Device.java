@@ -69,7 +69,7 @@ public class Device {
     private static String features;
     private static Object openGLShaderConstraints;
     private static DisplayHelper displayHelper;
-    private static Context context;
+    private static volatile Context context;
     private static volatile HashMap<File, String> cache;
     private static String uuid;
     public int x = 0;
@@ -1356,10 +1356,6 @@ public class Device {
     public static float getDensityDpi() {
         if (supportsApi(14)) return getDisplayMetrics().densityDpi;
         else return context().getResources().getDisplayMetrics().density * 160f;
-    }
-
-    public static DisplayMetrics getRealDisplayMetrics() {
-        return null;
     }
 
     // endregion
