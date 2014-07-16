@@ -16,6 +16,8 @@ import static net.kibotu.android.deviceinfo.Device.context;
 
 public enum Registry implements IGetInfoFragment {
 
+    // region Unsorted
+
     Unsorted(android.R.drawable.ic_menu_search) {
         @Override
         public void createFragmentList() {
@@ -45,23 +47,47 @@ public enum Registry implements IGetInfoFragment {
         }
     },
 
-    General(android.R.drawable.ic_menu_search) {
+    // endregion
+
+    // region Monitor
+
+    Monitor(android.R.drawable.ic_menu_search) {
         @Override
         public void createFragmentList() {
-
-            General.threads.add(cachedList.addItem("Time", "description", 1f, true, new DeviceInfoItemAsync() {
+            Monitor.threads.add(cachedList.addItem("Time", "description", 1f, true, new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
                     value = String.valueOf(Calendar.getInstance().getTime());
                 }
             }));
+            Monitor.threads.add(cachedList.addItem("threads count", "description", 1f, true, new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = "" + Thread.getAllStackTraces().keySet().size();
+                }
+            }));
+        }
+    },
+
+    // endregion
+
+    // region General
+
+    General(android.R.drawable.ic_menu_search) {
+        @Override
+        public void createFragmentList() {
 
             cachedList.addItem("MANUFACTURER", "description", MANUFACTURER);
             cachedList.addItem("MODEL", "description", MODEL);
             cachedList.addItem("PRODUCT", "description", PRODUCT);
             cachedList.addItem("IMEI No", "description", Device.getDeviceIdFromTelephonyManager());
+
         }
     },
+
+    // endregion
+
+    // region Battery
 
     Battery(android.R.drawable.ic_menu_search) {
         @Override
@@ -121,6 +147,10 @@ public enum Registry implements IGetInfoFragment {
         }
     },
 
+    // endregion
+
+    // region Display
+
     Display(android.R.drawable.ic_menu_search) {
         @Override
         public void createFragmentList() {
@@ -178,88 +208,13 @@ public enum Registry implements IGetInfoFragment {
         }
     },
 
-    Memory(android.R.drawable.ic_menu_search) {
+    // endregion
+
+    // region Directories
+
+    Directories(android.R.drawable.ic_menu_search) {
         @Override
         public void createFragmentList() {
-
-            cachedList.addItem("Total RAM", "description", "");
-            cachedList.addItem("Available RAM", "description", "");
-            cachedList.addItem("Total Internal Storage", "description", "");
-            cachedList.addItem("Available Internal Storage", "description", "");
-            cachedList.addItem("Total External Storage", "description", "");
-            cachedList.addItem("Available External Storage", "description", "");
-
-            cachedList.addItem("Total Memory Environment", "description", Utils.formatBytes(Device.getTotalMemoryByEnvironment()));
-
-            Memory.threads.add(cachedList.addItem("Available Memory Activity", "description", 1f, true, new DeviceInfoItemAsync() {
-                @Override
-                protected void async() {
-                    value = Utils.formatBytes(Device.getFreeMemoryByActivityService());
-                }
-            }));
-
-            Memory.threads.add(cachedList.addItem("Available Memory Environment", "description", 1f, true, new DeviceInfoItemAsync() {
-                @Override
-                protected void async() {
-                    value = Utils.formatBytes(Device.getFreeMemoryByEnvironment());
-                }
-            }));
-
-            cachedList.addItem("Max Heap Memory", "description", Utils.formatBytes(Device.getMaxMemory()));
-
-            Memory.threads.add(cachedList.addItem("Low Memory", "description", 1f, true, new DeviceInfoItemAsync() {
-                @Override
-                protected void async() {
-                    value = "" + Device.isLowMemory();
-                }
-            }));
-
-            cachedList.addItem("Memory Class", "description", Device.getMemoryClass() + " MB");
-//            cachedList.addItem("Large Memory Class", "description", Device.getLargeMemoryClass() + " MB");
-
-            Memory.threads.add(cachedList.addItem("Total Memory by this App", "description", 1f, true, new DeviceInfoItemAsync() {
-                @Override
-                protected void async() {
-                    value = Utils.formatBytes(Device.getRuntimeTotalMemory());
-                }
-            }));
-
-            Memory.threads.add(cachedList.addItem("Used Memory by this App", "description", 1f, true, new DeviceInfoItemAsync() {
-                @Override
-                protected void async() {
-                    value = Utils.formatBytes(Device.getUsedMemorySize());
-                }
-            }));
-
-            Memory.threads.add(cachedList.addItem("Free Runtime Memory by this App", "description", 1f, true, new DeviceInfoItemAsync() {
-                @Override
-                protected void async() {
-                    value = Utils.formatBytes(Device.getRuntimeFreeMemory());
-                }
-            }));
-
-            Memory.threads.add(cachedList.addItem("Free Disc Space", "description", 1f, true, new DeviceInfoItemAsync() {
-                @Override
-                protected void async() {
-                    value = Utils.formatBytes(Device.getFreeDiskSpace());
-                }
-            }));
-
-            cachedList.addItem("External Storage State", "description", Environment.getExternalStorageState());
-
-            cachedList.addItem("Internal Storage Path", "description", new DeviceInfoItemAsync() {
-                @Override
-                protected void async() {
-                    value = Device.getFileSize(context().getFilesDir().getParent());
-                }
-            });
-
-            cachedList.addItem("APK Storage Path", "description", new DeviceInfoItemAsync() {
-                @Override
-                protected void async() {
-                    value = Device.getFileSize(context().getPackageCodePath());
-                }
-            });
 
             cachedList.addItem("Root Directory", "description", new DeviceInfoItemAsync() {
                 @Override
@@ -354,6 +309,99 @@ public enum Registry implements IGetInfoFragment {
         }
     },
 
+    // endregion
+
+    // region Memory
+
+    Memory(android.R.drawable.ic_menu_search) {
+        @Override
+        public void createFragmentList() {
+
+            cachedList.addItem("Total RAM", "description", "");
+            cachedList.addItem("Available RAM", "description", "");
+            cachedList.addItem("Total Internal Storage", "description", "");
+            cachedList.addItem("Available Internal Storage", "description", "");
+            cachedList.addItem("Total External Storage", "description", "");
+            cachedList.addItem("Available External Storage", "description", "");
+
+            cachedList.addItem("Total Memory Environment", "description", Utils.formatBytes(Device.getTotalMemoryByEnvironment()));
+
+            Memory.threads.add(cachedList.addItem("Available Memory Activity", "description", 1f, true, new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Utils.formatBytes(Device.getFreeMemoryByActivityService());
+                }
+            }));
+
+            Memory.threads.add(cachedList.addItem("Available Memory Environment", "description", 1f, true, new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Utils.formatBytes(Device.getFreeMemoryByEnvironment());
+                }
+            }));
+
+            cachedList.addItem("Max Heap Memory", "description", Utils.formatBytes(Device.getMaxMemory()));
+
+            Memory.threads.add(cachedList.addItem("Low Memory", "description", 1f, true, new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = "" + Device.isLowMemory();
+                }
+            }));
+
+            cachedList.addItem("Memory Class", "description", Device.getMemoryClass() + " MB");
+//            cachedList.addItem("Large Memory Class", "description", Device.getLargeMemoryClass() + " MB");
+
+            Memory.threads.add(cachedList.addItem("Total Memory by this App", "description", 1f, true, new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Utils.formatBytes(Device.getRuntimeTotalMemory());
+                }
+            }));
+
+            Memory.threads.add(cachedList.addItem("Used Memory by this App", "description", 1f, true, new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Utils.formatBytes(Device.getUsedMemorySize());
+                }
+            }));
+
+            Memory.threads.add(cachedList.addItem("Free Runtime Memory by this App", "description", 1f, true, new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Utils.formatBytes(Device.getRuntimeFreeMemory());
+                }
+            }));
+
+            Memory.threads.add(cachedList.addItem("Free Disc Space", "description", 1f, true, new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Utils.formatBytes(Device.getFreeDiskSpace());
+                }
+            }));
+
+            cachedList.addItem("External Storage State", "description", Environment.getExternalStorageState());
+
+            cachedList.addItem("Internal Storage Path", "description", new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Device.getFileSize(context().getFilesDir().getParent());
+                }
+            });
+
+            cachedList.addItem("APK Storage Path", "description", new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Device.getFileSize(context().getPackageCodePath());
+                }
+            });
+        }
+    },
+
+    // endregion
+
+    // region CPU
+
     CPU(android.R.drawable.ic_menu_search) {
         @Override
         public void createFragmentList() {
@@ -411,6 +459,10 @@ public enum Registry implements IGetInfoFragment {
         }
     },
 
+    // endregion
+
+    // region Hardware
+
     Hardware(android.R.drawable.ic_menu_search) {
         @Override
         public void createFragmentList() {
@@ -435,6 +487,10 @@ public enum Registry implements IGetInfoFragment {
         }
     },
 
+    // endregion
+
+    // region Software
+
     Software(android.R.drawable.ic_menu_search) {
         @Override
         public void createFragmentList() {
@@ -452,6 +508,10 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("Build (Tags)", "description", DISPLAY + " (" + TAGS + ")");
         }
     },
+
+    // endregion
+
+    // region Sensor
 
     Sensor(android.R.drawable.ic_menu_search) {
         @Override
@@ -475,11 +535,13 @@ public enum Registry implements IGetInfoFragment {
         }
     },
 
+    // endregion
+
+    // region Network
+
     Network(android.R.drawable.ic_menu_search) {
         @Override
         public void createFragmentList() {
-            cachedList.addItem("Network", "description", "Value");
-
             cachedList.addItem("MAC Address (wlan0)", "description", Device.getMACAddress("wlan0"));
             cachedList.addItem("MAC Address (eth0)", "description", Device.getMACAddress("eth0"));
             cachedList.addItem("IP4 Address", "description", Device.getIPAddress(true));
@@ -487,15 +549,12 @@ public enum Registry implements IGetInfoFragment {
 
             cachedList.addItem("Mobile County/Network code", "description", context().getResources().getConfiguration().mcc + "/" + context().getResources().getConfiguration().mnc);
             cachedList.addItem("UserAgent", "description", Device.getUserAgent());
-
-            Network.threads.add(cachedList.addItem("threads count", "description", 1f, true, new DeviceInfoItemAsync() {
-                @Override
-                protected void async() {
-                    value = "" + Thread.getAllStackTraces().keySet().size();
-                }
-            }));
         }
     };
+
+    // endregion
+
+    // region Register
 
     public int iconR;
     protected DeviceInfoFragment cachedList;
@@ -511,6 +570,16 @@ public enum Registry implements IGetInfoFragment {
 
         return cachedList;
     }
+
+    private Registry(final int iconR) {
+        this.iconR = iconR;
+        isRefreshing = false;
+        threads = new ArrayList<Thread>(50);
+    }
+
+    // endregion
+
+    // region Threads
 
     public synchronized void startRefreshingList(final float intervalInSeconds) {
 
@@ -544,13 +613,13 @@ public enum Registry implements IGetInfoFragment {
     }
 
     public synchronized void resumeThreads() {
-        for(final Thread t : threads) {
+        for (final Thread t : threads) {
             t.notify();
         }
     }
 
     public synchronized void pauseThreads() {
-        for(final Thread t : threads) {
+        for (final Thread t : threads) {
             try {
                 t.wait();
             } catch (final InterruptedException e) {
@@ -564,9 +633,5 @@ public enum Registry implements IGetInfoFragment {
 //        pauseThreads();
     }
 
-    private Registry(final int iconR) {
-        this.iconR = iconR;
-        isRefreshing = false;
-        threads = new ArrayList<Thread>(50);
-    }
+    // endregion
 }
