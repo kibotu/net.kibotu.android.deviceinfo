@@ -47,9 +47,9 @@ public class DeviceInfoFragment extends ListFragment {
      * @param loop
      * @param asyncValue
      */
-    public DeviceInfoItem addItem(final String tag, final String description, final float delay, final boolean loop, final DeviceInfoItemAsync asyncValue) {
+    public Thread addItem(final String tag, final String description, final float delay, final boolean loop, final DeviceInfoItemAsync asyncValue) {
 
-        new Thread(new Runnable() {
+        Thread t =  new Thread(new Runnable() {
             @Override
             public void run() {
 
@@ -73,9 +73,11 @@ public class DeviceInfoFragment extends ListFragment {
 
                 } while (loop);
             }
-        }).start();
+        });
 
-        return asyncValue;
+        t.start();
+
+        return t;
     }
 
     public void addItem(final String tag, final String description, final DeviceInfoItemAsync asyncValue) {

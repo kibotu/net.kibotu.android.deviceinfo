@@ -46,6 +46,7 @@ public class MenuFragment extends ListFragment {
             currentItemList.stopRefreshing();
         currentItemList = Registry.values()[position];
         currentItemList.startRefreshingList(1);
+//        currentItemList.resumeThreads();
 
         ((FragmentActivity) Device.context()).getSupportFragmentManager()
                 .beginTransaction()

@@ -3,6 +3,7 @@
   <component name="FacetManager">
     <facet type="android" name="Android">
       <configuration>
+        <option name="APK_PATH" value="/../jar/deviceinfo-app.apk" />
         <option name="UPDATE_PROPERTY_FILES" value="true" />
         <option name="ENABLE_MANIFEST_MERGING" value="true" />
       </configuration>
