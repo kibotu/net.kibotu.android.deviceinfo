@@ -17,6 +17,7 @@ public class MenuFragment extends ListFragment {
 
     private MenuAdapter list;
     private Context context;
+    private Registry currentItemList;
 
     public MenuFragment(Context context) {
         this.context = context;
@@ -41,15 +42,18 @@ public class MenuFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView lv, View v, int position, long id) {
-        Registry item = Registry.values()[position];
+        if(currentItemList != null)
+            currentItemList.stopRefreshing();
+        currentItemList = Registry.values()[position];
+        currentItemList.startRefreshingList(1);
 
         ((FragmentActivity) Device.context()).getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.content_frame, item.getFragmentList())
+                .replace(R.id.content_frame, currentItemList.getFragmentList())
                 .commit();
 
         super.onListItemClick(lv, v, position, id);
         MainActivity.menu.showContent();
-        Device.context().setTitle(item.name());
+        Device.context().setTitle(currentItemList.name());
     }
 }

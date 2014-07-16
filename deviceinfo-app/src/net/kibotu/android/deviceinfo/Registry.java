@@ -2,7 +2,6 @@ package net.kibotu.android.deviceinfo;
 
 import android.os.Environment;
 import net.kibotu.android.deviceinfo.fragments.list.DeviceInfoFragment;
-import net.kibotu.android.deviceinfo.fragments.list.DeviceInfoItem;
 import net.kibotu.android.deviceinfo.fragments.list.DeviceInfoItemAsync;
 import net.kibotu.android.deviceinfo.fragments.list.IGetInfoFragment;
 import net.kibotu.android.deviceinfo.utils.Utils;
@@ -10,8 +9,10 @@ import net.kibotu.android.deviceinfo.utils.Utils;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import static android.os.Build.*;
+import static net.kibotu.android.deviceinfo.Device.checkSuperUserAPK;
 import static net.kibotu.android.deviceinfo.Device.context;
 
 public enum Registry implements IGetInfoFragment {
@@ -79,7 +80,7 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("Battery Present", "description", 1f, true, new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
-                    value = ""+ battery.present;
+                    value = "" + battery.present;
                 }
             });
 
@@ -94,7 +95,7 @@ public enum Registry implements IGetInfoFragment {
                 @Override
                 protected void async() {
                     //value = battery.getTemperatureFarenheit();
-                    value = (battery.temperature /10f) + " °C";
+                    value = (battery.temperature / 10f) + " °C";
                 }
             });
 
@@ -354,15 +355,9 @@ public enum Registry implements IGetInfoFragment {
         }
     },
 
-    Hardware(android.R.drawable.ic_menu_search) {
+    CPU(android.R.drawable.ic_menu_search) {
         @Override
         public void createFragmentList() {
-
-            cachedList.addItem("BOARD", "description", BOARD);
-            cachedList.addItem("HARDWARE", "description", HARDWARE);
-            cachedList.addItem("CPU_ABI", "description", CPU_ABI);
-            cachedList.addItem("CPU_ABI2", "description", CPU_ABI2);
-
             cachedList.addItem("CPU Cores", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
@@ -408,12 +403,25 @@ public enum Registry implements IGetInfoFragment {
                 }
             });
 
-            cachedList.addItem("Cpu Infos", "description", new DeviceInfoItemAsync() {
+            cachedList.addItem("CPU Details", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
                     value = Device.getCpuInfo();
                 }
             });
+        }
+    },
+
+    Hardware(android.R.drawable.ic_menu_search) {
+        @Override
+        public void createFragmentList() {
+
+            cachedList.addItem("BOARD", "description", BOARD);
+            cachedList.addItem("HARDWARE", "description", HARDWARE);
+            cachedList.addItem("CPU_ABI", "description", CPU_ABI);
+            cachedList.addItem("CPU_ABI2", "description", CPU_ABI2);
+
+
 
             cachedList.addItem("FINGERPRINT", "description", FINGERPRINT);
             cachedList.addItem("HOST", "description", HOST);
@@ -452,8 +460,7 @@ public enum Registry implements IGetInfoFragment {
         public void createFragmentList() {
 
             List<android.hardware.Sensor> list = Device.getSensorList();
-            for (int i = 0; i < list.size(); ++i) {
-                final android.hardware.Sensor s = list.get(i);
+            for (final android.hardware.Sensor s : list) {
                 cachedList.addItem(s.getName(), "description", new DeviceInfoItemAsync() {
                     @Override
                     protected void async() {
@@ -482,6 +489,13 @@ public enum Registry implements IGetInfoFragment {
 
             cachedList.addItem("Mobile County/Network code", "description", context().getResources().getConfiguration().mcc + "/" + context().getResources().getConfiguration().mnc);
             cachedList.addItem("UserAgent", "description", Device.getUserAgent());
+
+            cachedList.addItem("threads count", "description", 1f, true, new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = "" + Thread.getAllStackTraces().keySet().size();
+                }
+            });
         }
     };
 
@@ -492,14 +506,17 @@ public enum Registry implements IGetInfoFragment {
     public DeviceInfoFragment getFragmentList() {
         if (cachedList == null) {
             cachedList = new DeviceInfoFragment(context());
-            startRefreshingList(1);
             createFragmentList();
+            startRefreshingList(1);
         }
 
         return cachedList;
     }
 
-    private void startRefreshingList(final float intervalInSeconds) {
+    public void startRefreshingList(final float intervalInSeconds) {
+
+        if(isRefreshing)
+            return;
 
         isRefreshing = true;
 
@@ -507,12 +524,12 @@ public enum Registry implements IGetInfoFragment {
             @Override
             public void run() {
 
-                while(isRefreshing) {
+                while (isRefreshing) {
 
                     try {
                         Thread.sleep((long) (intervalInSeconds * 1000));
                     } catch (final InterruptedException e) {
-                        Logger.e(""+e.getMessage(),e);
+                        Logger.e("" + e.getMessage(), e);
                     }
 
                     Device.context().runOnUiThread(new Runnable() {
@@ -525,6 +542,10 @@ public enum Registry implements IGetInfoFragment {
 
             }
         }).start();
+    }
+
+    public void stopRefreshing() {
+        isRefreshing = false;
     }
 
     private Registry(final int iconR) {
