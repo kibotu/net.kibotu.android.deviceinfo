@@ -8,6 +8,8 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Point;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
@@ -357,6 +359,22 @@ public class Device {
         return 1;
     }
 
+    public static List<ResolveInfo> installedApps() {
+        final PackageManager pm = context().getPackageManager();
+        Intent intent = new Intent(Intent.ACTION_MAIN, null);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        List<ResolveInfo> apps = pm.queryIntentActivities(intent, PackageManager.GET_META_DATA);
+//        for(int i = 0; i < apps.size(); ++i) {
+//            Logger.v(""+apps.get(i).activityInfo.name);
+//        }
+        return apps;
+    }
+
+    public static List<Sensor> getSensorList() {
+        SensorManager manager = (SensorManager) context().getSystemService(Context.SENSOR_SERVICE);
+        return manager.getSensorList(Sensor.TYPE_ALL); // SensorManager.SENSOR_ALL
+    }
+
     /**
      * @see android.content.pm.FeatureInfo#getGlEsVersion()
      */
@@ -522,6 +540,10 @@ public class Device {
         }
     }
 
+    public static String getCpuInfo() {
+        return getContentRandomAccessFile("/proc/cpuinfo");
+    }
+
     public static String getContentRandomAccessFile(String file) {
 
         final StringBuffer buffer = new StringBuffer();
@@ -530,9 +552,9 @@ public class Device {
             final RandomAccessFile reader = new RandomAccessFile(file, "r");
             String load = reader.readLine();
             while (load != null) {
-                Logger.v(reader.readLine());
+//                Logger.v(reader.readLine());
+                buffer.append(load).append("\n");
                 load = reader.readLine();
-                buffer.append(load);
             }
         }
         catch (final IOException ex) {

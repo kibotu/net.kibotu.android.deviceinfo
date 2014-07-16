@@ -49,4 +49,25 @@ final public class Utils {
             }
         }).start();
     }
+
+    public static String getSensorName(int type) {
+
+        String name = "" + type;
+
+        switch (type) {
+            case 1: name ="TYPE_ACCELEROMETER";
+            case 2: name ="TYPE_MAGNETIC_FIELD";
+            case 3: name ="TYPE_ORIENTATION";
+            case 4: name ="TYPE_GYROSCOPE";
+            case 5: name ="TYPE_LIGHT";
+            case 6: name ="TYPE_PRESSURE";
+            case 7: name ="TYPE_TEMPERATURE";
+            case 8: name ="TYPE_PROXIMITY";
+            case 9: name ="TYPE_GRAVITY";
+            case 10: name ="TYPE_LINEAR_ACCELERATION";
+            case 11: name ="TYPE_ROTATION_VECTOR";
+        }
+
+        return name;
+    }
 }
