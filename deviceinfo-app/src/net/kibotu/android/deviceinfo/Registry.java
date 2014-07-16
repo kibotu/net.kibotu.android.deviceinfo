@@ -2,9 +2,11 @@ package net.kibotu.android.deviceinfo;
 
 import android.os.Environment;
 import net.kibotu.android.deviceinfo.fragments.list.DeviceInfoFragment;
+import net.kibotu.android.deviceinfo.fragments.list.DeviceInfoItem;
 import net.kibotu.android.deviceinfo.fragments.list.DeviceInfoItemAsync;
 import net.kibotu.android.deviceinfo.fragments.list.IGetInfoFragment;
 import net.kibotu.android.deviceinfo.utils.Utils;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -65,26 +67,57 @@ public enum Registry implements IGetInfoFragment {
         @Override
         public void createFragmentList() {
 
-            cachedList.addItem("Charging", "description", 1f, true, new DeviceInfoItemAsync() {
+            final net.kibotu.android.deviceinfo.Battery battery = Device.getBattery();
+
+            cachedList.addItem("Technology", "description", 1f, true, new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
-                    value = "" + Device.getCharging();
+                    value = battery.technology;
                 }
             });
 
-            cachedList.addItem("Charge Level", "description", 1f, true, new DeviceInfoItemAsync() {
+            cachedList.addItem("Battery Present", "description", 1f, true, new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
-                    value = "" + Device.getChargeLevel();
+                    value = ""+ battery.present;
                 }
             });
 
-            cachedList.addItem("Technology", "description", "");
-            cachedList.addItem("Voltage", "description", "");
-            cachedList.addItem("Temperature", "description", "");
-            cachedList.addItem("Health", "description", "");
-            cachedList.addItem("Charging Status", "description", ""); // full
-            cachedList.addItem("Last Charging Source", "description", "");
+            cachedList.addItem("Voltage", "description", 1f, true, new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = battery.voltage + " Volt";
+                }
+            });
+
+            cachedList.addItem("Temperature", "description", 1f, true, new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    //value = battery.getTemperatureFarenheit();
+                    value = (battery.temperature /10f) + " °C";
+                }
+            });
+
+            cachedList.addItem("Health", "description", 1f, true, new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = battery.health;
+                }
+            });
+
+            cachedList.addItem("Charging Level", "description", 1f, true, new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = "" + (int) (battery.getChargingLevel() * 100) + " %";
+                }
+            });
+
+            cachedList.addItem("Charging Source", "description", 1f, true, new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = battery.plugged;
+                }
+            });
         }
     },
 
@@ -149,12 +182,12 @@ public enum Registry implements IGetInfoFragment {
         @Override
         public void createFragmentList() {
 
-            cachedList.addItem("Total RAM", "description", "0");
-            cachedList.addItem("Available RAM", "description", "0");
-            cachedList.addItem("Total Internal Storage", "description", "0");
-            cachedList.addItem("Available Internal Storage", "description", "0");
-            cachedList.addItem("Total External Storage", "description", "0");
-            cachedList.addItem("Available External Storage", "description", "0");
+            cachedList.addItem("Total RAM", "description", "");
+            cachedList.addItem("Available RAM", "description", "");
+            cachedList.addItem("Total Internal Storage", "description", "");
+            cachedList.addItem("Available Internal Storage", "description", "");
+            cachedList.addItem("Total External Storage", "description", "");
+            cachedList.addItem("Available External Storage", "description", "");
 
             cachedList.addItem("Total Memory Environment", "description", Utils.formatBytes(Device.getTotalMemoryByEnvironment()));
 
@@ -177,7 +210,7 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("Low Memory", "description", 1f, true, new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
-                    value =  "" + Device.isLowMemory();
+                    value = "" + Device.isLowMemory();
                 }
             });
 
@@ -333,7 +366,7 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("CPU Cores", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
-                    value = ""+Device.getNumCores();
+                    value = "" + Device.getNumCores();
 
                     cachedList.addItem("CPU Usage All Cores", "description", 1f, true, new DeviceInfoItemAsync() {
                         @Override
@@ -342,7 +375,7 @@ public enum Registry implements IGetInfoFragment {
                         }
                     });
 
-                    for(int i = 1; i < Device.getNumCores() + 1; ++i) {
+                    for (int i = 1; i < Device.getNumCores() + 1; ++i) {
                         final int finalI = i;
                         cachedList.addItem("CPU Usage Core " + i, "description", 1f, true, new DeviceInfoItemAsync() {
                             @Override
@@ -419,7 +452,7 @@ public enum Registry implements IGetInfoFragment {
         public void createFragmentList() {
 
             List<android.hardware.Sensor> list = Device.getSensorList();
-            for(int i = 0; i < list.size(); ++i) {
+            for (int i = 0; i < list.size(); ++i) {
                 final android.hardware.Sensor s = list.get(i);
                 cachedList.addItem(s.getName(), "description", new DeviceInfoItemAsync() {
                     @Override
@@ -454,14 +487,44 @@ public enum Registry implements IGetInfoFragment {
 
     public int iconR;
     protected DeviceInfoFragment cachedList;
+    private volatile boolean isRefreshing = false;
 
     public DeviceInfoFragment getFragmentList() {
         if (cachedList == null) {
             cachedList = new DeviceInfoFragment(context());
+            startRefreshingList(1);
             createFragmentList();
         }
 
         return cachedList;
+    }
+
+    private void startRefreshingList(final float intervalInSeconds) {
+
+        isRefreshing = true;
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                while(isRefreshing) {
+
+                    try {
+                        Thread.sleep((long) (intervalInSeconds * 1000));
+                    } catch (final InterruptedException e) {
+                        Logger.e(""+e.getMessage(),e);
+                    }
+
+                    Device.context().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            cachedList.list.notifyDataSetChanged();
+                        }
+                    });
+                }
+
+            }
+        }).start();
     }
 
     private Registry(final int iconR) {

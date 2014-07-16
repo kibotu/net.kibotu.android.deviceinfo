@@ -46,9 +46,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac29e572-50bf-4121-b2c4-6f74c649a384" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/deviceinfo-lib/src/net/kibotu/android/deviceinfo/Battery.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo-lib/src/net/kibotu/android/deviceinfo/Device.java" afterPath="$PROJECT_DIR$/deviceinfo-lib/src/net/kibotu/android/deviceinfo/Device.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/fragments/list/DeviceInfoFragment.java" afterPath="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/fragments/list/DeviceInfoFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/Registry.java" afterPath="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/Registry.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/utils/Utils.java" afterPath="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/utils/Utils.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="android-device.iws" />
@@ -108,8 +109,8 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <ui_properties converted="true" />
     <breakpoint_rules converted="true" />
+    <ui_properties converted="true" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
@@ -120,29 +121,126 @@
       <file leaf-file-name="Registry.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/Registry.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5066225" vertical-offset="4488" max-vertical-offset="6511">
-              <caret line="381" column="17" selection-start-line="381" selection-start-column="17" selection-end-line="381" selection-end-column="17" />
+            <state vertical-scroll-proportion="-0.36996338" vertical-offset="8600" max-vertical-offset="9146">
+              <caret line="494" column="35" selection-start-line="494" selection-start-column="35" selection-end-line="494" selection-end-column="35" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#4156#4193#0" expanded="true" />
-                <element signature="e#4608#4649#0" expanded="true" />
-                <element signature="e#5096#5137#0" expanded="true" />
-                <element signature="e#14685#15677#0" expanded="true" />
-                <element signature="e#14921#15152#0" expanded="true" />
-                <element signature="e#15129#15130#0" expanded="true" />
-                <element signature="e#15365#15621#0" expanded="true" />
-                <element signature="e#15594#15595#0" expanded="true" />
-                <element signature="e#15662#15663#0" expanded="true" />
-                <element signature="e#15754#15955#0" expanded="true" />
-                <element signature="e#15940#15941#0" expanded="true" />
-                <element signature="e#16032#16233#0" expanded="true" />
-                <element signature="e#16218#16219#0" expanded="true" />
-                <element signature="e#16314#16519#0" expanded="true" />
-                <element signature="e#16504#16505#0" expanded="true" />
-                <element signature="e#16582#16757#0" expanded="true" />
-                <element signature="e#18782#19431#0" expanded="true" />
-                <element signature="e#19412#19413#0" expanded="true" />
+                <element signature="e#2407#2611#0" expanded="true" />
+                <element signature="e#2596#2597#0" expanded="true" />
+                <element signature="e#3209#3383#0" expanded="true" />
+                <element signature="e#3368#3369#0" expanded="true" />
+                <element signature="e#3462#3637#0" expanded="true" />
+                <element signature="e#3622#3623#0" expanded="true" />
+                <element signature="e#3708#3889#0" expanded="true" />
+                <element signature="e#3874#3875#0" expanded="true" />
+                <element signature="e#3964#4219#0" expanded="true" />
+                <element signature="e#4204#4205#0" expanded="true" />
+                <element signature="e#4289#4459#0" expanded="true" />
+                <element signature="e#4444#4445#0" expanded="true" />
+                <element signature="e#4537#4745#0" expanded="true" />
+                <element signature="e#4730#4731#0" expanded="true" />
+                <element signature="e#4824#4995#0" expanded="true" />
+                <element signature="e#4980#4981#0" expanded="true" />
+                <element signature="e#5252#5289#0" expanded="true" />
+                <element signature="e#5704#5745#0" expanded="true" />
+                <element signature="e#5816#5994#0" expanded="true" />
+                <element signature="e#5979#5980#0" expanded="true" />
+                <element signature="e#6069#6266#0" expanded="true" />
+                <element signature="e#6192#6233#0" expanded="true" />
+                <element signature="e#6251#6252#0" expanded="true" />
+                <element signature="e#6338#6561#0" expanded="true" />
+                <element signature="e#6546#6547#0" expanded="true" />
+                <element signature="e#6626#6852#0" expanded="true" />
+                <element signature="e#6837#6838#0" expanded="true" />
+                <element signature="e#6917#7143#0" expanded="true" />
+                <element signature="e#7128#7129#0" expanded="true" />
+                <element signature="e#8339#8553#0" expanded="true" />
+                <element signature="e#8538#8539#0" expanded="true" />
+                <element signature="e#8645#8855#0" expanded="true" />
+                <element signature="e#8840#8841#0" expanded="true" />
+                <element signature="e#9038#9219#0" expanded="true" />
+                <element signature="e#9204#9205#0" expanded="true" />
+                <element signature="e#9513#9718#0" expanded="true" />
+                <element signature="e#9703#9704#0" expanded="true" />
+                <element signature="e#9805#10006#0" expanded="true" />
+                <element signature="e#9991#9992#0" expanded="true" />
+                <element signature="e#10101#10305#0" expanded="true" />
+                <element signature="e#10290#10291#0" expanded="true" />
+                <element signature="e#10384#10584#0" expanded="true" />
+                <element signature="e#10569#10570#0" expanded="true" />
+                <element signature="e#10772#10983#0" expanded="true" />
+                <element signature="e#10968#10969#0" expanded="true" />
+                <element signature="e#11053#11259#0" expanded="true" />
+                <element signature="e#11244#11245#0" expanded="true" />
+                <element signature="e#11327#11533#0" expanded="true" />
+                <element signature="e#11518#11519#0" expanded="true" />
+                <element signature="e#11601#11807#0" expanded="true" />
+                <element signature="e#11792#11793#0" expanded="true" />
+                <element signature="e#11886#12103#0" expanded="true" />
+                <element signature="e#12088#12089#0" expanded="true" />
+                <element signature="e#12181#12396#0" expanded="true" />
+                <element signature="e#12381#12382#0" expanded="true" />
+                <element signature="e#12466#12717#0" expanded="true" />
+                <element signature="e#12702#12703#0" expanded="true" />
+                <element signature="e#12785#13034#0" expanded="true" />
+                <element signature="e#13019#13020#0" expanded="true" />
+                <element signature="e#13107#13361#0" expanded="true" />
+                <element signature="e#13346#13347#0" expanded="true" />
+                <element signature="e#13431#13682#0" expanded="true" />
+                <element signature="e#13667#13668#0" expanded="true" />
+                <element signature="e#13751#14001#0" expanded="true" />
+                <element signature="e#13986#13987#0" expanded="true" />
+                <element signature="e#14078#14336#0" expanded="true" />
+                <element signature="e#14321#14322#0" expanded="true" />
+                <element signature="e#14408#14661#0" expanded="true" />
+                <element signature="e#14646#14647#0" expanded="true" />
+                <element signature="e#14733#14986#0" expanded="true" />
+                <element signature="e#14971#14972#0" expanded="true" />
+                <element signature="e#15059#15313#0" expanded="true" />
+                <element signature="e#15298#15299#0" expanded="true" />
+                <element signature="e#15774#16769#0" expanded="true" />
+                <element signature="e#16012#16243#0" expanded="true" />
+                <element signature="e#16220#16221#0" expanded="true" />
+                <element signature="e#16457#16713#0" expanded="true" />
+                <element signature="e#16686#16687#0" expanded="true" />
+                <element signature="e#16754#16755#0" expanded="true" />
+                <element signature="e#16846#17047#0" expanded="true" />
+                <element signature="e#17032#17033#0" expanded="true" />
+                <element signature="e#17124#17325#0" expanded="true" />
+                <element signature="e#17310#17311#0" expanded="true" />
+                <element signature="e#17406#17611#0" expanded="true" />
+                <element signature="e#17596#17597#0" expanded="true" />
+                <element signature="e#17674#17849#0" expanded="true" />
+                <element signature="e#17834#17835#0" expanded="true" />
+                <element signature="e#19875#20524#0" expanded="true" />
+                <element signature="e#20505#20506#0" expanded="true" />
+                <element signature="e#21898#22553#0" expanded="true" />
+                <element signature="e#22298#22508#0" expanded="true" />
+                <element signature="e#22485#22486#0" expanded="true" />
+                <element signature="e#22542#22543#0" expanded="true" />
+                <element signature="e#22609#22610#0" expanded="true" />
+                <element signature="e#22643#22644#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IGetInfoFragment.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/fragments/list/IGetInfoFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="170">
+              <caret line="3" column="28" selection-start-line="3" selection-start-column="28" selection-end-line="3" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DeviceInfoFragment.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/fragments/list/DeviceInfoFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="344" max-vertical-offset="1360">
+              <caret line="60" column="45" selection-start-line="60" selection-start-column="23" selection-end-line="60" selection-end-column="45" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -150,7 +248,7 @@
       <file leaf-file-name="Sensor.class" pinned="false" current="false" current-in-tab="false">
         <entry file="jar://$MAVEN_REPOSITORY$/com/google/android/android/2.3.3/android-2.3.3.jar!/android/hardware/Sensor.class">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-15.64" vertical-offset="0" max-vertical-offset="714">
+            <state vertical-scroll-proportion="0.0" vertical-offset="408" max-vertical-offset="731">
               <caret line="24" column="28" selection-start-line="24" selection-start-column="28" selection-end-line="24" selection-end-column="28" />
               <folding />
             </state>
@@ -160,91 +258,57 @@
       <file leaf-file-name="Device.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/deviceinfo-lib/src/net/kibotu/android/deviceinfo/Device.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="6022" max-vertical-offset="34663">
-              <caret line="374" column="0" selection-start-line="374" selection-start-column="0" selection-end-line="374" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="20523" max-vertical-offset="32351">
+              <caret line="1305" column="36" selection-start-line="1305" selection-start-column="36" selection-end-line="1305" selection-end-column="36" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#2752#2753#0" expanded="true" />
-                <element signature="e#2792#2793#0" expanded="true" />
-                <element signature="e#3254#3262#0" expanded="true" />
-                <element signature="e#13214#13215#0" expanded="true" />
-                <element signature="e#13266#13267#0" expanded="true" />
-                <element signature="e#14974#14975#0" expanded="true" />
-                <element signature="e#15031#15032#0" expanded="true" />
-                <element signature="e#15075#15076#0" expanded="true" />
-                <element signature="e#15136#15137#0" expanded="true" />
-                <element signature="e#20276#20277#0" expanded="true" />
-                <element signature="e#20342#20343#0" expanded="true" />
                 <element signature="e#24913#24914#0" expanded="true" />
                 <element signature="e#24968#24969#0" expanded="true" />
-                <element signature="e#26226#26234#0" expanded="true" />
                 <element signature="e#26959#26967#0" expanded="true" />
-                <element signature="e#30064#30072#0" expanded="true" />
-                <element signature="e#36903#36904#0" expanded="true" />
-                <element signature="e#36961#36962#0" expanded="true" />
-                <element signature="e#37006#37007#0" expanded="true" />
-                <element signature="e#37070#37071#0" expanded="true" />
-                <element signature="e#37160#37168#0" expanded="true" />
-                <element signature="e#38856#38857#0" expanded="true" />
-                <element signature="e#38890#38891#0" expanded="true" />
-                <element signature="e#38936#38937#0" expanded="true" />
-                <element signature="e#39011#39012#0" expanded="true" />
-                <element signature="e#39050#39051#0" expanded="true" />
-                <element signature="e#39088#39089#0" expanded="true" />
                 <element signature="e#39134#39135#0" expanded="true" />
                 <element signature="e#39175#39176#0" expanded="true" />
                 <element signature="e#39215#39216#0" expanded="true" />
                 <element signature="e#39268#39269#0" expanded="true" />
                 <element signature="e#41371#41372#0" expanded="true" />
                 <element signature="e#41426#41427#0" expanded="true" />
-                <element signature="e#43301#43302#0" expanded="true" />
-                <element signature="e#43351#43352#0" expanded="true" />
                 <element signature="e#43771#43772#0" expanded="true" />
                 <element signature="e#43809#43810#0" expanded="true" />
-                <element signature="e#46117#46466#0" expanded="true" />
-                <element signature="e#46451#46452#0" expanded="true" />
-                <element signature="e#46635#46844#0" expanded="true" />
-                <element signature="e#46829#46830#0" expanded="true" />
                 <element signature="e#47935#47936#0" expanded="true" />
                 <element signature="e#48005#48006#0" expanded="true" />
-                <element signature="e#51127#51128#0" expanded="true" />
-                <element signature="e#51205#51206#0" expanded="true" />
-                <element signature="e#52198#52199#0" expanded="true" />
-                <element signature="e#52258#52259#0" expanded="true" />
-                <element signature="e#52298#52299#0" expanded="true" />
-                <element signature="e#52350#52351#0" expanded="true" />
-                <element signature="e#52397#52398#0" expanded="true" />
-                <element signature="e#52457#52458#0" expanded="true" />
-                <element signature="e#52498#52499#0" expanded="true" />
-                <element signature="e#52550#52551#0" expanded="true" />
-                <element signature="e#58221#58498#0" expanded="true" />
-                <element signature="e#58483#58484#0" expanded="true" />
-                <element signature="e#58575#58576#0" expanded="true" />
-                <element signature="e#58663#58664#0" expanded="true" />
-                <element signature="e#58705#58706#0" expanded="true" />
-                <element signature="e#58793#58794#0" expanded="true" />
-                <element signature="e#58837#58838#0" expanded="true" />
-                <element signature="e#58925#58926#0" expanded="true" />
-                <element signature="e#58976#58977#0" expanded="true" />
-                <element signature="e#59046#59047#0" expanded="true" />
-                <element signature="e#59097#59098#0" expanded="true" />
-                <element signature="e#59167#59168#0" expanded="true" />
-                <element signature="e#59797#59798#0" expanded="true" />
-                <element signature="e#59847#59848#0" expanded="true" />
-                <element signature="e#60200#60407#0" expanded="true" />
-                <element signature="e#60392#60393#0" expanded="true" />
-                <element signature="e#61127#61354#0" expanded="true" />
-                <element signature="e#61335#61336#0" expanded="true" />
-                <element signature="e#64193#64194#0" expanded="true" />
-                <element signature="e#64266#64267#0" expanded="true" />
-                <element signature="e#64354#64355#0" expanded="true" />
-                <element signature="e#64427#64428#0" expanded="true" />
-                <element signature="e#68309#68310#0" expanded="true" />
-                <element signature="e#68389#68390#0" expanded="true" />
-                <element signature="e#68829#68835#0" expanded="true" />
-                <element signature="e#76093#76094#0" expanded="true" />
-                <element signature="e#76188#76189#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Battery.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/deviceinfo-lib/src/net/kibotu/android/deviceinfo/Battery.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="73" max-vertical-offset="2465">
+              <caret line="35" column="76" selection-start-line="35" selection-start-column="76" selection-end-line="35" selection-end-column="76" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#625#626#0" expanded="true" />
+                <element signature="e#666#667#0" expanded="true" />
+                <element signature="e#1390#1391#0" expanded="true" />
+                <element signature="e#1434#1435#0" expanded="true" />
+                <element signature="e#3734#3735#0" expanded="true" />
+                <element signature="e#3809#3810#0" expanded="true" />
+                <element signature="e#3856#3857#0" expanded="true" />
+                <element signature="e#3931#3932#0" expanded="true" />
+                <element signature="e#4024#4025#0" expanded="true" />
+                <element signature="e#4074#4075#0" expanded="true" />
+                <element signature="e#4167#4168#0" expanded="true" />
+                <element signature="e#4214#4215#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Async.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/deviceinfo-lib/src/net/kibotu/android/deviceinfo/Async.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="544">
+              <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -252,7 +316,7 @@
       <file leaf-file-name="Utils.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/utils/Utils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="284" max-vertical-offset="1190">
+            <state vertical-scroll-proportion="0.0" vertical-offset="884" max-vertical-offset="1343">
               <caret line="52" column="17" selection-start-line="52" selection-start-column="17" selection-end-line="52" selection-end-column="17" />
               <folding />
             </state>
@@ -277,7 +341,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/TopicListFragment.java" />
         <option value="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/DeviceInfoListFragment.java" />
         <option value="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/FragmentListAdapter.java" />
         <option value="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/ListFragmentItem.java" />
@@ -317,16 +380,17 @@
         <option value="D:/Libraries/raw/SlidingMenu/library/res/layout/content_frame.xml" />
         <option value="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/fragments/list/DeviceInfoAdapter.java" />
         <option value="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/IGetInfoFragment.java" />
-        <option value="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/fragments/list/IGetInfoFragment.java" />
         <option value="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/utils/LessBlockingRunnableQueue.java" />
         <option value="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/MainActivity.java" />
         <option value="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/fragments/list/DeviceInfoItemAsync.java" />
         <option value="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/fragments/list/DeviceInfoItem.java" />
-        <option value="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/fragments/list/DeviceInfoFragment.java" />
         <option value="$PROJECT_DIR$/deviceinfo-lib/src/net/kibotu/android/deviceinfo/Cpu.java" />
         <option value="$PROJECT_DIR$/deviceinfo-lib/src/net/kibotu/android/deviceinfo/ProcStat.java" />
-        <option value="$PROJECT_DIR$/deviceinfo-lib/src/net/kibotu/android/deviceinfo/Device.java" />
         <option value="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/utils/Utils.java" />
+        <option value="$PROJECT_DIR$/deviceinfo-lib/src/net/kibotu/android/deviceinfo/Device.java" />
+        <option value="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/fragments/list/DeviceInfoFragment.java" />
+        <option value="$PROJECT_DIR$/deviceinfo-lib/src/net/kibotu/android/deviceinfo/Battery.java" />
+        <option value="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/fragments/list/IGetInfoFragment.java" />
         <option value="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/Registry.java" />
       </list>
     </option>
@@ -409,6 +473,136 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="library" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo-tests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo-lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo-lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="net.kibotu.android.deviceinfo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="net.kibotu.android.deviceinfo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="net.kibotu.android.deviceinfo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="utils" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="net.kibotu.android.deviceinfo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fragments" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="net.kibotu.android.deviceinfo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fragments" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="list" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -606,136 +800,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="list" />
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="library" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo-tests" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo-lib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo-lib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="net.kibotu.android.deviceinfo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo-app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo-app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="net.kibotu.android.deviceinfo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo-app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="net.kibotu.android.deviceinfo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="utils" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo-app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="net.kibotu.android.deviceinfo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="fragments" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo-app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="net.kibotu.android.deviceinfo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="fragments" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="list" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -1132,11 +1196,12 @@
       <workItem from="1405186883731" duration="13353000" />
       <workItem from="1405411860164" duration="36216000" />
       <workItem from="1405461947042" duration="9271000" />
+      <workItem from="1405496645553" duration="7164000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="111871000" />
+    <option name="totallyTimeSpent" value="119035000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1176,8 +1241,8 @@
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960597" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.15458423" sideWeight="0.42719486" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26873663" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38543898" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26766595" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="true" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.38543898" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32976446" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17697228" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1189,8 +1254,8 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32976446" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39978677" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -1221,20 +1286,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://D:/Libraries/raw/SlidingMenu/library/src/com/jeremyfeinstein/slidingmenu/lib/MenuInterface.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="12" max-vertical-offset="663">
-          <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Libraries/raw/SlidingMenu/library/src/com/jeremyfeinstein/slidingmenu/lib/CanvasTransformerBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1360">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://D:/Libraries/raw/SlidingMenu/library/src/com/jeremyfeinstein/slidingmenu/lib/app/SlidingActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1479" max-vertical-offset="2278">
@@ -1337,15 +1388,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.40838853" vertical-offset="1177" max-vertical-offset="8160">
           <caret line="91" column="31" selection-start-line="91" selection-start-column="31" selection-end-line="91" selection-end-column="31" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#5254#5255#0" expanded="false" />
-            <element signature="e#5327#5328#0" expanded="false" />
-            <element signature="e#5748#5749#0" expanded="false" />
-            <element signature="e#5821#5822#0" expanded="false" />
-            <element signature="e#5992#5993#0" expanded="false" />
-            <element signature="e#6065#6066#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1417,76 +1459,65 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.65384614" vertical-offset="0" max-vertical-offset="187">
           <caret line="1" column="64" selection-start-line="1" selection-start-column="64" selection-end-line="1" selection-end-column="64" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/deviceinfo-app/res/layout/deviceinfo.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-5.1320753" vertical-offset="0" max-vertical-offset="527">
           <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
           <folding />
         </state>
       </provider>
+    </entry>
+    <entry file="file://D:/Libraries/raw/SlidingMenu/library/res/layout/list.xml">
       <provider editor-type-id="android-designer">
         <state />
       </provider>
-    </entry>
-    <entry file="file://D:/Libraries/raw/SlidingMenu/library/res/layout/list.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.9245284" vertical-offset="0" max-vertical-offset="238">
           <caret line="6" column="36" selection-start-line="6" selection-start-column="36" selection-end-line="6" selection-end-column="36" />
           <folding />
         </state>
       </provider>
+    </entry>
+    <entry file="file://D:/Libraries/raw/SlidingMenu/library/res/layout/menu_frame.xml">
       <provider editor-type-id="android-designer">
         <state />
       </provider>
-    </entry>
-    <entry file="file://D:/Libraries/raw/SlidingMenu/library/res/layout/menu_frame.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.6037736" vertical-offset="0" max-vertical-offset="187">
           <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="37" />
-          <folding />
         </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://D:/Libraries/raw/SlidingMenu/library/res/layout/slidingmenumain.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="550">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://D:/Libraries/raw/SlidingMenu/library/res/layout/row.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-7.3773584" vertical-offset="0" max-vertical-offset="493">
           <caret line="23" column="15" selection-start-line="23" selection-start-column="15" selection-end-line="23" selection-end-column="15" />
-          <folding />
         </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/com/google/android/android/2.3.3/android-2.3.3.jar!/android/content/res/Resources.class">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.4426788" vertical-offset="21" max-vertical-offset="2193">
           <caret line="77" column="45" selection-start-line="77" selection-start-column="45" selection-end-line="77" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/fragments/list/IGetInfoFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="170">
-          <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
         </state>
       </provider>
     </entry>
@@ -1498,25 +1529,23 @@
       </provider>
     </entry>
     <entry file="file://D:/Libraries/raw/SlidingMenu/library/res/layout/responsive_content_frame.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.08192771" vertical-offset="0" max-vertical-offset="830">
           <caret line="4" column="43" selection-start-line="4" selection-start-column="43" selection-end-line="4" selection-end-column="43" />
-          <folding />
         </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://D:/Libraries/raw/SlidingMenu/library/res/layout/content_frame.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.061445784" vertical-offset="0" max-vertical-offset="830">
           <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-          <folding />
         </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/com/google/android/android/2.3.3/android-2.3.3.jar!/android/app/Activity.class">
@@ -1569,19 +1598,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/fragments/list/DeviceInfoFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="522" max-vertical-offset="1513">
-          <caret line="71" column="37" selection-start-line="71" selection-start-column="37" selection-end-line="71" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/deviceinfo-lib/src/net/kibotu/android/deviceinfo/ProcStat.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="692" max-vertical-offset="1598">
           <caret line="55" column="65" selection-start-line="55" selection-start-column="65" selection-end-line="55" selection-end-column="65" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1597,7 +1617,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.093818985" vertical-offset="0" max-vertical-offset="906">
           <caret line="6" column="22" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1605,97 +1624,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-7.28" vertical-offset="56" max-vertical-offset="1853">
           <caret line="15" column="28" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deviceinfo-lib/src/net/kibotu/android/deviceinfo/Device.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="6022" max-vertical-offset="34663">
-          <caret line="374" column="0" selection-start-line="374" selection-start-column="0" selection-end-line="374" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2752#2753#0" expanded="true" />
-            <element signature="e#2792#2793#0" expanded="true" />
-            <element signature="e#3254#3262#0" expanded="true" />
-            <element signature="e#13214#13215#0" expanded="true" />
-            <element signature="e#13266#13267#0" expanded="true" />
-            <element signature="e#14974#14975#0" expanded="true" />
-            <element signature="e#15031#15032#0" expanded="true" />
-            <element signature="e#15075#15076#0" expanded="true" />
-            <element signature="e#15136#15137#0" expanded="true" />
-            <element signature="e#20276#20277#0" expanded="true" />
-            <element signature="e#20342#20343#0" expanded="true" />
-            <element signature="e#24913#24914#0" expanded="true" />
-            <element signature="e#24968#24969#0" expanded="true" />
-            <element signature="e#26226#26234#0" expanded="true" />
-            <element signature="e#26959#26967#0" expanded="true" />
-            <element signature="e#30064#30072#0" expanded="true" />
-            <element signature="e#36903#36904#0" expanded="true" />
-            <element signature="e#36961#36962#0" expanded="true" />
-            <element signature="e#37006#37007#0" expanded="true" />
-            <element signature="e#37070#37071#0" expanded="true" />
-            <element signature="e#37160#37168#0" expanded="true" />
-            <element signature="e#38856#38857#0" expanded="true" />
-            <element signature="e#38890#38891#0" expanded="true" />
-            <element signature="e#38936#38937#0" expanded="true" />
-            <element signature="e#39011#39012#0" expanded="true" />
-            <element signature="e#39050#39051#0" expanded="true" />
-            <element signature="e#39088#39089#0" expanded="true" />
-            <element signature="e#39134#39135#0" expanded="true" />
-            <element signature="e#39175#39176#0" expanded="true" />
-            <element signature="e#39215#39216#0" expanded="true" />
-            <element signature="e#39268#39269#0" expanded="true" />
-            <element signature="e#41371#41372#0" expanded="true" />
-            <element signature="e#41426#41427#0" expanded="true" />
-            <element signature="e#43301#43302#0" expanded="true" />
-            <element signature="e#43351#43352#0" expanded="true" />
-            <element signature="e#43771#43772#0" expanded="true" />
-            <element signature="e#43809#43810#0" expanded="true" />
-            <element signature="e#46117#46466#0" expanded="true" />
-            <element signature="e#46451#46452#0" expanded="true" />
-            <element signature="e#46635#46844#0" expanded="true" />
-            <element signature="e#46829#46830#0" expanded="true" />
-            <element signature="e#47935#47936#0" expanded="true" />
-            <element signature="e#48005#48006#0" expanded="true" />
-            <element signature="e#51127#51128#0" expanded="true" />
-            <element signature="e#51205#51206#0" expanded="true" />
-            <element signature="e#52198#52199#0" expanded="true" />
-            <element signature="e#52258#52259#0" expanded="true" />
-            <element signature="e#52298#52299#0" expanded="true" />
-            <element signature="e#52350#52351#0" expanded="true" />
-            <element signature="e#52397#52398#0" expanded="true" />
-            <element signature="e#52457#52458#0" expanded="true" />
-            <element signature="e#52498#52499#0" expanded="true" />
-            <element signature="e#52550#52551#0" expanded="true" />
-            <element signature="e#58221#58498#0" expanded="true" />
-            <element signature="e#58483#58484#0" expanded="true" />
-            <element signature="e#58575#58576#0" expanded="true" />
-            <element signature="e#58663#58664#0" expanded="true" />
-            <element signature="e#58705#58706#0" expanded="true" />
-            <element signature="e#58793#58794#0" expanded="true" />
-            <element signature="e#58837#58838#0" expanded="true" />
-            <element signature="e#58925#58926#0" expanded="true" />
-            <element signature="e#58976#58977#0" expanded="true" />
-            <element signature="e#59046#59047#0" expanded="true" />
-            <element signature="e#59097#59098#0" expanded="true" />
-            <element signature="e#59167#59168#0" expanded="true" />
-            <element signature="e#59797#59798#0" expanded="true" />
-            <element signature="e#59847#59848#0" expanded="true" />
-            <element signature="e#60200#60407#0" expanded="true" />
-            <element signature="e#60392#60393#0" expanded="true" />
-            <element signature="e#61127#61354#0" expanded="true" />
-            <element signature="e#61335#61336#0" expanded="true" />
-            <element signature="e#64193#64194#0" expanded="true" />
-            <element signature="e#64266#64267#0" expanded="true" />
-            <element signature="e#64354#64355#0" expanded="true" />
-            <element signature="e#64427#64428#0" expanded="true" />
-            <element signature="e#68309#68310#0" expanded="true" />
-            <element signature="e#68389#68390#0" expanded="true" />
-            <element signature="e#68829#68835#0" expanded="true" />
-            <element signature="e#76093#76094#0" expanded="true" />
-            <element signature="e#76188#76189#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1709,36 +1637,181 @@
     </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/com/google/android/android/2.3.3/android-2.3.3.jar!/android/hardware/Sensor.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.64" vertical-offset="0" max-vertical-offset="714">
+        <state vertical-scroll-proportion="0.0" vertical-offset="408" max-vertical-offset="731">
           <caret line="24" column="28" selection-start-line="24" selection-start-column="28" selection-end-line="24" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deviceinfo-lib/src/net/kibotu/android/deviceinfo/Async.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="544">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deviceinfo-lib/src/net/kibotu/android/deviceinfo/Device.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="20523" max-vertical-offset="32351">
+          <caret line="1305" column="36" selection-start-line="1305" selection-start-column="36" selection-end-line="1305" selection-end-column="36" />
+          <folding>
+            <element signature="e#24913#24914#0" expanded="true" />
+            <element signature="e#24968#24969#0" expanded="true" />
+            <element signature="e#26959#26967#0" expanded="true" />
+            <element signature="e#39134#39135#0" expanded="true" />
+            <element signature="e#39175#39176#0" expanded="true" />
+            <element signature="e#39215#39216#0" expanded="true" />
+            <element signature="e#39268#39269#0" expanded="true" />
+            <element signature="e#41371#41372#0" expanded="true" />
+            <element signature="e#41426#41427#0" expanded="true" />
+            <element signature="e#43771#43772#0" expanded="true" />
+            <element signature="e#43809#43810#0" expanded="true" />
+            <element signature="e#47935#47936#0" expanded="true" />
+            <element signature="e#48005#48006#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deviceinfo-lib/src/net/kibotu/android/deviceinfo/Battery.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="73" max-vertical-offset="2465">
+          <caret line="35" column="76" selection-start-line="35" selection-start-column="76" selection-end-line="35" selection-end-column="76" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#625#626#0" expanded="true" />
+            <element signature="e#666#667#0" expanded="true" />
+            <element signature="e#1390#1391#0" expanded="true" />
+            <element signature="e#1434#1435#0" expanded="true" />
+            <element signature="e#3734#3735#0" expanded="true" />
+            <element signature="e#3809#3810#0" expanded="true" />
+            <element signature="e#3856#3857#0" expanded="true" />
+            <element signature="e#3931#3932#0" expanded="true" />
+            <element signature="e#4024#4025#0" expanded="true" />
+            <element signature="e#4074#4075#0" expanded="true" />
+            <element signature="e#4167#4168#0" expanded="true" />
+            <element signature="e#4214#4215#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/fragments/list/DeviceInfoFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="344" max-vertical-offset="1360">
+          <caret line="60" column="45" selection-start-line="60" selection-start-column="23" selection-end-line="60" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/fragments/list/IGetInfoFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="170">
+          <caret line="3" column="28" selection-start-line="3" selection-start-column="28" selection-end-line="3" selection-end-column="28" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/Registry.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5066225" vertical-offset="4488" max-vertical-offset="6511">
-          <caret line="381" column="17" selection-start-line="381" selection-start-column="17" selection-end-line="381" selection-end-column="17" />
+        <state vertical-scroll-proportion="-0.36996338" vertical-offset="8600" max-vertical-offset="9146">
+          <caret line="494" column="35" selection-start-line="494" selection-start-column="35" selection-end-line="494" selection-end-column="35" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4156#4193#0" expanded="true" />
-            <element signature="e#4608#4649#0" expanded="true" />
-            <element signature="e#5096#5137#0" expanded="true" />
-            <element signature="e#14685#15677#0" expanded="true" />
-            <element signature="e#14921#15152#0" expanded="true" />
-            <element signature="e#15129#15130#0" expanded="true" />
-            <element signature="e#15365#15621#0" expanded="true" />
-            <element signature="e#15594#15595#0" expanded="true" />
-            <element signature="e#15662#15663#0" expanded="true" />
-            <element signature="e#15754#15955#0" expanded="true" />
-            <element signature="e#15940#15941#0" expanded="true" />
-            <element signature="e#16032#16233#0" expanded="true" />
-            <element signature="e#16218#16219#0" expanded="true" />
-            <element signature="e#16314#16519#0" expanded="true" />
-            <element signature="e#16504#16505#0" expanded="true" />
-            <element signature="e#16582#16757#0" expanded="true" />
-            <element signature="e#18782#19431#0" expanded="true" />
-            <element signature="e#19412#19413#0" expanded="true" />
+            <element signature="e#2407#2611#0" expanded="true" />
+            <element signature="e#2596#2597#0" expanded="true" />
+            <element signature="e#3209#3383#0" expanded="true" />
+            <element signature="e#3368#3369#0" expanded="true" />
+            <element signature="e#3462#3637#0" expanded="true" />
+            <element signature="e#3622#3623#0" expanded="true" />
+            <element signature="e#3708#3889#0" expanded="true" />
+            <element signature="e#3874#3875#0" expanded="true" />
+            <element signature="e#3964#4219#0" expanded="true" />
+            <element signature="e#4204#4205#0" expanded="true" />
+            <element signature="e#4289#4459#0" expanded="true" />
+            <element signature="e#4444#4445#0" expanded="true" />
+            <element signature="e#4537#4745#0" expanded="true" />
+            <element signature="e#4730#4731#0" expanded="true" />
+            <element signature="e#4824#4995#0" expanded="true" />
+            <element signature="e#4980#4981#0" expanded="true" />
+            <element signature="e#5252#5289#0" expanded="true" />
+            <element signature="e#5704#5745#0" expanded="true" />
+            <element signature="e#5816#5994#0" expanded="true" />
+            <element signature="e#5979#5980#0" expanded="true" />
+            <element signature="e#6069#6266#0" expanded="true" />
+            <element signature="e#6192#6233#0" expanded="true" />
+            <element signature="e#6251#6252#0" expanded="true" />
+            <element signature="e#6338#6561#0" expanded="true" />
+            <element signature="e#6546#6547#0" expanded="true" />
+            <element signature="e#6626#6852#0" expanded="true" />
+            <element signature="e#6837#6838#0" expanded="true" />
+            <element signature="e#6917#7143#0" expanded="true" />
+            <element signature="e#7128#7129#0" expanded="true" />
+            <element signature="e#8339#8553#0" expanded="true" />
+            <element signature="e#8538#8539#0" expanded="true" />
+            <element signature="e#8645#8855#0" expanded="true" />
+            <element signature="e#8840#8841#0" expanded="true" />
+            <element signature="e#9038#9219#0" expanded="true" />
+            <element signature="e#9204#9205#0" expanded="true" />
+            <element signature="e#9513#9718#0" expanded="true" />
+            <element signature="e#9703#9704#0" expanded="true" />
+            <element signature="e#9805#10006#0" expanded="true" />
+            <element signature="e#9991#9992#0" expanded="true" />
+            <element signature="e#10101#10305#0" expanded="true" />
+            <element signature="e#10290#10291#0" expanded="true" />
+            <element signature="e#10384#10584#0" expanded="true" />
+            <element signature="e#10569#10570#0" expanded="true" />
+            <element signature="e#10772#10983#0" expanded="true" />
+            <element signature="e#10968#10969#0" expanded="true" />
+            <element signature="e#11053#11259#0" expanded="true" />
+            <element signature="e#11244#11245#0" expanded="true" />
+            <element signature="e#11327#11533#0" expanded="true" />
+            <element signature="e#11518#11519#0" expanded="true" />
+            <element signature="e#11601#11807#0" expanded="true" />
+            <element signature="e#11792#11793#0" expanded="true" />
+            <element signature="e#11886#12103#0" expanded="true" />
+            <element signature="e#12088#12089#0" expanded="true" />
+            <element signature="e#12181#12396#0" expanded="true" />
+            <element signature="e#12381#12382#0" expanded="true" />
+            <element signature="e#12466#12717#0" expanded="true" />
+            <element signature="e#12702#12703#0" expanded="true" />
+            <element signature="e#12785#13034#0" expanded="true" />
+            <element signature="e#13019#13020#0" expanded="true" />
+            <element signature="e#13107#13361#0" expanded="true" />
+            <element signature="e#13346#13347#0" expanded="true" />
+            <element signature="e#13431#13682#0" expanded="true" />
+            <element signature="e#13667#13668#0" expanded="true" />
+            <element signature="e#13751#14001#0" expanded="true" />
+            <element signature="e#13986#13987#0" expanded="true" />
+            <element signature="e#14078#14336#0" expanded="true" />
+            <element signature="e#14321#14322#0" expanded="true" />
+            <element signature="e#14408#14661#0" expanded="true" />
+            <element signature="e#14646#14647#0" expanded="true" />
+            <element signature="e#14733#14986#0" expanded="true" />
+            <element signature="e#14971#14972#0" expanded="true" />
+            <element signature="e#15059#15313#0" expanded="true" />
+            <element signature="e#15298#15299#0" expanded="true" />
+            <element signature="e#15774#16769#0" expanded="true" />
+            <element signature="e#16012#16243#0" expanded="true" />
+            <element signature="e#16220#16221#0" expanded="true" />
+            <element signature="e#16457#16713#0" expanded="true" />
+            <element signature="e#16686#16687#0" expanded="true" />
+            <element signature="e#16754#16755#0" expanded="true" />
+            <element signature="e#16846#17047#0" expanded="true" />
+            <element signature="e#17032#17033#0" expanded="true" />
+            <element signature="e#17124#17325#0" expanded="true" />
+            <element signature="e#17310#17311#0" expanded="true" />
+            <element signature="e#17406#17611#0" expanded="true" />
+            <element signature="e#17596#17597#0" expanded="true" />
+            <element signature="e#17674#17849#0" expanded="true" />
+            <element signature="e#17834#17835#0" expanded="true" />
+            <element signature="e#19875#20524#0" expanded="true" />
+            <element signature="e#20505#20506#0" expanded="true" />
+            <element signature="e#21898#22553#0" expanded="true" />
+            <element signature="e#22298#22508#0" expanded="true" />
+            <element signature="e#22485#22486#0" expanded="true" />
+            <element signature="e#22542#22543#0" expanded="true" />
+            <element signature="e#22609#22610#0" expanded="true" />
+            <element signature="e#22643#22644#0" expanded="true" />
           </folding>
         </state>
       </provider>

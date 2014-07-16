@@ -1301,37 +1301,12 @@ public class Device {
         return diskSpace;
     }
 
-    public static Boolean getCharging() {
-        Boolean isCharging = null;
-        try {
-            IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-            Intent batteryStatus = context().registerReceiver(null, ifilter);
+    private static Battery battery;
 
-            int status = batteryStatus.getIntExtra("status", -1);
-            isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING ||
-                    status == BatteryManager.BATTERY_STATUS_FULL;
-        } catch (Exception e) {
-            Log.w(Device.TAG, e);
-        }
-
-        return isCharging;
-    }
-
-    public static Float getChargeLevel() {
-        Float chargeLevel = null;
-        try {
-            IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-            Intent batteryStatus = context().registerReceiver(null, ifilter);
-
-            int level = batteryStatus.getIntExtra("level", -1);
-            int scale = batteryStatus.getIntExtra("scale", -1);
-
-            chargeLevel = level / (float) scale;
-        } catch (Exception e) {
-            Log.w(Device.TAG, e);
-        }
-
-        return chargeLevel;
+    public static Battery getBattery() {
+        if(battery != null) return battery;
+        battery = new Battery(context());
+        return battery;
     }
 
     public static int getOrientation() {
