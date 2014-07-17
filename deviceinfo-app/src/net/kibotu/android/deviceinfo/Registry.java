@@ -5,6 +5,8 @@ import net.kibotu.android.deviceinfo.fragments.list.DeviceInfoFragment;
 import net.kibotu.android.deviceinfo.fragments.list.DeviceInfoItemAsync;
 import net.kibotu.android.deviceinfo.fragments.list.IGetInfoFragment;
 import net.kibotu.android.deviceinfo.utils.Utils;
+import net.kibotu.android.deviceinfo.GPU.OpenGLGles10Info;
+import net.kibotu.android.deviceinfo.GPU.OpenGLGles20Info;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -216,6 +218,20 @@ public enum Registry implements IGetInfoFragment {
         @Override
         public void createFragmentList() {
 
+            cachedList.addItem("Internal Storage Path", "description", new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Device.getFileSize(context().getFilesDir().getParent());
+                }
+            });
+
+            cachedList.addItem("APK Storage Path", "description", new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Device.getFileSize(context().getPackageCodePath());
+                }
+            });
+
             cachedList.addItem("Root Directory", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
@@ -381,20 +397,6 @@ public enum Registry implements IGetInfoFragment {
             }));
 
             cachedList.addItem("External Storage State", "description", Environment.getExternalStorageState());
-
-            cachedList.addItem("Internal Storage Path", "description", new DeviceInfoItemAsync() {
-                @Override
-                protected void async() {
-                    value = Device.getFileSize(context().getFilesDir().getParent());
-                }
-            });
-
-            cachedList.addItem("APK Storage Path", "description", new DeviceInfoItemAsync() {
-                @Override
-                protected void async() {
-                    value = Device.getFileSize(context().getPackageCodePath());
-                }
-            });
         }
     },
 
@@ -454,6 +456,44 @@ public enum Registry implements IGetInfoFragment {
                 @Override
                 protected void async() {
                     value = Device.getCpuInfo();
+                }
+            });
+        }
+    },
+
+    // endregion
+
+    // region GPU
+
+    GPU(android.R.drawable.ic_menu_search) {
+        @Override
+        public void createFragmentList() {
+
+            final GPU gpu = new GPU();
+
+            cachedList.addItem("OpenGLES10", "description", new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    gpu.loadOpenGLGles10Info(new GPU.OnCompleteCallback<OpenGLGles10Info>() {
+
+                        @Override
+                        public void onComplete(final OpenGLGles10Info info) {
+                            value = info.toString();
+                        }
+                    });
+                }
+            });
+
+            cachedList.addItem("OpenGLES20", "description", new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    gpu.loadOpenGLGles20Info(new GPU.OnCompleteCallback<OpenGLGles20Info>() {
+
+                        @Override
+                        public void onComplete(final OpenGLGles20Info info) {
+                            value = info.toString();
+                        }
+                    });
                 }
             });
         }
@@ -599,6 +639,8 @@ public enum Registry implements IGetInfoFragment {
                     } catch (final InterruptedException e) {
                         Logger.e("" + e.getMessage(), e);
                     }
+
+//                    Runtime.getRuntime().gc();
 
                     Device.context().runOnUiThread(new Runnable() {
                         @Override
