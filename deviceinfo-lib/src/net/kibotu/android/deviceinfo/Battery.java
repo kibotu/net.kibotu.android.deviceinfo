@@ -19,6 +19,7 @@ public class Battery extends BroadcastReceiver {
     String plugged = "Unknown";
     boolean present = true;
     String technology = "";
+    int status;
 
     public Battery(final Context context) {
         registerReceiver(context);
@@ -34,6 +35,7 @@ public class Battery extends BroadcastReceiver {
         voltage = intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, 0);
         present = intent.getBooleanExtra(BatteryManager.EXTRA_PRESENT, true);
         technology = intent.getStringExtra(BatteryManager.EXTRA_TECHNOLOGY);
+        status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, 0);
     }
 
     public float getChargingLevel() {
@@ -61,7 +63,7 @@ public class Battery extends BroadcastReceiver {
                 ret = "Over Voltage";
                 break;
             default:
-                ret = ""+health;
+                ret = "" + health;
         }
 
         return ret;
@@ -71,7 +73,7 @@ public class Battery extends BroadcastReceiver {
 
         String ret = null;
 
-        switch (plugged ) {
+        switch (plugged) {
             case BatteryManager.BATTERY_PLUGGED_AC:
                 ret = "AC";
                 break;
@@ -81,17 +83,17 @@ public class Battery extends BroadcastReceiver {
             case 4: // api 17 - BatteryManager.BATTERY_PLUGGED_WIRELESS:
                 ret = "Wireless";
             default:
-                ret = ""+plugged;
+                ret = "" + plugged;
         }
 
         return ret;
     }
 
-    public static String nameVoltage(int voltage) {
+    public static String nameStatus(int status) {
 
         String ret = null;
 
-        switch (voltage) {
+        switch (status) {
             case BatteryManager.BATTERY_STATUS_CHARGING:
                 ret = "Charging";
                 break;
@@ -108,7 +110,7 @@ public class Battery extends BroadcastReceiver {
                 ret = "Unknown";
                 break;
             default:
-                ret = ""+voltage;
+                ret = "" + status;
         }
 
         return ret;
@@ -120,11 +122,11 @@ public class Battery extends BroadcastReceiver {
     }
 
     public String getTemperatureCelcius() {
-        return convertFahrenheitToCelcius(temperature /10f) + " °C";
+        return convertFahrenheitToCelcius(temperature / 10f) + " °C";
     }
 
     public String getTemperatureFarenheit() {
-        return convertCelciusToFahrenheit(temperature /10f) + " °F";
+        return convertCelciusToFahrenheit(temperature / 10f) + " °F";
     }
 
     // Converts to celcius
@@ -135,5 +137,9 @@ public class Battery extends BroadcastReceiver {
     // Converts to fahrenheit
     private float convertCelciusToFahrenheit(float celsius) {
         return ((celsius * 9) / 5) + 32;
+    }
+
+    public String getStatus() {
+        return nameStatus(status);
     }
 }

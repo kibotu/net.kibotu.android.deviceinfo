@@ -14,7 +14,8 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.egl.EGLDisplay;
 import javax.microedition.khronos.opengles.GL10;
 import java.nio.IntBuffer;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class GPU {
 
@@ -40,8 +41,8 @@ public class GPU {
         public int GL_SUBPIXEL_BITS;
         public int GL_DEPTH_BITS;
         public int GL_STENCIL_BITS;
-        public int[] GL_MAX_ELEMENTS_INDICES;
-        public int[] GL_MAX_ELEMENTS_VERTICES;
+        public int GL_MAX_ELEMENTS_INDICES;
+        public int GL_MAX_ELEMENTS_VERTICES;
 
         // extensions
         public String GL_EXTENSIONS;
@@ -59,8 +60,8 @@ public class GPU {
             GL_MAX_TEXTURE_UNITS = glGetIntegerv(GLES10.GL_MAX_TEXTURE_UNITS);
             GL_MAX_LIGHTS = glGetIntegerv(GLES10.GL_MAX_LIGHTS);
             GL_SUBPIXEL_BITS = glGetIntegerv(GLES10.GL_SUBPIXEL_BITS);
-            GL_MAX_ELEMENTS_VERTICES = glGetIntegerv(GLES10.GL_MAX_ELEMENTS_VERTICES, 4);
-            GL_MAX_ELEMENTS_INDICES = glGetIntegerv(GLES10.GL_MAX_ELEMENTS_INDICES, 4);
+            GL_MAX_ELEMENTS_VERTICES = glGetIntegerv(GLES10.GL_MAX_ELEMENTS_VERTICES);
+            GL_MAX_ELEMENTS_INDICES = glGetIntegerv(GLES10.GL_MAX_ELEMENTS_INDICES);
             GL_MAX_MODELVIEW_STACK_DEPTH = glGetIntegerv(GLES10.GL_MAX_MODELVIEW_STACK_DEPTH);
             GL_MAX_PROJECTION_STACK_DEPTH = glGetIntegerv(GLES10.GL_MAX_PROJECTION_STACK_DEPTH);
             GL_MAX_TEXTURE_STACK_DEPTH = glGetIntegerv(GLES10.GL_MAX_TEXTURE_STACK_DEPTH);
@@ -86,8 +87,8 @@ public class GPU {
                     ", GL_SUBPIXEL_BITS=" + GL_SUBPIXEL_BITS + '\n' +
                     ", GL_DEPTH_BITS=" + GL_DEPTH_BITS + '\n' +
                     ", GL_STENCIL_BITS=" + GL_STENCIL_BITS + '\n' +
-                    ", GL_MAX_ELEMENTS_INDICES=" + Arrays.toString(GL_MAX_ELEMENTS_INDICES) + '\n' +
-                    ", GL_MAX_ELEMENTS_VERTICES=" + Arrays.toString(GL_MAX_ELEMENTS_VERTICES) + '\n' +
+                    ", GL_MAX_ELEMENTS_INDICES=" + GL_MAX_ELEMENTS_INDICES + '\n' +
+                    ", GL_MAX_ELEMENTS_VERTICES=" + GL_MAX_ELEMENTS_VERTICES + '\n' +
                     ", GL_EXTENSIONS='" + GL_EXTENSIONS + '\'' + '\n' +
                     '}';
         }
@@ -335,7 +336,7 @@ public class GPU {
                     final GLSurfaceView glView = new GLSurfaceView(context);
 
                     // egl info
-                    glView.setEGLConfigChooser(new EglChooser(info));
+                    glView.setEGLConfigChooser(new EglChooser<T>(info));
 
                     // need to be on top to be rendered at least for one frame
                     glView.setZOrderOnTop(true);
@@ -406,9 +407,9 @@ public class GPU {
 
     final private static class EglChooser<T extends OpenGLInfo> implements GLSurfaceView.EGLConfigChooser {
 
-        public OpenGLInfo info;
+        public T info;
 
-        private EglChooser(final OpenGLInfo info) {
+        private EglChooser(final T info) {
             this.info = info;
         }
 
@@ -447,7 +448,7 @@ public class GPU {
         private EGLConfig better(EGLConfig a, EGLConfig b, EGL10 egl, EGLDisplay display) {
             if (a == null) return b;
 
-            EGLConfig result = null;
+            EGLConfig result;
 
             int[] value = new int[1];
 
@@ -484,7 +485,7 @@ public class GPU {
         }
     }
 
-    public final static class Egl implements Comparable<Egl> {
+    public final static class Egl {
 
         public final int EGL_NON_CONFORMANT_CONFIG;
         public final int EGL_SAMPLES;
@@ -543,17 +544,12 @@ public class GPU {
 
             // rgba (rgba) depth stencil samples non comfort
             return "RGB" + (EGL_ALPHA_SIZE > 0 ? "A" : "") +
-                    " " + (EGL_RED_SIZE + EGL_GREEN_SIZE + EGL_BLUE_SIZE +  EGL_ALPHA_SIZE) + " bit" +
-                    " (" + EGL_RED_SIZE + "" + EGL_GREEN_SIZE +  EGL_BLUE_SIZE + "" + (EGL_ALPHA_SIZE > 0 ? EGL_ALPHA_SIZE : "") + ")" +
+                    " " + (EGL_RED_SIZE + EGL_GREEN_SIZE + EGL_BLUE_SIZE + EGL_ALPHA_SIZE) + " bit" +
+                    " (" + EGL_RED_SIZE + "" + EGL_GREEN_SIZE + EGL_BLUE_SIZE + "" + (EGL_ALPHA_SIZE > 0 ? EGL_ALPHA_SIZE : "") + ")" +
                     (EGL_DEPTH_SIZE > 0 ? " Depth " + EGL_DEPTH_SIZE + "bit" : "") +
                     (EGL_STENCIL_SIZE > 0 ? " Stencil " + EGL_STENCIL_SIZE : "") +
                     (EGL_SAMPLES > 0 ? " Samples x" + EGL_SAMPLES : "") +
                     (EGL_NON_CONFORMANT_CONFIG > 0 ? " Non-Conformant" : "");
-        }
-
-        @Override
-        public int compareTo(Egl egl) {
-            return hashCode() - egl.hashCode();
         }
     }
 

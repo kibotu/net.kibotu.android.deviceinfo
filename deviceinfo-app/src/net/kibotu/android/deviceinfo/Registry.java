@@ -1,14 +1,17 @@
 package net.kibotu.android.deviceinfo;
 
 import android.os.Environment;
+import net.kibotu.android.deviceinfo.GPU.OpenGLGles10Info;
+import net.kibotu.android.deviceinfo.GPU.OpenGLGles20Info;
 import net.kibotu.android.deviceinfo.fragments.list.DeviceInfoFragment;
 import net.kibotu.android.deviceinfo.fragments.list.DeviceInfoItemAsync;
 import net.kibotu.android.deviceinfo.fragments.list.IGetInfoFragment;
 import net.kibotu.android.deviceinfo.utils.Utils;
-import net.kibotu.android.deviceinfo.GPU.OpenGLGles10Info;
-import net.kibotu.android.deviceinfo.GPU.OpenGLGles20Info;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 import static android.os.Build.*;
 import static net.kibotu.android.deviceinfo.Device.context;
@@ -92,26 +95,33 @@ public enum Registry implements IGetInfoFragment {
         @Override
         public void createFragmentList() {
 
-            final net.kibotu.android.deviceinfo.Battery battery = Device.getBattery();
+            final Battery battery = Device.getBattery();
 
-            cachedList.addItem("Technology", "description", new DeviceInfoItemAsync() {
+            cachedList.addItem("Technology", "description", 1f, true, new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
                     value = battery.technology;
                 }
             });
 
-            Battery.threads.add(cachedList.addItem("Battery Present", "description", 1f, true, new DeviceInfoItemAsync() {
+            cachedList.addItem("Status", "description", 1f, true, new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
-                    value = "" + battery.present;
+                    value = battery.getStatus();
+                }
+            });
+
+            Battery.threads.add(cachedList.addItem("Charging Level", "description", 1f, true, new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = "" + (int) (battery.getChargingLevel() * 100) + " %";
                 }
             }));
 
             Battery.threads.add(cachedList.addItem("Voltage", "description", 1f, true, new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
-                    value = battery.voltage + " Volt";
+                    value = battery.voltage + " mV";
                 }
             }));
 
@@ -130,17 +140,17 @@ public enum Registry implements IGetInfoFragment {
                 }
             }));
 
-            Battery.threads.add(cachedList.addItem("Charging Level", "description", 1f, true, new DeviceInfoItemAsync() {
-                @Override
-                protected void async() {
-                    value = "" + (int) (battery.getChargingLevel() * 100) + " %";
-                }
-            }));
-
             Battery.threads.add(cachedList.addItem("Charging Source", "description", 1f, true, new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
                     value = battery.plugged;
+                }
+            }));
+
+            Battery.threads.add(cachedList.addItem("Battery Present", "description", 1f, true, new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = battery.present ? "Yes" : "No";
                 }
             }));
         }
@@ -362,7 +372,7 @@ public enum Registry implements IGetInfoFragment {
                 }
             }));
 
-            cachedList.addItem("Memory Class", "description", Device.getMemoryClass() + " MB");
+            cachedList.addItem("Memory Class", "description", String.format("%.2f MB", (float) Device.getMemoryClass()));
 //            cachedList.addItem("Large Memory Class", "description", Device.getLargeMemoryClass() + " MB");
 
             Memory.threads.add(cachedList.addItem("Total Memory by this App", "description", 1f, true, new DeviceInfoItemAsync() {
@@ -469,34 +479,34 @@ public enum Registry implements IGetInfoFragment {
 
             final GPU gpu = new GPU(Device.context());
 
-            cachedList.addItem("OpenGLES10", "description", new DeviceInfoItemAsync() {
-                @Override
-                protected void async() {
-                    gpu.loadOpenGLGles10Info(new GPU.OnCompleteCallback<OpenGLGles10Info>() {
-
-                        @Override
-                        public void onComplete(final OpenGLGles10Info info) {
-                            value = info.toString();
-                        }
-                    });
-                }
-            });
-
-            cachedList.addItem("OpenGLES20", "description", new DeviceInfoItemAsync() {
+            cachedList.addItem("OpenGL ES 2.0", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
                     gpu.loadOpenGLGles20Info(new GPU.OnCompleteCallback<OpenGLGles20Info>() {
 
                         @Override
                         public void onComplete(final OpenGLGles20Info info) {
-                            value = info.toString();
+                            value = Utils.formatOpenGles20info(info);
+                        }
+                    });
+                }
+            });
+
+            cachedList.addItem("OpenGL ES-CM 1.1", "description", new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    gpu.loadOpenGLGles10Info(new GPU.OnCompleteCallback<OpenGLGles10Info>() {
+
+                        @Override
+                        public void onComplete(final OpenGLGles10Info info) {
+                            value = Utils.formatOpenGles10info(info);
 
                             cachedList.addItem("Graphic Modes", "description", new DeviceInfoItemAsync() {
 
                                 @Override
                                 protected void async() {
                                     value = "";
-                                    for(final GPU.Egl egl : info.eglconfigs)
+                                    for (final GPU.Egl egl : info.eglconfigs)
                                         value += egl.toString() + "\n";
                                 }
                             });
