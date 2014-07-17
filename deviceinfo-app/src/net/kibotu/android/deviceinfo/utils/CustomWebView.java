@@ -80,7 +80,7 @@ public class CustomWebView {
     private static ProgressDialog prDialog = null;
 
     /**
-     * Domain which the webview may loadOncreate only from.
+     * Domain which the webview may loadOnCreate only from.
      */
     private static String restrictedUrl;
 

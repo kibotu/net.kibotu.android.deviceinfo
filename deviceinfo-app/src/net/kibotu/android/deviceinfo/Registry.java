@@ -424,7 +424,8 @@ public enum Registry implements IGetInfoFragment {
                         CPU.threads.add(cachedList.addItem("CPU Usage Core " + i, "description", 1f, true, new DeviceInfoItemAsync() {
                             @Override
                             protected void async() {
-                                value = "" + Device.getCpuUsage()[finalI] + " %";
+                                float usage = Device.getCpuUsage()[finalI];
+                                value = usage <= 0.01f ? "Idle" : usage + " %";
                             }
                         }));
                     }
@@ -469,7 +470,7 @@ public enum Registry implements IGetInfoFragment {
         @Override
         public void createFragmentList() {
 
-            final GPU gpu = new GPU();
+            final GPU gpu = new GPU(Device.context());
 
             cachedList.addItem("OpenGLES10", "description", new DeviceInfoItemAsync() {
                 @Override
