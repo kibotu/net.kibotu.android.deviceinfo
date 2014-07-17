@@ -42,9 +42,9 @@ public class Battery extends BroadcastReceiver {
         return level / (float) scale;
     }
 
-    public static String healthName(int health) {
+    public static String healthName(final int health) {
 
-        String ret = null;
+        String ret;
 
         switch (health) {
             case BatteryManager.BATTERY_HEALTH_DEAD:
@@ -69,9 +69,9 @@ public class Battery extends BroadcastReceiver {
         return ret;
     }
 
-    public static String pluggedName(int plugged) {
+    public static String pluggedName(final int plugged) {
 
-        String ret = null;
+        String ret;
 
         switch (plugged) {
             case BatteryManager.BATTERY_PLUGGED_AC:
@@ -89,9 +89,9 @@ public class Battery extends BroadcastReceiver {
         return ret;
     }
 
-    public static String nameStatus(int status) {
+    public static String nameStatus(final int status) {
 
-        String ret = null;
+        String ret;
 
         switch (status) {
             case BatteryManager.BATTERY_STATUS_CHARGING:

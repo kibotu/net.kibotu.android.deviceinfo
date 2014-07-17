@@ -1,5 +1,6 @@
 package net.kibotu.android.deviceinfo.utils;
 
+import android.hardware.Sensor;
 import net.kibotu.android.deviceinfo.GPU;
 import net.kibotu.android.deviceinfo.Logger;
 import org.json.JSONArray;
@@ -27,7 +28,7 @@ final public class Utils {
         for (int i = 0; i < array.length(); ++i) {
             try {
                 buffer.append(array.getString(i)).append("\n");
-            } catch (JSONException e) {
+            } catch (final JSONException e) {
                 Logger.e("" + e.getMessage(), e);
             }
         }
@@ -48,7 +49,6 @@ final public class Utils {
     public static String formatFrequency(int clockHz) {
         return clockHz < 1000 * 1000 ? (clockHz / 1000) + " MHz" : (clockHz / 1000 / 1000) + "." + (clockHz / 1000 / 100) % 10 + " GHz";
     }
-
 
     public static void killCpu() {
         new Thread(new Runnable() {
@@ -72,28 +72,39 @@ final public class Utils {
         String name = "" + type;
 
         switch (type) {
-            case 1:
-                name = "TYPE_ACCELEROMETER";
-            case 2:
-                name = "TYPE_MAGNETIC_FIELD";
-            case 3:
-                name = "TYPE_ORIENTATION";
-            case 4:
-                name = "TYPE_GYROSCOPE";
-            case 5:
-                name = "TYPE_LIGHT";
-            case 6:
-                name = "TYPE_PRESSURE";
-            case 7:
-                name = "TYPE_TEMPERATURE";
-            case 8:
-                name = "TYPE_PROXIMITY";
-            case 9:
-                name = "TYPE_GRAVITY";
-            case 10:
-                name = "TYPE_LINEAR_ACCELERATION";
-            case 11:
-                name = "TYPE_ROTATION_VECTOR";
+            case Sensor.TYPE_ACCELEROMETER:
+                name = "Accelerometer";
+                break;
+            case Sensor.TYPE_MAGNETIC_FIELD:
+                name = "Magnetic Field";
+                break;
+            case Sensor.TYPE_ORIENTATION:
+                name = "Orientation";
+                break;
+            case Sensor.TYPE_GYROSCOPE:
+                name = "Gyroscope";
+                break;
+            case Sensor.TYPE_LIGHT:
+                name = "Light";
+                break;
+            case Sensor.TYPE_PRESSURE:
+                name = "Pressure";
+                break;
+            case Sensor.TYPE_TEMPERATURE:
+                name = "Temperature";
+                break;
+            case Sensor.TYPE_PROXIMITY:
+                name = "Proximity";
+                break;
+            case Sensor.TYPE_GRAVITY:
+                name = "Gravity";
+                break;
+            case Sensor.TYPE_LINEAR_ACCELERATION:
+                name = "Linear Acceleration";
+                break;
+            case Sensor.TYPE_ROTATION_VECTOR:
+                name = "Rotation Vector";
+                break;
         }
 
         return name;
