@@ -8,10 +8,7 @@ import net.kibotu.android.deviceinfo.utils.Utils;
 import net.kibotu.android.deviceinfo.GPU.OpenGLGles10Info;
 import net.kibotu.android.deviceinfo.GPU.OpenGLGles20Info;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static android.os.Build.*;
 import static net.kibotu.android.deviceinfo.Device.context;
@@ -493,6 +490,16 @@ public enum Registry implements IGetInfoFragment {
                         @Override
                         public void onComplete(final OpenGLGles20Info info) {
                             value = info.toString();
+
+                            cachedList.addItem("Graphic Modes", "description", new DeviceInfoItemAsync() {
+
+                                @Override
+                                protected void async() {
+                                    value = "";
+                                    for(final GPU.Egl egl : info.eglconfigs)
+                                        value += egl.toString() + "\n";
+                                }
+                            });
                         }
                     });
                 }

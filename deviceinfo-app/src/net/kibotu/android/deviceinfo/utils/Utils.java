@@ -1,8 +1,11 @@
 package net.kibotu.android.deviceinfo.utils;
 
+import net.kibotu.android.deviceinfo.GPU;
 import net.kibotu.android.deviceinfo.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
+
+import java.util.*;
 
 final public class Utils {
 
@@ -69,5 +72,11 @@ final public class Utils {
         }
 
         return name;
+    }
+
+    public synchronized static <T extends Comparable<? super T>> List<T> asSortedList(final Collection<T> c) {
+        final List<T> list = new ArrayList<T>(c);
+        Collections.sort(list);
+        return list;
     }
 }

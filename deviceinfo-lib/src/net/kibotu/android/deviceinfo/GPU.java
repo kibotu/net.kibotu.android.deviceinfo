@@ -9,10 +9,12 @@ import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.widget.FrameLayout;
 
+import javax.microedition.khronos.egl.EGL10;
 import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.egl.EGLDisplay;
 import javax.microedition.khronos.opengles.GL10;
 import java.nio.IntBuffer;
-import java.util.Arrays;
+import java.util.*;
 
 public class GPU {
 
@@ -48,6 +50,7 @@ public class GPU {
             super(1);
         }
 
+        @Override
         protected void loadOnCreate() {
             GL_RENDERER = glGetString(GLES10.GL_RENDERER);
             GL_VERSION = glGetString(GLES10.GL_VERSION);
@@ -122,25 +125,26 @@ public class GPU {
         // extensions
         public String GL_EXTENSIONS;
 
-        // precision
+        // precision [] { -range, range, precision }
         public int[] GL_VERTEX_SHADER_GL_LOW_INT;
         public int[] GL_VERTEX_SHADER_GL_MEDIUM_INT;
         public int[] GL_VERTEX_SHADER_GL_HIGH_INT;
-        private int[] GL_VERTEX_SHADER_GL_LOW_FLOAT;
-        private int[] GL_VERTEX_SHADER_GL_MEDIUM_FLOAT;
-        private int[] GL_VERTEX_SHADER_GL_HIGH_FLOAT;
+        public int[] GL_VERTEX_SHADER_GL_LOW_FLOAT;
+        public int[] GL_VERTEX_SHADER_GL_MEDIUM_FLOAT;
+        public int[] GL_VERTEX_SHADER_GL_HIGH_FLOAT;
 
         public int[] GL_FRAGMENT_SHADER_GL_LOW_INT;
         public int[] GL_FRAGMENT_SHADER_GL_MEDIUM_INT;
         public int[] GL_FRAGMENT_SHADER_GL_HIGH_INT;
-        private int[] GL_FRAGMENT_SHADER_GL_LOW_FLOAT;
-        private int[] GL_FRAGMENT_SHADER_GL_MEDIUM_FLOAT;
-        private int[] GL_FRAGMENT_SHADER_GL_HIGH_FLOAT;
+        public int[] GL_FRAGMENT_SHADER_GL_LOW_FLOAT;
+        public int[] GL_FRAGMENT_SHADER_GL_MEDIUM_FLOAT;
+        public int[] GL_FRAGMENT_SHADER_GL_HIGH_FLOAT;
 
         protected OpenGLGles20Info() {
             super(GPU.supportsOpenGLES2() ? 2 : 1);
         }
 
+        @Override
         protected void loadOnCreate() {
 
             GL_RENDERER = glGetString(GLES10.GL_RENDERER);
@@ -249,7 +253,12 @@ public class GPU {
     public synchronized static int[] glGetShaderPrecisionFormat(int shaderType, int precisionType) {
         buffer2.clear();
         GLES20.glGetShaderPrecisionFormat(shaderType, precisionType, buffer2, buffer);
-        return new int[] { buffer2.get(0), buffer2.get(1), buffer.get(0) };
+        return new int[]{buffer2.get(0), buffer2.get(1), buffer.get(0)};
+    }
+
+    public synchronized static int eglGetConfigAttrib(int eglType, final EGL10 egl, final EGLDisplay display, final EGLConfig eglConfig) {
+        egl.eglGetConfigAttrib(display, eglConfig, eglType, arrayBuffer);
+        return arrayBuffer[0];
     }
 
     public static boolean isVTFSupported() {
@@ -288,12 +297,19 @@ public class GPU {
     }
 
     private static abstract class OpenGLInfo {
+
         final int eGLContextClientVersion;
+        public ArrayList<Egl> eglconfigs;
 
         protected OpenGLInfo(final int eGLContextClientVersion) {
             this.eGLContextClientVersion = eGLContextClientVersion;
+            eglconfigs = new ArrayList<Egl>();
         }
 
+        /**
+         * Basically run this in a successfully running GLSurfaceView.Renderer.onSurfaceCreated.
+         * Guaranties valid OpenGL context.
+         */
         protected abstract void loadOnCreate();
     }
 
@@ -319,7 +335,7 @@ public class GPU {
                     final GLSurfaceView glView = new GLSurfaceView(context);
 
                     // egl info
-                    glView.setEGLConfigChooser(true);
+                    glView.setEGLConfigChooser(new EglChooser(info));
 
                     // need to be on top to be rendered at least for one frame
                     glView.setZOrderOnTop(true);
@@ -385,6 +401,159 @@ public class GPU {
         @Override
         public void onDrawFrame(final GL10 gl) {
             // do nothing
+        }
+    }
+
+    final private static class EglChooser<T extends OpenGLInfo> implements GLSurfaceView.EGLConfigChooser {
+
+        public OpenGLInfo info;
+
+        private EglChooser(final OpenGLInfo info) {
+            this.info = info;
+        }
+
+        @Override
+        public EGLConfig chooseConfig(final EGL10 egl, final EGLDisplay display) {
+
+            //Querying number of configurations
+            final int[] num_conf = new int[1];
+            egl.eglGetConfigs(display, null, 0, num_conf); //if configuration array is null it still returns the number of configurations
+            final int configurations = num_conf[0];
+
+            //Querying actual configurations
+            final EGLConfig[] conf = new EGLConfig[configurations];
+            egl.eglGetConfigs(display, conf, configurations, num_conf);
+
+            EGLConfig result = null;
+
+            for (int i = 0; i < configurations; i++) {
+                result = better(result, conf[i], egl, display);
+
+                final Egl config = new Egl(egl, display, conf[i]);
+                if (config.EGL_RED_SIZE + config.EGL_BLUE_SIZE + config.EGL_GREEN_SIZE + config.EGL_ALPHA_SIZE >= 16)
+                    info.eglconfigs.add(config);
+            }
+
+            return result;
+        }
+
+        /**
+         * Returns the best of the two EGLConfig passed according to depth and colours
+         *
+         * @param a The first candidate
+         * @param b The second candidate
+         * @return The chosen candidate
+         */
+        private EGLConfig better(EGLConfig a, EGLConfig b, EGL10 egl, EGLDisplay display) {
+            if (a == null) return b;
+
+            EGLConfig result = null;
+
+            int[] value = new int[1];
+
+            egl.eglGetConfigAttrib(display, a, EGL10.EGL_DEPTH_SIZE, value);
+            int depthA = value[0];
+
+            egl.eglGetConfigAttrib(display, b, EGL10.EGL_DEPTH_SIZE, value);
+            int depthB = value[0];
+
+            if (depthA > depthB)
+                result = a;
+            else if (depthA < depthB)
+                result = b;
+            else //if depthA == depthB
+            {
+                egl.eglGetConfigAttrib(display, a, EGL10.EGL_RED_SIZE, value);
+                int redA = value[0];
+
+                egl.eglGetConfigAttrib(display, b, EGL10.EGL_RED_SIZE, value);
+                int redB = value[0];
+
+                if (redA > redB)
+                    result = a;
+                else if (redA < redB)
+                    result = b;
+                else //if redA == redB
+                {
+                    //Don't care
+                    result = a;
+                }
+            }
+
+            return result;
+        }
+    }
+
+    public final static class Egl implements Comparable<Egl> {
+
+        public final int EGL_NON_CONFORMANT_CONFIG;
+        public final int EGL_SAMPLES;
+        public final int EGL_STENCIL_SIZE;
+        public final int EGL_DEPTH_SIZE;
+        public final int EGL_ALPHA_SIZE;
+        public final int EGL_BLUE_SIZE;
+        public final int EGL_GREEN_SIZE;
+        public final int EGL_RED_SIZE;
+
+        public Egl(final EGL10 egl, final EGLDisplay display, final EGLConfig eglConfig) {
+            EGL_RED_SIZE = eglGetConfigAttrib(EGL10.EGL_RED_SIZE, egl, display, eglConfig);
+            EGL_BLUE_SIZE = eglGetConfigAttrib(EGL10.EGL_BLUE_SIZE, egl, display, eglConfig);
+            EGL_GREEN_SIZE = eglGetConfigAttrib(EGL10.EGL_GREEN_SIZE, egl, display, eglConfig);
+            EGL_ALPHA_SIZE = eglGetConfigAttrib(EGL10.EGL_ALPHA_SIZE, egl, display, eglConfig);
+            EGL_DEPTH_SIZE = eglGetConfigAttrib(EGL10.EGL_DEPTH_SIZE, egl, display, eglConfig);
+            EGL_STENCIL_SIZE = eglGetConfigAttrib(EGL10.EGL_STENCIL_SIZE, egl, display, eglConfig);
+            EGL_SAMPLES = eglGetConfigAttrib(EGL10.EGL_SAMPLES, egl, display, eglConfig);
+            EGL_NON_CONFORMANT_CONFIG = eglGetConfigAttrib(EGL10.EGL_NON_CONFORMANT_CONFIG, egl, display, eglConfig);
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            Egl egl = (Egl) o;
+
+            if (EGL_ALPHA_SIZE != egl.EGL_ALPHA_SIZE) return false;
+            if (EGL_BLUE_SIZE != egl.EGL_BLUE_SIZE) return false;
+            if (EGL_DEPTH_SIZE != egl.EGL_DEPTH_SIZE) return false;
+            if (EGL_GREEN_SIZE != egl.EGL_GREEN_SIZE) return false;
+            if (EGL_NON_CONFORMANT_CONFIG != egl.EGL_NON_CONFORMANT_CONFIG) return false;
+            if (EGL_RED_SIZE != egl.EGL_RED_SIZE) return false;
+            if (EGL_SAMPLES != egl.EGL_SAMPLES) return false;
+            if (EGL_STENCIL_SIZE != egl.EGL_STENCIL_SIZE) return false;
+
+            return true;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = EGL_NON_CONFORMANT_CONFIG;
+            result = 31 * result + EGL_SAMPLES;
+            result = 31 * result + EGL_STENCIL_SIZE;
+            result = 31 * result + EGL_DEPTH_SIZE;
+            result = 31 * result + EGL_ALPHA_SIZE;
+            result = 31 * result + EGL_BLUE_SIZE;
+            result = 31 * result + EGL_GREEN_SIZE;
+            result = 31 * result + EGL_RED_SIZE;
+            return result;
+        }
+
+        @Override
+        public String toString() {
+
+            // rgba (rgba) depth stencil samples non comfort
+            return "RGB" + (EGL_ALPHA_SIZE > 0 ? "A" : "") +
+                    " " + (EGL_RED_SIZE + EGL_GREEN_SIZE + EGL_BLUE_SIZE +  EGL_ALPHA_SIZE) + " bit" +
+                    " (" + EGL_RED_SIZE + "" + EGL_GREEN_SIZE +  EGL_BLUE_SIZE + "" + (EGL_ALPHA_SIZE > 0 ? EGL_ALPHA_SIZE : "") + ")" +
+                    (EGL_DEPTH_SIZE > 0 ? " Depth " + EGL_DEPTH_SIZE + "bit" : "") +
+                    (EGL_STENCIL_SIZE > 0 ? " Stencil " + EGL_STENCIL_SIZE : "") +
+                    (EGL_SAMPLES > 0 ? " Samples x" + EGL_SAMPLES : "") +
+                    (EGL_NON_CONFORMANT_CONFIG > 0 ? " Non-Conformant" : "");
+        }
+
+        @Override
+        public int compareTo(Egl egl) {
+            return hashCode() - egl.hashCode();
         }
     }
 
