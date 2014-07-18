@@ -2,16 +2,17 @@ package net.kibotu.android.deviceinfo;
 
 import android.os.BatteryManager;
 import android.os.Environment;
-import android.text.Html;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.webkit.WebView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import net.kibotu.android.deviceinfo.GPU.OpenGLGles10Info;
 import net.kibotu.android.deviceinfo.GPU.OpenGLGles20Info;
 import net.kibotu.android.deviceinfo.fragments.list.vertical.DeviceInfoFragment;
 import net.kibotu.android.deviceinfo.fragments.list.vertical.DeviceInfoItemAsync;
 import net.kibotu.android.deviceinfo.fragments.list.vertical.IGetInfoFragment;
+import net.kibotu.android.deviceinfo.utils.CustomWebView;
 import net.kibotu.android.deviceinfo.utils.Utils;
 import org.json.JSONObject;
 
@@ -646,6 +647,7 @@ public enum Registry implements IGetInfoFragment {
                         @Override
                         public void onComplete(final String result) {
                             value = result;
+                            Logger.v(result);
                         }
                     });
                 }
@@ -658,8 +660,14 @@ public enum Registry implements IGetInfoFragment {
     // region Network
 
     Geolocation(android.R.drawable.ic_menu_search) {
+
         @Override
         public void createFragmentList() {
+
+//            stopRefreshing();
+
+            // todo freegeoip.net
+
             NetworkHelper.request("http://www.telize.com/geoip", new Device.AsyncCallback<JSONObject>() {
                 @Override
                 public void onComplete(final JSONObject result) {
@@ -667,18 +675,18 @@ public enum Registry implements IGetInfoFragment {
                     final LinearLayout l = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.table, null);
                     final TextView keys = ((TextView) l.findViewById(R.id.keys));
                     final TextView values = ((TextView) l.findViewById(R.id.values));
-                    final HashMap<String, String> map = Utils.parseTelize(result);
+                    final HashMap<String, String> geoMap = Utils.parseTelize(result);
 
-                    final DeviceInfoItemAsync item = new DeviceInfoItemAsync() {
+                    final DeviceInfoItemAsync item = new DeviceInfoItemAsync(1) {
 
                         @Override
                         protected void async() {
                             String k = "";
                             String v = "";
 
-                            for(String key : map.keySet()) {
-                                k += key + "\n";
-                                v += map.get(key) + "\n";
+                            for (String key : geoMap.keySet()) {
+                                k += key + ":\n";
+                                v += geoMap.get(key) + "\n";
                             }
 
                             keys.setText(k);
@@ -688,6 +696,29 @@ public enum Registry implements IGetInfoFragment {
 
                     item.customView = l;
                     cachedList.addItem("<b>Geolocation</b>", "description", item);
+                    final WebView webView = CustomWebView.createWebView(context());
+
+                    final String url = "http://www.google.de/maps/?q=" + geoMap.get("Latitude") + "," + geoMap.get("Longitude")+ "&t=h&z=19";
+//                    final String url2 = "https://www.google.com/maps/embed/v1/view?key="+API_KEY+"&center=" + geoMap.get("Latitude") + "," + geoMap.get("Longitude");
+
+                    final DeviceInfoItemAsync map = new DeviceInfoItemAsync(0) {
+
+                        @Override
+                        protected void async() {
+                            value = "bla";
+
+                            context().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    webView.loadUrl(url);
+                                }
+                            });
+                        }
+                    };
+
+                    map.customView = webView;
+
+                    cachedList.addItem("<b>Google Maps</b>", "description", map);
                 }
             });
         }
@@ -705,8 +736,8 @@ public enum Registry implements IGetInfoFragment {
     public DeviceInfoFragment getFragmentList() {
         if (cachedList == null) {
             cachedList = new DeviceInfoFragment(context());
-            createFragmentList();
             startRefreshingList(1);
+            createFragmentList();
         }
 
         return cachedList;

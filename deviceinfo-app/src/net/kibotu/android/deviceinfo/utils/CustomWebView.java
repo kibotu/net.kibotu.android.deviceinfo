@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -21,6 +22,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import net.kibotu.android.deviceinfo.DisplayHelper;
 import net.kibotu.android.deviceinfo.Logger;
 import net.kibotu.android.deviceinfo.R;
 
@@ -215,6 +217,46 @@ public class CustomWebView {
                 });
             }
         });
+    }
+
+    public static WebView createWebView(Context context) {
+        final WebView view = new WebView(context) {
+
+            @Override
+            public void loadUrl(final String url) {
+                Logger.v("loading url " + url);
+                super.loadUrl(url);
+            }
+
+            @Override
+            protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+                heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(DisplayHelper.absScreenHeight / 2, View.MeasureSpec.AT_MOST);
+                super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+            }
+        };
+        RelativeLayout.LayoutParams webViewParams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        view.setLayoutParams(webViewParams);
+        setWebViewSettings((Activity) context,view);
+        view.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(final WebView view, final String url) {
+                if (restrictedUrl != null && url.contains(restrictedUrl))
+                    return true;
+                return false;
+            }
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                Logger.e(LOGGING_TAG, description + " " + failingUrl + " " + errorCode);
+                super.onReceivedError(view, errorCode, description, failingUrl);
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+//                view.setMinimumHeight(150);
+                super.onPageFinished(view,url);
+            }
+        });
+        return view;
     }
 
     /**
@@ -432,9 +474,9 @@ public class CustomWebView {
         final WebSettings s = webView.getSettings();
         webView.setFocusable(true);
         webView.setFocusableInTouchMode(true);
-        s.setJavaScriptEnabled(true);
-        s.setJavaScriptCanOpenWindowsAutomatically(true);
-        s.setPluginState(PluginState.ON_DEMAND);
+        s.setJavaScriptEnabled(true );
+        s.setJavaScriptCanOpenWindowsAutomatically(false);
+        s.setPluginState(PluginState.OFF);
         s.setRenderPriority(RenderPriority.HIGH);
         s.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK); // WebSettings.LOAD_DEFAULT
         s.setDomStorageEnabled(true);
@@ -450,7 +492,8 @@ public class CustomWebView {
         s.setLoadWithOverviewMode(true);
         s.setSavePassword(false);
         s.setSaveFormData(true);
-        //s.setUserAgentString("CUSTOM_UA"); // custom android user agent
+        String userAgent = "Mozilla/5.0 (Linux; U; Android 4.2.2; en-gb; GT-I9100 Build/JDQ39E; CyanogenMod-10.1) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30";
+        s.setUserAgentString(userAgent); // custom android user agent
     }
 
     /**

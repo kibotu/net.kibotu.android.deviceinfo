@@ -378,21 +378,21 @@ final public class Utils {
         final StringBuffer buffer = new StringBuffer();
         final HashMap<String, String> map = new HashMap<String, String>();
         try {
-            map.put("Timezone:", geo.getString("timezone"));
-            map.put("ISP:", geo.getString("isp"));
-            map.put("Region Code:", geo.getString("region_code"));
-            map.put("Country:", geo.getString("country"));
-            map.put("DMA Code:", geo.getString("dma_code"));
-            map.put("Area Code:", geo.getString("area_code"));
-            map.put("Region:", geo.getString("region"));
-            map.put("IP:", geo.getString("ip"));
-            map.put("ASN:", geo.getString("asn"));
-            map.put("Continent Code:", geo.getString("continent_code"));
-            map.put("City:", geo.getString("city"));
-            map.put("Postal Code:", geo.getString("postal_code"));
-            map.put("Longitude:", geo.getString("longitude"));
-            map.put("Latitude:", geo.getString("latitude"));
-            map.put("Country Code:", geo.getString("country_code"));
+            map.put("Timezone", geo.getString("timezone"));
+            map.put("ISP", geo.getString("isp"));
+            map.put("Region Code", geo.getString("region_code"));
+            map.put("Country", geo.getString("country"));
+            map.put("DMA Code", geo.getString("dma_code"));
+            map.put("Area Code", geo.getString("area_code"));
+            map.put("Region", geo.getString("region"));
+            map.put("IP", geo.getString("ip"));
+            map.put("ASN", geo.getString("asn"));
+            map.put("Continent Code", geo.getString("continent_code"));
+            map.put("City", geo.getString("city"));
+            map.put("Postal Code", geo.getString("postal_code"));
+            map.put("Longitude", geo.getString("longitude"));
+            map.put("Latitude", geo.getString("latitude"));
+            map.put("Country Code", geo.getString("country_code"));
         } catch (final JSONException e) {
             Logger.e("" + e.getMessage(), e);
         }

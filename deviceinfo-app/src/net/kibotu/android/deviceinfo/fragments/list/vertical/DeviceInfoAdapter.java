@@ -23,7 +23,7 @@ public class DeviceInfoAdapter extends ArrayAdapter<DeviceInfoItem> {
 
         final DeviceInfoItem item = getItem(position);
 
-        ((TextView) convertView.findViewById(R.id.row_title)).setText(Html.fromHtml(item.tag));
+        ((TextView) convertView.findViewById(R.id.row_title)).setText(Html.fromHtml("<b>" + item.tag + "</b>"));
 
         if (item.customView != null) {
             if (item.customView.getParent() != null)
@@ -31,7 +31,8 @@ public class DeviceInfoAdapter extends ArrayAdapter<DeviceInfoItem> {
             ((LinearLayout) convertView).addView(item.customView);
             convertView.findViewById(R.id.row_value).setVisibility(View.GONE);
         } else {
-            ((TextView) convertView.findViewById(R.id.row_value)).setText(Html.fromHtml(item.value));
+//            ((TextView) convertView.findViewById(R.id.row_value)).setText(Html.fromHtml(item.value));
+            ((TextView) convertView.findViewById(R.id.row_value)).setText(item.value);
         }
 
         return convertView;
