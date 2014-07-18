@@ -6,14 +6,12 @@ import android.hardware.Sensor;
 import android.view.Surface;
 import net.kibotu.android.deviceinfo.GPU;
 import net.kibotu.android.deviceinfo.Logger;
-import net.kibotu.android.deviceinfo.fragments.list.DeviceInfoItemAsync;
+import net.kibotu.android.deviceinfo.Storage;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 final public class Utils {
 
@@ -40,9 +38,10 @@ final public class Utils {
         return buffer.toString();
     }
 
+    // alternatve to Formatter.formatFileSize which doesn't show bytes and rounds to int
     public static String formatBytes(final long bytes) {
         if (bytes == 0)
-            return "";
+            return "0 bytes";
 
         return bytes / BYTES_TO_TB > 0 ? String.format("%.2f TB [%d bytes]", bytes / (float) BYTES_TO_TB, bytes) :
                 bytes / BYTES_TO_GB > 0 ? String.format("%.2f GB [%d bytes]", bytes / (float) BYTES_TO_GB, bytes) :
@@ -352,14 +351,51 @@ final public class Utils {
     }
 
     public static String formatInches(final double screenInches) {
-        return String.format("%.2f inches",screenInches);
+        return String.format("%.2f inches", screenInches);
     }
 
     public static String inchToCm(final double screenInches) {
-        return String.format("%.2f cm",screenInches * 2.54f);
+        return String.format("%.2f cm", screenInches * 2.54f);
     }
 
     public static String formatPixel(final double screenDiagonalPixel) {
-        return String.format("%.2f px",screenDiagonalPixel);
+        return String.format("%.2f px", screenDiagonalPixel);
+    }
+
+    public static String formatStorage(final Storage s) {
+        final StringBuffer buffer = new StringBuffer();
+        buffer.append("Path:").append(t(3)).append(s.absolutePath).append("\n");
+        buffer.append("Total:").append(t(3)).append(formatBytes(s.total)).append("\n");
+        buffer.append("Available:").append(t(1)).append(formatBytes(s.available)).append("\n");
+        buffer.append("Free:").append(t(3)).append(formatBytes(s.free)).append("\n");
+        buffer.append("Used:").append(t(3)).append(formatBytes(s.total - s.free)).append("\n");
+        if (s.free - s.available > 0)
+            buffer.append("Busy:").append(t(3)).append(formatBytes(s.free - s.available)).append("\n");
+        return buffer.toString();
+    }
+
+    public static HashMap<String, String> parseTelize(final JSONObject geo) {
+        final StringBuffer buffer = new StringBuffer();
+        final HashMap<String, String> map = new HashMap<String, String>();
+        try {
+            map.put("Timezone:", geo.getString("timezone"));
+            map.put("ISP:", geo.getString("isp"));
+            map.put("Region Code:", geo.getString("region_code"));
+            map.put("Country:", geo.getString("country"));
+            map.put("DMA Code:", geo.getString("dma_code"));
+            map.put("Area Code:", geo.getString("area_code"));
+            map.put("Region:", geo.getString("region"));
+            map.put("IP:", geo.getString("ip"));
+            map.put("ASN:", geo.getString("asn"));
+            map.put("Continent Code:", geo.getString("continent_code"));
+            map.put("City:", geo.getString("city"));
+            map.put("Postal Code:", geo.getString("postal_code"));
+            map.put("Longitude:", geo.getString("longitude"));
+            map.put("Latitude:", geo.getString("latitude"));
+            map.put("Country Code:", geo.getString("country_code"));
+        } catch (final JSONException e) {
+            Logger.e("" + e.getMessage(), e);
+        }
+        return map;
     }
 }

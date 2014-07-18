@@ -1,4 +1,4 @@
-package net.kibotu.android.deviceinfo.fragments.list;
+package net.kibotu.android.deviceinfo.fragments.list.vertical;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -101,7 +101,10 @@ public class DeviceInfoFragment extends ListFragment {
     public void onListItemClick(ListView lv, View v, int position, long id) {
         super.onListItemClick(lv, v, position, id);
 
-        Logger.toast(list.getItem(position).tag + " " +list.getItem(position).order);
+        if(list.getItem(position).tag.equalsIgnoreCase("RAM")){
+            Runtime.getRuntime().gc();
+        }
+        // Logger.toast(list.getItem(position).tag + " " +list.getItem(position).order);
 
         // CustomWebView webView = new CustomWebView(Device.context());
         // webView.showWebViewFullScreen("https://github.com/kibotu/net.kibotu.android.deviceinfo/blob/master/deviceinfo-lib/src/net/kibotu/android/deviceinfo/Device.java#L96-L113");

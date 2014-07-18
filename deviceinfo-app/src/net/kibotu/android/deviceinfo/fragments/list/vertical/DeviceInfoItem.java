@@ -1,4 +1,6 @@
-package net.kibotu.android.deviceinfo.fragments.list;
+package net.kibotu.android.deviceinfo.fragments.list.vertical;
+
+import android.view.View;
 
 public class DeviceInfoItem implements Comparable<DeviceInfoItem>{
 
@@ -6,6 +8,7 @@ public class DeviceInfoItem implements Comparable<DeviceInfoItem>{
     public String description;
     public String value = "0";
     public int order = Integer.MAX_VALUE;
+    public View customView;
 
     public DeviceInfoItem(final String tag, final String description, final String value, final int order) {
         this.tag = tag;

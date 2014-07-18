@@ -1,4 +1,4 @@
-package net.kibotu.android.deviceinfo.fragments.list;
+package net.kibotu.android.deviceinfo.fragments.list.vertical;
 
 import net.kibotu.android.deviceinfo.Logger;
 
