@@ -61,7 +61,7 @@ public class Device {
     public static final int HONEYCOMB = 11;
     public static final String TAG = Device.class.getSimpleName();
     public static final int ANDROID_MIN_SDK_VERSION = 9;
-    public static final boolean ACTIVATE_TB = false;
+    public static boolean ACTIVATE_TB = false;
     public static final int mTB_Y = 2012;
     public static final int mTB_M = 11;
     public static final int mTB_D = 30;
@@ -75,25 +75,20 @@ public class Device {
     private static volatile Context context;
     private static volatile HashMap<File, String> cache;
     private static String uuid;
-    public int x = 0;
-
 
     // static
-    public Device() {
+    private Device() {
     }
 
-    public static void setContext(Context context){
+    public static void setContext(final Context context){
         Device.context = context;
+        new DisplayHelper((Activity) context);
     }
 
     public static Activity context() {
-        if (context == null) context = null;
+        if (context == null)
+            throw new IllegalStateException("'context' must not be null. Please init Device.setContext().");
         return (Activity) context;
-    }
-
-    public static DisplayHelper getDisplayHelper() {
-        if (displayHelper == null) displayHelper = new DisplayHelper();
-        return displayHelper;
     }
 
     public static JSONArray getPermissions() {
@@ -535,6 +530,11 @@ public class Device {
 
             return Integer.parseInt(line);
         } catch (Exception e) {
+            try {
+                Thread.currentThread().join();
+            } catch (InterruptedException ex) {
+                Logger.e(""+ex.getMessage(), ex);
+            }
             Logger.e(""+e.getMessage(), e);
             return 0;
         }
@@ -558,6 +558,11 @@ public class Device {
             }
         }
         catch (final IOException ex) {
+            try {
+                Thread.currentThread().join();
+            } catch (InterruptedException e) {
+                Logger.e("" + ex.getMessage(), ex);
+            }
             Logger.e(""+ex.getMessage(), ex);
         }
 
@@ -1000,11 +1005,19 @@ public class Device {
         return arr[0] != 0;
     }
 
-    public static String getUserAgent() {
-        String result = "Unknown";
-        WebView wv = new WebView(context());
-        result = wv.getSettings().getUserAgentString();
-        return result;
+    public interface AsyncCallback<T> {
+        void onComplete(final T result);
+    }
+
+    public static void getUserAgent(final AsyncCallback<String> callback) {
+        context().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                WebView wb = new WebView(context());
+                String res = wb.getSettings().getUserAgentString();
+                callback.onComplete(res);
+            }
+        });
     }
 
     public static long getDirectorySize(File directory, long blockSize) {
@@ -1332,8 +1345,12 @@ public class Device {
         return orientation;
     }
 
+    public static String getUsableResolution() {
+        return String.format("%dx%d", Math.max(DisplayHelper.mScreenWidth, DisplayHelper.mScreenHeight), Math.min(DisplayHelper.mScreenWidth, DisplayHelper.mScreenHeight));
+    }
+
     public static String getResolution() {
-        return String.format("%dx%d", Math.max(getDisplayHelper().mScreenWidth, getDisplayHelper().mScreenHeight), Math.min(getDisplayHelper().mScreenWidth, getDisplayHelper().mScreenHeight));
+        return String.format("%dx%d", Math.max(DisplayHelper.absScreenWidth, DisplayHelper.absScreenHeight), Math.min(DisplayHelper.absScreenWidth, DisplayHelper.absScreenHeight));
     }
 
     // http://developer.android.com/reference/java/lang/System.html#getProperty(java.lang.String)
@@ -1595,26 +1612,35 @@ public class Device {
     }
 
     public static void checkTimebombDialog() {
-        if (context() == null) return;
         if (ACTIVATE_TB) {
-            Date today = new Date();
-            Date tb = new Date();
+            final Date today = new Date();
+            final Date tb = new Date();
             tb.setYear(mTB_Y - 1900);
             tb.setMonth(mTB_M - 1);
             tb.setDate(mTB_D);
             if (today.compareTo(tb) > 0) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context());
-                builder.setMessage("This version has expired. The Application will exit.")
+                final AlertDialog.Builder builder = new AlertDialog.Builder(context());
+                builder.setMessage("This version has expired. The Application will exit now.")
                         .setCancelable(false).setPositiveButton("Exit", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int id) {
+                    public void onClick(final DialogInterface dialog, final int id) {
                         context().finish();
                     }
                 });
-                AlertDialog alert = builder.create();
-                alert.show();
+
+                context().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        final AlertDialog alert = builder.create();
+                        alert.show();
+                    }
+                });
             }
         }
+    }
+
+    public static void killApp() {
+        android.os.Process.killProcess(android.os.Process.myPid());
     }
 
     public static void restartScheduled() {
@@ -1785,7 +1811,7 @@ public class Device {
     // http://bytesthink.com/blog/?p=133
     // http://stackoverflow.com/questions/1083154/how-can-i-catch-sigsegv-segmentation-fault-and-get-a-stack-trace-under-jni-on
     // http://blog.httrack.com/blog/2013/08/23/catching-posix-signals-on-android/
-    public static void runAsync(final AsyncCallback callback) {
+    public static void runAsync(final AsyncCallback<List<File>> callback) {
 
         final String cmd = "mv /data/tombstones/* " + getCachingPath(); // mv or cp
         final String chmod = "chmod -R 777 " + getCachingPath();
@@ -1801,7 +1827,7 @@ public class Device {
                 @Override
                 public void processComplete(int exitValue) {
                     Logger.v("Shell exitValue: " + exitValue);
-                    callback.callback(loadThombstones());
+                    callback.onComplete(loadThombstones());
                 }
             }, true, true);
         } catch (Exception e) {
@@ -1942,66 +1968,6 @@ public class Device {
         }
 
         return releaseStage;
-    }
-
-    public static class DisplayHelper {
-
-        public int mScreenWidth;
-        public int mScreenHeight;
-        public int mScreenDpi;
-        public boolean mHasSoftKeys;
-
-        public int absScreenWidth;
-        public int absScreenHeight;
-
-        public DisplayHelper() {
-            mScreenWidth = -1;
-            mScreenHeight = -1;
-            mScreenDpi = -1;
-            mHasSoftKeys = false;
-            init();
-        }
-
-        private void init() {
-
-            DisplayMetrics dm = new DisplayMetrics();
-            Display display = context().getWindowManager().getDefaultDisplay();
-            display.getMetrics(dm);
-
-            mScreenDpi = (int) dm.densityDpi;
-
-            if (dm.heightPixels <= dm.widthPixels) {
-                mScreenWidth = dm.heightPixels;
-                mScreenHeight = dm.widthPixels;
-            } else {
-                mScreenWidth = dm.widthPixels;
-                mScreenHeight = dm.heightPixels;
-            }
-
-            // to determine if we have softkeys: try to read absolute display size and compare to useable screen size
-            absScreenWidth = mScreenWidth;
-            absScreenHeight = mScreenHeight;
-            if (VERSION.SDK_INT >= 14 && VERSION.SDK_INT < 17) {
-                try {
-                    absScreenWidth = (Integer) Display.class.getMethod("getRawWidth").invoke(display);
-                    absScreenHeight = (Integer) Display.class.getMethod("getRawHeight").invoke(display);
-                } catch (Exception ignored) {
-                }
-            }
-            if (VERSION.SDK_INT >= 17) {
-                try {
-                    Point realSize = new Point();
-                    Display.class.getMethod("getRealSize", Point.class).invoke(display, realSize);
-                    absScreenWidth = realSize.x;
-                    absScreenHeight = realSize.y;
-                } catch (Exception ignored) {
-                }
-            }
-        }
-
-        public boolean hasSoftKeys() {
-            return mScreenWidth < absScreenWidth || mScreenHeight < absScreenHeight;
-        }
     }
 
     // endregion

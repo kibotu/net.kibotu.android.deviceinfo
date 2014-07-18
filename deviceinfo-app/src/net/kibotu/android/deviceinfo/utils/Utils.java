@@ -1,8 +1,12 @@
 package net.kibotu.android.deviceinfo.utils;
 
+import android.graphics.ImageFormat;
+import android.graphics.PixelFormat;
 import android.hardware.Sensor;
+import android.view.Surface;
 import net.kibotu.android.deviceinfo.GPU;
 import net.kibotu.android.deviceinfo.Logger;
+import net.kibotu.android.deviceinfo.fragments.list.DeviceInfoItemAsync;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -36,7 +40,7 @@ final public class Utils {
         return buffer.toString();
     }
 
-    public static String formatBytes(long bytes) {
+    public static String formatBytes(final long bytes) {
         if (bytes == 0)
             return "";
 
@@ -46,7 +50,7 @@ final public class Utils {
                                 bytes / BYTES_TO_KB > 0 ? String.format("%.2f KB [%d bytes]", bytes / (float) BYTES_TO_KB, bytes) : bytes + " bytes";
     }
 
-    public static String formatFrequency(int clockHz) {
+    public static String formatFrequency(final int clockHz) {
         return clockHz < 1000 * 1000 ? (clockHz / 1000) + " MHz" : (clockHz / 1000 / 1000) + "." + (clockHz / 1000 / 100) % 10 + " GHz";
     }
 
@@ -67,7 +71,7 @@ final public class Utils {
         }).start();
     }
 
-    public static String getSensorName(int type) {
+    public static String getSensorName(final int type) {
 
         String name = "" + type;
 
@@ -110,6 +114,95 @@ final public class Utils {
         return name;
     }
 
+    /**
+     * Based PixelFormat and native http://stackoverflow.com/a/12068719
+     */
+    public synchronized static String nameForPixelFormat(final int pixelFormat) {
+        String res;
+        switch (pixelFormat) {
+            case PixelFormat.TRANSLUCENT:
+                res = "Translucent";
+                break;
+            case PixelFormat.TRANSPARENT:
+                res = "Transparent";
+                break;
+            case PixelFormat.OPAQUE:
+                res = "Opaque";
+                break;
+            case PixelFormat.RGBA_8888:
+                res = "RGBA_8888";
+                break;
+            case PixelFormat.RGBX_8888:
+                res = "RGBX_8888";
+                break;
+            case PixelFormat.RGB_888:
+                res = "RGB_888";
+                break;
+            case PixelFormat.RGB_565:
+                res = "RGB_565";
+                break;
+            case PixelFormat.RGBA_5551:
+                res = "RGBA_5551";
+                break;
+            case PixelFormat.RGBA_4444:
+                res = "RGBA_4444";
+                break;
+            case PixelFormat.A_8:
+                res = "A_8";
+                break;
+            case PixelFormat.L_8:
+                res = "L_8";
+                break;
+            case PixelFormat.LA_88:
+                res = "LA_88";
+                break;
+            case PixelFormat.RGB_332:
+                res = "RGB_332";
+                break;
+            case 0x13:
+                res = "YCbCr_420_P";
+                break;
+            case 0x21:
+                res = "YCbCr_420_SP";
+                break;
+            case 0x20:
+            case 0x22:
+                res = "YCrCb_420_SP_TILED";
+                break;
+            case ImageFormat.NV16:
+                //case PixelFormat.YCbCr_422_SP: deprecated
+            case 0x23:
+            case 0x24:
+            case 0x12:
+                res = "YCbCr_422_P";
+                break;
+            case ImageFormat.NV21:
+                //case PixelFormat.YCbCr_420_SP: deprecated
+                res = "YCbCr_420_SP";
+                break;
+            case ImageFormat.YUY2:
+                //case PixelFormat.YCbCr_422_I: deprecated
+            case 0x16:
+                res = "CbYCrY_422_I";
+                break;
+            case ImageFormat.JPEG:
+                //case PixelFormat.JPEG: deprecated
+                res = "Jpeg";
+                break;
+            case 0x15:
+            case 0x17:
+                res = "reserved";
+                break;
+            case 0x18:
+                res = "range unavailable";
+                break;
+            case PixelFormat.UNKNOWN:
+            default:
+                res = "Unknown";
+        }
+        return res;
+    }
+
     public synchronized static <T extends Comparable<? super T>> List<T> asSortedList(final Collection<T> c) {
         final List<T> list = new ArrayList<T>(c);
         Collections.sort(list);
@@ -142,7 +235,7 @@ final public class Utils {
         buffer.append("Max Combined Texture Units:").append(t(1)).append(i.GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS).append("\n");
         buffer.append("Max Cube Map Texture Size:").append(t(1)).append(i.GL_MAX_CUBE_MAP_TEXTURE_SIZE).append("x").append(i.GL_MAX_CUBE_MAP_TEXTURE_SIZE).append("\n");
         buffer.append("Max Vertex Texture Images:").append(t(1)).append(i.GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS).append("\n");
-        buffer.append("Vertex Texture Fetch:").append(t(5)).append(i.Vertex_Texture_Fetch ? "Yes" : "No").append("\n");
+        buffer.append("Vertex Texture Fetch:").append(t(5)).append(formatBool(i.Vertex_Texture_Fetch)).append("\n");
         buffer.append("Max Viewport Dimension:").append(t(3)).append(i.GL_MAX_VIEWPORT_DIMS[0]).append("x").append(i.GL_MAX_VIEWPORT_DIMS[0]).append("\n");
         buffer.append("Max Renderbuffer Size:").append(t(4)).append(i.GL_MAX_RENDERBUFFER_SIZE).append("x").append(i.GL_MAX_RENDERBUFFER_SIZE).append("\n\n");
 
@@ -231,5 +324,38 @@ final public class Utils {
 
     public synchronized static String firstLetterToUpperCase(final String word) {
         return Character.toString(word.charAt(0)).toUpperCase() + word.substring(1);
+    }
+
+    public static String nameForRotation(final int rotation) {
+        String ret;
+        switch (rotation) {
+            case Surface.ROTATION_0:
+                ret = "0°";
+                break;
+            case Surface.ROTATION_90:
+                ret = "90°";
+                break;
+            case Surface.ROTATION_180:
+                ret = "180°";
+                break;
+            case Surface.ROTATION_270:
+                ret = "270°";
+                break;
+            default:
+                ret = "" + rotation;
+        }
+        return ret;
+    }
+
+    public static String formatBool(final boolean isTrue) {
+        return isTrue ? "Yes" : "No";
+    }
+
+    public static String formatInches(final double screenInches) {
+        return String.format("%.2f inches",screenInches);
+    }
+
+    public static String inchToCm(final double screenInches) {
+        return String.format("%.2f cm",screenInches * 2.54f);
     }
 }

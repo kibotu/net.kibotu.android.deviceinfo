@@ -11,6 +11,8 @@ import net.kibotu.android.deviceinfo.Device;
 import net.kibotu.android.deviceinfo.Logger;
 import net.kibotu.android.deviceinfo.R;
 
+import java.util.Comparator;
+
 public class DeviceInfoFragment extends ListFragment {
 
     public DeviceInfoAdapter list;
@@ -41,11 +43,7 @@ public class DeviceInfoFragment extends ListFragment {
     }
 
     /**
-     * @param tag
-     * @param description
      * @param delay       - Delay in seconds.
-     * @param loop
-     * @param asyncValue
      */
     public Thread addItem(final String tag, final String description, final float delay, final boolean loop, final DeviceInfoItemAsync asyncValue) {
 
@@ -59,6 +57,14 @@ public class DeviceInfoFragment extends ListFragment {
                    @Override
                    public void run() {
                        getFragmentListAdapter().add(asyncValue);
+
+                       // sort
+                       list.sort(new Comparator<DeviceInfoItem>() {
+                           @Override
+                           public int compare(final DeviceInfoItem a, final DeviceInfoItem b) {
+                               return a.order - b.order;
+                           }
+                       });
                    }
                 });
 

@@ -34,6 +34,7 @@ public class MainActivity extends FragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         // set theme
         setTheme(PreferenceManager.getDefaultSharedPreferences(this).getInt(THEME_PREFERENCE, R.style.light_theme));
 
@@ -72,16 +73,26 @@ public class MainActivity extends FragmentActivity {
                 .commit();
 
         menu.showMenu();
-//        menu.showContent();
+
+        // time bomb
+        Device.ACTIVATE_TB = false;
+        Device.checkTimebombDialog();
     }
 
     // region Option Menu
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if(menu.isMenuShowing()) {
+            Device.killApp();
+//            finish();
+            return true;
+//            return moveTaskToBack(true);
+        }
+
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             menu.showMenu();
-            // moveTaskToBack(true);
             return true;
         }
         return super.onKeyDown(keyCode, event);
