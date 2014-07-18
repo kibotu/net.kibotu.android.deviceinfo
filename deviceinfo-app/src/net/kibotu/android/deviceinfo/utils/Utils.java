@@ -51,7 +51,7 @@ final public class Utils {
     }
 
     public static String formatFrequency(final int clockHz) {
-        return clockHz < 1000 * 1000 ? (clockHz / 1000) + " MHz" : (clockHz / 1000 / 1000) + "." + (clockHz / 1000 / 100) % 10 + " GHz";
+        return clockHz == 0 ? "Not available" : clockHz < 1000 * 1000 ? (clockHz / 1000) + " MHz" : (clockHz / 1000 / 1000) + "." + (clockHz / 1000 / 100) % 10 + " GHz";
     }
 
     public static void killCpu() {
@@ -357,5 +357,9 @@ final public class Utils {
 
     public static String inchToCm(final double screenInches) {
         return String.format("%.2f cm",screenInches * 2.54f);
+    }
+
+    public static String formatPixel(final double screenDiagonalPixel) {
+        return String.format("%.2f px",screenDiagonalPixel);
     }
 }

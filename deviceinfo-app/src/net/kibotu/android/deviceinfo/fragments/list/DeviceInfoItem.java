@@ -5,15 +5,25 @@ public class DeviceInfoItem implements Comparable<DeviceInfoItem>{
     public String tag;
     public String description;
     public String value = "0";
-    public int order;
+    public int order = Integer.MAX_VALUE;
 
-    public DeviceInfoItem(String tag, String description, String value) {
+    public DeviceInfoItem(final String tag, final String description, final String value, final int order) {
         this.tag = tag;
         this.description = description;
         this.value = value;
+        this.order = order;
+    }
+
+    public DeviceInfoItem(final int order) {
+        this("", "", "0", order);
+    }
+
+    public DeviceInfoItem(final String tag, final String description, final String value) {
+       this(tag,description,value, Integer.MAX_VALUE);
     }
 
     public DeviceInfoItem() {
+        this("","","0",Integer.MAX_VALUE);
     }
 
     @Override

@@ -12,7 +12,8 @@ public class DisplayHelper {
 
     public static int mScreenWidth;
     public static int mScreenHeight;
-    public int mScreenDpi;
+    public static int mScreenDpi;
+    public static float mDensity;
     public boolean mHasSoftKeys;
     private static Activity context;
 
@@ -34,10 +35,17 @@ public class DisplayHelper {
         init();
     }
 
-    public static double getScreenInches() {
+    public static double getScreenDiagonalInches() {
         if (context == null) throw new IllegalStateException("Please instantiate first!");
         double x = Math.pow(mScreenWidth / xDpi, 2);
         double y = Math.pow(mScreenHeight / yDpi, 2);
+        return Math.sqrt(x + y);
+    }
+
+    public static double getScreenDiagonalPixel() {
+        if (context == null) throw new IllegalStateException("Please instantiate first!");
+        double x = Math.pow(mScreenWidth, 2);
+        double y = Math.pow(mScreenHeight, 2);
         return Math.sqrt(x + y);
     }
 
@@ -50,6 +58,8 @@ public class DisplayHelper {
         mScreenDpi = dm.densityDpi;
         xDpi = dm.xdpi;
         yDpi = dm.ydpi;
+
+        mDensity = dm.density;
 
         mScreenWidth = Math.max(dm.heightPixels, dm.widthPixels);
         mScreenHeight = Math.min(dm.heightPixels, dm.widthPixels);
@@ -77,7 +87,7 @@ public class DisplayHelper {
 
     public static boolean hasSoftKeys() {
         if (context == null) throw new IllegalStateException("Please instantiate first!");
-        return Math.max(mScreenWidth,mScreenHeight) < Math.max(absScreenWidth,absScreenHeight) || Math.min(mScreenWidth,mScreenHeight) < Math.min(absScreenWidth,absScreenHeight) ;
+        return Math.max(mScreenWidth, mScreenHeight) < Math.max(absScreenWidth,absScreenHeight) || Math.min(mScreenWidth, mScreenHeight) < Math.min(absScreenWidth, absScreenHeight) ;
     }
 
     public static boolean isTablet2() {

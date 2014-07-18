@@ -4,6 +4,21 @@ import net.kibotu.android.deviceinfo.Logger;
 
 public abstract class DeviceInfoItemAsync extends DeviceInfoItem implements Runnable {
 
+    public DeviceInfoItemAsync(final int order) {
+        super(order);
+    }
+
+    protected DeviceInfoItemAsync(final String tag, final String description, final String value) {
+        super(tag, description, value);
+    }
+
+    protected DeviceInfoItemAsync() {
+    }
+
+    protected DeviceInfoItemAsync(final String tag, final String description, final String value, final int order) {
+        super(tag, description, value, order);
+    }
+
     @Override
     public void run() {
         try {

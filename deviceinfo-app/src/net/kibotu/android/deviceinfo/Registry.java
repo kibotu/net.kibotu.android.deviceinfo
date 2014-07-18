@@ -1,18 +1,22 @@
 package net.kibotu.android.deviceinfo;
 
+import android.os.BatteryManager;
 import android.os.Environment;
 import net.kibotu.android.deviceinfo.GPU.OpenGLGles10Info;
 import net.kibotu.android.deviceinfo.GPU.OpenGLGles20Info;
 import net.kibotu.android.deviceinfo.fragments.list.DeviceInfoFragment;
-import net.kibotu.android.deviceinfo.fragments.list.DeviceInfoItem;
 import net.kibotu.android.deviceinfo.fragments.list.DeviceInfoItemAsync;
 import net.kibotu.android.deviceinfo.fragments.list.IGetInfoFragment;
 import net.kibotu.android.deviceinfo.utils.Utils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 import static android.os.Build.*;
 import static net.kibotu.android.deviceinfo.Device.context;
+import static net.kibotu.android.deviceinfo.SharedPreferenceHelper.shared;
 import static net.kibotu.android.deviceinfo.utils.Utils.*;
 
 public enum Registry implements IGetInfoFragment {
@@ -58,7 +62,6 @@ public enum Registry implements IGetInfoFragment {
                 @Override
                 protected void async() {
                     value = String.valueOf(Calendar.getInstance().getTime());
-                    order = 2;
                 }
             }));
             Monitor.threads.add(cachedList.addItem("threads count", "description", 1f, true, new DeviceInfoItemAsync() {
@@ -83,6 +86,7 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("MODEL", "description", MODEL);
             cachedList.addItem("PRODUCT", "description", PRODUCT);
             cachedList.addItem("IMEI No", "description", Device.getDeviceIdFromTelephonyManager());
+            cachedList.addItem("Locale", "description", context().getResources().getConfiguration().locale.toString());
         }
     },
 
@@ -100,6 +104,7 @@ public enum Registry implements IGetInfoFragment {
                 @Override
                 protected void async() {
                     value = battery.technology;
+                    order = 0;
                 }
             });
 
@@ -107,6 +112,7 @@ public enum Registry implements IGetInfoFragment {
                 @Override
                 protected void async() {
                     value = battery.getStatus();
+                    order = 1;
                 }
             });
 
@@ -114,6 +120,7 @@ public enum Registry implements IGetInfoFragment {
                 @Override
                 protected void async() {
                     value = "" + (int) (battery.getChargingLevel() * 100) + " %";
+                    order = 2;
                 }
             }));
 
@@ -121,6 +128,7 @@ public enum Registry implements IGetInfoFragment {
                 @Override
                 protected void async() {
                     value = battery.voltage + " mV";
+                    order = 3;
                 }
             }));
 
@@ -128,6 +136,7 @@ public enum Registry implements IGetInfoFragment {
                 @Override
                 protected void async() {
                     value = (battery.temperature / 10f) + " °C [" + battery.getTemperatureFarenheit() + "]";
+                    order = 4;
                 }
             }));
 
@@ -135,13 +144,22 @@ public enum Registry implements IGetInfoFragment {
                 @Override
                 protected void async() {
                     value = battery.health;
+                    order = 5;
                 }
             }));
 
-            Battery.threads.add(cachedList.addItem("Charging Source", "description", 1f, true, new DeviceInfoItemAsync() {
+            Battery.threads.add(cachedList.addItem("Last Charging Source", "description", 1f, true, new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
-                    value = battery.plugged;
+
+                    if (battery.plugged.equalsIgnoreCase("0")) {
+                        value = shared.prefs().getString(BatteryManager.EXTRA_PLUGGED, "Unknown");
+                    } else {
+                        shared.editor().putString(BatteryManager.EXTRA_PLUGGED, value = battery.plugged);
+                        shared.editor().commit();
+                    }
+
+                    order = 6;
                 }
             }));
 
@@ -149,6 +167,7 @@ public enum Registry implements IGetInfoFragment {
                 @Override
                 protected void async() {
                     value = formatBool(battery.present);
+                    order = 7;
                 }
             }));
         }
@@ -162,38 +181,47 @@ public enum Registry implements IGetInfoFragment {
         @Override
         public void createFragmentList() {
 
-            cachedList.addItem("DISPLAY", "description", DISPLAY);
-
-            cachedList.addItem("Has Softkeys", "description", formatBool(DisplayHelper.hasSoftKeys()));
-            cachedList.addItem("Is Tablet", "description", formatBool(DisplayHelper.isTablet()));
-
-            cachedList.addItem("Density", "description", context().getString(R.string.density) + " (" + Device.getDisplayMetrics().density + ")");
-            cachedList.addItem("DensityDpi", "description", Device.getDisplayMetrics().densityDpi + " (" + Device.getDisplayMetrics().scaledDensity + ")");
-
-            cachedList.addItem("DPI", "description", DisplayHelper.xDpi + "x" + DisplayHelper.yDpi);
-
-            cachedList.addItem("Screen Class", "description", context().getString(R.string.screen_size));
+            cachedList.addItem("Display Screen Resolution", "description", new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Device.getResolution() + " px | " + Device.getResolutionDp() + " dp";
+                    order = 0;
+                }
+            });
 
             cachedList.addItem("Usable Screen Resolution", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
-                    value = Device.getUsableResolution();
+                    value = Device.getUsableResolution() + " px | " + Device.getUsableResolutionDp() + " dp";
+                    order = 1;
                 }
             });
 
-            cachedList.addItem("Screen Diagonal", "description", new DeviceInfoItemAsync() {
+            cachedList.addItem("Screen Diagonal Length", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
-                    value = Utils.inchToCm(DisplayHelper.getScreenInches()) + " [" + Utils.formatInches(DisplayHelper.getScreenInches()) + "]";
+                    value = Utils.inchToCm(DisplayHelper.getScreenDiagonalInches()) + " | " + Utils.formatInches(DisplayHelper.getScreenDiagonalInches()) + " | " + Utils.formatPixel(DisplayHelper.getScreenDiagonalPixel());
+                    order = 2;
                 }
             });
 
-            cachedList.addItem("Display Screen Resolution", "description", new DeviceInfoItemAsync() {
+            cachedList.addItem("Refresh Rate", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
-                    value = Device.getResolution();
+                    value = context().getWindowManager().getDefaultDisplay().getRefreshRate() + " FPS";
+                    order = 3;
                 }
             });
+
+            cachedList.addItem("Is Tablet", "description", formatBool(DisplayHelper.isTablet()));
+
+            cachedList.addItem("Has Softkeys", "description", formatBool(DisplayHelper.hasSoftKeys()));
+
+            cachedList.addItem("Screen Class", "description", context().getString(R.string.screen_size));
+
+            cachedList.addItem("Density", "description", context().getString(R.string.density) + " | " + Device.getDisplayMetrics().densityDpi + " | " + Device.getDisplayMetrics().density);
+
+            cachedList.addItem("DPI", "description", DisplayHelper.xDpi + " x " + DisplayHelper.yDpi);
 
             Display.threads.add(cachedList.addItem("Orientation", "description", 1f, true, new DeviceInfoItemAsync() {
                 @Override
@@ -209,6 +237,11 @@ public enum Registry implements IGetInfoFragment {
                 }
             }));
 
+            cachedList.addItem("Density Class", "description", "");
+//            cachedList.addItem("Density DPI", "description", DisplayHelper.hasSoftKeys());
+
+            cachedList.addItem("DISPLAY", "description", DISPLAY);
+
             cachedList.addItem("PixelFormat", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
@@ -218,17 +251,6 @@ public enum Registry implements IGetInfoFragment {
                     value = nameForPixelFormat(context().getWindowManager().getDefaultDisplay().getPixelFormat());
                 }
             });
-
-            cachedList.addItem("RefreshRate", "description", new DeviceInfoItemAsync() {
-                @Override
-                protected void async() {
-                    value = "" + context().getWindowManager().getDefaultDisplay().getRefreshRate();
-                }
-            });
-            cachedList.addItem("Locale", "description", context().getResources().getConfiguration().locale.toString());
-
-            cachedList.addItem("Density Class", "description", "");
-//            cachedList.addItem("Density DPI", "description", DisplayHelper.hasSoftKeys());
         }
     },
 
@@ -427,23 +449,26 @@ public enum Registry implements IGetInfoFragment {
     // region CPU
 
     CPU(android.R.drawable.ic_menu_search) {
+
+        final int cores = Device.getNumCores();
+
         @Override
         public void createFragmentList() {
-            cachedList.addItem("CPU Cores", "description", new DeviceInfoItemAsync() {
+            cachedList.addItem("CPU Cores", "description", new DeviceInfoItemAsync(1) {
                 @Override
                 protected void async() {
-                    value = "" + Device.getNumCores();
+                    value = "" + cores;
 
-                    CPU.threads.add(cachedList.addItem("CPU Usage All Cores", "description", 1f, true, new DeviceInfoItemAsync() {
+                    CPU.threads.add(cachedList.addItem("CPU Utilization All Cores", "description", 1f, true, new DeviceInfoItemAsync(0) {
                         @Override
                         protected void async() {
                             value = "" + Device.getCpuUsage()[0] + " %";
                         }
                     }));
 
-                    for (int i = 1; i < Device.getNumCores() + 1; ++i) {
+                    for (int i = 1; i < cores + 1; ++i) {
                         final int finalI = i;
-                        CPU.threads.add(cachedList.addItem("CPU Usage Core " + i, "description", 1f, true, new DeviceInfoItemAsync() {
+                        CPU.threads.add(cachedList.addItem("CPU Utilization Core " + i, "description", 1f, true, new DeviceInfoItemAsync(finalI+1) {
                             @Override
                             protected void async() {
                                 float usage = Device.getCpuUsage()[finalI];
@@ -454,28 +479,28 @@ public enum Registry implements IGetInfoFragment {
                 }
             });
 
-            cachedList.addItem("Min Frequency", "description", 1f, true, new DeviceInfoItemAsync() {
-                @Override
-                protected void async() {
-                    value = formatFrequency(Device.getMinCpuFreq());
-                }
-            });
-
-            cachedList.addItem("Max Frequency", "description", 1f, true, new DeviceInfoItemAsync() {
-                @Override
-                protected void async() {
-                    value = formatFrequency(Device.getMaxCpuFreq());
-                }
-            });
-
-            cachedList.addItem("Current Frequency", "description", 1f, true, new DeviceInfoItemAsync() {
+            CPU.threads.add(cachedList.addItem("Current Frequency", "description", 1f, true, new DeviceInfoItemAsync(cores + 2) {
                 @Override
                 protected void async() {
                     value = formatFrequency(Device.getCurrentCpuFreq());
                 }
-            });
+            }));
 
-            cachedList.addItem("CPU Details", "description", new DeviceInfoItemAsync() {
+            CPU.threads.add(cachedList.addItem("Min Frequency", "description", 1f, true, new DeviceInfoItemAsync(cores + 2) {
+                @Override
+                protected void async() {
+                    value = formatFrequency(Device.getMinCpuFreq());
+                }
+            }));
+
+            CPU.threads.add(cachedList.addItem("Max Frequency", "description", 1f, true, new DeviceInfoItemAsync(cores + 4) {
+                @Override
+                protected void async() {
+                    value = formatFrequency(Device.getMaxCpuFreq());
+                }
+            }));
+
+            cachedList.addItem("CPU Details", "description", 1f, false, new DeviceInfoItemAsync(cores + 5) {
                 @Override
                 protected void async() {
                     value = Device.getCpuInfo();

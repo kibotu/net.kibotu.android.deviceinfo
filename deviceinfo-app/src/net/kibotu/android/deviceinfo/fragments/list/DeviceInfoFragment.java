@@ -35,6 +35,13 @@ public class DeviceInfoFragment extends ListFragment {
         return (list == null) ? (list = new DeviceInfoAdapter(context)) : list;
     }
 
+    public DeviceInfoItem addItem(String tag, String description, String value, int order) {
+        if (value == null || value == "") return null;
+        DeviceInfoItem item = new DeviceInfoItem(tag, description, value, order);
+        getFragmentListAdapter().add(item);
+        return item;
+    }
+
     public DeviceInfoItem addItem(String tag, String description, String value) {
         if (value == null || value == "") return null;
         DeviceInfoItem item = new DeviceInfoItem(tag, description, value);
@@ -93,6 +100,8 @@ public class DeviceInfoFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView lv, View v, int position, long id) {
         super.onListItemClick(lv, v, position, id);
+
+        Logger.toast(list.getItem(position).tag + " " +list.getItem(position).order);
 
         // CustomWebView webView = new CustomWebView(Device.context());
         // webView.showWebViewFullScreen("https://github.com/kibotu/net.kibotu.android.deviceinfo/blob/master/deviceinfo-lib/src/net/kibotu/android/deviceinfo/Device.java#L96-L113");
