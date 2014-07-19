@@ -40,13 +40,13 @@ final public class Utils {
 
     // alternatve to Formatter.formatFileSize which doesn't show bytes and rounds to int
     public static String formatBytes(final long bytes) {
-        if (bytes == 0)
+        if (bytes <= 0)
             return "0 bytes";
 
-        return bytes / BYTES_TO_TB > 0 ? String.format("%.2f TB [%d bytes]", bytes / (float) BYTES_TO_TB, bytes) :
-                bytes / BYTES_TO_GB > 0 ? String.format("%.2f GB [%d bytes]", bytes / (float) BYTES_TO_GB, bytes) :
-                        bytes / BYTES_TO_MB > 0 ? String.format("%.2f MB [%d bytes]", bytes / (float) BYTES_TO_MB, bytes) :
-                                bytes / BYTES_TO_KB > 0 ? String.format("%.2f KB [%d bytes]", bytes / (float) BYTES_TO_KB, bytes) : bytes + " bytes";
+        return bytes / BYTES_TO_TB > 0 ? String.format("%.2f TB", bytes / (float) BYTES_TO_TB) :
+                bytes / BYTES_TO_GB > 0 ? String.format("%.2f GB", bytes / (float) BYTES_TO_GB) :
+                        bytes / BYTES_TO_MB > 0 ? String.format("%.2f MB", bytes / (float) BYTES_TO_MB) :
+                                bytes / BYTES_TO_KB > 0 ? String.format("%.2f KB", bytes / (float) BYTES_TO_KB) : bytes + " bytes";
     }
 
     public static String formatFrequency(final int clockHz) {
@@ -374,9 +374,8 @@ final public class Utils {
         return buffer.toString();
     }
 
-    public static HashMap<String, String> parseTelize(final JSONObject geo) {
-        final StringBuffer buffer = new StringBuffer();
-        final HashMap<String, String> map = new HashMap<String, String>();
+    public static Map<String, String> parseTelize(final JSONObject geo) {
+        final LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
         try {
             map.put("Timezone", geo.getString("timezone"));
             map.put("ISP", geo.getString("isp"));
@@ -396,6 +395,22 @@ final public class Utils {
         } catch (final JSONException e) {
             Logger.e("" + e.getMessage(), e);
         }
+
         return map;
+    }
+
+    public static Map<String, String> parseRam(final String procMem) {
+        final LinkedHashMap<String, String> ramMap = new LinkedHashMap<String, String>();
+
+        final String lines[] = procMem.trim().split("\n");
+
+        for (int i = 0; i < lines.length; ++i) {
+            final String[] token = lines[i].split(" ");
+            // proc mem output looks like this each line: "info         byte kB" with tons of non-utf8-spaces in between,
+            // so split(" ") doesn't work properly, but we can just take the first and length-2 token index to get what we want
+            ramMap.put(token[0], formatBytes(Integer.valueOf(token[token.length - 2])));
+        }
+
+        return ramMap;
     }
 }

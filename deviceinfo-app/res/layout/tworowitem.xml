@@ -15,7 +15,7 @@
             android:textAppearance="@android:style/TextAppearance.Medium"/>
 
     <TextView
-            android:id="@+id/row_value"
+            android:id="@+id/value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

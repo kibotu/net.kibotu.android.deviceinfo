@@ -6,9 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import net.kibotu.android.deviceinfo.R;
+
+import static net.kibotu.android.deviceinfo.Device.context;
 
 public class DeviceInfoAdapter extends ArrayAdapter<DeviceInfoItem> {
 
@@ -17,21 +18,25 @@ public class DeviceInfoAdapter extends ArrayAdapter<DeviceInfoItem> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public synchronized View getView(int position, View convertView, ViewGroup parent) {
 
         final DeviceInfoItem item = getItem(position);
-        if (convertView == null)
-            convertView = item.customView != null ? item.customView : LayoutInflater.from(getContext()).inflate(item.viewId, null);
+        convertView = item.getView();
 
         final TextView tag = (TextView) convertView.findViewById(R.id.row_title);
-        if(tag != null) {
+        if (tag != null) {
             tag.setTextAppearance(getContext(), item.textAppearance);
             tag.setText(Html.fromHtml(item.tag));
         }
 
-        final TextView rowValue = (TextView) convertView.findViewById(R.id.row_value);
-        if(rowValue != null) {
-            rowValue.setText(item.value);
+        final TextView keys = (TextView) convertView.findViewById(R.id.key);
+        if (keys != null) {
+            keys.setText(item.keys != null ? item.keys : item.tag);
+        }
+
+        final TextView value = (TextView) convertView.findViewById(R.id.value);
+        if (value != null) {
+            value.setText(item.value);
         }
 
         return convertView;

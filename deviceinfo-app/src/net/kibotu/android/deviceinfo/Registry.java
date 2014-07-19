@@ -5,7 +5,6 @@ import android.os.Environment;
 import android.view.LayoutInflater;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import net.kibotu.android.deviceinfo.GPU.OpenGLGles10Info;
 import net.kibotu.android.deviceinfo.GPU.OpenGLGles20Info;
 import net.kibotu.android.deviceinfo.fragments.list.vertical.DeviceInfoFragment;
@@ -268,7 +267,7 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("External Storage", "description", 1f, true, new DeviceInfoItemAsync(0) {
                 @Override
                 protected void async() {
-                    Storage.ROOT.update();
+                    Storage.EXTERNAL.update();
                     value = Utils.formatStorage(Storage.EXTERNAL);
                 }
             });
@@ -276,7 +275,7 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("Internal Storage", "description", 1f, true, new DeviceInfoItemAsync(2) {
                 @Override
                 protected void async() {
-                    Storage.ROOT.update();
+                    Storage.DATA.update();
                     value = Utils.formatStorage(Storage.DATA);
                 }
             });
@@ -298,10 +297,14 @@ public enum Registry implements IGetInfoFragment {
                 }
             }));
 
+            final LinearLayout l = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.tablewithtag, null);
+
             Memory.threads.add(cachedList.addItem("RAM", "description", 1f, true, new DeviceInfoItemAsync(5) {
+
                 @Override
                 protected void async() {
-                    value = Device.getContentRandomAccessFile("/proc/meminfo");
+                    customView = l;
+                    setMap(Utils.parseRam(Device.getContentRandomAccessFile("/proc/meminfo")));
                 }
             }));
 
@@ -317,24 +320,26 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("Memory Class", "description", String.format("%.2f MB", (float) Device.getMemoryClass()), 8);
             // cachedList.addItem("Large Memory Class", "description", Device.getLargeMemoryClass() + " MB");
 
-            cachedList.addItem("Internal Storage Path", "description", new DeviceInfoItemAsync() {
-                @Override
-                protected void async() {
-                    value = Device.getFileSize(context().getFilesDir().getParent());
-                }
-            });
-
             cachedList.addItem("APK Storage Path", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
-                    value = Device.getFileSize(context().getPackageCodePath());
                     setHorizontal();
+                    value = Device.getFileSize(context().getPackageCodePath());
+                }
+            });
+
+            cachedList.addItem("Internal Storage Path", "description", new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    setHorizontal();
+                    value = Device.getFileSize(context().getFilesDir().getParent());
                 }
             });
 
             cachedList.addItem("Root Directory", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
+                    setHorizontal();
                     value = Device.getFileSize(Environment.getRootDirectory());
                 }
             });
@@ -342,6 +347,7 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("Data Directory", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
+                    setHorizontal();
                     value = Device.getFileSize(Environment.getDataDirectory());
                 }
             });
@@ -349,6 +355,7 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("External Storage Director", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
+                    setHorizontal();
                     value = Device.getFileSize(Environment.getExternalStorageDirectory());
                 }
             });
@@ -356,6 +363,7 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("Download Cache Directory", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
+                    setHorizontal();
                     value = Device.getFileSize(Environment.getDownloadCacheDirectory());
                 }
             });
@@ -363,6 +371,7 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("Directory Alarms", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
+                    setHorizontal();
                     value = Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_ALARMS));
                 }
             });
@@ -370,6 +379,7 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("Directory DCIM", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
+                    setHorizontal();
                     value = Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM));
                 }
             });
@@ -377,6 +387,7 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("Directory Downloads", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
+                    setHorizontal();
                     value = Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
                 }
             });
@@ -384,6 +395,7 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("Directory Movies", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
+                    setHorizontal();
                     value = Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES));
                 }
             });
@@ -391,6 +403,7 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("Directory Music", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
+                    setHorizontal();
                     value = Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC));
                 }
             });
@@ -398,6 +411,7 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("Directory Notifications", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
+                    setHorizontal();
                     value = Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_NOTIFICATIONS));
                 }
             });
@@ -405,6 +419,7 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("Directory Pictures", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
+                    setHorizontal();
                     value = Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES));
                 }
             });
@@ -412,6 +427,7 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("Directory Podcasts", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
+                    setHorizontal();
                     value = Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PODCASTS));
                 }
             });
@@ -419,6 +435,7 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("Directory Ringtones", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
+                    setHorizontal();
                     value = Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_RINGTONES));
                 }
             });
@@ -660,27 +677,14 @@ public enum Registry implements IGetInfoFragment {
                 public void onComplete(final JSONObject result) {
 
                     final LinearLayout l = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.tablewithtag, null);
-                    final TextView keys = ((TextView) l.findViewById(R.id.key));
-                    final TextView values = ((TextView) l.findViewById(R.id.value));
-                    final HashMap<String, String> geoMap = Utils.parseTelize(result);
+                    final Map<String, String> geoMap = Utils.parseTelize(result);
 
                     cachedList.addItem("<b>Geolocation</b>", "description", new DeviceInfoItemAsync(0) {
 
                         @Override
                         protected void async() {
-
                             customView = l;
-
-                            String k = "";
-                            String v = "";
-
-                            for (String key : geoMap.keySet()) {
-                                k += key + ":\n";
-                                v += geoMap.get(key) + "\n";
-                            }
-
-                            keys.setText(k);
-                            values.setText(v);
+                            setMap(geoMap);
                         }
                     });
 

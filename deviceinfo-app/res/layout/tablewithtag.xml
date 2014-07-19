@@ -21,14 +21,14 @@
         <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/keys"
+                android:id="@+id/key"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:padding="10dp"
                 android:textAppearance="@android:style/TextAppearance.Small"/>
 
         <TextView
-                android:id="@+id/values"
+                android:id="@+id/value"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

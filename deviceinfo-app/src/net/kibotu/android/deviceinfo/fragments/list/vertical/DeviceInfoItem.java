@@ -6,6 +6,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import net.kibotu.android.deviceinfo.R;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static net.kibotu.android.deviceinfo.Device.context;
 
 public class DeviceInfoItem implements Comparable<DeviceInfoItem> {
@@ -13,10 +16,11 @@ public class DeviceInfoItem implements Comparable<DeviceInfoItem> {
     public String tag;
     public String description;
     public String value = "0";
+    public String keys;
     public int order = Integer.MAX_VALUE;
-    public View customView;
+    public volatile View customView;
     public int textAppearance = android.R.style.TextAppearance_Large;
-    public int viewId = R.layout.tworowitem;
+    public volatile int viewId = R.layout.tworowitem;
 
     public DeviceInfoItem(final String tag, final String description, final String value, final int order) {
         this.tag = tag;
@@ -74,7 +78,22 @@ public class DeviceInfoItem implements Comparable<DeviceInfoItem> {
         keys.setText(tag);
         values.setText(value);
         customView = l;
-//        orientation = LinearLayout.HORIZONTAL;
-//        textAppearance = android.R.style.TextAppearance_Small;
+    }
+
+    public View getView() {
+        return customView = customView != null ? customView : LayoutInflater.from(context()).inflate(viewId, null);
+    }
+
+    public void setMap(final Map<String,String> map) {
+        final StringBuffer keyBuffer = new StringBuffer();
+        final StringBuffer valueBuffer = new StringBuffer();
+
+        for (String key : map.keySet()) {
+            keyBuffer.append(key).append("\n");
+            valueBuffer.append(map.get(key)).append("\n");
+        }
+
+        keys = keyBuffer.toString();
+        value = valueBuffer.toString();
     }
 }
