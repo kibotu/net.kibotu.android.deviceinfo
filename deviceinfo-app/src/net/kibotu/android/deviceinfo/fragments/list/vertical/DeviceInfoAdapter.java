@@ -18,21 +18,20 @@ public class DeviceInfoAdapter extends ArrayAdapter<DeviceInfoItem> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null)
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.deviceinfo, null);
 
         final DeviceInfoItem item = getItem(position);
+        if (convertView == null)
+            convertView = item.customView != null ? item.customView : LayoutInflater.from(getContext()).inflate(item.viewId, null);
 
-        ((TextView) convertView.findViewById(R.id.row_title)).setText(Html.fromHtml("<b>" + item.tag + "</b>"));
+        final TextView tag = (TextView) convertView.findViewById(R.id.row_title);
+        if(tag != null) {
+            tag.setTextAppearance(getContext(), item.textAppearance);
+            tag.setText(Html.fromHtml(item.tag));
+        }
 
-        if (item.customView != null) {
-            if (item.customView.getParent() != null)
-                ((ViewGroup) item.customView.getParent()).removeView(item.customView);
-            ((LinearLayout) convertView).addView(item.customView);
-            convertView.findViewById(R.id.row_value).setVisibility(View.GONE);
-        } else {
-//            ((TextView) convertView.findViewById(R.id.row_value)).setText(Html.fromHtml(item.value));
-            ((TextView) convertView.findViewById(R.id.row_value)).setText(item.value);
+        final TextView rowValue = (TextView) convertView.findViewById(R.id.row_value);
+        if(rowValue != null) {
+            rowValue.setText(item.value);
         }
 
         return convertView;

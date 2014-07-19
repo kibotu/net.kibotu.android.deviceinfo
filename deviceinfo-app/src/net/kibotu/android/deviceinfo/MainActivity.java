@@ -54,7 +54,7 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.content_frame);
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.content_frame, Registry.General.getFragmentList())
+                .replace(R.id.content_frame, Registry.Build.getFragmentList())
                 .commit();
 
         // configure the SlidingMenu

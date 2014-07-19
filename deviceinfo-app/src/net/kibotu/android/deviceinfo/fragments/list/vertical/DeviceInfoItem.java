@@ -1,14 +1,22 @@
 package net.kibotu.android.deviceinfo.fragments.list.vertical;
 
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import net.kibotu.android.deviceinfo.R;
 
-public class DeviceInfoItem implements Comparable<DeviceInfoItem>{
+import static net.kibotu.android.deviceinfo.Device.context;
+
+public class DeviceInfoItem implements Comparable<DeviceInfoItem> {
 
     public String tag;
     public String description;
     public String value = "0";
     public int order = Integer.MAX_VALUE;
     public View customView;
+    public int textAppearance = android.R.style.TextAppearance_Large;
+    public int viewId = R.layout.tworowitem;
 
     public DeviceInfoItem(final String tag, final String description, final String value, final int order) {
         this.tag = tag;
@@ -22,11 +30,11 @@ public class DeviceInfoItem implements Comparable<DeviceInfoItem>{
     }
 
     public DeviceInfoItem(final String tag, final String description, final String value) {
-       this(tag,description,value, Integer.MAX_VALUE);
+        this(tag, description, value, Integer.MAX_VALUE);
     }
 
     public DeviceInfoItem() {
-        this("","","0",Integer.MAX_VALUE);
+        this("", "", "0", Integer.MAX_VALUE);
     }
 
     @Override
@@ -57,5 +65,16 @@ public class DeviceInfoItem implements Comparable<DeviceInfoItem>{
     public int compareTo(final DeviceInfoItem other) {
         assert other != null;
         return order - other.order;
+    }
+
+    public void setHorizontal() {
+        final LinearLayout l = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.table, null);
+        final TextView keys = ((TextView) l.findViewById(R.id.key));
+        final TextView values = ((TextView) l.findViewById(R.id.value));
+        keys.setText(tag);
+        values.setText(value);
+        customView = l;
+//        orientation = LinearLayout.HORIZONTAL;
+//        textAppearance = android.R.style.TextAppearance_Small;
     }
 }

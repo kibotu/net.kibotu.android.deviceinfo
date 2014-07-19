@@ -3,7 +3,6 @@ package net.kibotu.android.deviceinfo;
 import android.os.BatteryManager;
 import android.os.Environment;
 import android.view.LayoutInflater;
-import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -82,15 +81,15 @@ public enum Registry implements IGetInfoFragment {
 
     // region General
 
-    General(android.R.drawable.ic_menu_search) {
+    Build(android.R.drawable.ic_menu_search) {
         @Override
         public void createFragmentList() {
 
-            cachedList.addItem("MANUFACTURER", "description", MANUFACTURER);
-            cachedList.addItem("MODEL", "description", MODEL);
-            cachedList.addItem("PRODUCT", "description", PRODUCT);
-            cachedList.addItem("IMEI No", "description", Device.getDeviceIdFromTelephonyManager());
-            cachedList.addItem("Locale", "description", context().getResources().getConfiguration().locale.toString());
+            cachedList.addItem("MANUFACTURER", "description", MANUFACTURER).setHorizontal();
+            cachedList.addItem("MODEL", "description", MODEL).setHorizontal();
+            cachedList.addItem("PRODUCT", "description", PRODUCT).setHorizontal();
+            cachedList.addItem("IMEI No", "description", Device.getDeviceIdFromTelephonyManager()).setHorizontal();
+            cachedList.addItem("Locale", "description", context().getResources().getConfiguration().locale.toString()).setHorizontal();
         }
     },
 
@@ -260,11 +259,63 @@ public enum Registry implements IGetInfoFragment {
 
     // endregion
 
-    // region Directories
+    // region Memory
 
-    Directories(android.R.drawable.ic_menu_search) {
+    Memory(android.R.drawable.ic_menu_search) {
         @Override
         public void createFragmentList() {
+
+            cachedList.addItem("External Storage", "description", 1f, true, new DeviceInfoItemAsync(0) {
+                @Override
+                protected void async() {
+                    Storage.ROOT.update();
+                    value = Utils.formatStorage(Storage.EXTERNAL);
+                }
+            });
+
+            cachedList.addItem("Internal Storage", "description", 1f, true, new DeviceInfoItemAsync(2) {
+                @Override
+                protected void async() {
+                    Storage.ROOT.update();
+                    value = Utils.formatStorage(Storage.DATA);
+                }
+            });
+
+            cachedList.addItem("Root Storage", "description", 1f, true, new DeviceInfoItemAsync(3) {
+                @Override
+                protected void async() {
+                    Storage.ROOT.update();
+                    value = Utils.formatStorage(Storage.ROOT);
+                }
+            });
+
+            Memory.threads.add(cachedList.addItem("Runtime Memory by this App", "description", 1f, true, new DeviceInfoItemAsync(4) {
+                @Override
+                protected void async() {
+                    value = "Total:\t\t" + formatBytes(Device.getRuntimeTotalMemory()) + "\n" +
+                            "Free:\t\t" + formatBytes(Device.getRuntimeFreeMemory()) + "\n" +
+                            "Used:\t\t" + formatBytes(Device.getUsedMemorySize());
+                }
+            }));
+
+            Memory.threads.add(cachedList.addItem("RAM", "description", 1f, true, new DeviceInfoItemAsync(5) {
+                @Override
+                protected void async() {
+                    value = Device.getContentRandomAccessFile("/proc/meminfo");
+                }
+            }));
+
+            cachedList.addItem("External Storage State", "description", Utils.firstLetterToUpperCase(Environment.getExternalStorageState()), 6);
+
+            Memory.threads.add(cachedList.addItem("Low Memory", "description", 1f, true, new DeviceInfoItemAsync(7) {
+                @Override
+                protected void async() {
+                    value = formatBool(Device.isLowMemory());
+                }
+            }));
+
+            cachedList.addItem("Memory Class", "description", String.format("%.2f MB", (float) Device.getMemoryClass()), 8);
+            // cachedList.addItem("Large Memory Class", "description", Device.getLargeMemoryClass() + " MB");
 
             cachedList.addItem("Internal Storage Path", "description", new DeviceInfoItemAsync() {
                 @Override
@@ -277,6 +328,7 @@ public enum Registry implements IGetInfoFragment {
                 @Override
                 protected void async() {
                     value = Device.getFileSize(context().getPackageCodePath());
+                    setHorizontal();
                 }
             });
 
@@ -370,68 +422,6 @@ public enum Registry implements IGetInfoFragment {
                     value = Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_RINGTONES));
                 }
             });
-        }
-    },
-
-    // endregion
-
-    // region Memory
-
-    Memory(android.R.drawable.ic_menu_search) {
-        @Override
-        public void createFragmentList() {
-
-            cachedList.addItem("External Storage", "description", 1f, true, new DeviceInfoItemAsync(0) {
-                @Override
-                protected void async() {
-                    Storage.ROOT.update();
-                    value = Utils.formatStorage(Storage.EXTERNAL);
-                }
-            });
-
-            cachedList.addItem("Internal Storage", "description", 1f, true, new DeviceInfoItemAsync(2) {
-                @Override
-                protected void async() {
-                    Storage.ROOT.update();
-                    value = Utils.formatStorage(Storage.DATA);
-                }
-            });
-
-            cachedList.addItem("Root Storage", "description", 1f, true, new DeviceInfoItemAsync(3) {
-                @Override
-                protected void async() {
-                    Storage.ROOT.update();
-                    value = Utils.formatStorage(Storage.ROOT);
-                }
-            });
-
-            Memory.threads.add(cachedList.addItem("Runtime Memory by this App", "description", 1f, true, new DeviceInfoItemAsync(4) {
-                @Override
-                protected void async() {
-                    value = "Total:\t\t" + formatBytes(Device.getRuntimeTotalMemory()) + "\n" +
-                            "Free:\t\t" + formatBytes(Device.getRuntimeFreeMemory()) + "\n" +
-                            "Used:\t\t" + formatBytes(Device.getUsedMemorySize());
-                }
-            }));
-
-            Memory.threads.add(cachedList.addItem("RAM", "description", 1f, true, new DeviceInfoItemAsync(5) {
-                @Override
-                protected void async() {
-                    value = Device.getContentRandomAccessFile("/proc/meminfo");
-                }
-            }));
-
-            cachedList.addItem("External Storage State", "description", Utils.firstLetterToUpperCase(Environment.getExternalStorageState()), 6);
-
-            Memory.threads.add(cachedList.addItem("Low Memory", "description", 1f, true, new DeviceInfoItemAsync(7) {
-                @Override
-                protected void async() {
-                    value = formatBool(Device.isLowMemory());
-                }
-            }));
-
-            cachedList.addItem("Memory Class", "description", String.format("%.2f MB", (float) Device.getMemoryClass()), 8);
-            // cachedList.addItem("Large Memory Class", "description", Device.getLargeMemoryClass() + " MB");
         }
     },
 
@@ -657,14 +647,11 @@ public enum Registry implements IGetInfoFragment {
 
     // endregion
 
-    // region Network
+    // region Geolocation
 
     Geolocation(android.R.drawable.ic_menu_search) {
-
         @Override
         public void createFragmentList() {
-
-//            stopRefreshing();
 
             // todo freegeoip.net
 
@@ -672,15 +659,18 @@ public enum Registry implements IGetInfoFragment {
                 @Override
                 public void onComplete(final JSONObject result) {
 
-                    final LinearLayout l = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.table, null);
-                    final TextView keys = ((TextView) l.findViewById(R.id.keys));
-                    final TextView values = ((TextView) l.findViewById(R.id.values));
+                    final LinearLayout l = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.tablewithtag, null);
+                    final TextView keys = ((TextView) l.findViewById(R.id.key));
+                    final TextView values = ((TextView) l.findViewById(R.id.value));
                     final HashMap<String, String> geoMap = Utils.parseTelize(result);
 
-                    final DeviceInfoItemAsync item = new DeviceInfoItemAsync(1) {
+                    cachedList.addItem("<b>Geolocation</b>", "description", new DeviceInfoItemAsync(0) {
 
                         @Override
                         protected void async() {
+
+                            customView = l;
+
                             String k = "";
                             String v = "";
 
@@ -692,33 +682,26 @@ public enum Registry implements IGetInfoFragment {
                             keys.setText(k);
                             values.setText(v);
                         }
-                    };
+                    });
 
-                    item.customView = l;
-                    cachedList.addItem("<b>Geolocation</b>", "description", item);
-                    final WebView webView = CustomWebView.createWebView(context());
-
-                    final String url = "http://www.google.de/maps/?q=" + geoMap.get("Latitude") + "," + geoMap.get("Longitude")+ "&t=h&z=19";
-//                    final String url2 = "https://www.google.com/maps/embed/v1/view?key="+API_KEY+"&center=" + geoMap.get("Latitude") + "," + geoMap.get("Longitude");
-
-                    final DeviceInfoItemAsync map = new DeviceInfoItemAsync(0) {
+                    cachedList.addItem("<b>Google Maps</b>", "description", new DeviceInfoItemAsync(1) {
 
                         @Override
                         protected void async() {
-                            value = "bla";
-
                             context().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
+                                    final LinearLayout linearWeb = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.linearlayoutwithtag, null);
+                                    final WebView webView = CustomWebView.createWebView(context());
+                                    linearWeb.addView(webView);
+                                    // final String url2 = "https://www.google.com/maps/embed/v1/view?key="+API_KEY+"&center=" + geoMap.get("Latitude") + "," + geoMap.get("Longitude");
+                                    final String url = "http://www.google.de/maps/?q=" + geoMap.get("Latitude") + "," + geoMap.get("Longitude") + "&t=h&z=17";
                                     webView.loadUrl(url);
+                                    customView = linearWeb;
                                 }
                             });
                         }
-                    };
-
-                    map.customView = webView;
-
-                    cachedList.addItem("<b>Google Maps</b>", "description", map);
+                    });
                 }
             });
         }

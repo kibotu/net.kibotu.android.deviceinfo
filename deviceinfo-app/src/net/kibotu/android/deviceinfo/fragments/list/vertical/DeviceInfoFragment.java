@@ -93,8 +93,8 @@ public class DeviceInfoFragment extends ListFragment {
         return t;
     }
 
-    public void addItem(final String tag, final String description, final DeviceInfoItemAsync asyncValue) {
-        addItem(tag, description, 0f, false, asyncValue);
+    public Thread addItem(final String tag, final String description, final DeviceInfoItemAsync asyncValue) {
+        return addItem(tag, description, 0f, false, asyncValue);
     }
 
     @Override
@@ -107,6 +107,6 @@ public class DeviceInfoFragment extends ListFragment {
         // Logger.toast(list.getItem(position).tag + " " +list.getItem(position).order);
 
         // CustomWebView webView = new CustomWebView(Device.context());
-        // webView.showWebViewFullScreen("https://github.com/kibotu/net.kibotu.android.deviceinfo/blob/master/deviceinfo-lib/src/net/kibotu/android/deviceinfo/Device.java#L96-L113");
+        // webView.showWebViewFullScreen("https://github.com/kibotu/net.kibotu.android.tworowitem/blob/master/tworowitem-lib/src/net/kibotu/android/tworowitem/Device.java#L96-L113");
     }
 }
