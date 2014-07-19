@@ -72,6 +72,7 @@ public class MainActivity extends FragmentActivity {
                 .replace(R.id.menu_frame, arcList)
                 .commit();
 
+        arcList.lastItemList = Registry.Build;
         menu.showMenu();
 
         // time bomb

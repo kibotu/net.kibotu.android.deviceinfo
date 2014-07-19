@@ -17,8 +17,7 @@ public class MenuFragment extends ListFragment {
 
     private volatile MenuAdapter list;
     private volatile Context context;
-    private volatile Registry currentItemList;
-    private volatile Registry lastItemList;
+    public volatile Registry lastItemList;
 
     public MenuFragment(Context context) {
         this.context = context;
@@ -45,27 +44,19 @@ public class MenuFragment extends ListFragment {
     public void onListItemClick(final ListView lv, final View v, final int position, final long id) {
         super.onListItemClick(lv, v, position, id);
 
-        currentItemList = Registry.values()[position];
-        if(lastItemList == currentItemList) {
-            MainActivity.menu.showContent();
-            return;
-        }
-
-        if (lastItemList != null)
-            lastItemList.stopRefreshing();
-
+        if (lastItemList != null) lastItemList.stopRefreshing();
+        final Registry currentItemList = Registry.values()[position];
         currentItemList.startRefreshingList(1);
 //        currentItemList.resumeThreads();
 
-        if (lastItemList != null)
+        if (lastItemList != currentItemList)
             ((FragmentActivity) Device.context()).getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.content_frame, currentItemList.getFragmentList())
                     .commit();
 
+        lastItemList = currentItemList;
         Device.context().setTitle(currentItemList.name());
         MainActivity.menu.showContent();
-
-        lastItemList = currentItemList;
     }
 }

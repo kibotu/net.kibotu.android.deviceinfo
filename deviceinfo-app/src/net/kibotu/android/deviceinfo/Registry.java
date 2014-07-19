@@ -16,6 +16,7 @@ import net.kibotu.android.deviceinfo.utils.Utils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
 import java.util.*;
 
 import static android.os.Build.*;
@@ -356,7 +357,7 @@ public enum Registry implements IGetInfoFragment {
 
             final LinearLayout l = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.ram, null);
 
-            Memory.threads.add(cachedList.addItem("RAM", "description", 1f, true, new DeviceInfoItemAsync(5) {
+            Memory.threads.add(cachedList.addItem("RAM", "Dumping /proc/meminfo.", 1f, true, new DeviceInfoItemAsync(5) {
 
                 @Override
                 protected void async() {
@@ -365,7 +366,7 @@ public enum Registry implements IGetInfoFragment {
                 }
             }));
 
-            cachedList.addItem("External Storage State", "description", Utils.firstLetterToUpperCase(Environment.getExternalStorageState()), 6);
+            cachedList.addItem("External Storage State", "Returns the current state of the primary \"external\" storage device.", Utils.firstLetterToUpperCase(Environment.getExternalStorageState()), 6);
 
             Memory.threads.add(cachedList.addItem("Low Memory", "description", 1f, true, new DeviceInfoItemAsync(7) {
                 @Override
@@ -401,14 +402,6 @@ public enum Registry implements IGetInfoFragment {
                 }
             });
 
-            cachedList.addItem("Data Directory", "description", new DeviceInfoItemAsync() {
-                @Override
-                protected void async() {
-                    useDirectoryLayout();
-                    value = Device.getFileSize(Environment.getDataDirectory());
-                }
-            });
-
             cachedList.addItem("External Storage Director", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
@@ -425,7 +418,8 @@ public enum Registry implements IGetInfoFragment {
                 }
             });
 
-            cachedList.addItem("Directory Alarms", "description", new DeviceInfoItemAsync() {
+            // http://developer.android.com/reference/android/os/Environment.html
+            cachedList.addItem("Directory Alarms", "Standard directory in which to place any audio files that should be in the list of alarms that the user can select (not as regular music).", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
                     useDirectoryLayout();
@@ -433,7 +427,7 @@ public enum Registry implements IGetInfoFragment {
                 }
             });
 
-            cachedList.addItem("Directory DCIM", "description", new DeviceInfoItemAsync() {
+            cachedList.addItem("Directory DCIM", "The traditional location for pictures and videos when mounting the device as a camera.", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
                     useDirectoryLayout();
@@ -441,7 +435,27 @@ public enum Registry implements IGetInfoFragment {
                 }
             });
 
-            cachedList.addItem("Directory Downloads", "description", new DeviceInfoItemAsync() {
+            cachedList.addItem("Directory Documents", "Standard directory in which to place documents that have been created by the user.", new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    useDirectoryLayout();
+
+                    if (Device.getApiLevel() <= 19)
+                        value = "Added in API level 19.";
+                    else {
+                        try {
+                            Field field = Environment.class.getField("DIRECTORY_DOCUMENTS");
+                            value = Device.getFileSize(Environment.getExternalStoragePublicDirectory((String) field.get(null)));
+                        } catch (final NoSuchFieldException e) {
+                            Logger.e(e);
+                        } catch (final IllegalAccessException e) {
+                            Logger.e(e);
+                        }
+                    }
+                }
+            });
+
+            cachedList.addItem("Directory Downloads", "Standard directory in which to place files that have been downloaded by the user.", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
                     useDirectoryLayout();
@@ -449,7 +463,7 @@ public enum Registry implements IGetInfoFragment {
                 }
             });
 
-            cachedList.addItem("Directory Movies", "description", new DeviceInfoItemAsync() {
+            cachedList.addItem("Directory Movies", "Standard directory in which to place movies that are available to the user.", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
                     useDirectoryLayout();
@@ -457,7 +471,7 @@ public enum Registry implements IGetInfoFragment {
                 }
             });
 
-            cachedList.addItem("Directory Music", "description", new DeviceInfoItemAsync() {
+            cachedList.addItem("Directory Music", "Standard directory in which to place any audio files that should be in the regular list of music for the user.", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
                     useDirectoryLayout();
@@ -465,7 +479,7 @@ public enum Registry implements IGetInfoFragment {
                 }
             });
 
-            cachedList.addItem("Directory Notifications", "description", new DeviceInfoItemAsync() {
+            cachedList.addItem("Directory Notifications", "Standard directory in which to place any audio files that should be in the list of notifications that the user can select (not as regular music).", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
                     useDirectoryLayout();
@@ -473,7 +487,7 @@ public enum Registry implements IGetInfoFragment {
                 }
             });
 
-            cachedList.addItem("Directory Pictures", "description", new DeviceInfoItemAsync() {
+            cachedList.addItem("Directory Pictures", "Standard directory in which to place pictures that are available to the user.", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
                     useDirectoryLayout();
@@ -481,7 +495,7 @@ public enum Registry implements IGetInfoFragment {
                 }
             });
 
-            cachedList.addItem("Directory Podcasts", "description", new DeviceInfoItemAsync() {
+            cachedList.addItem("Directory Podcasts", "Standard directory in which to place any audio files that should be in the list of podcasts that the user can select (not as regular music).", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
                     useDirectoryLayout();
@@ -489,7 +503,7 @@ public enum Registry implements IGetInfoFragment {
                 }
             });
 
-            cachedList.addItem("Directory Ringtones", "description", new DeviceInfoItemAsync() {
+            cachedList.addItem("Directory Ringtones", "Standard directory in which to place any audio files that should be in the list of ringtones that the user can select (not as regular music).", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
                     useDirectoryLayout();
@@ -784,7 +798,7 @@ public enum Registry implements IGetInfoFragment {
                         public void run() {
 
                             // redraw listview
-                            if(cachedList != null) cachedList.list.notifyDataSetChanged();
+                            if (cachedList != null) cachedList.list.notifyDataSetChanged();
                         }
                     });
                 }
