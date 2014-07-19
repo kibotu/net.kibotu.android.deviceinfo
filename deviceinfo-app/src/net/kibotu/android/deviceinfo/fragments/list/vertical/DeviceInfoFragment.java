@@ -36,14 +36,16 @@ public class DeviceInfoFragment extends ListFragment {
     }
 
     public DeviceInfoItem addItem(String tag, String description, String value, int order) {
-        if (value == null || value == "") return null;
+        if (value == null || value == "")
+            Logger.w("Adding empty Item " + tag);
         DeviceInfoItem item = new DeviceInfoItem(tag, description, value, order);
         getFragmentListAdapter().add(item);
         return item;
     }
 
     public DeviceInfoItem addItem(String tag, String description, String value) {
-        if (value == null || value == "") return null;
+        if (value == null || value == "")
+            Logger.w("Adding empty Item " + tag);
         DeviceInfoItem item = new DeviceInfoItem(tag, description, value);
         getFragmentListAdapter().add(item);
         return item;

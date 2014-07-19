@@ -16,7 +16,6 @@ import net.kibotu.android.deviceinfo.utils.Utils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.lang.reflect.Field;
 import java.util.*;
 
 import static android.os.Build.*;
@@ -26,30 +25,109 @@ import static net.kibotu.android.deviceinfo.utils.Utils.*;
 
 public enum Registry implements IGetInfoFragment {
 
-    // region Unsorted
+    // region App
 
-    Unsorted(android.R.drawable.ic_menu_search) {
+    App(android.R.drawable.ic_menu_search) {
         @Override
         public void createFragmentList() {
 
-            cachedList.addItem("display ID", "description", "" + context().getWindowManager().getDefaultDisplay().getDisplayId()).setHorizontal();
-            cachedList.addItem("Brand", "description", BRAND).setHorizontal();
+            cachedList.addItem("AppVersion", "description", "" + Device.getVersionFromPackageManager(),0).setHorizontal();
 
-            cachedList.addItem("IMSI No", "description", Device.getSubscriberIdFromTelephonyManager()).setHorizontal();
-            cachedList.addItem("hwID", "description", Device.getSerialNummer()).setHorizontal();
-            cachedList.addItem("AppVersion", "description", "" + Device.getVersionFromPackageManager()).setHorizontal();
+            App.threads.add(cachedList.addItem("threads count", "description", 1f, true, new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = "" + Thread.getAllStackTraces().keySet().size();
+                    order = 1;
+                }
+            }));
 
-            cachedList.addItem("IMEI No", "description", Device.getDeviceIdFromTelephonyManager()).setHorizontal();
-            cachedList.addItem("Locale", "description", context().getResources().getConfiguration().locale.toString()).setHorizontal();
+            final LinearLayout lApp = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.ram, null);
+            App.threads.add(cachedList.addItem("Runtime Memory App", "Currently reserved runtime memory by this App.", 1f, true, new DeviceInfoItemAsync(2) {
+                @Override
+                protected void async() {
 
+                    customView = lApp;
+                    useHtml = true;
 
-            cachedList.addItem("Rooted", "description", "" + Device.isPhoneRooted());
+                    keys = "Max:" + BR;
+                    value = formatBytes(Device.getRuntimeMaxMemory()) + BR;
+                    keys += "Total:" + BR;
+                    value += formatBytes(Device.getRuntimeTotalMemory()) + BR;
+                    keys += "Free:" + BR;
+                    value += formatBytes(Device.getRuntimeFreeMemory()) + BR;
+                    keys += "Used:" + BR;
+                    value += formatBytes(Device.getUsedMemorySize()) + BR;
+                }
+            }));
 
-            cachedList.addItem("Installed Apps", "description", "" + Device.installedApps().size());
+            cachedList.addItem("APK Storage Path", "description", new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Device.getFileSize(context().getPackageCodePath());
+                    order = 3;
+//                    textAppearance = android.R.style.TextAppearance_Small;
+                }
+            });
 
-            cachedList.addItem("Permissions", "description", jsonArrayToString(Device.getPermissions()));
+            cachedList.addItem("Internal Storage Path", "description", new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+                    value = Device.getFileSize(context().getFilesDir().getParent());
+                    order = 4;
+//                    textAppearance = android.R.style.TextAppearance_Small;
+                }
+            });
 
-            cachedList.addItem("Shared Libraries", "description", jsonArrayToString(Device.getSharedLibraries()));
+            cachedList.addItem("Permissions", "All enabled permissions for this app.", jsonArrayToString(Device.getPermissions()),5);
+
+            cachedList.addItem("Shared Libraries", "List of shared libraries that are available on the system.", jsonArrayToString(Device.getSharedLibraries()),6);
+        }
+    },
+
+    // endregion
+
+    // region Unsorted
+
+    Other(android.R.drawable.ic_menu_search) {
+        @Override
+        public void createFragmentList() {
+            cachedList.addItem("Rooted", "Determines if this device has been rooted.", "" + Device.isPhoneRooted()).setHorizontal();
+            cachedList.addItem("Installed Apps", "Amount of currently installed applications.", "" + Device.installedApps().size()).setHorizontal();
+        }
+    },
+
+    // endregion
+
+    // region Unsorted
+
+    Configuration(android.R.drawable.ic_menu_search) {
+        @Override
+        public void createFragmentList() {
+
+            // http://developer.android.com/reference/android/content/res/Configuration.html
+//            cachedList.addItem("densityDpi", "The target screen density being rendered to, corresponding to density resource qualifier.", Utils.formatOrientation(context().getResources().getConfiguration().densityDpi)).setHorizontal(); // 17
+            cachedList.addItem("Font Scale", "Current user preference for the scaling factor for fonts, relative to the base density scaling.", "" + context().getResources().getConfiguration().fontScale).setHorizontal();
+            cachedList.addItem("Hard Keyboard Hidden", "A flag indicating whether the hard keyboard has been hidden. This will be set on a device with a mechanism to hide the keyboard from the user, when that mechanism is closed. One of: HARDKEYBOARDHIDDEN_NO, HARDKEYBOARDHIDDEN_YES.", formatKeyBoardHidden(context().getResources().getConfiguration().hardKeyboardHidden)).setHorizontal();
+            cachedList.addItem("Keyboard", "The kind of keyboard attached to the device. One of: KEYBOARD_NOKEYS, KEYBOARD_QWERTY, KEYBOARD_12KEY.", formatKeyboard(context().getResources().getConfiguration().keyboard)).setHorizontal();
+            cachedList.addItem("Keyboard Hidden", "A flag indicating whether any keyboard is available. Unlike hardKeyboardHidden, this also takes into account a soft keyboard, so if the hard keyboard is hidden but there is soft keyboard available, it will be set to NO. Value is one of: KEYBOARDHIDDEN_NO, KEYBOARDHIDDEN_YES.", Utils.formatKeyboardHidden(context().getResources().getConfiguration().keyboardHidden)).setHorizontal();
+            cachedList.addItem("Locale", "Current user preference for the locale, corresponding to locale resource qualifier.", context().getResources().getConfiguration().locale.toString()).setHorizontal();
+            cachedList.addItem("IMSI MCC", "IMSI MCC (Mobile Country Code), corresponding to mcc resource qualifier.", "" + context().getResources().getConfiguration().mcc).setHorizontal();
+            cachedList.addItem("IMSI MNC", "IMSI MNC (Mobile Network Code), corresponding to mnc resource qualifier.", "" + context().getResources().getConfiguration().mnc).setHorizontal();
+            cachedList.addItem("Navigation", "The kind of navigation method available on the device. One of: NAVIGATION_NONAV, NAVIGATION_DPAD, NAVIGATION_TRACKBALL, NAVIGATION_WHEEL.", formatNavigation(context().getResources().getConfiguration().navigation)).setHorizontal();
+            cachedList.addItem("Navigation Hidden", "A flag indicating whether any 5-way or DPAD navigation available.", formatNavigationHidden(context().getResources().getConfiguration().navigationHidden)).setHorizontal();
+            cachedList.addItem("Orientation", "Overall orientation of the screen.", formatOrientation(context().getResources().getConfiguration().orientation)).setHorizontal();
+//            cachedList.addItem("ScreenHeightDp", "The current height of the available screen space, in dp units, corresponding to screen height resource qualifier.", Utils.formatOrientation(context().getResources().getConfiguration().screenHeightDp)).setHorizontal(); // 13
+            cachedList.addItem("Screen Layout", "Bit mask of overall layout of the screen. Currently there are two fields:\n" +
+                    "The SCREENLAYOUT_SIZE_MASK bits define the overall size of the screen. They may be one of SCREENLAYOUT_SIZE_SMALL, SCREENLAYOUT_SIZE_NORMAL, SCREENLAYOUT_SIZE_LARGE, or SCREENLAYOUT_SIZE_XLARGE.\n" +
+                    "The SCREENLAYOUT_LONG_MASK defines whether the screen is wider/taller than normal. They may be one of SCREENLAYOUT_LONG_NO or SCREENLAYOUT_LONG_YES.\n" +
+                    "The SCREENLAYOUT_LAYOUTDIR_MASK defines whether the screen layout is either LTR or RTL. They may be one of SCREENLAYOUT_LAYOUTDIR_LTR or SCREENLAYOUT_LAYOUTDIR_RTL.\n" +
+                    "See Supporting Multiple Screens for more information.", formatScreenLayout(context().getResources().getConfiguration().screenLayout)).setHorizontal();
+//            cachedList.addItem("screenWidthDp", "The current width of the available screen space, in dp units, corresponding to screen width resource qualifier.", Utils.formatOrientation(context().getResources().getConfiguration().screenWidthDp)).setHorizontal(); // 13
+//            cachedList.addItem("smallestScreenWidthDp", "The smallest screen size an application will see in normal operation, corresponding to smallest screen width resource qualifier.", Utils.formatOrientation(context().getResources().getConfiguration().smallestScreenWidthDp)).setHorizontal(); // 13
+            cachedList.addItem("Touchscreen", "The kind of touch screen attached to the device. One of: TOUCHSCREEN_NOTOUCH, TOUCHSCREEN_FINGER.", formatTouchscreen(context().getResources().getConfiguration().touchscreen)).setHorizontal();
+            cachedList.addItem("UIMode", "Bit mask of the ui mode. Currently there are two fields:\n" +
+                    "The UI_MODE_TYPE_MASK bits define the overall ui mode of the device. They may be one of UI_MODE_TYPE_UNDEFINED, UI_MODE_TYPE_NORMAL, UI_MODE_TYPE_DESK, UI_MODE_TYPE_CAR, UI_MODE_TYPE_TELEVISION, UI_MODE_TYPE_APPLIANCE, or UI_MODE_TYPE_WATCH.\n" +
+                    "The UI_MODE_NIGHT_MASK defines whether the screen is in a special mode. They may be one of UI_MODE_NIGHT_UNDEFINED, UI_MODE_NIGHT_NO or UI_MODE_NIGHT_YES.", formatUIMode(context().getResources().getConfiguration().uiMode)).setHorizontal();
         }
     },
 
@@ -64,13 +142,6 @@ public enum Registry implements IGetInfoFragment {
                 @Override
                 protected void async() {
                     value = String.valueOf(Calendar.getInstance().getTime());
-                }
-            }));
-            Monitor.threads.add(cachedList.addItem("threads count", "description", 1f, true, new DeviceInfoItemAsync() {
-                @Override
-                protected void async() {
-                    value = "" + Thread.getAllStackTraces().keySet().size();
-                    order = 1;
                 }
             }));
         }
@@ -116,7 +187,7 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("SDK_INT", "The user-visible SDK version of the framework; its possible values are defined in Build.VERSION_CODES.", "" + VERSION.SDK_INT).setHorizontal();
 
             final JSONArray features = Device.getFeatures();
-            cachedList.addItem("Features", "This device supports " + features.length() + " Features.", jsonArrayToString(Utils.sort(features))).textAppearance = android.R.style.TextAppearance_Small;
+            cachedList.addItem("Features", "List of features that are available on the system. This device supports " + features.length() + " Features.", jsonArrayToString(sort(features))).textAppearance = android.R.style.TextAppearance_Small;
         }
     },
 
@@ -281,10 +352,7 @@ public enum Registry implements IGetInfoFragment {
                 }
             }));
 
-            cachedList.addItem("Density Class", "description", "");
-//            cachedList.addItem("Density DPI", "description", DisplayHelper.hasSoftKeys());
-
-            cachedList.addItem("DISPLAY", "description", DISPLAY);
+            cachedList.addItem("Display ID", "Each logical display has a unique id. The default display has id DEFAULT_DISPLAY. (" + android.view.Display.DEFAULT_DISPLAY + ")", "" + context().getWindowManager().getDefaultDisplay().getDisplayId());
 
             cachedList.addItem("PixelFormat", "description", new DeviceInfoItemAsync() {
                 @Override
@@ -336,25 +404,6 @@ public enum Registry implements IGetInfoFragment {
 //                }
 //            });
 
-            final LinearLayout lApp = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.ram, null);
-            Memory.threads.add(cachedList.addItem("Runtime Memory App", "Currently reserved runtime memory by this App.", 1f, true, new DeviceInfoItemAsync(4) {
-                @Override
-                protected void async() {
-
-                    customView = lApp;
-                    useHtml = true;
-
-                    keys = "Max:" + BR;
-                    value = formatBytes(Device.getRuntimeMaxMemory()) + BR;
-                    keys += "Total:" + BR;
-                    value += formatBytes(Device.getRuntimeTotalMemory()) + BR;
-                    keys += "Free:" + BR;
-                    value += formatBytes(Device.getRuntimeFreeMemory()) + BR;
-                    keys += "Used:" + BR;
-                    value += formatBytes(Device.getUsedMemorySize()) + BR;
-                }
-            }));
-
             final LinearLayout l = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.ram, null);
 
             Memory.threads.add(cachedList.addItem("RAM", "Dumping /proc/meminfo.", 1f, true, new DeviceInfoItemAsync(5) {
@@ -362,11 +411,11 @@ public enum Registry implements IGetInfoFragment {
                 @Override
                 protected void async() {
                     customView = l;
-                    setMap(Utils.parseRam(Device.getContentRandomAccessFile("/proc/meminfo")));
+                    setMap(parseRam(Device.getContentRandomAccessFile("/proc/meminfo")));
                 }
             }));
 
-            cachedList.addItem("External Storage State", "Returns the current state of the primary \"external\" storage device.", Utils.firstLetterToUpperCase(Environment.getExternalStorageState()), 6);
+            cachedList.addItem("External Storage State", "Returns the current state of the primary \"external\" storage device.", firstLetterToUpperCase(Environment.getExternalStorageState()), 6);
 
             Memory.threads.add(cachedList.addItem("Low Memory", "description", 1f, true, new DeviceInfoItemAsync(7) {
                 @Override
@@ -378,22 +427,6 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("Memory Class", "description", String.format("%.2f MB", (float) Device.getMemoryClass()), 8);
             // cachedList.addItem("Large Memory Class", "description", Device.getLargeMemoryClass() + " MB");
 
-            cachedList.addItem("APK Storage Path", "description", new DeviceInfoItemAsync() {
-                @Override
-                protected void async() {
-                    useDirectoryLayout();
-                    value = Device.getFileSize(context().getPackageCodePath());
-                }
-            });
-
-            cachedList.addItem("Internal Storage Path", "description", new DeviceInfoItemAsync() {
-                @Override
-                protected void async() {
-                    useDirectoryLayout();
-                    value = Device.getFileSize(context().getFilesDir().getParent());
-                }
-            });
-
             cachedList.addItem("Root Directory", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
@@ -402,7 +435,7 @@ public enum Registry implements IGetInfoFragment {
                 }
             });
 
-            cachedList.addItem("External Storage Director", "description", new DeviceInfoItemAsync() {
+            cachedList.addItem("External Storage Directory", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
                     useDirectoryLayout();
@@ -440,17 +473,11 @@ public enum Registry implements IGetInfoFragment {
                 protected void async() {
                     useDirectoryLayout();
 
-                    if (Device.getApiLevel() <= 19)
+                    if (!Device.supportsApi(19))
                         value = "Added in API level 19.";
                     else {
-                        try {
-                            Field field = Environment.class.getField("DIRECTORY_DOCUMENTS");
-                            value = Device.getFileSize(Environment.getExternalStoragePublicDirectory((String) field.get(null)));
-                        } catch (final NoSuchFieldException e) {
-                            Logger.e(e);
-                        } catch (final IllegalAccessException e) {
-                            Logger.e(e);
-                        }
+                        final String result = ReflectionHelper.getPublicStaticField(Environment.class, "DIRECTORY_DOCUMENTS");
+                        value = Device.getFileSize(Environment.getExternalStoragePublicDirectory(result));
                     }
                 }
             });
@@ -523,12 +550,12 @@ public enum Registry implements IGetInfoFragment {
 
         @Override
         public void createFragmentList() {
-            cachedList.addItem("CPU Cores", "description", new DeviceInfoItemAsync(1) {
+            cachedList.addItem("CPU Cores", "Amount of cores.", new DeviceInfoItemAsync(1) {
                 @Override
                 protected void async() {
                     value = "" + cores;
 
-                    CPU.threads.add(cachedList.addItem("CPU Utilization All Cores", "description", 1f, true, new DeviceInfoItemAsync(0) {
+                    CPU.threads.add(cachedList.addItem("CPU Utilization All Cores", "Output from /proc/stat.", 1f, true, new DeviceInfoItemAsync(0) {
                         @Override
                         protected void async() {
                             value = "" + Device.getCpuUsage()[0] + " %";
@@ -537,7 +564,7 @@ public enum Registry implements IGetInfoFragment {
 
                     for (int i = 1; i < cores + 1; ++i) {
                         final int finalI = i;
-                        CPU.threads.add(cachedList.addItem("CPU Utilization Core " + i, "description", 1f, true, new DeviceInfoItemAsync(finalI + 1) {
+                        CPU.threads.add(cachedList.addItem("CPU Utilization Core " + i, "Output from /proc/stat.", 1f, true, new DeviceInfoItemAsync(finalI + 1) {
                             @Override
                             protected void async() {
                                 float usage = Device.getCpuUsage()[finalI];
@@ -548,28 +575,24 @@ public enum Registry implements IGetInfoFragment {
                 }
             });
 
-            CPU.threads.add(cachedList.addItem("Current Frequency", "description", 1f, true, new DeviceInfoItemAsync(cores + 2) {
+            final LinearLayout lFreq = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.tablewithtag, null);
+            CPU.threads.add(cachedList.addItem("Frequency", "Dumped cpuinfo_max_freq, cpuinfo_min_freq and scaling_cur_freq from /sys/devices/system/cpu/cpu0/cpufreq/.", 1f, true, new DeviceInfoItemAsync(cores + 2) {
                 @Override
                 protected void async() {
-                    value = formatFrequency(Device.getCurrentCpuFreq());
+                    customView = lFreq;
+
+                    useHtml = true;
+
+                    keys = "Max:" + BR;
+                    value = formatFrequency(Device.getMaxCpuFreq()) + BR;
+                    keys += "Min:" + BR;
+                    value += formatFrequency(Device.getMinCpuFreq()) + BR;
+                    keys += "Current:" + BR;
+                    value += formatFrequency(Device.getCurrentCpuFreq());
                 }
             }));
 
-            CPU.threads.add(cachedList.addItem("Min Frequency", "description", 1f, true, new DeviceInfoItemAsync(cores + 2) {
-                @Override
-                protected void async() {
-                    value = formatFrequency(Device.getMinCpuFreq());
-                }
-            }));
-
-            CPU.threads.add(cachedList.addItem("Max Frequency", "description", 1f, true, new DeviceInfoItemAsync(cores + 4) {
-                @Override
-                protected void async() {
-                    value = formatFrequency(Device.getMaxCpuFreq());
-                }
-            }));
-
-            cachedList.addItem("CPU Details", "description", 1f, false, new DeviceInfoItemAsync(cores + 5) {
+            cachedList.addItem("CPU Details", "Dumped /proc/cpuinfo.", 1f, false, new DeviceInfoItemAsync(cores + 5) {
                 @Override
                 protected void async() {
                     value = Device.getCpuInfo();
@@ -673,12 +696,22 @@ public enum Registry implements IGetInfoFragment {
     Network(android.R.drawable.ic_menu_search) {
         @Override
         public void createFragmentList() {
-            cachedList.addItem("MAC Address (wlan0)", "description", Device.getMACAddress("wlan0"));
-            cachedList.addItem("MAC Address (eth0)", "description", Device.getMACAddress("eth0"));
-            cachedList.addItem("IP4 Address", "description", Device.getIPAddress(true));
-            cachedList.addItem("IP6 Address", "description", Device.getIPAddress(false));
 
-            cachedList.addItem("Mobile County/Network code", "description", context().getResources().getConfiguration().mcc + "/" + context().getResources().getConfiguration().mnc);
+            final SIM sim = new SIM(Device.context());
+            cachedList.addItem("sim Country", "description", sim.simCountry).setHorizontal();
+            cachedList.addItem("sim OperatorCode", "description", sim.simOperatorCode).setHorizontal();
+            cachedList.addItem("simOperatorName", "description", sim.simOperatorName).setHorizontal();
+            cachedList.addItem("simSerial", "description", sim.simSerial).setHorizontal();
+            cachedList.addItem("simState", "description", sim.simState).setHorizontal();
+
+            cachedList.addItem("IMSI No", "description", Device.getSubscriberIdFromTelephonyManager()).setHorizontal();
+            cachedList.addItem("hwID", "description", Device.getSerialNummer()).setHorizontal();
+            cachedList.addItem("IMEI No", "description", Device.getDeviceIdFromTelephonyManager()).setHorizontal();
+
+            cachedList.addItem("MAC Address (wlan0)", "description", Device.getMACAddress("wlan0")).setHorizontal();
+            cachedList.addItem("MAC Address (eth0)", "description", Device.getMACAddress("eth0")).setHorizontal();
+            cachedList.addItem("IP4 Address", "description", Device.getIPAddress(true)).setHorizontal();
+            cachedList.addItem("IP6 Address", "description", Device.getIPAddress(false)).setHorizontal();
             cachedList.addItem("UserAgent", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
@@ -686,7 +719,6 @@ public enum Registry implements IGetInfoFragment {
                         @Override
                         public void onComplete(final String result) {
                             value = result;
-                            Logger.v(result);
                         }
                     });
                 }
@@ -709,7 +741,7 @@ public enum Registry implements IGetInfoFragment {
                 public void onComplete(final JSONObject result) {
 
                     final LinearLayout l = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.tablewithtag, null);
-                    final Map<String, String> geoMap = Utils.parseTelize(result);
+                    final Map<String, String> geoMap = parseTelize(result);
 
                     cachedList.addItem("<b>Geolocation</b>", "description", new DeviceInfoItemAsync(0) {
 
