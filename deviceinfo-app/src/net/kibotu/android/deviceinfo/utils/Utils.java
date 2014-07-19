@@ -653,4 +653,9 @@ final public class Utils {
 
         return result;
     }
+
+    public static String formatLineSeparator(final String lineSeparator) {
+        return lineSeparator.equals("\n") ? "\\n" : lineSeparator.equals("\n\r") ? "\\n\\r" : lineSeparator;
+
+    }
 }

@@ -31,7 +31,7 @@ public enum Registry implements IGetInfoFragment {
         @Override
         public void createFragmentList() {
 
-            cachedList.addItem("AppVersion", "description", "" + Device.getVersionFromPackageManager(),0).setHorizontal();
+            cachedList.addItem("AppVersion", "description", "" + Device.getVersionFromPackageManager(), 0).setHorizontal();
 
             App.threads.add(cachedList.addItem("threads count", "description", 1f, true, new DeviceInfoItemAsync() {
                 @Override
@@ -78,15 +78,15 @@ public enum Registry implements IGetInfoFragment {
                 }
             });
 
-            cachedList.addItem("Permissions", "All enabled permissions for this app.", jsonArrayToString(Device.getPermissions()),5);
+            cachedList.addItem("Permissions", "All enabled permissions for this app.", jsonArrayToString(Device.getPermissions()), 5);
 
-            cachedList.addItem("Shared Libraries", "List of shared libraries that are available on the system.", jsonArrayToString(Device.getSharedLibraries()),6);
+            cachedList.addItem("Shared Libraries", "List of shared libraries that are available on the system.", jsonArrayToString(Device.getSharedLibraries()), 6);
         }
     },
 
     // endregion
 
-    // region Unsorted
+    // region Other
 
     Other(android.R.drawable.ic_menu_search) {
         @Override
@@ -691,6 +691,71 @@ public enum Registry implements IGetInfoFragment {
 
     // endregion
 
+    // region Java
+
+    Java(android.R.drawable.ic_menu_search) {
+        @Override
+        public void createFragmentList() {
+
+            // java vm
+            cachedList.addItem("java.vm.name", "description", System.getProperty("java.vm.name")).setJavaSpecs();
+            cachedList.addItem("java.vm.version", "description", System.getProperty("java.vm.version")).setJavaSpecs();
+            cachedList.addItem("java.vm.vendor.url", "description", System.getProperty("java.vm.vendor.url")).setJavaSpecs();
+
+            // java.vm.specification
+            cachedList.addItem("java.vm.specification.version", "description", System.getProperty("java.vm.specification.version")).setJavaSpecs();
+            cachedList.addItem("java.vm.specification.vendor", "description", System.getProperty("java.vm.specification.vendor")).setJavaSpecs();
+
+            // java.specification
+            cachedList.addItem("java.specification.name", "description", System.getProperty("java.specification.name")).setJavaSpecs();
+            cachedList.addItem("java.specification.version", "description", System.getProperty("java.specification.version")).setJavaSpecs();
+            cachedList.addItem("java.specification.vendor", "description", System.getProperty("java.specification.vendor")).setJavaSpecs();
+
+            // java.vendor
+            cachedList.addItem("java.vendor.url", "description", System.getProperty("java.vendor.url")).setJavaSpecs();
+            cachedList.addItem("java.vendor", "description", System.getProperty("java.vendor")).setJavaSpecs();
+
+            // java
+            cachedList.addItem("java.version", "description", System.getProperty("java.version")).setJavaSpecs();
+            cachedList.addItem("java.home", "description", System.getProperty("java.home")).setJavaSpecs();
+            cachedList.addItem("java.runtime.version", "description", System.getProperty("java.runtime.version")).setJavaSpecs();
+            cachedList.addItem("java.runtime.name", "description", System.getProperty("java.runtime.name")).setJavaSpecs();
+            cachedList.addItem("java.class.version", "description", System.getProperty("java.class.version")).setJavaSpecs();
+            cachedList.addItem("java.boot.class.path", "description", System.getProperty("java.boot.class.path")).textAppearance = android.R.style.TextAppearance_Small;
+            cachedList.addItem("java.io.tmpdir", "description", System.getProperty("java.io.tmpdir")).textAppearance = android.R.style.TextAppearance_Small;
+            cachedList.addItem("java.library.path", "description", System.getProperty("java.library.path")).setJavaSpecs();
+            cachedList.addItem("java.compiler", "description", System.getProperty("java.compiler")).setJavaSpecs();
+            cachedList.addItem("java.class.path", "description", System.getProperty("java.class.path")).setJavaSpecs();
+            cachedList.addItem("java.ext.dirs", "description", System.getProperty("java.ext.dirs")).setJavaSpecs();
+
+            // android
+            cachedList.addItem("android.openssl.version", "description", System.getProperty("android.openssl.version")).setJavaSpecs();
+            cachedList.addItem("android.icu.library.version", "description", System.getProperty("android.icu.library.version")).setJavaSpecs();
+            cachedList.addItem("android.zlib.version", "description", System.getProperty("android.zlib.version")).setJavaSpecs();
+
+            // user
+            cachedList.addItem("user.dir", "description", System.getProperty("user.dir")).setJavaSpecs();
+            cachedList.addItem("user.region", "description", System.getProperty("user.region")).setJavaSpecs();
+            cachedList.addItem("user.home", "description", System.getProperty("user.home")).setJavaSpecs();
+            cachedList.addItem("user.language", "description", System.getProperty("user.language")).setJavaSpecs();
+            cachedList.addItem("user.name", "description", System.getProperty("user.name")).setJavaSpecs();
+            cachedList.addItem("http.agent", "description", System.getProperty("http.agent")).textAppearance = android.R.style.TextAppearance_Small;
+
+            // os
+            cachedList.addItem("os.name", "description", System.getProperty("os.name")).setJavaSpecs();
+            cachedList.addItem("os.arch", "description", System.getProperty("os.arch")).setJavaSpecs();
+            cachedList.addItem("os.version", "description", System.getProperty("os.version")).setJavaSpecs();
+
+            // file
+            cachedList.addItem("file.encoding", "description", System.getProperty("file.encoding")).setJavaSpecs();
+            cachedList.addItem("line.separator", "description", Utils.formatLineSeparator(System.getProperty("line.separator"))).setJavaSpecs();
+            cachedList.addItem("path.separator", "description", System.getProperty("path.separator")).setJavaSpecs();
+            cachedList.addItem("file.separator", "description", System.getProperty("file.separator")).setJavaSpecs();
+        }
+    },
+
+    // endregion
+
     // region Network
 
     Network(android.R.drawable.ic_menu_search) {
@@ -708,8 +773,8 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("hwID", "description", Device.getSerialNummer()).setHorizontal();
             cachedList.addItem("IMEI No", "description", Device.getDeviceIdFromTelephonyManager()).setHorizontal();
 
-            cachedList.addItem("MAC Address (wlan0)", "description", Device.getMACAddress("wlan0")).setHorizontal();
-            cachedList.addItem("MAC Address (eth0)", "description", Device.getMACAddress("eth0")).setHorizontal();
+            cachedList.addItem("MAC Address: wlan0", "description", Device.getMACAddress("wlan0")).setHorizontal();
+            cachedList.addItem("MAC Address: eth0", "description", Device.getMACAddress("eth0")).setHorizontal();
             cachedList.addItem("IP4 Address", "description", Device.getIPAddress(true)).setHorizontal();
             cachedList.addItem("IP6 Address", "description", Device.getIPAddress(false)).setHorizontal();
             cachedList.addItem("UserAgent", "description", new DeviceInfoItemAsync() {

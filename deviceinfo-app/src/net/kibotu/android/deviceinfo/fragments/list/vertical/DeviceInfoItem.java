@@ -105,4 +105,8 @@ public class DeviceInfoItem implements Comparable<DeviceInfoItem> {
         keys = keyBuffer.toString();
         value = valueBuffer.toString();
     }
+
+    public void setJavaSpecs() {
+        setHorizontal(R.layout.javaspecs);
+    }
 }

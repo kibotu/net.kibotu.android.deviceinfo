@@ -14,14 +14,19 @@ Library and app for showing tons of device information for your android device.
 ### Changelog
 
 ### Contact
+* [Jan Rabe](mailto:jan.rabe@wooga.com)
 
 ### TODO
+
+* write readme file :D 
 
 ### Known Issues
 
 ## Contact
 
 **Contributers:**
-* [Jan Rabe](mailto:jan.rabe@wooga.com)
+
+## Dependancies 
+* Added [jfeinstein10's Slidemenu][https://github.com/jfeinstein10/SlidingMenu]. 
 
 ## See also

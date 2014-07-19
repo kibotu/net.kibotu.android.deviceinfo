@@ -17,7 +17,7 @@
 <resources>
 
     <dimen name="slidingmenu_offset">100dp</dimen>
-    <dimen name="list_padding">15dp</dimen>
+    <dimen name="list_padding">5dp</dimen>
     <dimen name="shadow_width">40dp</dimen>
 
     <integer name="num_cols">1</integer>
