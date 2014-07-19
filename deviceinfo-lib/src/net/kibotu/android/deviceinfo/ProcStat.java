@@ -70,8 +70,8 @@ public class ProcStat {
                 line = reader.readLine();
             }
         }
-        catch (final IOException ex) {
-            Logger.e(""+ex.getMessage(), ex);
+        catch (final IOException e) {
+            Logger.e(e);
         }
 
         return procStat;

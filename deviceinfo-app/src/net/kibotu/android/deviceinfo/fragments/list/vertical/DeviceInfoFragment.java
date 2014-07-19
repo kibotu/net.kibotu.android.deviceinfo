@@ -79,7 +79,7 @@ public class DeviceInfoFragment extends ListFragment {
                     try {
                         Thread.sleep((long) (delay * 1000));
                     } catch (final InterruptedException e) {
-                        Logger.e("" + e.getMessage(), e);
+                        Logger.e(e);
                     }
 
                     asyncValue.run();
@@ -101,8 +101,14 @@ public class DeviceInfoFragment extends ListFragment {
     public void onListItemClick(ListView lv, View v, int position, long id) {
         super.onListItemClick(lv, v, position, id);
 
-        if(list.getItem(position).tag.equalsIgnoreCase("RAM")){
+        final DeviceInfoItem item = list.getItem(position);
+
+        if(item.tag.equalsIgnoreCase("RAM")){
             Runtime.getRuntime().gc();
+        }
+
+        if(!item.description.equals("description")){
+            Logger.toast(item.description);
         }
         // Logger.toast(list.getItem(position).tag + " " +list.getItem(position).order);
 

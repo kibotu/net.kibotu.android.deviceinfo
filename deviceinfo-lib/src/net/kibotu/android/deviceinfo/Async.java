@@ -20,7 +20,7 @@ public class Async {
                 try {
                     delegate.run();
                 } catch (final Exception e) {
-                    Logger.e("Error in SBSErrorTracking", e);
+                    Logger.e(e);
                 }
                 return null;
             }

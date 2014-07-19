@@ -19,6 +19,7 @@ final public class Utils {
     public static final long BYTES_TO_MB = BYTES_TO_KB * 1024;
     public static final long BYTES_TO_GB = BYTES_TO_MB * 1024;
     public static final long BYTES_TO_TB = BYTES_TO_GB * 1024;
+    public static final String BR = "<br>";
 
     private Utils() throws IllegalAccessException {
         throw new IllegalAccessException("'Utils' cannot be instantiated.");
@@ -31,7 +32,7 @@ final public class Utils {
             try {
                 buffer.append(array.getString(i)).append("\n");
             } catch (final JSONException e) {
-                Logger.e("" + e.getMessage(), e);
+                Logger.e(e);
             }
         }
 
@@ -362,16 +363,19 @@ final public class Utils {
         return String.format("%.2f px", screenDiagonalPixel);
     }
 
-    public static String formatStorage(final Storage s) {
-        final StringBuffer buffer = new StringBuffer();
-        buffer.append("Path:").append(t(3)).append(s.absolutePath).append("\n");
-        buffer.append("Total:").append(t(3)).append(formatBytes(s.total)).append("\n");
-        buffer.append("Available:").append(t(1)).append(formatBytes(s.available)).append("\n");
-        buffer.append("Free:").append(t(3)).append(formatBytes(s.free)).append("\n");
-        buffer.append("Used:").append(t(3)).append(formatBytes(s.total - s.free)).append("\n");
+    public static Map<String, String> mapStorage(final Storage s) {
+        final LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
+
+        map.put("Path:", s.absolutePath);
+        map.put("Total:", formatBytes(s.total));
+        map.put("Available:", formatBytes(s.available));
+        map.put("Free:", formatBytes(s.free));
+        map.put("Used:", formatBytes(s.total - s.free));
+
         if (s.free - s.available > 0)
-            buffer.append("Busy:").append(t(3)).append(formatBytes(s.free - s.available)).append("\n");
-        return buffer.toString();
+            map.put("Busy:", formatBytes(s.free - s.available));
+
+        return map;
     }
 
     public static Map<String, String> parseTelize(final JSONObject geo) {
@@ -393,7 +397,7 @@ final public class Utils {
             map.put("Latitude", geo.getString("latitude"));
             map.put("Country Code", geo.getString("country_code"));
         } catch (final JSONException e) {
-            Logger.e("" + e.getMessage(), e);
+            Logger.e(e);
         }
 
         return map;
@@ -412,5 +416,17 @@ final public class Utils {
         }
 
         return ramMap;
+    }
+
+    public static JSONArray sort(final JSONArray jsonArray) {
+        final List<String> jsonValues = new ArrayList<String>();
+        for (int i = 0; i < jsonArray.length(); i++)
+            try {
+                jsonValues.add(jsonArray.getString(i));
+            } catch (JSONException e) {
+                Logger.e(e);
+            }
+        Collections.sort(jsonValues);
+        return new JSONArray(jsonValues);
     }
 }

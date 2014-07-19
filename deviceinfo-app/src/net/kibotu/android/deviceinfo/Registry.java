@@ -3,8 +3,10 @@ package net.kibotu.android.deviceinfo;
 import android.os.BatteryManager;
 import android.os.Environment;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import net.kibotu.android.deviceinfo.GPU.OpenGLGles10Info;
 import net.kibotu.android.deviceinfo.GPU.OpenGLGles20Info;
 import net.kibotu.android.deviceinfo.fragments.list.vertical.DeviceInfoFragment;
@@ -12,6 +14,7 @@ import net.kibotu.android.deviceinfo.fragments.list.vertical.DeviceInfoItemAsync
 import net.kibotu.android.deviceinfo.fragments.list.vertical.IGetInfoFragment;
 import net.kibotu.android.deviceinfo.utils.CustomWebView;
 import net.kibotu.android.deviceinfo.utils.Utils;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.*;
@@ -29,27 +32,24 @@ public enum Registry implements IGetInfoFragment {
         @Override
         public void createFragmentList() {
 
+            cachedList.addItem("display ID", "description", "" + context().getWindowManager().getDefaultDisplay().getDisplayId()).setHorizontal();
+            cachedList.addItem("Brand", "description", BRAND).setHorizontal();
 
-            cachedList.addItem("BRAND", "description", BRAND);
-            cachedList.addItem("DEVICE", "description", DEVICE);
-            cachedList.addItem("RADIO", "description", RADIO);
-            cachedList.addItem("SERIAL", "description", SERIAL);
-            cachedList.addItem("TIME", "description", "" + new Date(TIME));
-            cachedList.addItem("TYPE", "description", TYPE);
-            cachedList.addItem("UNKNOWN", "description", UNKNOWN);
-            cachedList.addItem("USER", "description", USER);
+            cachedList.addItem("IMSI No", "description", Device.getSubscriberIdFromTelephonyManager()).setHorizontal();
+            cachedList.addItem("hwID", "description", Device.getSerialNummer()).setHorizontal();
+            cachedList.addItem("AppVersion", "description", "" + Device.getVersionFromPackageManager()).setHorizontal();
 
-            cachedList.addItem("ID", "description", "" + context().getWindowManager().getDefaultDisplay().getDisplayId());
-            cachedList.addItem("Manufacturer", "description", MANUFACTURER);
-            cachedList.addItem("Model", "description", MODEL);
-            cachedList.addItem("Device", "description", DEVICE);
-            cachedList.addItem("Product", "description", PRODUCT);
-            cachedList.addItem("Brand", "description", BRAND);
+            cachedList.addItem("IMEI No", "description", Device.getDeviceIdFromTelephonyManager()).setHorizontal();
+            cachedList.addItem("Locale", "description", context().getResources().getConfiguration().locale.toString()).setHorizontal();
 
-            cachedList.addItem("IMSI No", "description", Device.getSubscriberIdFromTelephonyManager());
-            cachedList.addItem("hwID", "description", Device.getSerialNummer());
-            cachedList.addItem("AndroidID", "description", Device.getAndroidId());
-            cachedList.addItem("AppVersion", "description", "" + Device.getVersionFromPackageManager());
+
+            cachedList.addItem("Rooted", "description", "" + Device.isPhoneRooted());
+
+            cachedList.addItem("Installed Apps", "description", "" + Device.installedApps().size());
+
+            cachedList.addItem("Permissions", "description", jsonArrayToString(Device.getPermissions()));
+
+            cachedList.addItem("Shared Libraries", "description", jsonArrayToString(Device.getSharedLibraries()));
         }
     },
 
@@ -78,17 +78,45 @@ public enum Registry implements IGetInfoFragment {
 
     // endregion
 
-    // region General
+    // region Build
 
     Build(android.R.drawable.ic_menu_search) {
         @Override
         public void createFragmentList() {
 
-            cachedList.addItem("MANUFACTURER", "description", MANUFACTURER).setHorizontal();
-            cachedList.addItem("MODEL", "description", MODEL).setHorizontal();
-            cachedList.addItem("PRODUCT", "description", PRODUCT).setHorizontal();
-            cachedList.addItem("IMEI No", "description", Device.getDeviceIdFromTelephonyManager()).setHorizontal();
-            cachedList.addItem("Locale", "description", context().getResources().getConfiguration().locale.toString()).setHorizontal();
+            // http://developer.android.com/reference/android/os/Build.html
+            cachedList.addItem("Android Id", "More specifically, Settings.Secure.ANDROID_ID. A 64-bit number (as a hex string) that is randomly generated on the device's first boot and should remain constant for the lifetime of the device (The value may change if a factory reset is performed on the device.)", Device.getAndroidId()).setHorizontal();
+            cachedList.addItem("Board", "The name of the underlying board, like \"goldfish\"", BOARD).setHorizontal();
+            cachedList.addItem("Bootloader", "The system bootloader version number", BOOTLOADER).setHorizontal();
+            cachedList.addItem("Brand", "The consumer-visible brand with which the product/hardware will be associated, if any.", BRAND).setHorizontal();
+            cachedList.addItem("CPU_ABI", "The name of the instruction set (CPU type + ABI convention) of native code.", CPU_ABI).setHorizontal();
+            cachedList.addItem("CPU_ABI2", "The name of the second instruction set (CPU type + ABI convention) of native code.", CPU_ABI2).setHorizontal();
+            cachedList.addItem("Device", "The name of the industrial design.", DEVICE).setHorizontal();
+            cachedList.addItem("Display", "A build ID string meant for displaying to the user.", DISPLAY).setHorizontal();
+            cachedList.addItem("Fingerprint", "A string that uniquely identifies this build.", FINGERPRINT).textAppearance = android.R.style.TextAppearance_Small;
+            cachedList.addItem("Hardware", "The name of the hardware (from the kernel command line or /proc).", HARDWARE).setHorizontal();
+            cachedList.addItem("Host", "description", HOST).setHorizontal();
+            cachedList.addItem("Id", "Either a changelist number, or a label like \"M4-rc20\".", ID).setHorizontal();
+            cachedList.addItem("Manufacturer", "The manufacturer of the product/hardware.", MANUFACTURER).setHorizontal();
+            cachedList.addItem("Model", "The end-user-visible name for the end product.", MODEL).setHorizontal();
+            cachedList.addItem("Product", "The name of the overall product.", PRODUCT).setHorizontal();
+            cachedList.addItem("Radio", "The radio firmware version number. Note API >= 14: use getRadioVersion()", "" + Device.getRadio()).setHorizontal();
+            cachedList.addItem("Serial", "A hardware serial number, if available.", SERIAL).setHorizontal();
+            cachedList.addItem("Tags", "Comma-separated tags describing the build, like \"unsigned,debug\".", TAGS).setHorizontal();
+            cachedList.addItem("Time", "Build Time: " + TIME, new Date(TIME).toString()).textAppearance = android.R.style.TextAppearance_Small;
+            cachedList.addItem("Type", "The type of build, like \"user\" or \"eng\".", TYPE).setHorizontal();
+            cachedList.addItem("User", "description", USER).setHorizontal();
+            cachedList.addItem("Unknown", "Value used for when a build property is unknown.", UNKNOWN).setHorizontal();
+
+            // http://developer.android.com/reference/android/os/Build.VERSION.html
+            cachedList.addItem("Codename", "The current development codename, or the string \"REL\" if this is a release build.", VERSION.CODENAME).setHorizontal();
+            cachedList.addItem("Incremental", "The internal value used by the underlying source control to represent this build. E.g., a perforce changelist number or a git hash. ", VERSION.INCREMENTAL).setHorizontal();
+            cachedList.addItem("Release", "The user-visible version string. E.g., \"1.0\" or \"3.4b5\". ", VERSION.RELEASE).setHorizontal();
+            cachedList.addItem("SDK", "The user-visible SDK version of the framework in its raw String representation; use SDK_INT instead", VERSION.SDK).setHorizontal();
+            cachedList.addItem("SDK_INT", "The user-visible SDK version of the framework; its possible values are defined in Build.VERSION_CODES.", "" + VERSION.SDK_INT).setHorizontal();
+
+            final JSONArray features = Device.getFeatures();
+            cachedList.addItem("Features", "This device supports " + features.length() + " Features.", jsonArrayToString(Utils.sort(features))).textAppearance = android.R.style.TextAppearance_Small;
         }
     },
 
@@ -102,7 +130,7 @@ public enum Registry implements IGetInfoFragment {
 
             final Battery battery = Device.getBattery();
 
-            cachedList.addItem("Technology", "description", 1f, true, new DeviceInfoItemAsync() {
+            cachedList.addItem("Technology", "Technology of the current battery.", 1f, true, new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
                     value = battery.technology;
@@ -110,7 +138,7 @@ public enum Registry implements IGetInfoFragment {
                 }
             });
 
-            cachedList.addItem("Status", "description", 1f, true, new DeviceInfoItemAsync() {
+            cachedList.addItem("Status", "Current status constant.", 1f, true, new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
                     value = battery.getStatus();
@@ -118,7 +146,7 @@ public enum Registry implements IGetInfoFragment {
                 }
             });
 
-            Battery.threads.add(cachedList.addItem("Charging Level", "description", 1f, true, new DeviceInfoItemAsync() {
+            Battery.threads.add(cachedList.addItem("Charging Level", "Current battery level, from 0 to the maximum battery level.", 1f, true, new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
                     value = "" + (int) (battery.getChargingLevel() * 100) + " %";
@@ -126,7 +154,7 @@ public enum Registry implements IGetInfoFragment {
                 }
             }));
 
-            Battery.threads.add(cachedList.addItem("Voltage", "description", 1f, true, new DeviceInfoItemAsync() {
+            Battery.threads.add(cachedList.addItem("Voltage", "Current battery voltage level.", 1f, true, new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
                     value = battery.voltage + " mV";
@@ -134,7 +162,7 @@ public enum Registry implements IGetInfoFragment {
                 }
             }));
 
-            Battery.threads.add(cachedList.addItem("Temperature", "description", 1f, true, new DeviceInfoItemAsync() {
+            Battery.threads.add(cachedList.addItem("Temperature", "Current battery temperature.", 1f, true, new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
                     value = (battery.temperature / 10f) + " °C [" + battery.getTemperatureFarenheit() + "]";
@@ -142,7 +170,7 @@ public enum Registry implements IGetInfoFragment {
                 }
             }));
 
-            Battery.threads.add(cachedList.addItem("Health", "description", 1f, true, new DeviceInfoItemAsync() {
+            Battery.threads.add(cachedList.addItem("Health", "Current health constant.", 1f, true, new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
                     value = battery.health;
@@ -150,7 +178,21 @@ public enum Registry implements IGetInfoFragment {
                 }
             }));
 
-            Battery.threads.add(cachedList.addItem("Last Charging Source", "description", 1f, true, new DeviceInfoItemAsync() {
+            Battery.threads.add(cachedList.addItem("Power Source", "Indicating whether the device is plugged in to a power source; 0 means it is on battery, other constants are different types of power sources.", 1f, true, new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+
+                    if (battery.plugged.equalsIgnoreCase("0")) {
+                        value = "Battery";
+                    } else {
+                        value = battery.plugged;
+                    }
+
+                    order = 6;
+                }
+            }));
+
+            Battery.threads.add(cachedList.addItem("Last Charging Source", "Last recorded charging power source.", 1f, true, new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
 
@@ -161,15 +203,15 @@ public enum Registry implements IGetInfoFragment {
                         shared.editor().commit();
                     }
 
-                    order = 6;
+                    order = 7;
                 }
             }));
 
-            Battery.threads.add(cachedList.addItem("Battery Present", "description", 1f, true, new DeviceInfoItemAsync() {
+            Battery.threads.add(cachedList.addItem("Battery Present", "Indicating whether a battery is present or not.", 1f, true, new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
                     value = formatBool(battery.present);
-                    order = 7;
+                    order = 8;
                 }
             }));
         }
@@ -268,7 +310,7 @@ public enum Registry implements IGetInfoFragment {
                 @Override
                 protected void async() {
                     Storage.EXTERNAL.update();
-                    value = Utils.formatStorage(Storage.EXTERNAL);
+                    setMap(mapStorage(Storage.EXTERNAL));
                 }
             });
 
@@ -276,7 +318,7 @@ public enum Registry implements IGetInfoFragment {
                 @Override
                 protected void async() {
                     Storage.DATA.update();
-                    value = Utils.formatStorage(Storage.DATA);
+                    setMap(mapStorage(Storage.DATA));
                 }
             });
 
@@ -284,7 +326,7 @@ public enum Registry implements IGetInfoFragment {
                 @Override
                 protected void async() {
                     Storage.ROOT.update();
-                    value = Utils.formatStorage(Storage.ROOT);
+                    setMap(mapStorage(Storage.ROOT));
                 }
             });
 
@@ -297,7 +339,7 @@ public enum Registry implements IGetInfoFragment {
                 }
             }));
 
-            final LinearLayout l = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.tablewithtag, null);
+            final LinearLayout l = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.ram, null);
 
             Memory.threads.add(cachedList.addItem("RAM", "description", 1f, true, new DeviceInfoItemAsync(5) {
 
@@ -323,7 +365,7 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("APK Storage Path", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
-                    setHorizontal();
+                    useDirectoryLayout();
                     value = Device.getFileSize(context().getPackageCodePath());
                 }
             });
@@ -331,7 +373,7 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("Internal Storage Path", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
-                    setHorizontal();
+                    useDirectoryLayout();
                     value = Device.getFileSize(context().getFilesDir().getParent());
                 }
             });
@@ -339,7 +381,7 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("Root Directory", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
-                    setHorizontal();
+                    useDirectoryLayout();
                     value = Device.getFileSize(Environment.getRootDirectory());
                 }
             });
@@ -347,7 +389,7 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("Data Directory", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
-                    setHorizontal();
+                    useDirectoryLayout();
                     value = Device.getFileSize(Environment.getDataDirectory());
                 }
             });
@@ -355,7 +397,7 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("External Storage Director", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
-                    setHorizontal();
+                    useDirectoryLayout();
                     value = Device.getFileSize(Environment.getExternalStorageDirectory());
                 }
             });
@@ -363,7 +405,7 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("Download Cache Directory", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
-                    setHorizontal();
+                    useDirectoryLayout();
                     value = Device.getFileSize(Environment.getDownloadCacheDirectory());
                 }
             });
@@ -371,7 +413,7 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("Directory Alarms", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
-                    setHorizontal();
+                    useDirectoryLayout();
                     value = Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_ALARMS));
                 }
             });
@@ -379,7 +421,7 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("Directory DCIM", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
-                    setHorizontal();
+                    useDirectoryLayout();
                     value = Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM));
                 }
             });
@@ -387,7 +429,7 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("Directory Downloads", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
-                    setHorizontal();
+                    useDirectoryLayout();
                     value = Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
                 }
             });
@@ -395,7 +437,7 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("Directory Movies", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
-                    setHorizontal();
+                    useDirectoryLayout();
                     value = Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES));
                 }
             });
@@ -403,7 +445,7 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("Directory Music", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
-                    setHorizontal();
+                    useDirectoryLayout();
                     value = Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC));
                 }
             });
@@ -411,7 +453,7 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("Directory Notifications", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
-                    setHorizontal();
+                    useDirectoryLayout();
                     value = Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_NOTIFICATIONS));
                 }
             });
@@ -419,7 +461,7 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("Directory Pictures", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
-                    setHorizontal();
+                    useDirectoryLayout();
                     value = Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES));
                 }
             });
@@ -427,7 +469,7 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("Directory Podcasts", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
-                    setHorizontal();
+                    useDirectoryLayout();
                     value = Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PODCASTS));
                 }
             });
@@ -435,7 +477,7 @@ public enum Registry implements IGetInfoFragment {
             cachedList.addItem("Directory Ringtones", "description", new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
-                    setHorizontal();
+                    useDirectoryLayout();
                     value = Device.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_RINGTONES));
                 }
             });
@@ -557,77 +599,38 @@ public enum Registry implements IGetInfoFragment {
 
     // endregion
 
-    // region Hardware
-
-    Hardware(android.R.drawable.ic_menu_search) {
-        @Override
-        public void createFragmentList() {
-
-            cachedList.addItem("BOARD", "description", BOARD);
-            cachedList.addItem("HARDWARE", "description", HARDWARE);
-            cachedList.addItem("CPU_ABI", "description", CPU_ABI);
-            cachedList.addItem("CPU_ABI2", "description", CPU_ABI2);
-
-
-            cachedList.addItem("FINGERPRINT", "description", FINGERPRINT);
-            cachedList.addItem("HOST", "description", HOST);
-            cachedList.addItem("TAGS", "description", TAGS);
-            cachedList.addItem("Features", "description", jsonArrayToString(Device.getFeatures()));
-
-
-//developer.apple.com/library/ios/#documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/DeterminingOpenGLESCapabilities/DeterminingOpenGLESCapabilities.html
-            //        cachedList.addItem("supportsOpenGLES2: " + supportsOpenGLES2();
-//        cachedList.addItem("OpenGL Version", Device.getOpenGLVersion());
-
-//        cachedList.addItem("OpenGL Constraints", Device.getOpenGLShaderConstraints());
-        }
-    },
-
-    // endregion
-
-    // region Software
-
-    Software(android.R.drawable.ic_menu_search) {
-        @Override
-        public void createFragmentList() {
-            cachedList.addItem("Rooted", "description", "" + Device.isPhoneRooted());
-
-            cachedList.addItem("Installed Apps", "description", "" + Device.installedApps().size());
-
-            cachedList.addItem("SDK", "description", VERSION.SDK);
-            cachedList.addItem("SDK_INT", "description", "" + VERSION.SDK_INT);
-            cachedList.addItem("CODENAME", "description", VERSION.CODENAME);
-            cachedList.addItem("INCREMENTAL", "description", VERSION.INCREMENTAL);
-            cachedList.addItem("RELEASE", "description", VERSION.RELEASE);
-            cachedList.addItem("BOOTLOADER", "description", BOOTLOADER);
-            cachedList.addItem("ID", "description", ID);
-            cachedList.addItem("Build (Tags)", "description", DISPLAY + " (" + TAGS + ")");
-            cachedList.addItem("Shared Libraries", "description", jsonArrayToString(Device.getSharedLibraries()));
-
-            cachedList.addItem("Permissions", "description", jsonArrayToString(Device.getPermissions()));
-        }
-    },
-
-    // endregion
-
     // region Sensor
 
     Sensor(android.R.drawable.ic_menu_search) {
         @Override
         public void createFragmentList() {
 
-            List<android.hardware.Sensor> list = Device.getSensorList();
+//            stopRefreshing();
+
+            final List<android.hardware.Sensor> list = Device.getSensorList();
             for (final android.hardware.Sensor s : list) {
+                final View v = LayoutInflater.from(context()).inflate(R.layout.sensors, null);
                 cachedList.addItem(s.getName(), "description", new DeviceInfoItemAsync() {
                     @Override
                     protected void async() {
-                        value = "Type: " + getSensorName(s.getType()) + "\n" +
-                                "Vendor: " + s.getVendor() + "\n" +
-                                "Version: " + s.getVersion() + "\n" +
-                                "Resolution: " + s.getResolution() + "\n" +
-                                "Max Range: " + s.getMaximumRange() + "\n" +
-                                "Min Delay: " + s.getMinDelay() + "\n" +
-                                "Power: " + s.getPower();
+
+                        customView = v;
+                        useHtml = true;
+
+                        keys = "Type:" + BR;
+                        value = getSensorName(s.getType()) + BR;
+                        keys += "Vendor:" + BR;
+                        value += s.getVendor() + BR;
+                        keys += "Version:" + BR;
+                        value += s.getVersion() + BR;
+                        keys += "Resolution:" + BR;
+                        value += s.getResolution() + BR;
+                        keys += "Min Delay:" + BR;
+                        value += s.getMinDelay() + BR;
+                        keys += "Max Range:" + BR;
+                        value += s.getMaximumRange() + BR;
+                        keys += "Power:";
+                        value += s.getPower();
                     }
                 });
             }
@@ -756,7 +759,7 @@ public enum Registry implements IGetInfoFragment {
                     try {
                         Thread.sleep((long) (intervalInSeconds * 1000));
                     } catch (final InterruptedException e) {
-                        Logger.e("" + e.getMessage(), e);
+                        Logger.e(e);
                     }
 
 //                    Runtime.getRuntime().gc();
@@ -785,7 +788,7 @@ public enum Registry implements IGetInfoFragment {
             try {
                 t.wait();
             } catch (final InterruptedException e) {
-                Logger.e("" + e.getMessage(), e);
+                Logger.e(e);
             }
         }
     }

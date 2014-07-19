@@ -24,7 +24,7 @@ public abstract class DeviceInfoItemAsync extends DeviceInfoItem implements Runn
         try {
             async();
         } catch (final Exception e) {
-            Logger.e("" + e.getMessage(), e);
+            Logger.e(e);
         }
     }
 

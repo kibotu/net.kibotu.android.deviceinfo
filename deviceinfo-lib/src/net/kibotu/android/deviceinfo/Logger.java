@@ -1,7 +1,6 @@
 package net.kibotu.android.deviceinfo;
 
 
-import android.util.Log;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -254,6 +253,18 @@ final public class Logger {
      */
     public static void e(@NotNull final String message, @NotNull final Throwable e) {
         if (allowLogging(Level.ERROR)) logger.error(tag, message, e);
+    }
+
+    /**
+     * Logging an exception.
+     *
+     * @param e Throwable.
+     */
+    public static void e(final Throwable e) {
+        if (allowLogging(Level.ERROR)) {
+            final String msg = e.getMessage();
+            logger.error(tag, msg == null ? "" : msg, e);
+        }
     }
 
     /**

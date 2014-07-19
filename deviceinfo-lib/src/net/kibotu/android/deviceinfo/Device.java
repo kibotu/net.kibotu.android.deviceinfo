@@ -16,7 +16,9 @@ import android.net.wifi.WifiManager;
 import android.opengl.GLES10;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
-import android.os.*;
+import android.os.Build;
+import android.os.Environment;
+import android.os.StatFs;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
@@ -31,7 +33,6 @@ import org.json.JSONArray;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 import java.io.*;
-import java.lang.Process;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -48,12 +49,12 @@ import static android.os.Build.*;
 
 /**
  * Variety ways to retrieve device id in Android.
- * <p>
+ * <p/>
  * - Unique number (IMEI, MEID, ESN, IMSI)
  * - MAC Address
  * - Serial Number
  * - ANDROID_ID
- * <p>
+ * <p/>
  * Further information @see http://developer.samsung.com/android/technical-docs/How-to-retrieve-the-Device-Unique-ID-from-android-device
  */
 public class Device {
@@ -75,12 +76,14 @@ public class Device {
     private static volatile Context context;
     private static volatile HashMap<File, String> cache;
     private static String uuid;
+    private static Map<String, ?> buildInfo;
 
     // static
-    private Device() {
+    private Device() throws IllegalAccessException {
+        throw new IllegalAccessException("static class");
     }
 
-    public static void setContext(final Context context){
+    public static void setContext(final Context context) {
         Device.context = context;
         new DisplayHelper((Activity) context);
     }
@@ -103,8 +106,8 @@ public class Device {
                     if (context().checkCallingOrSelfPermission(pi.name) == PackageManager.PERMISSION_GRANTED)
                         permissions.add(pi.name);
                 }
-            } catch (final Exception ex) {
-                Logger.e("" + ex.getMessage(), ex);
+            } catch (final Exception e) {
+                Logger.e(e);
             }
         }
         return new JSONArray(permissions);
@@ -112,9 +115,9 @@ public class Device {
 
     /**
      * Returns the unique device ID. for example,the IMEI for GSM and the MEID or ESN for CDMA phones.
-     * <p>
+     * <p/>
      * IMPORTANT! it requires READ_PHONE_STATE permission in AndroidManifest.xml
-     * <p>
+     * <p/>
      * Disadvantages:
      * - Android devices should have telephony services
      * - It doesn't work reliably
@@ -129,7 +132,7 @@ public class Device {
 
     /**
      * Returns the unique subscriber ID, for example, the IMSI for a GSM phone.
-     * <p>
+     * <p/>
      * Disadvantages:
      * - Android devices should have telephony services
      * - It doesn't work reliably
@@ -144,9 +147,9 @@ public class Device {
 
     /**
      * Returns MAC Address.
-     * <p>
+     * <p/>
      * IMPORTANT! requires ACCESS_WIFI_STATE permission in AndroidManifest.xml
-     * <p>
+     * <p/>
      * Disadvantages:
      * - Device should have Wi-Fi (where not all devices have Wi-Fi)
      * - If Wi-Fi present in Device should be turned on otherwise does not report the MAC address
@@ -220,7 +223,7 @@ public class Device {
 
     /**
      * System Property ro.serialno returns the serial number as unique number Works for Android 2.3 and above. Can return null.
-     * <p>
+     * <p/>
      * Disadvantages:
      * - Serial Number is not available with all android devices
      */
@@ -248,7 +251,7 @@ public class Device {
      * that is randomly generated on the device's first boot and should remain constant
      * for the lifetime of the device (The value may change if a factory reset is performed on the device.)
      * ANDROID_ID seems a good choice for a unique device identifier.
-     * <p>
+     * <p/>
      * Disadvantages:
      * - Not 100% reliable of Android prior to 2.2 (�Froyo�) devices
      * - Also, there has been at least one widely-observed bug in a popular
@@ -273,13 +276,13 @@ public class Device {
                 dimension[0] = p.x;
                 dimension[1] = p.y;
             } catch (final IllegalAccessException e) {
-                Logger.e("" + e.getMessage(), e);
+                Logger.e(e);
             } catch (final InvocationTargetException e) {
-                Logger.e("" + e.getMessage(), e);
+                Logger.e(e);
             } catch (final NoSuchMethodException e) {
-                Logger.e("" + e.getMessage(), e);
+                Logger.e(e);
             } catch (final NoClassDefFoundError e) {
-                Logger.e("" + e.getMessage(), e);
+                Logger.e(e);
             }
 
         } else if (VERSION.SDK_INT >= 14) {
@@ -382,9 +385,8 @@ public class Device {
     }
 
     /**
-     *
      * @return integer Array with 4 elements: user, system, idle and other cpu
-     *         usage in percentage.
+     * usage in percentage.
      */
     public static int[] getCpuUsageStatistic() {
 
@@ -435,14 +437,14 @@ public class Device {
         return returnString;
     }
 
-    private static float[] cpuUsage = new float[] { 0, 0 };
+    private static float[] cpuUsage = new float[]{0, 0};
 
     /**
      * @credits to https://github.com/takke/cpustats
      */
     public synchronized static float[] getCpuUsage() {
 
-        if(lastPs == null) {
+        if (lastPs == null) {
             lastPs = ProcStat.loadProcStat();
             return cpuUsage;
         }
@@ -450,8 +452,8 @@ public class Device {
         final ProcStat ps = ProcStat.loadProcStat();
 
         int usedCores = Math.min(ps.cpu.size(), lastPs.cpu.size());
-        cpuUsage = new float[usedCores+1];
-        for(int i = 0; i < usedCores; ++i) {
+        cpuUsage = new float[usedCores + 1];
+        for (int i = 0; i < usedCores; ++i) {
             cpuUsage[i] = 0;
             final Cpu cpuC = ps.cpu.get(i);
             final Cpu cpuL = lastPs.cpu.get(i);
@@ -463,7 +465,7 @@ public class Device {
             if (totalDiff > 0) {
                 final int idleDiff = cpuC.idle - cpuL.idle;
 
-                cpuUsage[i] = 100 - idleDiff * 100 / (float)totalDiff;
+                cpuUsage[i] = 100 - idleDiff * 100 / (float) totalDiff;
             }
         }
         return cpuUsage;
@@ -474,13 +476,14 @@ public class Device {
     private static int numCores = 0;
 
     /**
-    * Gets the number of cores available in this device, across all processors.
-    * Requires: Ability to peruse the filesystem at "/sys/devices/system/cpu"
-    * @return The number of cores, or 1 if failed to get result
-    */
+     * Gets the number of cores available in this device, across all processors.
+     * Requires: Ability to peruse the filesystem at "/sys/devices/system/cpu"
+     *
+     * @return The number of cores, or 1 if failed to get result
+     */
     public static int getNumCores() {
 
-        if(numCores != 0)
+        if (numCores != 0)
             return numCores;
 
         //Private Class to display only CPU devices in the directory listing
@@ -488,7 +491,7 @@ public class Device {
             @Override
             public boolean accept(File pathname) {
                 //Check if filename is "cpu", followed by a single digit number
-                if(Pattern.matches("cpu[0-9]+", pathname.getName())) {
+                if (Pattern.matches("cpu[0-9]+", pathname.getName())) {
                     return true;
                 }
                 return false;
@@ -502,7 +505,7 @@ public class Device {
             File[] files = dir.listFiles(new CpuFilter());
             //Return the number of cores (virtual CPU devices)
             return numCores = files.length;
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Default to return 1 core
             return numCores = 1;
         }
@@ -533,9 +536,9 @@ public class Device {
             try {
                 Thread.currentThread().join();
             } catch (InterruptedException ex) {
-                Logger.e(""+ex.getMessage(), ex);
+                Logger.e(ex);
             }
-            Logger.e(""+e.getMessage(), e);
+            Logger.e(e);
             return 0;
         }
     }
@@ -556,14 +559,13 @@ public class Device {
                 buffer.append(load).append("\n");
                 load = reader.readLine();
             }
-        }
-        catch (final IOException ex) {
+        } catch (final IOException ex) {
             try {
                 Thread.currentThread().join();
             } catch (InterruptedException e) {
-                Logger.e("" + ex.getMessage(), ex);
+                Logger.e(e);
             }
-            Logger.e(""+ex.getMessage(), ex);
+            Logger.e(ex);
         }
 
         return buffer.toString();
@@ -582,7 +584,8 @@ public class Device {
 
             try {
                 Thread.sleep(360);
-            } catch (Exception e) {}
+            } catch (Exception e) {
+            }
 
             reader.seek(0);
             load = reader.readLine();
@@ -594,8 +597,8 @@ public class Device {
             long cpu2 = Long.parseLong(toks[2]) + Long.parseLong(toks[3]) + Long.parseLong(toks[5]) + Long.parseLong(toks[6]) + Long.parseLong(toks[7]) + Long.parseLong(toks[8]);
 
             float[] cpus = new float[2];
-            cpus[0] = (float)cpu1 /  ((float)cpu1 + (float)idle1);
-            cpus[1] = (float)cpu2 / ((float)cpu2 + (float)idle2);
+            cpus[0] = (float) cpu1 / ((float) cpu1 + (float) idle1);
+            cpus[1] = (float) cpu2 / ((float) cpu2 + (float) idle2);
 
 //            return (float)(cpu2 - cpu1) / ((cpu2 + idle2) - (cpu1 + idle1));
             return cpus;
@@ -712,7 +715,7 @@ public class Device {
             out.close();
             b.recycle();
         } catch (final Exception e) {
-            Logger.e("" + e.getMessage(), e);
+            Logger.e(e);
         }
     }
 
@@ -752,6 +755,18 @@ public class Device {
         return l;
     }
 
+    public static Map<String, FeatureInfo> getAllFeatures() {
+        final PackageManager pm = context().getPackageManager();
+        final FeatureInfo[] features = pm.getSystemAvailableFeatures();
+        final LinkedHashMap<String, FeatureInfo> featureMap = new LinkedHashMap<String, FeatureInfo>();
+        for (final FeatureInfo f : features) {
+            if (f.name != null) {
+                featureMap.put(f.name, f);
+            }
+        }
+        return featureMap;
+    }
+
     public static JSONArray getFeatures() {
         PackageManager pm = context().getPackageManager();
         FeatureInfo[] features = pm.getSystemAvailableFeatures();
@@ -759,6 +774,7 @@ public class Device {
         for (FeatureInfo f : features) {
             if (f.name != null) {
                 l.put(f.name);
+                f.describeContents();
             }
         }
         return l;
@@ -1005,6 +1021,17 @@ public class Device {
         return arr[0] != 0;
     }
 
+    public static Map<String, ?> getBuildInfo() {
+        return buildInfo;
+    }
+
+    public static String getRadio() {
+        String radio = android.os.Build.RADIO;
+        if (Device.getApiLevel() >= 14)
+            radio = ReflectionHelper.get(android.os.Build.class, "getRadioVersion", null);
+        return radio;
+    }
+
     public interface AsyncCallback<T> {
         void onComplete(final T result);
     }
@@ -1176,9 +1203,9 @@ public class Device {
 
     /**
      * Returns MAC address of the given interface name.
-     * <p>
+     * <p/>
      * credits to http://stackoverflow.com/questions/6064510/how-to-get-ip-address-of-the-device/13007325#13007325
-     * <p>
+     * <p/>
      * Note: requires  <uses-permission android:name="android.permission.INTERNET " /> and
      * <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE " />
      *
@@ -1317,7 +1344,7 @@ public class Device {
     private static Battery battery;
 
     public static Battery getBattery() {
-        if(battery != null) return battery;
+        if (battery != null) return battery;
         battery = new Battery(context());
         return battery;
     }
@@ -1869,8 +1896,8 @@ public class Device {
         File outputFile = new File("/mnt/sdcard/", fileName);
         try {
             Process process = Runtime.getRuntime().exec("logcat -d -v threadtime -f " + outputFile.getAbsolutePath());
-        } catch (IOException e) {
-            Logger.e("" + e.getMessage(), e);
+        } catch (final IOException e) {
+            Logger.e(e);
         }
 
         Logger.v("end logcat");

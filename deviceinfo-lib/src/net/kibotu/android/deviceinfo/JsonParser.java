@@ -49,11 +49,11 @@ final public class JsonParser {
                 Logger.e("Failed to download status file.");
             }
         } catch (final JSONException e) {
-            Logger.e("" + e.getMessage(), e);
+            Logger.e(e);
         } catch (final ClientProtocolException e) {
-            Logger.e("" + e.getMessage(), e);
+            Logger.e(e);
         } catch (final IOException e) {
-            Logger.e("" + e.getMessage(), e);
+            Logger.e(e);
         }
         return finalResult;
     }

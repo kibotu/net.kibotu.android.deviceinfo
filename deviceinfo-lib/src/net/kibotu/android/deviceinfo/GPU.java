@@ -252,13 +252,9 @@ public class GPU {
     }
 
     public synchronized static int[] glGetShaderPrecisionFormat(int shaderType, int precisionType) {
-        if(!Device.supportsOpenGLES2()) return new int[] {0,0,0};
+        if (!Device.supportsOpenGLES2()) return new int[]{0, 0, 0};
         buffer2.clear();
-//        try {
-            GLES20.glGetShaderPrecisionFormat(shaderType, precisionType, buffer2, buffer);
-//        } catch (final Exception e) {
-//            Logger.e(""+e.getMessage(), e);
-//        }
+        GLES20.glGetShaderPrecisionFormat(shaderType, precisionType, buffer2, buffer);
         return new int[]{buffer2.get(0), buffer2.get(1), buffer.get(0)};
     }
 
