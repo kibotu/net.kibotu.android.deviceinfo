@@ -1,5 +1,6 @@
 package net.kibotu.android.deviceinfo;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -47,5 +48,21 @@ final public class ReflectionHelper {
     public static <T> T get(final Class<?> cls, final String method, final Object target, final Object... params) {
         Method m = tryGetMethod(cls, method);
         return tryInvoke(m, target, params);
+    }
+
+    public static <T> T getPublicStaticField(final Class<?> cls, final String method) {
+
+        T result = null;
+
+        try {
+            final Field field = cls.getField(method);
+            result = (T) field.get(null);
+        } catch (final NoSuchFieldException e) {
+            Logger.e(e);
+        } catch (final IllegalAccessException e) {
+            Logger.e(e);
+        }
+
+        return result;
     }
 }
