@@ -15,9 +15,10 @@ import net.kibotu.android.deviceinfo.Registry;
 
 public class MenuFragment extends ListFragment {
 
-    private MenuAdapter list;
-    private Context context;
-    private Registry currentItemList;
+    private volatile MenuAdapter list;
+    private volatile Context context;
+    private volatile Registry currentItemList;
+    private volatile Registry lastItemList;
 
     public MenuFragment(Context context) {
         this.context = context;
@@ -41,20 +42,30 @@ public class MenuFragment extends ListFragment {
     }
 
     @Override
-    public void onListItemClick(ListView lv, View v, int position, long id) {
-        if(currentItemList != null)
-            currentItemList.stopRefreshing();
+    public void onListItemClick(final ListView lv, final View v, final int position, final long id) {
+        super.onListItemClick(lv, v, position, id);
+
         currentItemList = Registry.values()[position];
+        if(lastItemList == currentItemList) {
+            MainActivity.menu.showContent();
+            return;
+        }
+
+        if (lastItemList != null)
+            lastItemList.stopRefreshing();
+
         currentItemList.startRefreshingList(1);
 //        currentItemList.resumeThreads();
 
-        ((FragmentActivity) Device.context()).getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.content_frame, currentItemList.getFragmentList())
-                .commit();
+        if (lastItemList != null)
+            ((FragmentActivity) Device.context()).getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.content_frame, currentItemList.getFragmentList())
+                    .commit();
 
-        super.onListItemClick(lv, v, position, id);
-        MainActivity.menu.showContent();
         Device.context().setTitle(currentItemList.name());
+        MainActivity.menu.showContent();
+
+        lastItemList = currentItemList;
     }
 }

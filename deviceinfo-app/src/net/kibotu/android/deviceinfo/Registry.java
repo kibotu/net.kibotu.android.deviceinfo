@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import net.kibotu.android.deviceinfo.GPU.OpenGLGles10Info;
 import net.kibotu.android.deviceinfo.GPU.OpenGLGles20Info;
 import net.kibotu.android.deviceinfo.fragments.list.vertical.DeviceInfoFragment;
@@ -306,36 +305,52 @@ public enum Registry implements IGetInfoFragment {
         @Override
         public void createFragmentList() {
 
-            cachedList.addItem("External Storage", "description", 1f, true, new DeviceInfoItemAsync(0) {
+            final LinearLayout lExternal = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.ram, null);
+            cachedList.addItem("External Storage", "Every Android-compatible device supports a shared \"external storage\" that you can use to save files. This can be a removable storage media (such as an SD card) or an internal (non-removable) storage. Files saved to the external storage are world-readable and can be modified by the user when they enable USB mass storage to transfer files on a computer.", 1f, true, new DeviceInfoItemAsync(0) {
                 @Override
                 protected void async() {
+                    customView = lExternal;
                     Storage.EXTERNAL.update();
                     setMap(mapStorage(Storage.EXTERNAL));
                 }
             });
 
-            cachedList.addItem("Internal Storage", "description", 1f, true, new DeviceInfoItemAsync(2) {
+            final LinearLayout lData = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.ram, null);
+            cachedList.addItem("Internal Storage", "You can save files directly on the device's internal storage. By default, files saved to the internal storage are private to your application and other applications cannot access them (nor can the user). When the user uninstalls your application, these files are removed.", 1f, true, new DeviceInfoItemAsync(2) {
                 @Override
                 protected void async() {
+                    customView = lData;
                     Storage.DATA.update();
                     setMap(mapStorage(Storage.DATA));
                 }
             });
 
-            cachedList.addItem("Root Storage", "description", 1f, true, new DeviceInfoItemAsync(3) {
-                @Override
-                protected void async() {
-                    Storage.ROOT.update();
-                    setMap(mapStorage(Storage.ROOT));
-                }
-            });
+//            final LinearLayout lRoot = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.ram, null);
+//            cachedList.addItem("Root Storage", "description", 1f, true, new DeviceInfoItemAsync(3) {
+//                @Override
+//                protected void async() {
+//                    customView = lRoot;
+//                    Storage.ROOT.update();
+//                    setMap(mapStorage(Storage.ROOT));
+//                }
+//            });
 
-            Memory.threads.add(cachedList.addItem("Runtime Memory by this App", "description", 1f, true, new DeviceInfoItemAsync(4) {
+            final LinearLayout lApp = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.ram, null);
+            Memory.threads.add(cachedList.addItem("Runtime Memory App", "Currently reserved runtime memory by this App.", 1f, true, new DeviceInfoItemAsync(4) {
                 @Override
                 protected void async() {
-                    value = "Total:\t\t" + formatBytes(Device.getRuntimeTotalMemory()) + "\n" +
-                            "Free:\t\t" + formatBytes(Device.getRuntimeFreeMemory()) + "\n" +
-                            "Used:\t\t" + formatBytes(Device.getUsedMemorySize());
+
+                    customView = lApp;
+                    useHtml = true;
+
+                    keys = "Max:" + BR;
+                    value = formatBytes(Device.getRuntimeMaxMemory()) + BR;
+                    keys += "Total:" + BR;
+                    value += formatBytes(Device.getRuntimeTotalMemory()) + BR;
+                    keys += "Free:" + BR;
+                    value += formatBytes(Device.getRuntimeFreeMemory()) + BR;
+                    keys += "Used:" + BR;
+                    value += formatBytes(Device.getUsedMemorySize()) + BR;
                 }
             }));
 
@@ -769,7 +784,7 @@ public enum Registry implements IGetInfoFragment {
                         public void run() {
 
                             // redraw listview
-                            cachedList.list.notifyDataSetChanged();
+                            if(cachedList != null) cachedList.list.notifyDataSetChanged();
                         }
                     });
                 }

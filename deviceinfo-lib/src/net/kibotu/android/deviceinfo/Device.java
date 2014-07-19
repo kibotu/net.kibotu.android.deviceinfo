@@ -178,7 +178,7 @@ public class Device {
                 if (buf.length() > 0) buf.deleteCharAt(buf.length() - 1);
                 return buf.toString();
             }
-        } catch (Exception ignored) {
+        } catch(final Exception ignored) {
         } // for now eat exceptions
         return "";
        /*try {
@@ -216,7 +216,7 @@ public class Device {
                     }
                 }
             }
-        } catch (Exception ignored) {
+        } catch(final Exception ignored) {
         } // for now eat exceptions
         return "";
     }
@@ -233,7 +233,7 @@ public class Device {
             Class<?> c = Class.forName("android.os.SystemProperties");
             Method get = c.getMethod("get", String.class, String.class);
             hwID = (String) (get.invoke(c, "ro.serialno", "unknown"));
-        } catch (Exception ignored) {
+        } catch(final Exception ignored) {
         }
         if (hwID != null) return hwID;
         try {
@@ -241,7 +241,7 @@ public class Device {
             Method[] methods = myclass.getMethods();
             Object[] params = new Object[]{"ro.serialno", "Unknown"};
             hwID = (String) (methods[2].invoke(myclass, params));
-        } catch (Exception ignored) {
+        } catch(final Exception ignored) {
         }
         return hwID;
     }
@@ -505,7 +505,7 @@ public class Device {
             File[] files = dir.listFiles(new CpuFilter());
             //Return the number of cores (virtual CPU devices)
             return numCores = files.length;
-        } catch (Exception e) {
+        } catch(final Exception e) {
             //Default to return 1 core
             return numCores = 1;
         }
@@ -532,7 +532,7 @@ public class Device {
             reader.close();
 
             return Integer.parseInt(line);
-        } catch (Exception e) {
+        } catch(final Exception e) {
             try {
                 Thread.currentThread().join();
             } catch (InterruptedException ex) {
@@ -584,7 +584,7 @@ public class Device {
 
             try {
                 Thread.sleep(360);
-            } catch (Exception e) {
+            } catch(final Exception e) {
             }
 
             reader.seek(0);
@@ -603,8 +603,8 @@ public class Device {
 //            return (float)(cpu2 - cpu1) / ((cpu2 + idle2) - (cpu1 + idle1));
             return cpus;
 
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        } catch (final IOException e) {
+            Logger.e(e);
         }
 
         return null;
@@ -644,28 +644,26 @@ public class Device {
         return availableBlocks * blockSize;
     }
 
-    public static long getUsedMemorySize() {
-        long freeSize = 0L;
-        long totalSize = 0L;
-        long usedSize = -1L;
-        try {
-            Runtime info = Runtime.getRuntime();
-            freeSize = info.freeMemory();
-            totalSize = info.totalMemory();
-            usedSize = totalSize - freeSize;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return usedSize;
-    }
+
 
     public static long getRuntimeTotalMemory() {
         long memory = 0L;
         try {
-            Runtime info = Runtime.getRuntime();
+            final Runtime info = Runtime.getRuntime();
             memory = info.totalMemory();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (final Exception e) {
+           Logger.e(e);
+        }
+        return memory;
+    }
+
+    public static long getRuntimeMaxMemory() {
+        long memory = 0L;
+        try {
+            Runtime info = Runtime.getRuntime();
+            memory = info.maxMemory();
+        } catch(final Exception e) {
+            Logger.e(e);
         }
         return memory;
     }
@@ -673,12 +671,23 @@ public class Device {
     public static long getRuntimeFreeMemory() {
         long memory = 0L;
         try {
-            Runtime info = Runtime.getRuntime();
+            final Runtime info = Runtime.getRuntime();
             memory = info.freeMemory();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch(final Exception e) {
+            Logger.e(e);
         }
         return memory;
+    }
+
+    public static long getUsedMemorySize() {
+        long usedSize = 0L;
+        try {
+            final Runtime info = Runtime.getRuntime();
+            usedSize = info.totalMemory() - info.freeMemory();
+        } catch(final Exception e) {
+            Logger.e(e);
+        }
+        return usedSize;
     }
 
     /**
@@ -1090,7 +1099,7 @@ public class Device {
         try {
             StatFs fs = new StatFs(path);
             return android.text.format.Formatter.formatFileSize(context(), fs.getAvailableBlocks() * fs.getBlockSize());
-        } catch (Exception e) {
+        } catch(final Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -1228,7 +1237,7 @@ public class Device {
                 if (buf.length() > 0) buf.deleteCharAt(buf.length() - 1);
                 macaddress = buf.toString();
             }
-        } catch (Exception ignore) {
+        } catch(final Exception ignore) {
         } // for now eat exceptions
         return macaddress;
     }
@@ -1334,7 +1343,7 @@ public class Device {
             long internalBytesAvailable = (long) internalStat.getBlockSize() * (long) internalStat.getBlockCount();
 
             diskSpace = Math.min(internalBytesAvailable, externalBytesAvailable);
-        } catch (Exception e) {
+        } catch(final Exception e) {
             Log.w(Device.TAG, e);
         }
 
@@ -1365,7 +1374,7 @@ public class Device {
                     orientation = "portrait";
                     break;
             }
-        } catch (Exception e) {
+        } catch(final Exception e) {
             Log.w(Device.TAG, e);
         }
 
@@ -1416,7 +1425,7 @@ public class Device {
             } else {
                 totalMemory = Runtime.getRuntime().totalMemory();
             }
-        } catch (Exception e) {
+        } catch(final Exception e) {
             Log.w(Device.TAG, e);
         }
 
@@ -1429,7 +1438,7 @@ public class Device {
 
         try {
             freeMemory = totalMemoryAvailable() - memoryUsedByApp();
-        } catch (Exception e) {
+        } catch(final Exception e) {
             Log.w(Device.TAG, e);
         }
 
@@ -1443,7 +1452,7 @@ public class Device {
 
         try {
             memoryUsedByApp = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
-        } catch (Exception e) {
+        } catch(final Exception e) {
             Log.w(Device.TAG, e);
         }
 
@@ -1458,7 +1467,7 @@ public class Device {
             activityManager.getMemoryInfo(memInfo);
 
             lowMemory = memInfo.lowMemory;
-        } catch (Exception e) {
+        } catch(final Exception e) {
             Log.w(Device.TAG, e);
         }
         return lowMemory;
@@ -1479,7 +1488,7 @@ public class Device {
         try {
             File file = new File("/system/app/Superuser.apk");
             return file.exists();
-        } catch (Exception e) {
+        } catch(final Exception e) {
             return false;
         }
     }
@@ -1505,7 +1514,7 @@ public class Device {
             } else {
                 networkStatus = "none";
             }
-        } catch (Exception e) {
+        } catch(final Exception e) {
             Log.w(Device.TAG, e);
         }
 
@@ -1524,7 +1533,7 @@ public class Device {
             } else {
                 gpsAllowed = "disallowed";
             }
-        } catch (Exception e) {
+        } catch(final Exception e) {
             Log.w(Device.TAG, e);
         }
 
@@ -1534,7 +1543,7 @@ public class Device {
     public static String getPackageName() {
         try {
             return context().getPackageName();
-        } catch (Exception e) {
+        } catch(final Exception e) {
             Log.w(Device.TAG, e);
         }
         return null;
@@ -1734,7 +1743,7 @@ public class Device {
 //                    Logger.v("doShellCommand processComplete exitValue: " + exitValue);
 //                }
 //            },false,true);
-//        } catch (Exception e) {
+//        } catch(final Exception e) {
 //            e.printStackTrace();
 //        }
 //
@@ -1757,7 +1766,7 @@ public class Device {
                     Logger.v("shellOut " + exitValue);
                 }
             }, false, true);
-        } catch (Exception e) {
+        } catch(final Exception e) {
             e.printStackTrace();
         }
     }
@@ -1865,7 +1874,7 @@ public class Device {
                     callback.onComplete(loadThombstones());
                 }
             }, true, true);
-        } catch (Exception e) {
+        } catch(final Exception e) {
             e.printStackTrace();
         }
     }
@@ -1982,7 +1991,7 @@ public class Device {
         try {
             PackageInfo pi = context().getPackageManager().getPackageInfo(packageName, 0);
             packageVersion = pi.versionName;
-        } catch (Exception e) {
+        } catch(final Exception e) {
             Log.w(Device.TAG, "Could not get package version", e);
         }
 
@@ -1998,7 +2007,7 @@ public class Device {
             if (debuggable) {
                 releaseStage = "development";
             }
-        } catch (Exception e) {
+        } catch(final Exception e) {
             Log.w(Device.TAG, "Could not guess release stage", e);
         }
 
