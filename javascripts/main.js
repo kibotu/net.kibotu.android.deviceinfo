@@ -15,6 +15,12 @@ $(document).ready(function () {
         $('#myTab a:last').tab('show');
     });
 
+    var createTimespan = function(minutes) {
+        var timespan = new Date();
+        timespan.setTime(timespan.getTime() - (1000 * 60 * minutes));  // milliseconds * seconds * minutes * hours * days
+        return timespan;
+    };
+
     var spanColor = function (text, color) {
         return '<span style="color:' + color + ';">' + text + '</span>';
     };
@@ -27,19 +33,19 @@ $(document).ready(function () {
         return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
     };
 
-    var parseGetThrowableById = function(objectId, cb) {
+    var parseGetThrowableById = function (objectId, cb) {
         var throwable = Parse.Object.extend("Throwable");
         var query = new Parse.Query(throwable);
         query.get(objectId, {
-            success: function(result) {
+            success: function (result) {
                 cb(result);
             },
-            error: function(object, error) {
+            error: function (object, error) {
             }
         });
     };
 
-    var fillFields = function(exceptionJson, metaData) {
+    var fillFields = function (exceptionJson, metaData) {
 
         $("#metaData").html("");
         $("#stacktrace").html("");
@@ -104,43 +110,52 @@ $(document).ready(function () {
 
             var firstException = exceptionJson[0];
             var message = firstException['message'] ? firstException['message'].escape() : "[no error message]";
-            message = spanColor(message, "#000000");
-            $("#throwables").append('<li class="list-group-item">' + dateTooltip + ' <a href="#' + objectId + '" class="exceptionObjectId">' + firstException['errorType'] + '</a><br/><div class="well" style="word-wrap:break-word;margin-top: 1em;">' + message + '</div></li>');
+//            message = spanColor(message, "#000");
+
+            $("#throwables").append('<li class="list-group-item">' + dateTooltip + ' <a style="color:#b52222;" href="' + objectId + '">' + firstException['errorType'] + '</a><br/>' + message + '</li>');
 
             // fillFields(exceptionJson,throwables[i].get('metaData'));
         }
 
         $("[data-toggle=tooltip]").tooltip();
 
-        $("a.exceptionObjectId").click(function(event) {
+        $(".list-group-item a").click(function (event) {
             event.preventDefault();
-
-            var objectId = $(this).attr('href').substring(1);
-
-            console.log("click " + objectId);
-
-            parseGetThrowableById(objectId, function(result) {
-                fillFields(JSON.parse(result.get('exceptionJson')),result.get('metaData'));
+            parseGetThrowableById($(this).attr('href'), function (result) {
+                fillFields(JSON.parse(result.get('exceptionJson')), result.get('metaData'));
             });
+        });
+
+        $(".dropdown-menu a").click(function (event) {
+            event.preventDefault();
+            parseLoadThrowables(createTimespan($(this).attr('href')));
         });
     };
 
     Parse.initialize("ydr6IjoEfkcmgfqBFxeTujnVHGZ8Gtvqw8XVJtde", "TjR59xOlQlTfFRHXMaSgtxRV7pYPuFj8OAMRY8qX");
 
-    var Throwable = Parse.Object.extend("Throwable");
-    var query = new Parse.Query(Throwable);
+    var parseLoadThrowables = function(timespan) {
 
-    var last2days = 60 * 60 * 24 * 2; // 30601000
-    var now = new Date();
-    now.setTime(now.setTime()-30601000);
-//    query.lessThanOrEqualTo("createdAt",now);
+//        console.log(timespan);
+//        console.log(new Date())
 
-    query.find({
-        success: function (results) {
-            addExceptions(results);
-        },
-        error: function (throwable, error) {
-            console.log("Failed " + error);
-        }
-    });
+        var Throwable = Parse.Object.extend("Throwable");
+        var query = new Parse.Query(Throwable);
+
+        query.greaterThanOrEqualTo("createdAt", timespan);
+
+        query.find({
+            success: function (results) {
+
+                $("#throwables").html("");
+
+                addExceptions(results);
+            },
+            error: function (throwable, error) {
+                console.log("Failed " + JSON.stringify(throwable) + " " + error);
+            }
+        });
+    };
+
+    parseLoadThrowables(createTimespan(60 * 24 * 2));
 });
