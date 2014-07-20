@@ -41,7 +41,8 @@ final public class UncaughtExceptionHandlerDecorator implements UncaughtExceptio
     @Override
     public void uncaughtException(final Thread t, final Throwable e) {
         Logger.e(e);
-        customHandler.uncaughtException(t, e);
+        if (!Logger.hasThrowableHook())
+            customHandler.uncaughtException(t, e);
         originalHandler.uncaughtException(t, e);
     }
 }

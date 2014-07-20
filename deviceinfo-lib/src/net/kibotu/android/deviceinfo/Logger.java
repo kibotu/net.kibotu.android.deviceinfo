@@ -13,6 +13,10 @@ import org.jetbrains.annotations.NotNull;
  */
 final public class Logger {
 
+    public static boolean hasThrowableHook() {
+        return ThrowableHook.throwableHook != null;
+    }
+
     public abstract static class ThrowableHook {
         private static ThrowableHook throwableHook;
         abstract void handleException(@NotNull final Throwable e);

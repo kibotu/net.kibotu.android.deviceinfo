@@ -35,12 +35,11 @@ public class ErrorTrackingHelper {
         }
 
         ParseObject testObject = new ParseObject("Throwable");
-        testObject.add("message", "" + e.getMessage());
-        testObject.add("metaData", metaData);
+        testObject.put("metaData", metaData);
 
-        JSONObject exception = new JSONObject();
-        addException(exception, e);
-        testObject.add("exceptionJson", exception);
+        JSONArray exceptions = new JSONArray();
+        addException(exceptions, e);
+        testObject.put("exceptionJson", ""+exceptions);
 
         testObject.getObjectId();
         testObject.saveEventually(new SaveCallback() {
@@ -51,18 +50,21 @@ public class ErrorTrackingHelper {
         });
     }
 
-    private static void addException(final JSONObject json, final Throwable exception) {
+    private static void addException(final JSONArray exceptions, final Throwable throwable) {
         // Unwrap exceptions
-        if (exception != null) {
-            Throwable currentEx = exception;
+        if (throwable != null) {
+            Throwable currentEx = throwable;
             while (currentEx != null) {
-                JSONUtils.safePut(json, "errorType", currentEx.getClass().getName());
-                addStacktraceElements(json, currentEx.getStackTrace(), 0);
-                JSONUtils.safePut(json, "message", currentEx.getMessage());
+                final JSONObject exception = new JSONObject(); // current exception
+                JSONUtils.safePut(exception, "errorType", currentEx.getClass().getName());
+                JSONUtils.safePut(exception, "message", currentEx.getMessage());
+                addStacktraceElements(exception, currentEx.getStackTrace(), 0); // add current stacktrace to the current exception
+                exceptions.put(exception); // add the current exception to all exception array
                 currentEx = currentEx.getCause();
             }
-        } else
+        } else {
             Logger.w("Exception is null.");
+        }
     }
 
     private static void addStacktraceElements(final JSONObject json, StackTraceElement[] stackTrace, final int startIndex) {
@@ -78,7 +80,8 @@ public class ErrorTrackingHelper {
             try {
                 final StackTraceElement el = stackTrace[i];
                 final JSONObject line = new JSONObject();
-                JSONUtils.safePut(line, "method", el.getClassName() + "." + el.getMethodName());
+                JSONUtils.safePut(line, "class", el.getClassName());
+                JSONUtils.safePut(line, "method", el.getMethodName());
                 JSONUtils.safePut(line, "file", el.getLineNumber() == -2 ? "<Native Method>" : el.getFileName() == null ? "Unknown" : el.getFileName()); // line number -2 = native method
                 JSONUtils.safePut(line, "lineNumber", el.getLineNumber());
 

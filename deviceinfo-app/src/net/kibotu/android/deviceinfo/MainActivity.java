@@ -93,6 +93,16 @@ public class MainActivity extends FragmentActivity {
         // time bomb
         Device.ACTIVATE_TB = false;
         Device.checkTimebombDialog();
+
+        stub1();
+    }
+
+    public void stub1() {
+        testLowMemory();
+    }
+
+    private void testLowMemory() {
+        long[] l = new long[Integer.MAX_VALUE];
     }
 
     // region Option Menu
@@ -141,7 +151,6 @@ public class MainActivity extends FragmentActivity {
     }
 
     // endregion
-
 
     public void doParseStuff() {
 //
