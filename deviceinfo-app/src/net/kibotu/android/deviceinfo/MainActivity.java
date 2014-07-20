@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import com.flurry.android.FlurryAgent;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.parse.*;
@@ -85,7 +84,7 @@ public class MainActivity extends FragmentActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-        if(menu.isMenuShowing()) {
+        if (menu.isMenuShowing()) {
             Device.killApp();
 //            finish();
             return true;
