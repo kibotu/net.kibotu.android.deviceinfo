@@ -58,29 +58,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: net.kibotu.android.deviceinfo" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac29e572-50bf-4121-b2c4-6f74c649a384" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/android_support_v4__3_.xml" />
-      <change type="DELETED" beforePath="D:\programming\android-device\.idea\libraries\Maven__com_android_support_support_v4_18_0_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\.idea\libraries\Maven__com_github_stefanbirkner_system_rules_1_5_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\.idea\libraries\Maven__com_google_android_android_test_2_3_3.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\.idea\libraries\Maven__com_google_dexmaker_dexmaker_1_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\.idea\libraries\Maven__com_google_dexmaker_dexmaker_mockito_1_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\.idea\libraries\Maven__com_jayway_android_robotium_robotium_solo_3_6.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\.idea\libraries\Maven__commons_io_commons_io_2_4.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\.idea\libraries\Maven__junit_junit_4_11.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\.idea\libraries\Maven__org_mockito_mockito_core_1_9_5.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\.idea\libraries\Maven__org_objenesis_objenesis_1_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\.idea\libraries\Maven__org_skyscreamer_jsonassert_1_2_3.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\.idea\libraries\android_support_v42.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo-lib/target/generated-sources/r/net/kibotu/android/deviceinfo/BuildConfig.java" afterPath="$PROJECT_DIR$/deviceinfo-lib/target/generated-sources/r/net/kibotu/android/deviceinfo/BuildConfig.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/MainActivity.java" afterPath="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo-lib/target/generated-sources/r/net/kibotu/android/deviceinfo/R.java" afterPath="$PROJECT_DIR$/deviceinfo-lib/target/generated-sources/r/net/kibotu/android/deviceinfo/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo-lib/target/R.txt" afterPath="$PROJECT_DIR$/deviceinfo-lib/target/R.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo-app/deviceinfo-app.iml" afterPath="$PROJECT_DIR$/deviceinfo-app/deviceinfo-app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo-tests/deviceinfo-tests.iml" afterPath="$PROJECT_DIR$/deviceinfo-tests/deviceinfo-tests.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="ac29e572-50bf-4121-b2c4-6f74c649a384" name="Default" comment="" />
     <ignored path="android-device.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -172,8 +150,8 @@
       <file leaf-file-name=".travis.yml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.travis.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.42242354" vertical-offset="613" max-vertical-offset="1496">
-              <caret line="58" column="0" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.53793883" vertical-offset="613" max-vertical-offset="1496">
+              <caret line="64" column="0" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -1192,12 +1170,12 @@
       <workItem from="1405802068034" duration="76000" />
       <workItem from="1405802195654" duration="5349000" />
       <workItem from="1405807810795" duration="9418000" />
-      <workItem from="1405847075424" duration="3130000" />
+      <workItem from="1405847075424" duration="3178000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="282498000" />
+    <option name="totallyTimeSpent" value="282546000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1753,8 +1731,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.travis.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42242354" vertical-offset="613" max-vertical-offset="1496">
-          <caret line="58" column="0" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.53793883" vertical-offset="613" max-vertical-offset="1496">
+          <caret line="64" column="0" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
           <folding />
         </state>
       </provider>
