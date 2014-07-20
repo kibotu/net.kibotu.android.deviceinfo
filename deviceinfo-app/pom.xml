@@ -1,0 +1,60 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>net.kibotu.android.deviceinfo</groupId>
+        <artifactId>deviceinfo</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <!--<relativePath>../pom.xml</relativePath>-->
+    </parent>
+
+    <artifactId>deviceinfo-app</artifactId>
+    <version>1.0</version>
+    <packaging>jar</packaging>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>net.kibotu.android.deviceinfo</groupId>
+            <artifactId>deviceinfo-lib</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
+            <exclusions>
+
+                <exclusion>
+                    <groupId>com.google.android</groupId>
+                    <artifactId>annotations</artifactId>
+                </exclusion>
+
+                <exclusion>
+                    <groupId>com.intellij</groupId>
+                    <artifactId>annotations</artifactId>
+                </exclusion>
+
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.android</groupId>
+            <artifactId>android</artifactId>
+            <version>2.3.3</version>
+        </dependency>
+
+    </dependencies>
+
+    <repositories>
+
+        <!-- <repository>
+            <id>android.support-mvn-repo</id>
+            <url>https://raw.github.com/kmchugh/android.support/mvn-repo</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+            </snapshots>
+        </repository> -->
+
+    </repositories>
+
+
+</project>
