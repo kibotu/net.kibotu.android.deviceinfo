@@ -559,7 +559,7 @@ public enum Registry implements IGetInfoFragment {
                     customView = lCores;
                     useHtml = true;
 
-                    final float [] cpuUsages = Cpu.getCpuUsage();
+                    final float[] cpuUsages = Cpu.getCpuUsage();
 
                     keys = "Cores: " + BR;
                     value = cores + BR;
@@ -567,6 +567,7 @@ public enum Registry implements IGetInfoFragment {
                     value += formatPercent(cpuUsages[0]) + BR;
 
                     for (int i = 1; i < cores + 1; ++i) {
+                        if (cpuUsages.length <= i) break;
                         final float usage = cpuUsages[i];
                         keys += "Utilization Core " + i + BR;
                         value += usage <= 0.01f ? "Idle" : Utils.formatPercent(usage) + BR;

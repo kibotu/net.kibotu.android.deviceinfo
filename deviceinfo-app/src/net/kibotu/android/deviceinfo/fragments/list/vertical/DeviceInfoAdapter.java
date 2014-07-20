@@ -2,14 +2,11 @@ package net.kibotu.android.deviceinfo.fragments.list.vertical;
 
 import android.content.Context;
 import android.text.Html;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import net.kibotu.android.deviceinfo.R;
-
-import static net.kibotu.android.deviceinfo.Device.context;
 
 public class DeviceInfoAdapter extends ArrayAdapter<DeviceInfoItem> {
 
@@ -33,7 +30,7 @@ public class DeviceInfoAdapter extends ArrayAdapter<DeviceInfoItem> {
         if (keys != null) {
 //            keys.setText(item.keys != null ? item.keys : item.tag);
             final String v = item.keys != null ? item.keys : item.tag;
-            keys.setText(item.useHtml ? Html.fromHtml(v): v);
+            keys.setText(item.useHtml ? Html.fromHtml(v) : v);
         }
 
         final TextView value = (TextView) convertView.findViewById(R.id.value);

@@ -52,29 +52,29 @@ public class DeviceInfoFragment extends ListFragment {
     }
 
     /**
-     * @param delay       - Delay in seconds.
+     * @param delay - Delay in seconds.
      */
     public Thread addItem(final String tag, final String description, final float delay, final boolean loop, final DeviceInfoItemAsync asyncValue) {
 
-        Thread t =  new Thread(new Runnable() {
+        Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
 
                 asyncValue.tag = tag;
                 asyncValue.description = description;
                 Device.context().runOnUiThread(new Runnable() {
-                   @Override
-                   public void run() {
-                       getFragmentListAdapter().add(asyncValue);
+                    @Override
+                    public void run() {
+                        getFragmentListAdapter().add(asyncValue);
 
-                       // sort
-                       list.sort(new Comparator<DeviceInfoItem>() {
-                           @Override
-                           public int compare(final DeviceInfoItem a, final DeviceInfoItem b) {
-                               return a.order - b.order;
-                           }
-                       });
-                   }
+                        // sort
+                        list.sort(new Comparator<DeviceInfoItem>() {
+                            @Override
+                            public int compare(final DeviceInfoItem a, final DeviceInfoItem b) {
+                                return a.order - b.order;
+                            }
+                        });
+                    }
                 });
 
                 do {
@@ -105,11 +105,11 @@ public class DeviceInfoFragment extends ListFragment {
 
         final DeviceInfoItem item = list.getItem(position);
 
-        if(item.tag.equalsIgnoreCase("RAM")){
+        if (item.tag.equalsIgnoreCase("RAM")) {
             Runtime.getRuntime().gc();
         }
 
-        if(!item.description.equals("description")){
+        if (!item.description.equals("description")) {
             Logger.toast(item.description);
         }
         // Logger.toast(list.getItem(position).tag + " " +list.getItem(position).order);

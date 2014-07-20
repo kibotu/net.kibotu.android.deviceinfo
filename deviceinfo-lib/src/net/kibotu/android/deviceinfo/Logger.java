@@ -13,6 +13,16 @@ import org.jetbrains.annotations.NotNull;
  */
 final public class Logger {
 
+    public abstract static class ThrowableHook {
+        private static ThrowableHook throwableHook;
+        abstract void handleException(@NotNull final Throwable e);
+
+    }
+
+    public static void setThrowableHook(@NotNull final ThrowableHook throwableHook) {
+        ThrowableHook.throwableHook = throwableHook;
+    }
+
     // region Variables.
 
     /**
@@ -212,6 +222,7 @@ final public class Logger {
      * @param e       Additional Throwable.
      */
     public static void i(@NotNull final String message, @NotNull final Throwable e) {
+        ThrowableHook.throwableHook.handleException(e);
         if (allowLogging(Level.ERROR)) logger.error(tag, message, e);
     }
 
@@ -222,6 +233,7 @@ final public class Logger {
      * @param e       Additional Throwable.
      */
     public static void v(@NotNull final String message, @NotNull final Throwable e) {
+        ThrowableHook.throwableHook.handleException(e);
         if (allowLogging(Level.VERBOSE)) logger.verbose(tag, message, e);
     }
 
@@ -232,6 +244,7 @@ final public class Logger {
      * @param e       Additional Throwable.
      */
     public static void d(@NotNull final String message, @NotNull final Throwable e) {
+        ThrowableHook.throwableHook.handleException(e);
         if (allowLogging(Level.DEBUG)) logger.debug(tag, message, e);
     }
 
@@ -242,6 +255,7 @@ final public class Logger {
      * @param e       Additional Throwable.
      */
     public static void w(@NotNull final String message, @NotNull final Throwable e) {
+        ThrowableHook.throwableHook.handleException(e);
         if (allowLogging(Level.WARNING)) logger.warning(tag, message, e);
     }
 
@@ -252,6 +266,7 @@ final public class Logger {
      * @param e       Additional Throwable.
      */
     public static void e(@NotNull final String message, @NotNull final Throwable e) {
+        ThrowableHook.throwableHook.handleException(e);
         if (allowLogging(Level.ERROR)) logger.error(tag, message, e);
     }
 
@@ -261,6 +276,7 @@ final public class Logger {
      * @param e Throwable.
      */
     public static void e(final Throwable e) {
+        ThrowableHook.throwableHook.handleException(e);
         if (allowLogging(Level.ERROR)) {
             final String msg = e.getMessage();
             logger.error(tag, msg == null ? "" : msg, e);
@@ -274,6 +290,7 @@ final public class Logger {
      * @param e       Additional Throwable.
      */
     public static void f(@NotNull final String message, @NotNull final Throwable e) {
+        ThrowableHook.throwableHook.handleException(e);
         if (allowLogging(Level.FATAL)) logger.fatal(tag, message, e);
     }
 

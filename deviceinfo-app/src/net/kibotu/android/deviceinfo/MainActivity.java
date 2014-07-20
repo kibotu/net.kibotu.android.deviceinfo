@@ -9,8 +9,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import com.flurry.android.FlurryAgent;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
-import com.parse.*;
 import net.kibotu.android.deviceinfo.fragments.menu.MenuFragment;
+import net.kibotu.android.deviceinfo.utils.ErrorTrackingHelper;
+import net.kibotu.android.deviceinfo.utils.JSONUtils;
+import org.json.JSONObject;
 
 public class MainActivity extends FragmentActivity {
 
@@ -28,26 +30,40 @@ public class MainActivity extends FragmentActivity {
     public void onStop() {
         super.onStop();
         FlurryAgent.onEndSession(this);
+        ErrorTrackingHelper.endSession();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // set theme
-        setTheme(PreferenceManager.getDefaultSharedPreferences(this).getInt(THEME_PREFERENCE, R.style.light_theme));
+        // init logger
+        Logger.init(new LogcatLogger(this), "DeviceInfo", Logger.Level.VERBOSE);
 
         // init device
         Device.setContext(this);
 
-        // init logger
-        Logger.init(new LogcatLogger(this), "DeviceInfo", Logger.Level.VERBOSE);
+        // setup error tracking
+        ErrorTrackingHelper.startErrorTracking(this);
+        JSONObject metaData = new JSONObject();
+        JSONUtils.safePut(metaData, "SDK", "" + Device.getApiLevel());
+        ErrorTrackingHelper.addMetaData(metaData);
+
+        // inject logged exceptions
+        Logger.setThrowableHook(new Logger.ThrowableHook() {
+            @Override
+            void handleException(final Throwable e) {
+                ErrorTrackingHelper.notifyError(e);
+            }
+        });
+
+        // set theme
+        setTheme(PreferenceManager.getDefaultSharedPreferences(this).getInt(THEME_PREFERENCE, R.style.light_theme));
 
         arcList = new MenuFragment(this);
 
-        for (Registry item : Registry.values()) {
+        for (Registry item : Registry.values())
             arcList.addItem(item.name(), item.iconR);
-        }
 
         // set the Above View
         setContentView(R.layout.content_frame);
@@ -126,27 +142,22 @@ public class MainActivity extends FragmentActivity {
 
     // endregion
 
+
     public void doParseStuff() {
-        Parse.initialize(this, "JDbBWkOOUksLw7EefanIfckq4Rme9A62pF6uz4Qb", "y6dVB0I6RKCMiKjPxF3el2O1ErZp2MdCgIygu6RQ");
-
-        ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "bar");
-        testObject.saveInBackground();
-        testObject.getObjectId();
-
-        ParseQuery query = ParseQuery.getQuery("TestObject");
-
-
-        query.getInBackground(testObject.getObjectId(), new GetCallback() {
-
-            @Override
-            public void done(ParseObject parseObject, ParseException e) {
-                if (e == null) {
-                    // object will be your game score
-                } else {
-                    // something went wrong
-                }
-            }
-        });
+//
+//        ParseQuery query = ParseQuery.getQuery("TestObject");
+//
+//
+//        query.getInBackground(testObject.getObjectId(), new GetCallback() {
+//
+//            @Override
+//            public void done(ParseObject parseObject, ParseException e) {
+//                if (e == null) {
+//                    // object will be your game score
+//                } else {
+//                    // something went wrong
+//                }
+//            }
+//        });
     }
 }

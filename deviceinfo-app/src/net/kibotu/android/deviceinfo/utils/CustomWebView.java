@@ -236,7 +236,7 @@ public class CustomWebView {
         };
         RelativeLayout.LayoutParams webViewParams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         view.setLayoutParams(webViewParams);
-        setWebViewSettings((Activity) context,view);
+        setWebViewSettings((Activity) context, view);
         view.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(final WebView view, final String url) {
@@ -244,6 +244,7 @@ public class CustomWebView {
                     return true;
                 return false;
             }
+
             @Override
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
                 Logger.e(LOGGING_TAG, description + " " + failingUrl + " " + errorCode);
@@ -253,7 +254,7 @@ public class CustomWebView {
             @Override
             public void onPageFinished(WebView view, String url) {
 //                view.setMinimumHeight(150);
-                super.onPageFinished(view,url);
+                super.onPageFinished(view, url);
             }
         });
         return view;
@@ -474,7 +475,7 @@ public class CustomWebView {
         final WebSettings s = webView.getSettings();
         webView.setFocusable(true);
         webView.setFocusableInTouchMode(true);
-        s.setJavaScriptEnabled(true );
+        s.setJavaScriptEnabled(true);
         s.setJavaScriptCanOpenWindowsAutomatically(false);
         s.setPluginState(PluginState.OFF);
         s.setRenderPriority(RenderPriority.HIGH);
