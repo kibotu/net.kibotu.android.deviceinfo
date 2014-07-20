@@ -406,7 +406,7 @@ public enum Registry implements IGetInfoFragment {
 
             final LinearLayout l = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.ram, null);
 
-            Memory.threads.add(cachedList.addItem("RAM", "Dumping /proc/meminfo.", 1f, true, new DeviceInfoItemAsync(5) {
+            Memory.threads.add(cachedList.addItem("RAM", "Output /proc/meminfo.", 1f, true, new DeviceInfoItemAsync(5) {
 
                 @Override
                 protected void async() {
@@ -546,53 +546,52 @@ public enum Registry implements IGetInfoFragment {
 
     CPU(android.R.drawable.ic_menu_search) {
 
-        final int cores = Device.getNumCores();
+        final int cores = Cpu.getNumCores();
 
         @Override
         public void createFragmentList() {
-            cachedList.addItem("CPU Cores", "Amount of cores.", new DeviceInfoItemAsync(1) {
+
+            final LinearLayout lCores = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.tablewithtag, null);
+            CPU.threads.add(cachedList.addItem("CPU Utilization", "Output from /proc/stat.", 1f, true, new DeviceInfoItemAsync(0) {
                 @Override
                 protected void async() {
-                    value = "" + cores;
 
-                    CPU.threads.add(cachedList.addItem("CPU Utilization All Cores", "Output from /proc/stat.", 1f, true, new DeviceInfoItemAsync(0) {
-                        @Override
-                        protected void async() {
-                            value = "" + Device.getCpuUsage()[0] + " %";
-                        }
-                    }));
-
-                    for (int i = 1; i < cores + 1; ++i) {
-                        final int finalI = i;
-                        CPU.threads.add(cachedList.addItem("CPU Utilization Core " + i, "Output from /proc/stat.", 1f, true, new DeviceInfoItemAsync(finalI + 1) {
-                            @Override
-                            protected void async() {
-                                float usage = Device.getCpuUsage()[finalI];
-                                value = usage <= 0.01f ? "Idle" : usage + " %";
-                            }
-                        }));
-                    }
-                }
-            });
-
-            final LinearLayout lFreq = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.tablewithtag, null);
-            CPU.threads.add(cachedList.addItem("Frequency", "Dumped cpuinfo_max_freq, cpuinfo_min_freq and scaling_cur_freq from /sys/devices/system/cpu/cpu0/cpufreq/.", 1f, true, new DeviceInfoItemAsync(cores + 2) {
-                @Override
-                protected void async() {
-                    customView = lFreq;
-
+                    customView = lCores;
                     useHtml = true;
 
-                    keys = "Max:" + BR;
-                    value = formatFrequency(Device.getMaxCpuFreq()) + BR;
-                    keys += "Min:" + BR;
-                    value += formatFrequency(Device.getMinCpuFreq()) + BR;
-                    keys += "Current:" + BR;
-                    value += formatFrequency(Device.getCurrentCpuFreq());
+                    final float [] cpuUsages = Cpu.getCpuUsage();
+
+                    keys = "Cores: " + BR;
+                    value = cores + BR;
+                    keys += "Utilization All Cores:" + BR;
+                    value += formatPercent(cpuUsages[0]) + BR;
+
+                    for (int i = 1; i < cores + 1; ++i) {
+                        final float usage = cpuUsages[i];
+                        keys += "Utilization Core " + i + BR;
+                        value += usage <= 0.01f ? "Idle" : Utils.formatPercent(usage) + BR;
+                    }
                 }
             }));
 
-            cachedList.addItem("CPU Details", "Dumped /proc/cpuinfo.", 1f, false, new DeviceInfoItemAsync(cores + 5) {
+            final LinearLayout lFreq = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.tablewithtag, null);
+            CPU.threads.add(cachedList.addItem("Frequency", "Output cpuinfo_max_freq, cpuinfo_min_freq and scaling_cur_freq from /sys/devices/system/cpu/cpu0/cpufreq/.", 1f, true, new DeviceInfoItemAsync(cores + 2) {
+                @Override
+                protected void async() {
+
+                    customView = lFreq;
+                    useHtml = true;
+
+                    keys = "Max:" + BR;
+                    value = formatFrequency(Cpu.getMaxCpuFreq()) + BR;
+                    keys += "Min:" + BR;
+                    value += formatFrequency(Cpu.getMinCpuFreq()) + BR;
+                    keys += "Current:" + BR;
+                    value += formatFrequency(Cpu.getCurrentCpuFreq());
+                }
+            }));
+
+            cachedList.addItem("CPU Details", "Output /proc/cpuinfo.", new DeviceInfoItemAsync(cores + 5) {
                 @Override
                 protected void async() {
                     value = Device.getCpuInfo();
@@ -788,6 +787,65 @@ public enum Registry implements IGetInfoFragment {
                     });
                 }
             });
+
+
+            cachedList.addItem("Bluetooth", "description", "").setHorizontal();
+            cachedList.addItem("NFC", "description", "").setHorizontal();
+            cachedList.addItem("CONSUMER_IR_SERVICE", "description", "").setHorizontal();
+            cachedList.addItem("NETWORK_INFO_WIFI", "description", "").setHorizontal();
+            cachedList.addItem("WIFI_BSSID", "description", "").setHorizontal();
+            cachedList.addItem("WIFI_HIDDEN_SSID", "description", "").setHorizontal();
+            cachedList.addItem("WIFI_IP_ADDRESS", "description", "").setHorizontal();
+            cachedList.addItem("WIFI_LINK_SPEED", "description", "").setHorizontal();
+            cachedList.addItem("WIFI_MAC_ADDRESS", "description", "").setHorizontal();
+            cachedList.addItem("WIFI_RSSI", "description", "").setHorizontal();
+            cachedList.addItem("WIFI_SSID", "description", "").setHorizontal();
+
+            cachedList.addItem("CALL_STATE", "description", "").setHorizontal();
+            cachedList.addItem("CELL_LOCATION", "description", "").setHorizontal();
+            cachedList.addItem("CELL_ACTIVITY", "description", "").setHorizontal();
+            cachedList.addItem("DATA_ACTIVITY", "description", "").setHorizontal();
+            cachedList.addItem("DATA_STATE", "description", "").setHorizontal();
+            cachedList.addItem("DEVICE_ID", "description", "").setHorizontal();
+            cachedList.addItem("DEVICE_SOFTWARE_VERSION", "description", "").setHorizontal();
+            cachedList.addItem("DEVICE_SOFTWARE_VERSION", "description", "").setHorizontal();
+            cachedList.addItem("LINE1_NUMBER", "description", "").setHorizontal();
+            cachedList.addItem("MMS_UA_PROF_URL", "description", "").setHorizontal(); // 19
+            cachedList.addItem("MMS_USER_AGENT", "description", "").setHorizontal(); // 19
+            cachedList.addItem("NEIGHBORING_CELL_INFO", "description", "").setHorizontal();
+            cachedList.addItem("NETWORK_COUNTRY_ISO", "description", "").setHorizontal();
+            cachedList.addItem("NETWORK_OPERATOR", "description", "").setHorizontal();
+            cachedList.addItem("NETWORK_OPERATOR_NAME", "description", "").setHorizontal();
+            cachedList.addItem("NETWORK_TYPE", "description", "").setHorizontal();
+            cachedList.addItem("PHONE_TYPE", "description", "").setHorizontal();
+            cachedList.addItem("SUBSCRIBER_ID", "description", "").setHorizontal();
+            cachedList.addItem("VOICE_MAIL_ALPHA_TAG", "description", "").setHorizontal();
+            cachedList.addItem("VOICE_MAIL_NUMBER", "description", "").setHorizontal();
+        }
+    },
+
+    // endregion
+
+    // region Geolocation
+
+    Audio(android.R.drawable.ic_menu_search) {
+        @Override
+        public void createFragmentList() {
+
+            cachedList.addItem("MODE", "description", "").setHorizontal();
+            cachedList.addItem("RINGER_MODE", "description", "").setHorizontal();
+            cachedList.addItem("STREAM_DTMF", "description", "").setHorizontal();
+            cachedList.addItem("STREAM_MUSIC", "description", "").setHorizontal();
+            cachedList.addItem("STREAM_NOTIFICATION", "description", "").setHorizontal();
+            cachedList.addItem("STREAM_RING", "description", "").setHorizontal();
+            cachedList.addItem("STREAM_SYSTEM", "description", "").setHorizontal();
+            cachedList.addItem("STREAM_VOICE_CALL", "description", "").setHorizontal();
+            cachedList.addItem("BLUETOOTH_A2DP_ON", "description", "").setHorizontal();
+            cachedList.addItem("BLUETOOH_SCO_AVAILABLE_OFF_CALL", "description", "").setHorizontal();
+            cachedList.addItem("BLUETOOTH_SCO_ON", "description", "").setHorizontal();
+            cachedList.addItem("MICROPHONE_MUTE", "description", "").setHorizontal();
+            cachedList.addItem("MUSIC_ACTIVE", "description", "").setHorizontal();
+            cachedList.addItem("SPEAKERPHONE_ON", "description", "").setHorizontal();
         }
     },
 

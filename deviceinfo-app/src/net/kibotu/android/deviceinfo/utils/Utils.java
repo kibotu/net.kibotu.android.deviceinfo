@@ -18,7 +18,7 @@ final public class Utils {
     public static final long BYTES_TO_MB = BYTES_TO_KB * 1024;
     public static final long BYTES_TO_GB = BYTES_TO_MB * 1024;
     public static final long BYTES_TO_TB = BYTES_TO_GB * 1024;
-    public static final String BR = "<br>";
+    public static final String BR = "<br>\n";
 
     private Utils() throws IllegalAccessException {
         throw new IllegalAccessException("'Utils' cannot be instantiated.");
@@ -657,5 +657,9 @@ final public class Utils {
     public static String formatLineSeparator(final String lineSeparator) {
         return lineSeparator.equals("\n") ? "\\n" : lineSeparator.equals("\n\r") ? "\\n\\r" : lineSeparator;
 
+    }
+
+    public static String formatPercent(final float usage) {
+        return String.format("%.2f %s", usage, "%");
     }
 }

@@ -13,13 +13,13 @@ import static net.kibotu.android.deviceinfo.Device.setContext;
 
 public class DeviceInfoItem implements Comparable<DeviceInfoItem> {
 
-    public String tag;
-    public String description;
-    public String value = "0";
-    public String keys;
-    public int order = Integer.MAX_VALUE;
+    public volatile String tag;
+    public volatile String description;
+    public volatile String value = "0";
+    public volatile String keys;
+    public volatile int order = Integer.MAX_VALUE;
     public volatile View customView;
-    public int textAppearance = android.R.style.TextAppearance_Large;
+    public volatile int textAppearance = android.R.style.TextAppearance_Large;
     public volatile int viewId = R.layout.tworowitem;
     public volatile boolean useHtml = false;
 

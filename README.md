@@ -27,6 +27,7 @@ Library and app for showing tons of device information for your android device.
 **Contributers:**
 
 ## Dependancies 
-* Added [jfeinstein10's Slidemenu][https://github.com/jfeinstein10/SlidingMenu]. 
+* None for the library.
+* (Added [jfeinstein10's Slidemenu](https://github.com/jfeinstein10/SlidingMenu) to the app.)
 
 ## See also
