@@ -15,7 +15,7 @@ $(document).ready(function () {
         $('#myTab a:last').tab('show');
     });
 
-    var createTimespan = function(minutes) {
+    var createTimespan = function (minutes) {
         var timespan = new Date();
         timespan.setTime(timespan.getTime() - (1000 * 60 * minutes));  // milliseconds * seconds * minutes * hours * days
         return timespan;
@@ -104,9 +104,9 @@ $(document).ready(function () {
             var createdAt = throwables[i].createdAt;
             var objectId = throwables[i].id;
 
-            var dmy = createdAt.getDate() + "-" + createdAt.getMonth() + 1 + "-" + createdAt.getYear();
+            var dmy = createdAt.getDate() + "-" + (createdAt.getMonth() + 1) + "-" + createdAt.getFullYear() + ' ' + createdAt.getHours() + ':' + createdAt.getMinutes() + ":" + createdAt.getSeconds();
 
-            var dateTooltip = createToolTip(createdAt, dmy);
+            var dateTooltip = createToolTip(createdAt, dmy, "color:#565656;");
 
             var firstException = exceptionJson[0];
             var message = firstException['message'] ? firstException['message'].escape() : "[no error message]";
@@ -134,7 +134,7 @@ $(document).ready(function () {
 
     Parse.initialize("ydr6IjoEfkcmgfqBFxeTujnVHGZ8Gtvqw8XVJtde", "TjR59xOlQlTfFRHXMaSgtxRV7pYPuFj8OAMRY8qX");
 
-    var parseLoadThrowables = function(timespan) {
+    var parseLoadThrowables = function (timespan) {
 
 //        console.log(timespan);
 //        console.log(new Date())
@@ -143,6 +143,7 @@ $(document).ready(function () {
         var query = new Parse.Query(Throwable);
 
         query.greaterThanOrEqualTo("createdAt", timespan);
+        query.descending("createdAt");
 
         query.find({
             success: function (results) {
