@@ -16,7 +16,10 @@
             </intent-filter>
         </activity>
     </application>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" android:required="false"/>
+    <!--<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" android:required="false"/>-->
+    <uses-feature android:name="android.hardware.LOCATION" android:required="false"/>
+    <uses-feature android:name="android.hardware.location.GPS" android:required="false"/>
+
     <supports-screens android:anyDensity="true"
                       android:largeScreens="true"
                       android:normalScreens="true"

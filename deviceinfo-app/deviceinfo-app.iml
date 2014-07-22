@@ -23,7 +23,6 @@
     <orderEntry type="library" name="FlurryAnalytics-4.1.0" level="project" />
     <orderEntry type="library" name="android-support-v7-appcompat" level="project" />
     <orderEntry type="library" name="android-support-v4 (2)" level="project" />
-    <orderEntry type="module" module-name="library" />
     <orderEntry type="module" module-name="deviceinfo-lib" />
     <orderEntry type="library" name="Maven: net.kibotu.android.error.tracking:error-tracking-lib:1.0.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.google.android:android:2.3.3" level="project" />
@@ -35,6 +34,7 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: xerces:xmlParserAPIs:2.6.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: xpp3:xpp3:1.1.4c" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.json:json:20080701" level="project" />
+    <orderEntry type="module" module-name="SlideMenu" />
   </component>
 </module>
 
