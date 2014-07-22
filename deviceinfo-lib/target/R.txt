@@ -1,4 +1,0 @@
-int bool IsTablet 0x7f030000
-int string density 0x7f020000
-int string orientation 0x7f020001
-int string screen_size 0x7f020002

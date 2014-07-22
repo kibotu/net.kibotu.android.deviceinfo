@@ -113,10 +113,10 @@ $(document).ready(function () {
 //            message = spanColor(message, "#000");
 
             $("#throwables").append('<li class="list-group-item">' + dateTooltip + ' <a style="color:#b52222;" href="' + objectId + '">' + firstException['errorType'] + '</a><br/>' + message + '</li>');
-
-            // fillFields(exceptionJson,throwables[i].get('metaData'));
         }
 
+        fillFields(JSON.parse(throwables[0].get('exceptionJson')), throwables[0].get('metaData'));
+		
         $("[data-toggle=tooltip]").tooltip();
 
         $(".list-group-item a").click(function (event) {
