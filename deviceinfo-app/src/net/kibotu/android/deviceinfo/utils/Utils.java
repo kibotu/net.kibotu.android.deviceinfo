@@ -406,6 +406,25 @@ final public class Utils {
         return map;
     }
 
+    public static Map<String, String> parseRamSmall(final String procMem) {
+        final LinkedHashMap<String, String> ramMap = new LinkedHashMap<String, String>();
+
+        final String lines[] = procMem.trim().split("\n");
+
+        int i = 0;
+
+        for (String line : lines) {
+            if(i >= 2) break;
+            final String[] token = line.split(" ");
+            // proc mem output looks like this each line: "info         byte kB" with tons of non-utf8-spaces in between,
+            // so split(" ") doesn't work properly, but we can just take the first and length-2 token index to get what we want
+            ramMap.put(token[0], formatBytes(Integer.valueOf(token[token.length - 2])));
+            ++i;
+        }
+
+        return ramMap;
+    }
+
     public static Map<String, String> parseRam(final String procMem) {
         final LinkedHashMap<String, String> ramMap = new LinkedHashMap<String, String>();
 

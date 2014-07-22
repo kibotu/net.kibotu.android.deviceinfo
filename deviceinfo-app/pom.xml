@@ -41,12 +41,6 @@
             <version>2.3.3</version>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>net.kibotu.android.error.tracking</groupId>-->
-            <!--<artifactId>error-tracking-lib</artifactId>-->
-            <!--<version>1.0.0</version>-->
-        <!--</dependency>-->
-
     </dependencies>
 
     <repositories>

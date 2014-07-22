@@ -12,6 +12,7 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import net.kibotu.android.deviceinfo.fragments.menu.MenuFragment;
 import net.kibotu.android.error.tracking.ErrorTracking;
 import net.kibotu.android.error.tracking.JSONUtils;
+import net.kibotu.android.error.tracking.Logger;
 import org.json.JSONObject;
 
 public class MainActivity extends FragmentActivity {
@@ -50,6 +51,7 @@ public class MainActivity extends FragmentActivity {
 
         // start error tracking
         ErrorTracking.startSession(this, appConfig.optString("applicationId"), appConfig.optString("clientKey"));
+        Logger.setLogLevel(Logger.Level.SILENT);
 
         // add api level
         JSONObject metaData = new JSONObject();
@@ -100,23 +102,24 @@ public class MainActivity extends FragmentActivity {
 
         if (menu.isMenuShowing()) {
             Device.killApp();
-//            finish();
+            finish();
             return true;
 //            return moveTaskToBack(true);
         }
 
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             menu.showMenu();
+            Device.context().setTitle("Android Device Information.");
             return true;
         }
         return super.onKeyDown(keyCode, event);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu, menu);
+//        return true;
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
