@@ -13,6 +13,8 @@ import net.kibotu.android.deviceinfo.fragments.list.vertical.DeviceInfoItemAsync
 import net.kibotu.android.deviceinfo.fragments.list.vertical.IGetInfoFragment;
 import net.kibotu.android.deviceinfo.utils.CustomWebView;
 import net.kibotu.android.deviceinfo.utils.Utils;
+import net.kibotu.android.error.tracking.Logger;
+import net.kibotu.android.error.tracking.ReflectionHelper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

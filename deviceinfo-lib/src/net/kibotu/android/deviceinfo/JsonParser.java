@@ -1,5 +1,6 @@
 package net.kibotu.android.deviceinfo;
 
+import net.kibotu.android.error.tracking.Logger;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
 import org.apache.http.client.ClientProtocolException;

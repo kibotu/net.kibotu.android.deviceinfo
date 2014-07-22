@@ -1,11 +1,12 @@
 package net.kibotu.android.deviceinfo;
 
+import net.kibotu.android.error.tracking.Logger;
+
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 
 /**
- *
  * @see https://www.kernel.org/doc/Documentation/filesystems/proc.txt
  */
 public class ProcStat {
@@ -47,30 +48,29 @@ public class ProcStat {
 
             String line = reader.readLine();
 
-            while(line != null) {
+            while (line != null) {
 
-                if(line.startsWith("cpu"))
+                if (line.startsWith("cpu"))
                     procStat.cpu.add(Cpu.parseCpu(line));
 
-                if(line.startsWith("ctxt"))
+                if (line.startsWith("ctxt"))
                     procStat.ctxt = Integer.parseInt(line.split(" ")[1]);
 
-                if(line.startsWith("btime"))
+                if (line.startsWith("btime"))
                     procStat.btime = Integer.parseInt(line.split(" ")[1]);
 
-                if(line.startsWith("processes"))
+                if (line.startsWith("processes"))
                     procStat.processes = Integer.parseInt(line.split(" ")[1]);
 
-                if(line.startsWith("procs_running"))
+                if (line.startsWith("procs_running"))
                     procStat.procs_running = Integer.parseInt(line.split(" ")[1]);
 
-                if(line.startsWith("procs_blocked"))
+                if (line.startsWith("procs_blocked"))
                     procStat.procs_blocked = Integer.parseInt(line.split(" ")[1]);
 
                 line = reader.readLine();
             }
-        }
-        catch (final IOException e) {
+        } catch (final IOException e) {
             Logger.e(e);
         }
 

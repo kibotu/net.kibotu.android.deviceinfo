@@ -52,24 +52,24 @@
         </dependency>
 
         <!--<dependency>-->
-            <!--<groupId>net.kibotu.android.deviceinfo</groupId>-->
-            <!--<artifactId>deviceinfo-lib</artifactId>-->
-            <!--<version>1.0.0</version>-->
-            <!--<scope>compile</scope>-->
-            <!--<type>apklib</type>-->
-            <!--<exclusions>-->
+        <!--<groupId>net.kibotu.android.deviceinfo</groupId>-->
+        <!--<artifactId>deviceinfo-lib</artifactId>-->
+        <!--<version>1.0.0</version>-->
+        <!--<scope>compile</scope>-->
+        <!--<type>apklib</type>-->
+        <!--<exclusions>-->
 
-                <!--&lt;!&ndash;<exclusion>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<groupId>com.google.android</groupId>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<artifactId>annotations</artifactId>&ndash;&gt;-->
-                <!--&lt;!&ndash;</exclusion>&ndash;&gt;-->
+        <!--&lt;!&ndash;<exclusion>&ndash;&gt;-->
+        <!--&lt;!&ndash;<groupId>com.google.android</groupId>&ndash;&gt;-->
+        <!--&lt;!&ndash;<artifactId>annotations</artifactId>&ndash;&gt;-->
+        <!--&lt;!&ndash;</exclusion>&ndash;&gt;-->
 
-                <!--&lt;!&ndash;<exclusion>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<groupId>com.intellij</groupId>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<artifactId>annotations</artifactId>&ndash;&gt;-->
-                <!--&lt;!&ndash;</exclusion>&ndash;&gt;-->
+        <!--&lt;!&ndash;<exclusion>&ndash;&gt;-->
+        <!--&lt;!&ndash;<groupId>com.intellij</groupId>&ndash;&gt;-->
+        <!--&lt;!&ndash;<artifactId>annotations</artifactId>&ndash;&gt;-->
+        <!--&lt;!&ndash;</exclusion>&ndash;&gt;-->
 
-            <!--</exclusions>-->
+        <!--</exclusions>-->
         <!--</dependency>-->
 
         <!-- @NotNull, etc. annotations -->
@@ -216,7 +216,7 @@
                 <configuration>
                     <androidManifestFile>${project.build.directory}/AndroidManifest.xml</androidManifestFile>
                     <manifest>
-                        <versionName />
+                        <versionName/>
                         <versionCodeUpdateFromVersion>true</versionCodeUpdateFromVersion>
                     </manifest>
                     <mergeManifests>true</mergeManifests>

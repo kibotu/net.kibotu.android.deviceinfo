@@ -1,6 +1,7 @@
 package net.kibotu.android.deviceinfo;
 
 import android.os.AsyncTask;
+import net.kibotu.android.error.tracking.Logger;
 import org.json.JSONObject;
 
 public class NetworkHelper {

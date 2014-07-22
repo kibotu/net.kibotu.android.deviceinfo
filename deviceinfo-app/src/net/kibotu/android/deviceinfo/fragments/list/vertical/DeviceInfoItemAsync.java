@@ -1,6 +1,7 @@
 package net.kibotu.android.deviceinfo.fragments.list.vertical;
 
-import net.kibotu.android.deviceinfo.Logger;
+
+import net.kibotu.android.error.tracking.Logger;
 
 public abstract class DeviceInfoItemAsync extends DeviceInfoItem implements Runnable {
 

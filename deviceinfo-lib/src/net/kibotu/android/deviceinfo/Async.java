@@ -3,6 +3,7 @@ package net.kibotu.android.deviceinfo;
 import android.annotation.TargetApi;
 import android.os.AsyncTask;
 import android.os.Build;
+import net.kibotu.android.error.tracking.Logger;
 import org.jetbrains.annotations.NotNull;
 
 public class Async {

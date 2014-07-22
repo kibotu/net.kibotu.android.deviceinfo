@@ -26,6 +26,8 @@ import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.webkit.WebView;
+import net.kibotu.android.error.tracking.Logger;
+import net.kibotu.android.error.tracking.ReflectionHelper;
 import org.apache.http.conn.util.InetAddressUtils;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
@@ -43,7 +45,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.regex.Pattern;
 
 import static android.os.Build.*;
 
@@ -178,7 +179,7 @@ public class Device {
                 if (buf.length() > 0) buf.deleteCharAt(buf.length() - 1);
                 return buf.toString();
             }
-        } catch(final Exception ignored) {
+        } catch (final Exception ignored) {
         } // for now eat exceptions
         return "";
        /*try {
@@ -216,7 +217,7 @@ public class Device {
                     }
                 }
             }
-        } catch(final Exception ignored) {
+        } catch (final Exception ignored) {
         } // for now eat exceptions
         return "";
     }
@@ -233,7 +234,7 @@ public class Device {
             Class<?> c = Class.forName("android.os.SystemProperties");
             Method get = c.getMethod("get", String.class, String.class);
             hwID = (String) (get.invoke(c, "ro.serialno", "unknown"));
-        } catch(final Exception ignored) {
+        } catch (final Exception ignored) {
         }
         if (hwID != null) return hwID;
         try {
@@ -241,7 +242,7 @@ public class Device {
             Method[] methods = myclass.getMethods();
             Object[] params = new Object[]{"ro.serialno", "Unknown"};
             hwID = (String) (methods[2].invoke(myclass, params));
-        } catch(final Exception ignored) {
+        } catch (final Exception ignored) {
         }
         return hwID;
     }
@@ -438,10 +439,6 @@ public class Device {
     }
 
 
-
-
-
-
     public static String getCpuInfo() {
         return getContentRandomAccessFile("/proc/cpuinfo");
     }
@@ -483,7 +480,7 @@ public class Device {
 
             try {
                 Thread.sleep(360);
-            } catch(final Exception e) {
+            } catch (final Exception e) {
             }
 
             reader.seek(0);
@@ -544,14 +541,13 @@ public class Device {
     }
 
 
-
     public static long getRuntimeTotalMemory() {
         long memory = 0L;
         try {
             final Runtime info = Runtime.getRuntime();
             memory = info.totalMemory();
         } catch (final Exception e) {
-           Logger.e(e);
+            Logger.e(e);
         }
         return memory;
     }
@@ -561,7 +557,7 @@ public class Device {
         try {
             Runtime info = Runtime.getRuntime();
             memory = info.maxMemory();
-        } catch(final Exception e) {
+        } catch (final Exception e) {
             Logger.e(e);
         }
         return memory;
@@ -572,7 +568,7 @@ public class Device {
         try {
             final Runtime info = Runtime.getRuntime();
             memory = info.freeMemory();
-        } catch(final Exception e) {
+        } catch (final Exception e) {
             Logger.e(e);
         }
         return memory;
@@ -583,7 +579,7 @@ public class Device {
         try {
             final Runtime info = Runtime.getRuntime();
             usedSize = info.totalMemory() - info.freeMemory();
-        } catch(final Exception e) {
+        } catch (final Exception e) {
             Logger.e(e);
         }
         return usedSize;
@@ -998,7 +994,7 @@ public class Device {
         try {
             StatFs fs = new StatFs(path);
             return android.text.format.Formatter.formatFileSize(context(), fs.getAvailableBlocks() * fs.getBlockSize());
-        } catch(final Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -1136,7 +1132,7 @@ public class Device {
                 if (buf.length() > 0) buf.deleteCharAt(buf.length() - 1);
                 macaddress = buf.toString();
             }
-        } catch(final Exception ignore) {
+        } catch (final Exception ignore) {
         } // for now eat exceptions
         return macaddress;
     }
@@ -1242,7 +1238,7 @@ public class Device {
             long internalBytesAvailable = (long) internalStat.getBlockSize() * (long) internalStat.getBlockCount();
 
             diskSpace = Math.min(internalBytesAvailable, externalBytesAvailable);
-        } catch(final Exception e) {
+        } catch (final Exception e) {
             Log.w(Device.TAG, e);
         }
 
@@ -1273,7 +1269,7 @@ public class Device {
                     orientation = "portrait";
                     break;
             }
-        } catch(final Exception e) {
+        } catch (final Exception e) {
             Log.w(Device.TAG, e);
         }
 
@@ -1324,7 +1320,7 @@ public class Device {
             } else {
                 totalMemory = Runtime.getRuntime().totalMemory();
             }
-        } catch(final Exception e) {
+        } catch (final Exception e) {
             Log.w(Device.TAG, e);
         }
 
@@ -1337,7 +1333,7 @@ public class Device {
 
         try {
             freeMemory = totalMemoryAvailable() - memoryUsedByApp();
-        } catch(final Exception e) {
+        } catch (final Exception e) {
             Log.w(Device.TAG, e);
         }
 
@@ -1351,7 +1347,7 @@ public class Device {
 
         try {
             memoryUsedByApp = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
-        } catch(final Exception e) {
+        } catch (final Exception e) {
             Log.w(Device.TAG, e);
         }
 
@@ -1366,7 +1362,7 @@ public class Device {
             activityManager.getMemoryInfo(memInfo);
 
             lowMemory = memInfo.lowMemory;
-        } catch(final Exception e) {
+        } catch (final Exception e) {
             Log.w(Device.TAG, e);
         }
         return lowMemory;
@@ -1387,7 +1383,7 @@ public class Device {
         try {
             File file = new File("/system/app/Superuser.apk");
             return file.exists();
-        } catch(final Exception e) {
+        } catch (final Exception e) {
             return false;
         }
     }
@@ -1413,7 +1409,7 @@ public class Device {
             } else {
                 networkStatus = "none";
             }
-        } catch(final Exception e) {
+        } catch (final Exception e) {
             Log.w(Device.TAG, e);
         }
 
@@ -1432,7 +1428,7 @@ public class Device {
             } else {
                 gpsAllowed = "disallowed";
             }
-        } catch(final Exception e) {
+        } catch (final Exception e) {
             Log.w(Device.TAG, e);
         }
 
@@ -1442,7 +1438,7 @@ public class Device {
     public static String getPackageName() {
         try {
             return context().getPackageName();
-        } catch(final Exception e) {
+        } catch (final Exception e) {
             Log.w(Device.TAG, e);
         }
         return null;
@@ -1665,7 +1661,7 @@ public class Device {
                     Logger.v("shellOut " + exitValue);
                 }
             }, false, true);
-        } catch(final Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
@@ -1773,7 +1769,7 @@ public class Device {
                     callback.onComplete(loadThombstones());
                 }
             }, true, true);
-        } catch(final Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
@@ -1890,7 +1886,7 @@ public class Device {
         try {
             PackageInfo pi = context().getPackageManager().getPackageInfo(packageName, 0);
             packageVersion = pi.versionName;
-        } catch(final Exception e) {
+        } catch (final Exception e) {
             Log.w(Device.TAG, "Could not get package version", e);
         }
 
@@ -1906,7 +1902,7 @@ public class Device {
             if (debuggable) {
                 releaseStage = "development";
             }
-        } catch(final Exception e) {
+        } catch (final Exception e) {
             Log.w(Device.TAG, "Could not guess release stage", e);
         }
 

@@ -10,8 +10,8 @@ import android.view.MenuItem;
 import com.flurry.android.FlurryAgent;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import net.kibotu.android.deviceinfo.fragments.menu.MenuFragment;
-import net.kibotu.android.deviceinfo.utils.ErrorTrackingHelper;
-import net.kibotu.android.deviceinfo.utils.JSONUtils;
+import net.kibotu.android.error.tracking.ErrorTracking;
+import net.kibotu.android.error.tracking.JSONUtils;
 import org.json.JSONObject;
 
 public class MainActivity extends FragmentActivity {
@@ -19,46 +19,44 @@ public class MainActivity extends FragmentActivity {
     public static SlidingMenu menu;
     private volatile MenuFragment arcList;
     public static final String THEME_PREFERENCE = "themePreference";
+    public static JSONObject appConfig;
 
     @Override
     public void onStart() {
         super.onStart();
-        FlurryAgent.onStartSession(this, "HXN4YB6BKTKQT76NDHSR");
+        FlurryAgent.onStartSession(this, appConfig.optString("flurryAgent"));
     }
 
     @Override
     public void onStop() {
         super.onStop();
         FlurryAgent.onEndSession(this);
-        ErrorTrackingHelper.endSession();
+        ErrorTracking.endSession();
+    }
+
+    private void testLowMemory() {
+        long[] l = new long[Integer.MAX_VALUE];
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // init logger
-        Logger.init(new LogcatLogger(this), "DeviceInfo", Logger.Level.VERBOSE);
+        // set theme
+        setTheme(PreferenceManager.getDefaultSharedPreferences(this).getInt(THEME_PREFERENCE, R.style.light_theme));
+
+        // load secrets
+        appConfig = JSONUtils.loadJsonFromAssets(this, "app.json");
+
+        // start error tracking
+        ErrorTracking.startSession(this, appConfig.optString("applicationId"), appConfig.optString("clientKey"));
+
+        // add api level
+        JSONObject metaData = new JSONObject();
+        JSONUtils.safePut(metaData, "SDK", "" + Device.getApiLevel());
 
         // init device
         Device.setContext(this);
-
-        // setup error tracking
-        ErrorTrackingHelper.startErrorTracking(this);
-        JSONObject metaData = new JSONObject();
-        JSONUtils.safePut(metaData, "SDK", "" + Device.getApiLevel());
-        ErrorTrackingHelper.addMetaData(metaData);
-
-        // inject logged exceptions
-        Logger.setThrowableHook(new Logger.ThrowableHook() {
-            @Override
-            void handleException(final Throwable e) {
-                ErrorTrackingHelper.notifyError(e);
-            }
-        });
-
-        // set theme
-        setTheme(PreferenceManager.getDefaultSharedPreferences(this).getInt(THEME_PREFERENCE, R.style.light_theme));
 
         arcList = new MenuFragment(this);
 
@@ -138,25 +136,5 @@ public class MainActivity extends FragmentActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    // endregion
-
-    public void doParseStuff() {
-//
-//        ParseQuery query = ParseQuery.getQuery("TestObject");
-//
-//
-//        query.getInBackground(testObject.getObjectId(), new GetCallback() {
-//
-//            @Override
-//            public void done(ParseObject parseObject, ParseException e) {
-//                if (e == null) {
-//                    // object will be your game score
-//                } else {
-//                    // something went wrong
-//                }
-//            }
-//        });
     }
 }

@@ -33,6 +33,12 @@
             <version>4.1.1.4</version>
         </dependency>
 
+        <dependency>
+            <groupId>net.kibotu.android.error.tracking</groupId>
+            <artifactId>error-tracking-lib</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -54,4 +60,16 @@
 
         </plugins>
     </build>
+
+    <repositories>
+        <repository>
+            <id>net.kibotu.android.error.tracking-mvn-repo</id>
+            <url>https://raw.github.com/kibotu/net.kibotu.android.error.tracking/mvn-repo/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+
 </project>

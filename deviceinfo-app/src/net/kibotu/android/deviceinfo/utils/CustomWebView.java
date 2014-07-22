@@ -23,8 +23,8 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import net.kibotu.android.deviceinfo.DisplayHelper;
-import net.kibotu.android.deviceinfo.Logger;
 import net.kibotu.android.deviceinfo.R;
+import net.kibotu.android.error.tracking.Logger;
 
 /**
  * Custom WebView

@@ -21,7 +21,8 @@ public class BlaTest extends ActivityInstrumentationImpl {
     public void tearDown() throws Exception {
         super.tearDown();
     }
-//
+
+    //
     @Test
     public void testBuildPayload() throws Exception {
 

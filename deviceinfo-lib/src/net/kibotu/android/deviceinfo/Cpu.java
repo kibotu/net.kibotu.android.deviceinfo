@@ -1,5 +1,7 @@
 package net.kibotu.android.deviceinfo;
 
+import net.kibotu.android.error.tracking.Logger;
+
 import java.io.*;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -95,7 +97,7 @@ public class Cpu {
      * @credits to https://github.com/takke/cpustats
      */
     public synchronized static float[] getCpuUsage() {
-        if(cpuUsage == null) cpuUsage = new float [getNumCores()];
+        if (cpuUsage == null) cpuUsage = new float[getNumCores()];
 
         if (lastPs == null) {
             lastPs = ProcStat.loadProcStat();

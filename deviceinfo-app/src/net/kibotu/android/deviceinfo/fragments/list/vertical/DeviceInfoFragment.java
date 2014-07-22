@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import net.kibotu.android.deviceinfo.Device;
-import net.kibotu.android.deviceinfo.Logger;
 import net.kibotu.android.deviceinfo.R;
+import net.kibotu.android.error.tracking.Logger;
 
 import java.util.Comparator;
 

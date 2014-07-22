@@ -87,7 +87,7 @@ public class DisplayHelper {
 
     public static boolean hasSoftKeys() {
         if (context == null) throw new IllegalStateException("Please instantiate first!");
-        return Math.max(mScreenWidth, mScreenHeight) < Math.max(absScreenWidth,absScreenHeight) || Math.min(mScreenWidth, mScreenHeight) < Math.min(absScreenWidth, absScreenHeight) ;
+        return Math.max(mScreenWidth, mScreenHeight) < Math.max(absScreenWidth, absScreenHeight) || Math.min(mScreenWidth, mScreenHeight) < Math.min(absScreenWidth, absScreenHeight);
     }
 
     public static boolean isTablet2() {
