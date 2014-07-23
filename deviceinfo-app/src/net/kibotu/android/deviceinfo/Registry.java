@@ -261,8 +261,8 @@ public enum Registry implements IGetInfoFragment {
                 @Override
                 protected void async() {
                     customView = l;
-//                    setMap(parseRam(Device.getContentRandomAccessFile("/proc/meminfo")));
-                    setMap(parseRamSmall(Device.getContentRandomAccessFile("/proc/meminfo")));
+                    setMap(parseRam(Device.getContentRandomAccessFile("/proc/meminfo")));
+//                    setMap(parseRamSmall(Device.getContentRandomAccessFile("/proc/meminfo")));
                 }
             }));
 
@@ -630,6 +630,24 @@ public enum Registry implements IGetInfoFragment {
                             value = result;
                         }
                     });
+                }
+            });
+
+            final ProxySettings proxySettings = Device.getProxySettings();
+            final LinearLayout lProxy = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.sim, null);
+            cachedList.addItem("Proxy Settings", "description", new DeviceInfoItemAsync() {
+                @Override
+                protected void async() {
+
+                    customView = lProxy;
+                    useHtml = true;
+
+                    keys = "Host:" + BR;
+                    value = proxySettings.Host == null ? "" : proxySettings.Host + BR;
+                    keys += "Port:" + BR;
+                    value += proxySettings.Port == 0 ? "" : proxySettings.Port + BR;
+                    keys += "Exclusion List:" + BR;
+                    value += proxySettings.ExclusionList == null ? "" : proxySettings.ExclusionList + BR;
                 }
             });
 /*

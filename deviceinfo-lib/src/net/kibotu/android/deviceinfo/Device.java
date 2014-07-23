@@ -936,6 +936,10 @@ public class Device {
         return radio;
     }
 
+    public static ProxySettings getProxySettings() {
+        return new ProxySettings(context());
+    }
+
     public interface AsyncCallback<T> {
         void onComplete(final T result);
     }
@@ -973,6 +977,8 @@ public class Device {
         }
         return size;
     }
+
+
 
     public static long getFileSizeDir(String path) {
         File directory = new File(path);
