@@ -25,6 +25,7 @@
         <module name="deviceinfo-app" />
         <module name="deviceinfo-lib" />
         <module name="deviceinfo-tests" />
+        <module name="sildemenu-lib" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
