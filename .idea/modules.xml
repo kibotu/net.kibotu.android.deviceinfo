@@ -6,7 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/deviceinfo-app/deviceinfo-app.iml" filepath="$PROJECT_DIR$/deviceinfo-app/deviceinfo-app.iml" />
       <module fileurl="file://$PROJECT_DIR$/deviceinfo-lib/deviceinfo-lib.iml" filepath="$PROJECT_DIR$/deviceinfo-lib/deviceinfo-lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/deviceinfo-tests/deviceinfo-tests.iml" filepath="$PROJECT_DIR$/deviceinfo-tests/deviceinfo-tests.iml" />
-      <module fileurl="file://$PROJECT_DIR$/sildemenu-lib/sildemenu-lib.iml" filepath="$PROJECT_DIR$/sildemenu-lib/sildemenu-lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SlidingMenu/library/slidingmenu.iml" filepath="$PROJECT_DIR$/SlidingMenu/library/slidingmenu.iml" />
     </modules>
   </component>
 </project>

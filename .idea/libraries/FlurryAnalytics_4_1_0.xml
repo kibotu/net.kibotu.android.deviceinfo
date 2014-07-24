@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="FlurryAnalytics-4.1.0">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/deviceinfo-app/lib/FlurryAnalytics-4.1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/deviceinfo-app/libs/FlurryAnalytics-4.1.0.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

@@ -9,12 +9,14 @@
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="android" url="file://$PROJECT_DIR$/deviceinfo-lib" />
     <file type="android" url="file://$PROJECT_DIR$/deviceinfo-tests" />
+    <file type="android" url="file://$PROJECT_DIR$/SlidingMenu/library" />
   </component>
   <component name="IdProvider" IDEtalkID="381B33EB1AB3E270E4B62A10EDF398D7" />
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/SlidingMenu/library/pom.xml" />
       </list>
     </option>
   </component>

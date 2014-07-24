@@ -7,6 +7,12 @@ Android Device Info
 
 Library and app for showing tons of device information for your android device.
 
+
+##How to build:
+
+- `git clone git@github.com:kibotu/net.kibotu.android.deviceinfo.git`
+- `git submodule update --init --recursive`
+
 ### Ready to use lib in /jar/deviceinfo-lib.jar
 
 ### Features

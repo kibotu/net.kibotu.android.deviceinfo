@@ -2,6 +2,7 @@ package net.kibotu.android.deviceinfo;
 
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import com.flurry.android.FlurryAgent;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
@@ -12,7 +13,7 @@ import net.kibotu.android.error.tracking.JSONUtils;
 import net.kibotu.android.error.tracking.Logger;
 import org.json.JSONObject;
 
-public class MainActivity extends SlidingFragmentActivity {
+public class MainActivity extends FragmentActivity {
 
     public static SlidingMenu menu;
     private volatile MenuFragment arcList;

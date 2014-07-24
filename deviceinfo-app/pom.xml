@@ -39,12 +39,13 @@
             <groupId>com.google.android</groupId>
             <artifactId>android</artifactId>
             <version>2.3.3</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
-            <groupId>com.actionbarsherlock</groupId>
-            <artifactId>actionbarsherlock</artifactId>
-            <version>4.4.0</version>
+            <groupId>com.jeremyfeinstein.slidingmenu</groupId>
+            <artifactId>slidingmenu</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
     </dependencies>
@@ -59,6 +60,12 @@
                 <updatePolicy>daily</updatePolicy>
             </snapshots>
         </repository> -->
+
+        <repository>
+            <id>project.local</id>
+            <name>project</name>
+            <url>file:${project.basedir}/SlidingMenu/library</url>
+        </repository>
 
     </repositories>
 

@@ -1,5 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1000000"
-          android:versionName="1.0.0-SNAPSHOT" package="net.kibotu.android.deviceinfo">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1000000" android:versionName="1.0.0-SNAPSHOT" package="net.kibotu.android.deviceinfo">
     <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="19"/>
 
     <application android:label="Android Maven Tests">
@@ -13,8 +12,6 @@
     </application>
 
 
-    <instrumentation android:label="Tests for net.kibotu.android.deviceinfo"
-                     android:name="android.test.InstrumentationTestRunner"
-                     android:targetPackage="net.kibotu.android.deviceinfo"/>
+    <instrumentation android:label="Tests for net.kibotu.android.deviceinfo" android:name="android.test.InstrumentationTestRunner" android:targetPackage="net.kibotu.android.deviceinfo"/>
     <uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
 </manifest>
