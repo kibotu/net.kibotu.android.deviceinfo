@@ -3,4 +3,4 @@
 	url = https://github.com/jfeinstein10/SlidingMenu.git
 [submodule "ActionBarSherlock"]
 	path = ActionBarSherlock
-	url = git@github.com:JakeWharton/ActionBarSherlock.git
+	url = https://github.com/JakeWharton/ActionBarSherlock.git
