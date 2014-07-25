@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="net.kibotu.android.deviceinfo"
-          android:versionCode="1000004"
-          android:versionName="1.0.4">
+          android:versionCode="1000000"
+          android:versionName="1.0.5">
     <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="19"/>
     <uses-feature android:glEsVersion="0x00020000" android:required="false"/>
     <!--<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" android:required="false" />-->

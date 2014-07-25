@@ -529,28 +529,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac29e572-50bf-4121-b2c4-6f74c649a384" name="Default" comment="">
-      <change type="DELETED" beforePath="D:\programming\android-device\.idea\libraries\FlurryAnalytics_4_1_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\.idea\libraries\Parse_1_5_1.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SlidingMenu" afterPath="$PROJECT_DIR$/SlidingMenu" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo-app/AndroidManifest.xml" afterPath="$PROJECT_DIR$/deviceinfo-app/AndroidManifest.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/MainActivity.java" afterPath="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/fragments/menu/MenuFragment.java" afterPath="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/fragments/menu/MenuFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SlidingMenu/library/src/com/jeremyfeinstein/slidingmenu/lib/app/SlidingActivityHelper.java" afterPath="$PROJECT_DIR$/SlidingMenu/library/src/com/jeremyfeinstein/slidingmenu/lib/app/SlidingActivityHelper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SlidingMenu/library/src/com/jeremyfeinstein/slidingmenu/lib/app/SlidingFragmentActivity.java" afterPath="$PROJECT_DIR$/SlidingMenu/library/src/com/jeremyfeinstein/slidingmenu/lib/app/SlidingFragmentActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo-app/deviceinfo-app.iml" afterPath="$PROJECT_DIR$/deviceinfo-app/deviceinfo-app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo-lib/deviceinfo-lib.iml" afterPath="$PROJECT_DIR$/deviceinfo-lib/deviceinfo-lib.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo-tests/deviceinfo-tests.iml" afterPath="$PROJECT_DIR$/deviceinfo-tests/deviceinfo-tests.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo.iml" afterPath="$PROJECT_DIR$/deviceinfo.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SlidingMenu/example/res/menu/main.xml" afterPath="$PROJECT_DIR$/SlidingMenu/example/res/menu/main.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo-app/res/menu/menu.xml" afterPath="$PROJECT_DIR$/deviceinfo-app/res/menu/menu.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo-app/res/layout/navigation.xml" afterPath="$PROJECT_DIR$/deviceinfo-app/res/layout/navigation.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SlidingMenu/library/pom.xml" afterPath="$PROJECT_DIR$/SlidingMenu/library/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo-app/pom.xml" afterPath="$PROJECT_DIR$/deviceinfo-app/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SlidingMenu/library/project.properties" afterPath="$PROJECT_DIR$/SlidingMenu/library/project.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SlidingMenu/library/res/layout/slidingmenumain.xml" afterPath="$PROJECT_DIR$/SlidingMenu/library/res/layout/slidingmenumain.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/Registry.java" afterPath="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/Registry.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/deviceinfo_app.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/deviceinfo_app.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="android-device.iws" />
@@ -622,41 +605,46 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8861004" vertical-offset="1292" max-vertical-offset="3247">
-              <caret line="133" column="5" selection-start-line="133" selection-start-column="5" selection-end-line="133" selection-end-column="5" />
+            <state vertical-scroll-proportion="0.6891892" vertical-offset="204" max-vertical-offset="3383">
+              <caret line="57" column="5" selection-start-line="57" selection-start-column="5" selection-end-line="57" selection-end-column="5" />
+              <folding>
+                <element signature="e#4317#4645#0" expanded="true" />
+                <element signature="e#4626#4627#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MenuAdapter.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/fragments/menu/MenuAdapter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="425">
+              <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SlidingActivityHelper.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SlidingMenu/library/src/com/jeremyfeinstein/slidingmenu/lib/app/SlidingActivityHelper.java">
+      <file leaf-file-name="MenuFragment.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/fragments/menu/MenuFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="731" max-vertical-offset="3876">
-              <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
-              <folding />
+            <state vertical-scroll-proportion="0.0" vertical-offset="97" max-vertical-offset="1003">
+              <caret line="59" column="26" selection-start-line="59" selection-start-column="26" selection-end-line="59" selection-end-column="26" />
+              <folding>
+                <element signature="e#798#799#0" expanded="true" />
+                <element signature="e#836#837#0" expanded="true" />
+                <element signature="e#1225#1226#0" expanded="true" />
+                <element signature="e#1305#1306#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="slidingmenumain.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SlidingMenu/library/res/layout/slidingmenumain.xml">
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
+      <file leaf-file-name="Registry.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/Registry.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="17" max-vertical-offset="170">
-              <caret line="1" column="41" selection-start-line="1" selection-start-column="41" selection-end-line="1" selection-end-column="41" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SlidingMenu.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SlidingMenu/library/src/com/jeremyfeinstein/slidingmenu/lib/SlidingMenu.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="527" max-vertical-offset="17476">
-              <caret line="31" column="13" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="14686" max-vertical-offset="16252">
+              <caret line="1039" column="21" selection-start-line="1039" selection-start-column="21" selection-end-line="1039" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -721,15 +709,12 @@
         <option value="$PROJECT_DIR$/deviceinfo-app/res/values/styles.xml" />
         <option value="$USER_HOME$/.IntelliJIdea13/system/compile-server/deviceinfo_9bf2eb86/android/preprocessed_manifest/deviceinfo-app/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/ActionBarSherlock/actionbarsherlock-samples/demos/src/com/actionbarsherlock/sample/demos/ActionModesNoActionBar.java" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/deviceinfo-app/res/layout/list.xml" />
         <option value="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/fragments/list/vertical/DeviceInfoItem.java" />
         <option value="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/utils/NavigationActionMode.java" />
         <option value="$PROJECT_DIR$/deviceinfo-app/res/menu/settings_action_provider.xml" />
         <option value="$PROJECT_DIR$/deviceinfo-app/res/layout/settings_action_provider.xml" />
         <option value="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/utils/Utils.java" />
-        <option value="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/Registry.java" />
-        <option value="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/fragments/menu/MenuFragment.java" />
         <option value="$PROJECT_DIR$/SlidingMenu/example/res/menu/main.xml" />
         <option value="$PROJECT_DIR$/deviceinfo-app/res/layout/slidemen.xml" />
         <option value="$PROJECT_DIR$/SlidingMenu/library/res/layout/slidingmenumain.xml" />
@@ -737,12 +722,15 @@
         <option value="$PROJECT_DIR$/deviceinfo-app/res/layout/navigation.xml" />
         <option value="$PROJECT_DIR$/SlidingMenu/library/src/com/jeremyfeinstein/slidingmenu/lib/app/SlidingFragmentActivity.java" />
         <option value="$PROJECT_DIR$/deviceinfo-app/res/menu/menu.xml" />
-        <option value="$PROJECT_DIR$/deviceinfo-app/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/SlidingMenu/library/src/com/jeremyfeinstein/slidingmenu/lib/app/SlidingActivityHelper.java" />
         <option value="$PROJECT_DIR$/SlidingMenu/library/pom.xml" />
-        <option value="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/MainActivity.java" />
         <option value="$PROJECT_DIR$/deviceinfo-app/pom.xml" />
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/deviceinfo-app/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/fragments/menu/MenuFragment.java" />
+        <option value="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/Registry.java" />
+        <option value="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/MainActivity.java" />
       </list>
     </option>
   </component>
@@ -989,7 +977,15 @@
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="utils" />
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1007,11 +1003,45 @@
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
+              <option name="myItemId" value="src" />
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="layout" />
+              <option name="myItemId" value="deviceinfo" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fragments" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="menu" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="android-device" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo-app" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fragments" />
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1166,7 +1196,7 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="FullScreen" value="false" />
@@ -1174,7 +1204,7 @@
     <property name="ExportedModule" value="deviceinfo" />
     <property name="ExportedApkPath" value="D:\programming\android-device\deviceinfo.apk" />
     <property name="AndroidRunProguardForReleaseBuild" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/deviceinfo-app/AndroidManifest.xml" />
+    <property name="last_opened_file_path" value="D:/Libraries/android/Android Key/key.keystore" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -1465,7 +1495,7 @@
       <option name="ACTIVITY_CLASS" value="" />
       <option name="MODE" value="default_activity" />
       <option name="DEPLOY" value="true" />
-      <option name="ARTIFACT_NAME" value="" />
+      <option name="ARTIFACT_NAME" value="deviceinfo-app" />
       <option name="TARGET_SELECTION_MODE" value="USB_DEVICE" />
       <option name="USE_LAST_SELECTED_DEVICE" value="false" />
       <option name="PREFERRED_AVD" value="" />
@@ -1480,7 +1510,12 @@
       <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
       <RunnerSettings RunnerId="AndroidDebugRunner" />
       <ConfigurationWrapper RunnerId="AndroidDebugRunner" />
-      <method />
+      <method>
+        <option name="Make" enabled="false" />
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="deviceinfo-app" />
+        </option>
+      </method>
     </configuration>
     <configuration default="false" name="All Tests" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
       <module name="deviceinfo-tests" />
@@ -1625,12 +1660,12 @@
       <workItem from="1406294348193" duration="3697000" />
       <workItem from="1406298306008" duration="498000" />
       <workItem from="1406298897018" duration="426000" />
-      <workItem from="1406299361262" duration="48000" />
+      <workItem from="1406299361262" duration="2167000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="415324000" />
+    <option name="totallyTimeSpent" value="417443000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1670,12 +1705,12 @@
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32942432" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32976446" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.15458423" sideWeight="0.42719486" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25802997" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25695932" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="true" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.40149894" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32976446" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17697228" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17270789" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17270789" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20149253" sideWeight="0.57280517" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.48072806" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1717,30 +1752,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/ActionBarSherlock/actionbarsherlock-samples/styled/src/com/actionbarsherlock/sample/styled/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4548495" vertical-offset="0" max-vertical-offset="3162">
-          <caret line="41" column="53" selection-start-line="41" selection-start-column="53" selection-end-line="41" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider editor-type-id="MarkdownPreviewEditor">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="816">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SlidingMenu/example/src/com/jeremyfeinstein/slidingmenu/example/ViewPagerActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.65384614" vertical-offset="0" max-vertical-offset="1292">
-          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/SlidingMenu/example/res/drawable/octocat_scaled.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.19899665" vertical-offset="0" max-vertical-offset="598">
@@ -2022,21 +2033,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/deviceinfo-app/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.71686745" vertical-offset="0" max-vertical-offset="664">
-          <caret line="28" column="52" selection-start-line="28" selection-start-column="52" selection-end-line="28" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/fragments/menu/MenuFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="29" max-vertical-offset="935">
-          <caret line="64" column="96" selection-start-line="64" selection-start-column="96" selection-end-line="64" selection-end-column="96" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ActionBarSherlock/actionbarsherlock/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.26651737" vertical-offset="0" max-vertical-offset="2499">
@@ -2108,19 +2104,70 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.096700795" vertical-offset="0" max-vertical-offset="879">
+          <caret line="5" column="16" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deviceinfo-app/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.07505519" vertical-offset="0" max-vertical-offset="906">
+          <caret line="4" column="36" selection-start-line="4" selection-start-column="36" selection-end-line="4" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4631579" vertical-offset="1205" max-vertical-offset="2482">
-          <caret line="89" column="0" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.919426" vertical-offset="0" max-vertical-offset="2482">
+          <caret line="49" column="30" selection-start-line="49" selection-start-column="30" selection-end-line="49" selection-end-column="30" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/Registry.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="14686" max-vertical-offset="16252">
+          <caret line="1039" column="21" selection-start-line="1039" selection-start-column="21" selection-end-line="1039" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/fragments/menu/MenuAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="425">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/fragments/menu/MenuFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="97" max-vertical-offset="1003">
+          <caret line="59" column="26" selection-start-line="59" selection-start-column="26" selection-end-line="59" selection-end-column="26" />
+          <folding>
+            <element signature="e#798#799#0" expanded="true" />
+            <element signature="e#836#837#0" expanded="true" />
+            <element signature="e#1225#1226#0" expanded="true" />
+            <element signature="e#1305#1306#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8861004" vertical-offset="1292" max-vertical-offset="3247">
-          <caret line="133" column="5" selection-start-line="133" selection-start-column="5" selection-end-line="133" selection-end-column="5" />
-          <folding />
+        <state vertical-scroll-proportion="0.6891892" vertical-offset="204" max-vertical-offset="3383">
+          <caret line="57" column="5" selection-start-line="57" selection-start-column="5" selection-end-line="57" selection-end-column="5" />
+          <folding>
+            <element signature="e#4317#4645#0" expanded="true" />
+            <element signature="e#4626#4627#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

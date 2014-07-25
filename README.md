@@ -16,6 +16,7 @@ Library and app for showing tons of device information for your android device.
 
 - `git clone git@github.com:kibotu/net.kibotu.android.deviceinfo.git`
 - `git submodule update --init --recursive`
+- import pom.xml and run `mvn package` or `mvn install`
 
 ### Ready to use lib in /jar/deviceinfo-lib.jar
 
@@ -38,6 +39,7 @@ Library and app for showing tons of device information for your android device.
 
 ### Dependancies 
 * None for the library.
-* (Using [jfeinstein10's Slidemenu](https://github.com/jfeinstein10/SlidingMenu) in the app though.)
+* (Using [jfeinstein10's Slidemenu](https://github.com/jfeinstein10/SlidingMenu))
+* (and [JakeWharton's ActionBarSherlock](https://github.com/JakeWharton/ActionBarSherlock) in the app though.)
 
 ## See also

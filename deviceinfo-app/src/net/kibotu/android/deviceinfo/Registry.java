@@ -1035,9 +1035,9 @@ public enum Registry implements IGetInfoFragment {
 
     public int iconR;
     public int iconR_i;
-    protected DeviceInfoFragment cachedList;
+    protected volatile DeviceInfoFragment cachedList;
     private volatile boolean isRefreshing;
-    private List<Thread> threads;
+    private volatile List<Thread> threads;
 
     public DeviceInfoFragment getFragmentList() {
         if (cachedList == null) {

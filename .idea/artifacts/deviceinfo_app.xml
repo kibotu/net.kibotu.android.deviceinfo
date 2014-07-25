@@ -3,10 +3,10 @@
     <output-path>$PROJECT_DIR$/classes/artifacts/deviceinfo_app</output-path>
     <properties id="android-properties">
       <options>
-        <option name="keyAlias" value="cloudgazer" />
+        <option name="keyAlias" value="cloudgazer3d" />
         <option name="keyPassword" value="TnV0YW5pc2FfNjk=" />
         <option name="keyStorePassword" value="TnV0YW5pc2FfNjk=" />
-        <option name="keyStoreUrl" value="file://D:/Libraries/android/Android Key/deviceinfo/keystore.jks" />
+        <option name="keyStoreUrl" value="file://D:/Libraries/android/Android Key/key.keystore" />
         <option name="proGuardCfgFiles">
           <list>
             <option value="file://%MODULE_SDK_HOME%/tools/proguard/proguard-android.txt" />
@@ -17,6 +17,7 @@
     </properties>
     <root id="archive" name="deviceinfo-app.apk">
       <element id="android-final-package" facet="deviceinfo-app/android/Android" />
+      <element id="module-output" name="deviceinfo-app" />
     </root>
   </artifact>
 </component>

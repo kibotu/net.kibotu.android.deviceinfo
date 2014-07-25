@@ -26,8 +26,6 @@ import org.json.JSONObject;
 
 public class MainActivity extends SlidingFragmentActivity {
 
-    ActionBarSherlock mSherlock = ActionBarSherlock.wrap(this);
-
     public static SlidingMenu menu;
     private volatile MenuFragment arcList;
     public static final String THEME_PREFERENCE = "themePreference";
@@ -48,6 +46,15 @@ public class MainActivity extends SlidingFragmentActivity {
 
     private void testLowMemory() {
         long[] l = new long[Integer.MAX_VALUE];
+    }
+
+    @Override
+    public void onPostCreate(Bundle savedInstanceState) {
+        if (savedInstanceState == null) {
+            savedInstanceState = new Bundle();
+            savedInstanceState.putBoolean("SlidingActivityHelper.open", true);
+        }
+        super.onPostCreate(savedInstanceState);
     }
 
     @Override
@@ -77,6 +84,8 @@ public class MainActivity extends SlidingFragmentActivity {
         for (Registry item : Registry.values())
             arcList.addItem(item.name(), item.iconR);
 
+        setContentView(R.layout.content_frame);
+        setBehindContentView(R.layout.menu_frame);
         // set the Above View
         getSupportFragmentManager()
                 .beginTransaction()
@@ -84,13 +93,13 @@ public class MainActivity extends SlidingFragmentActivity {
                 .commit();
 
         // configure the SlidingMenu
-        menu = new SlidingMenu(this);
+        menu = getSlidingMenu();
         menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
         menu.setShadowWidthRes(R.dimen.shadow_width);
         menu.setShadowDrawable(R.drawable.shadow);
         menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
         menu.setFadeDegree(0.35f);
-        menu.attachToActivity(this, SlidingMenu.SLIDING_WINDOW);
+//        menu.attachToActivity(this, SlidingMenu.SLIDING_WINDOW);
         menu.setMenu(R.layout.menu_frame);
 
         getSupportFragmentManager()
@@ -122,15 +131,11 @@ public class MainActivity extends SlidingFragmentActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setCustomView(customNav);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setNavigationMode(ActionBar.DISPLAY_SHOW_CUSTOM);
 
-        menu.showMenu();
+
         setTitle("Build");
         getSupportActionBar().setIcon(Registry.Build.iconR_i);
-
-        mSherlock.setUiOptions(0);
-        setContentView(R.layout.content_frame);
-        setBehindContentView(R.layout.content_frame);
+        menu.showMenu();
     }
 
     @Override
