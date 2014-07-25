@@ -528,9 +528,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: net.kibotu.android.deviceinfo" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac29e572-50bf-4121-b2c4-6f74c649a384" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="ac29e572-50bf-4121-b2c4-6f74c649a384" name="Default" comment="" />
     <ignored path="android-device.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -621,7 +619,7 @@
         <entry file="file://$PROJECT_DIR$/.travis.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.52480704" vertical-offset="561" max-vertical-offset="1496">
-              <caret line="61" column="62" selection-start-line="61" selection-start-column="62" selection-end-line="61" selection-end-column="62" />
+              <caret line="61" column="61" selection-start-line="61" selection-start-column="61" selection-end-line="61" selection-end-column="61" />
               <folding />
             </state>
           </provider>
@@ -1659,12 +1657,12 @@
       <workItem from="1406298897018" duration="426000" />
       <workItem from="1406299361262" duration="15195000" />
       <workItem from="1406315673757" duration="760000" />
-      <workItem from="1406316927889" duration="36000" />
+      <workItem from="1406316927889" duration="340000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="431267000" />
+    <option name="totallyTimeSpent" value="431571000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -2158,7 +2156,7 @@
     <entry file="file://$PROJECT_DIR$/.travis.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.52480704" vertical-offset="561" max-vertical-offset="1496">
-          <caret line="61" column="62" selection-start-line="61" selection-start-column="62" selection-end-line="61" selection-end-column="62" />
+          <caret line="61" column="61" selection-start-line="61" selection-start-column="61" selection-end-line="61" selection-end-column="61" />
           <folding />
         </state>
       </provider>
