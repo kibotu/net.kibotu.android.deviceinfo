@@ -1,15 +1,25 @@
 package net.kibotu.android.deviceinfo;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import android.provider.Settings;
+import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Window;
-import com.actionbarsherlock.view.Menu;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.internal.widget.IcsAdapterView;
+import com.actionbarsherlock.internal.widget.IcsSpinner;
+import com.actionbarsherlock.view.ActionProvider;
 import com.actionbarsherlock.view.MenuItem;
 import com.flurry.android.FlurryAgent;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import net.kibotu.android.deviceinfo.fragments.menu.MenuFragment;
+import net.kibotu.android.deviceinfo.utils.CustomWebView;
 import net.kibotu.android.error.tracking.ErrorTracking;
 import net.kibotu.android.error.tracking.JSONUtils;
 import net.kibotu.android.error.tracking.Logger;
@@ -25,7 +35,6 @@ public class MainActivity extends SlidingFragmentActivity {
     @Override
     public void onStart() {
         super.onStart();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         FlurryAgent.onStartSession(this, appConfig.optString("flurryAgent"));
     }
 
@@ -57,6 +66,7 @@ public class MainActivity extends SlidingFragmentActivity {
         // add api level
         JSONObject metaData = new JSONObject();
         JSONUtils.safePut(metaData, "SDK", "" + Device.getApiLevel());
+        ErrorTracking.addMetaData(metaData);
 
         // init device
         Device.setContext(this);
@@ -91,29 +101,35 @@ public class MainActivity extends SlidingFragmentActivity {
 
         arcList.lastItemList = Registry.Build;
         menu.showMenu();
+        setTitle("Build");
+        getSupportActionBar().setIcon(Registry.Build.iconR_i);
 
         // time bomb
         Device.ACTIVATE_TB = false;
         Device.checkTimebombDialog();
 
         setSlidingActionBarEnabled(true);
-    }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        View customNav = LayoutInflater.from(this).inflate(R.layout.navigation, null);
 
-            case R.id.github:
-                Logger.v("github");
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+        final ImageButton button = (ImageButton) customNav.findViewById(R.id.imageButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Device.context().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        CustomWebView.showWebViewInDialog(Device.context(), "http://kibotu.github.io/net.kibotu.android.deviceinfo/", 0, 0, DisplayHelper.absScreenWidth, DisplayHelper.absScreenHeight);
+                    }
+                });
+            }
+        });
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.main, menu);
-        return true;
+        getSupportActionBar().setCustomView(customNav);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+
+        getSupportActionBar().setNavigationMode(ActionBar.DISPLAY_SHOW_CUSTOM);
     }
 
     // region Option Menu
@@ -130,17 +146,11 @@ public class MainActivity extends SlidingFragmentActivity {
 
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             menu.showMenu();
-            Device.context().setTitle("Android Device Information.");
             return true;
         }
         return super.onKeyDown(keyCode, event);
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu, menu);
-//        return true;
-//    }
 /*
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -161,4 +171,57 @@ public class MainActivity extends SlidingFragmentActivity {
                 return super.onOptionsItemSelected(item);
         }
     }*/
+
+    public static class SettingsActionProvider extends ActionProvider {
+
+        /**
+         * An intent for launching the system settings.
+         */
+        private static final Intent sSettingsIntent = new Intent(Settings.ACTION_SETTINGS);
+
+        /**
+         * Context for accessing resources.
+         */
+        private final Context mContext;
+
+        /**
+         * Creates a new instance.
+         *
+         * @param context Context for accessing resources.
+         */
+        public SettingsActionProvider(Context context) {
+            super(context);
+            mContext = context;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public View onCreateActionView() {
+            // Inflate the action view to be shown on the action bar.
+            LayoutInflater layoutInflater = LayoutInflater.from(mContext);
+            View view = layoutInflater.inflate(R.layout.settings_action_provider, null);
+            ImageButton button = (ImageButton) view.findViewById(R.id.button);
+            // Attach a click listener for launching the system settings.
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mContext.startActivity(sSettingsIntent);
+                }
+            });
+            return view;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean onPerformDefaultAction() {
+            // This is called if the host menu item placed in the overflow menu of the
+            // action bar is clicked and the host activity did not handle the click.
+            mContext.startActivity(sSettingsIntent);
+            return true;
+        }
+    }
 }

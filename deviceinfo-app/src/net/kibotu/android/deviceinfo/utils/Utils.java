@@ -1,6 +1,8 @@
 package net.kibotu.android.deviceinfo.utils;
 
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.ImageFormat;
 import android.graphics.PixelFormat;
 import android.hardware.Sensor;
@@ -414,7 +416,7 @@ final public class Utils {
         int i = 0;
 
         for (String line : lines) {
-            if(i >= 2) break;
+            if (i >= 2) break;
             final String[] token = line.split(" ");
             // proc mem output looks like this each line: "info         byte kB" with tons of non-utf8-spaces in between,
             // so split(" ") doesn't work properly, but we can just take the first and length-2 token index to get what we want
@@ -684,5 +686,28 @@ final public class Utils {
 
     public static String formatPercent(final float usage) {
         return String.format("%.2f %s", usage, "%");
+    }
+
+    public static Bitmap invert(final Bitmap src) {
+        final Bitmap output = Bitmap.createBitmap(src.getWidth(), src.getHeight(), src.getConfig());
+        int A, R, G, B;
+        int pixelColor;
+        int height = src.getHeight();
+        int width = src.getWidth();
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                pixelColor = src.getPixel(x, y);
+                A = Color.alpha(pixelColor);
+
+                R = 255 - Color.red(pixelColor);
+                G = 255 - Color.green(pixelColor);
+                B = 255 - Color.blue(pixelColor);
+
+                output.setPixel(x, y, Color.argb(A, R, G, B));
+            }
+        }
+
+        return output;
     }
 }

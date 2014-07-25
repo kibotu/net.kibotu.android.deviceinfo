@@ -8,7 +8,11 @@ Android Device Info
 Library and app for showing tons of device information for your android device.
 
 
-##How to build:
+### How to build the lib:
+
+- `mvn package`
+
+### How to build the app:
 
 - `git clone git@github.com:kibotu/net.kibotu.android.deviceinfo.git`
 - `git submodule update --init --recursive`
@@ -28,11 +32,11 @@ Library and app for showing tons of device information for your android device.
 
 ### Known Issues
 
-## Contact
+### Contact
 
 **Contributers:**
 
-## Dependancies 
+### Dependancies 
 * None for the library.
 * (Using [jfeinstein10's Slidemenu](https://github.com/jfeinstein10/SlidingMenu) in the app though.)
 

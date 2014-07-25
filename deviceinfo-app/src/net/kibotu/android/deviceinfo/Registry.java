@@ -32,7 +32,7 @@ public enum Registry implements IGetInfoFragment {
 
     // region Build
 
-    Build(R.drawable.build) {
+    Build(R.drawable.build, R.drawable.build_i) {
         @Override
         public void createFragmentList() {
 
@@ -76,7 +76,7 @@ public enum Registry implements IGetInfoFragment {
 
     // region Configuration
 
-    Configuration(R.drawable.config) {
+    Configuration(R.drawable.config, R.drawable.config_i) {
         @Override
         public void createFragmentList() {
 
@@ -111,7 +111,7 @@ public enum Registry implements IGetInfoFragment {
 
     // region CPU
 
-    CPU(R.drawable.cpu) {
+    CPU(R.drawable.cpu, R.drawable.cpu_i) {
 
         final int cores = Cpu.getNumCores();
 
@@ -172,7 +172,7 @@ public enum Registry implements IGetInfoFragment {
 
     // region GPU
 
-    GPU(R.drawable.gpu) {
+    GPU(R.drawable.gpu, R.drawable.gpu_i) {
         @Override
         public void createFragmentList() {
 
@@ -220,7 +220,7 @@ public enum Registry implements IGetInfoFragment {
 
     // region Memory
 
-    Memory(R.drawable.memory) {
+    Memory(R.drawable.memory, R.drawable.memory_i) {
         @Override
         public void createFragmentList() {
 
@@ -395,7 +395,7 @@ public enum Registry implements IGetInfoFragment {
 
     // region Battery
 
-    Battery(R.drawable.battery) {
+    Battery(R.drawable.battery, R.drawable.battery_i) {
         @Override
         public void createFragmentList() {
 
@@ -508,7 +508,7 @@ public enum Registry implements IGetInfoFragment {
 
     // region Display
 
-    Display(R.drawable.display) {
+    Display(R.drawable.display, R.drawable.display_i) {
         @Override
         public void createFragmentList() {
 
@@ -586,7 +586,7 @@ public enum Registry implements IGetInfoFragment {
 
     // region Network
 
-    Network(R.drawable.network) {
+    Network(R.drawable.network, R.drawable.network_i) {
         @Override
         public void createFragmentList() {
 
@@ -781,7 +781,7 @@ public enum Registry implements IGetInfoFragment {
 
     // region Sensor
 
-    Sensor(R.drawable.sensors) {
+    Sensor(R.drawable.sensors, R.drawable.sensors_i) {
         @Override
         public void createFragmentList() {
 
@@ -821,7 +821,7 @@ public enum Registry implements IGetInfoFragment {
 
     // region Java
 
-    Java(R.drawable.java) {
+    Java(R.drawable.java, R.drawable.java_i) {
         @Override
         public void createFragmentList() {
 
@@ -911,7 +911,7 @@ public enum Registry implements IGetInfoFragment {
 
     // region Geolocation
 
-    Geolocation(R.drawable.geo) {
+    Geolocation(R.drawable.geo, R.drawable.geo_i) {
         @Override
         public void createFragmentList() {
 
@@ -960,7 +960,7 @@ public enum Registry implements IGetInfoFragment {
 
     // region App
 
-    App(R.drawable.info) {
+    App(R.drawable.info, R.drawable.info_i) {
         @Override
         public void createFragmentList() {
 
@@ -1021,7 +1021,7 @@ public enum Registry implements IGetInfoFragment {
 
     // region Other
 
-    Other(R.drawable.others) {
+    Other(R.drawable.others, R.drawable.others_i) {
         @Override
         public void createFragmentList() {
             cachedList.addItem("Rooted", "Determines if this device has been rooted.", "" + Device.isPhoneRooted()).setHorizontal();
@@ -1034,6 +1034,7 @@ public enum Registry implements IGetInfoFragment {
     // region Register
 
     public int iconR;
+    public int iconR_i;
     protected DeviceInfoFragment cachedList;
     private volatile boolean isRefreshing;
     private List<Thread> threads;
@@ -1043,13 +1044,16 @@ public enum Registry implements IGetInfoFragment {
             cachedList = new DeviceInfoFragment(context());
             startRefreshingList(1);
             createFragmentList();
+
+//            iconR_i = new BitmapDrawable(Device.context().getResources(), Utils.invert(BitmapFactory.decodeResource(Device.context().getResources(), iconR)));
         }
 
         return cachedList;
     }
 
-    private Registry(final int iconR) {
+    private Registry(final int iconR, final int iconR_i) {
         this.iconR = iconR;
+        this.iconR_i = iconR_i;
         isRefreshing = false;
         threads = new ArrayList<Thread>(50);
     }

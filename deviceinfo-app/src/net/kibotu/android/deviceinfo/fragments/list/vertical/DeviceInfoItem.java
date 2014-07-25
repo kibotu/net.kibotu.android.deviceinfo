@@ -44,7 +44,7 @@ public class DeviceInfoItem implements Comparable<DeviceInfoItem> {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || DeviceInfoItem.class != o.getClass()) return false;
 
         DeviceInfoItem that = (DeviceInfoItem) o;
 
