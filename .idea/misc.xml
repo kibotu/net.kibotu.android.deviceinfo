@@ -12,13 +12,11 @@
     <file type="android" url="file://$PROJECT_DIR$/deviceinfo-tests" />
     <file type="android" url="file://$PROJECT_DIR$/SlidingMenu/library" />
   </component>
-  <component name="IdProvider" IDEtalkID="5C37AB947199C15D29C587B86A84785E" />
+  <component name="IdProvider" IDEtalkID="7C4A1962948735823D9BA89176BA550D" />
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/SlidingMenu/library/pom.xml" />
-        <option value="$PROJECT_DIR$/ActionBarSherlock/actionbarsherlock/pom.xml" />
       </list>
     </option>
   </component>
@@ -32,7 +30,7 @@
     <ConfirmationsSetting value="0" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" assert-keyword="true" jdk-15="true" project-jdk-name="Maven Android API 10 Platform" project-jdk-type="Android SDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/classes" />
   </component>
   <component name="RunManager">

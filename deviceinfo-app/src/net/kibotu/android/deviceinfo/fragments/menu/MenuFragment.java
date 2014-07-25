@@ -57,13 +57,12 @@ public class MenuFragment extends ListFragment {
                     .commit();
 
         lastItemList = currentItemList;
-        MainActivity.menu.showContent();
-
-        changeActionBar(currentItemList);
+        changeActionBar();
     }
 
-    public void changeActionBar(final Registry currentItemList) {
-        Device.context().setTitle(currentItemList.name());
-        ((SlidingFragmentActivity) context).getSupportActionBar().setIcon(currentItemList.iconR_i);
+    public void changeActionBar() {
+        Device.context().setTitle(lastItemList.name());
+        ((SlidingFragmentActivity) context).getSupportActionBar().setIcon(lastItemList.iconR_i);
+        MainActivity.menu.showContent();
     }
 }

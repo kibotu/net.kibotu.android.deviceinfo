@@ -2,18 +2,17 @@ package net.kibotu.android.deviceinfo;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import com.actionbarsherlock.ActionBarSherlock;
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.internal.widget.IcsAdapterView;
-import com.actionbarsherlock.internal.widget.IcsSpinner;
 import com.actionbarsherlock.view.ActionProvider;
+import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.flurry.android.FlurryAgent;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
@@ -26,6 +25,8 @@ import net.kibotu.android.error.tracking.Logger;
 import org.json.JSONObject;
 
 public class MainActivity extends SlidingFragmentActivity {
+
+    ActionBarSherlock mSherlock = ActionBarSherlock.wrap(this);
 
     public static SlidingMenu menu;
     private volatile MenuFragment arcList;
@@ -77,8 +78,6 @@ public class MainActivity extends SlidingFragmentActivity {
             arcList.addItem(item.name(), item.iconR);
 
         // set the Above View
-        setContentView(R.layout.content_frame);
-        setBehindContentView(R.layout.menu_frame);
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.content_frame, Registry.Build.getFragmentList())
@@ -100,19 +99,12 @@ public class MainActivity extends SlidingFragmentActivity {
                 .commit();
 
         arcList.lastItemList = Registry.Build;
-        menu.showMenu();
-        setTitle("Build");
-        getSupportActionBar().setIcon(Registry.Build.iconR_i);
 
         // time bomb
         Device.ACTIVATE_TB = false;
         Device.checkTimebombDialog();
 
-        setSlidingActionBarEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         View customNav = LayoutInflater.from(this).inflate(R.layout.navigation, null);
-
         final ImageButton button = (ImageButton) customNav.findViewById(R.id.imageButton);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,13 +118,36 @@ public class MainActivity extends SlidingFragmentActivity {
             }
         });
 
+        setSlidingActionBarEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setCustomView(customNav);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
-
         getSupportActionBar().setNavigationMode(ActionBar.DISPLAY_SHOW_CUSTOM);
+
+        menu.showMenu();
+        setTitle("Build");
+        getSupportActionBar().setIcon(Registry.Build.iconR_i);
+
+        mSherlock.setUiOptions(0);
+        setContentView(R.layout.content_frame);
+        setBehindContentView(R.layout.content_frame);
     }
 
-    // region Option Menu
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case android.R.id.home:
+//                toggle();
+//                return true;
+//        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getSupportMenuInflater().inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -150,27 +165,6 @@ public class MainActivity extends SlidingFragmentActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
-
-/*
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.daynighttheme:
-
-                // toggle preference
-                SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
-                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
-                editor.putInt(THEME_PREFERENCE, (R.style.dark_theme == pref.getInt(THEME_PREFERENCE, R.style.dark_theme)) ? R.style.light_theme : R.style.dark_theme);
-                editor.commit();
-
-                // restart device
-                Device.Restart();
-
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }*/
 
     public static class SettingsActionProvider extends ActionProvider {
 

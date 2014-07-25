@@ -42,6 +42,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.google.android</groupId>
+            <artifactId>support-v4</artifactId>
+            <version>r7</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.jeremyfeinstein.slidingmenu</groupId>
             <artifactId>slidingmenu</artifactId>
             <version>1.0.0</version>
@@ -53,22 +59,22 @@
             <version>4.4.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>FlurryAnalytics</groupId>
+            <artifactId>com.flurry.android.FlurryAgent</artifactId>
+            <version>4.1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/FlurryAnalytics-4.1.0.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>Parse</groupId>
+            <artifactId>com.parse</artifactId>
+            <version>1.5.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/Parse-1.5.1.jar</systemPath>
+        </dependency>
+
     </dependencies>
-
-    <repositories>
-
-        <repository>
-            <id>com.jeremyfeinstein.slidingmenu</id>
-            <name>slidingmenu</name>
-            <url>file:${project.basedir}/SlidingMenu/library</url>
-        </repository>
-
-        <repository>
-            <id>com.actionbarsherlock</id>
-            <name>actionbarsherlock</name>
-            <url>file:${project.basedir}/ActionBarSherlock/actionbarsherlock</url>
-        </repository>
-
-    </repositories>
 
 </project>
