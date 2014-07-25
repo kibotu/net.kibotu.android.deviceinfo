@@ -13,8 +13,6 @@
         <module>deviceinfo-lib</module>
         <module>deviceinfo-app</module>
         <module>deviceinfo-tests</module>
-        <module>SlidingMenu/library</module>
-        <module>ActionBarSherlock/actionbarsherlock</module>
     </modules>
 
     <dependencyManagement>

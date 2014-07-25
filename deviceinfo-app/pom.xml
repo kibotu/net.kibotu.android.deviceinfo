@@ -12,6 +12,11 @@
     <version>1.0</version>
     <packaging>jar</packaging>
 
+    <modules>
+        <module>../SlidingMenu/library</module>
+        <module>../ActionBarSherlock/actionbarsherlock</module>
+    </modules>
+
     <dependencies>
 
         <dependency>

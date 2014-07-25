@@ -31,10 +31,10 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="actionbarsherlock" target="1.6" />
-      <module name="deviceinfo" target="1.6" />
-      <module name="deviceinfo-app" target="1.6" />
-      <module name="deviceinfo-lib" target="1.6" />
-      <module name="deviceinfo-tests" target="1.6" />
+      <module name="deviceinfo" target="1.7" />
+      <module name="deviceinfo-app" target="1.7" />
+      <module name="deviceinfo-lib" target="1.7" />
+      <module name="deviceinfo-tests" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>
