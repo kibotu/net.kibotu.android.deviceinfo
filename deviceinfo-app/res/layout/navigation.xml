@@ -5,21 +5,4 @@
               android:gravity="left|center_vertical"
               android:uiOptions="none"
               android:orientation="horizontal">
-
-    <!-- email -->
-    <!-- fb -->
-    <!-- twitter -->
-
-    <!-- feedback -->
-    <!-- rating -->
-
-    <!-- about -->
-    <!-- search -->
-
-    <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageButton" android:layout_gravity="center_vertical"/>
-
-
 </LinearLayout>

@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Geräte Informationen</string>
+    <string name="app_name">Device Infos</string>
+    <string name="rate">Rate</string>
+    <string name="share">Share</string>
+    <string name="appinfo">App</string>
+    <string name="facebook">Facebook</string>
+    <string name="twitter">Twitter</string>
+    <string name="email">E-Mail</string>
+    <string name="about">About</string>
+    <string name="feedback">Feedback</string>
+    <string name="request">Request Feature</string>
+    <string name="github">Library on Github</string>
 </resources>

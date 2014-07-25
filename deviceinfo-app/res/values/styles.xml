@@ -4,6 +4,14 @@
     <style name="ExampleTheme" parent="Theme.Sherlock.Light.DarkActionBar">
         <item name="homeAsUpIndicator">@drawable/new_indicator</item>
         <item name="android:homeAsUpIndicator">@drawable/new_indicator</item>
+
+        <!--<item name="actionButtonStyle">@style/MyActionButtonStyle</item>-->
+        <!--<item name="android:actionButtonStyle">@style/MyActionButtonStyle</item>-->
     </style>
+
+    <!--<style name="MyActionButtonStyle" parent="Widget.Sherlock.ActionButton">-->
+        <!--<item name="android:minWidth">32dip</item>-->
+        <!--<item name="android:padding">0dip</item>-->
+    <!--</style>-->
 
 </resources>

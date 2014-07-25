@@ -2,15 +2,12 @@ package net.kibotu.android.deviceinfo;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.widget.ImageButton;
-import com.actionbarsherlock.ActionBarSherlock;
-import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.ActionProvider;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -19,14 +16,16 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import net.kibotu.android.deviceinfo.fragments.menu.MenuFragment;
 import net.kibotu.android.deviceinfo.utils.CustomWebView;
+import net.kibotu.android.deviceinfo.utils.RateMeMaybe;
 import net.kibotu.android.error.tracking.ErrorTracking;
 import net.kibotu.android.error.tracking.JSONUtils;
 import net.kibotu.android.error.tracking.Logger;
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
+
 public class MainActivity extends SlidingFragmentActivity {
 
-    public static SlidingMenu menu;
     private volatile MenuFragment arcList;
     public static final String THEME_PREFERENCE = "themePreference";
     public static JSONObject appConfig;
@@ -44,17 +43,40 @@ public class MainActivity extends SlidingFragmentActivity {
         ErrorTracking.endSession();
     }
 
-    private void testLowMemory() {
-        long[] l = new long[Integer.MAX_VALUE];
+    public void forceOverflowMenuItems() {
+        try {
+            final ViewConfiguration config = ViewConfiguration.get(this);
+            final Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
+            if (menuKeyField != null) {
+                menuKeyField.setAccessible(true);
+                menuKeyField.setBoolean(config, false);
+            }
+        } catch (final Exception e) {
+            Logger.e(e);
+        }
     }
 
     @Override
     public void onPostCreate(Bundle savedInstanceState) {
+
+        // forceOverflowMenuItems();
+
+        // open menu after creating
         if (savedInstanceState == null) {
             savedInstanceState = new Bundle();
             savedInstanceState.putBoolean("SlidingActivityHelper.open", true);
         }
         super.onPostCreate(savedInstanceState);
+
+        // More customized example
+//        RateMeMaybe rmm = new RateMeMaybe(this);
+//        rmm.setPromptMinimums(3, 14, 10, 30);
+//        rmm.setDialogMessage("You really seem to like this app, "
+//                +"since you have already used it %totalLaunchCount% times! "
+//                +"It would be great if you took a moment to rate it.");
+//        rmm.setDialogTitle("Rate this app");
+//        rmm.setPositiveBtn("Yeeha!");
+//        rmm.run();
     }
 
     @Override
@@ -93,14 +115,12 @@ public class MainActivity extends SlidingFragmentActivity {
                 .commit();
 
         // configure the SlidingMenu
-        menu = getSlidingMenu();
-        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-        menu.setShadowWidthRes(R.dimen.shadow_width);
-        menu.setShadowDrawable(R.drawable.shadow);
-        menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-        menu.setFadeDegree(0.35f);
-//        menu.attachToActivity(this, SlidingMenu.SLIDING_WINDOW);
-        menu.setMenu(R.layout.menu_frame);
+        getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        getSlidingMenu().setShadowWidthRes(R.dimen.shadow_width);
+        getSlidingMenu().setShadowDrawable(R.drawable.shadow);
+        getSlidingMenu().setBehindOffsetRes(R.dimen.slidingmenu_offset);
+        getSlidingMenu().setFadeDegree(0.35f);
+        getSlidingMenu().setMenu(R.layout.menu_frame);
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -114,38 +134,56 @@ public class MainActivity extends SlidingFragmentActivity {
         Device.checkTimebombDialog();
 
         View customNav = LayoutInflater.from(this).inflate(R.layout.navigation, null);
-        final ImageButton button = (ImageButton) customNav.findViewById(R.id.imageButton);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Device.context().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        CustomWebView.showWebViewInDialog(Device.context(), "http://kibotu.github.io/net.kibotu.android.deviceinfo/", 0, 0, DisplayHelper.absScreenWidth, DisplayHelper.absScreenHeight);
-                    }
-                });
-            }
-        });
+//        final ImageButton button = (ImageButton) customNav.findViewById(R.id.imageButton);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                CustomWebView.showWebViewInDialog(Device.context(), "http://kibotu.github.io/net.kibotu.android.deviceinfo/", 0, 0, DisplayHelper.absScreenWidth, DisplayHelper.absScreenHeight);
+//            }
+//        });
 
         setSlidingActionBarEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setCustomView(customNav);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-
+//        getSupportActionBar().setCustomView(customNav);
+//        getSupportActionBar().setDisplayShowCustomEnabled(true);
 
         setTitle("Build");
         getSupportActionBar().setIcon(Registry.Build.iconR_i);
-        menu.showMenu();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case android.R.id.home:
-//                toggle();
-//                return true;
-//        }
+        switch (item.getItemId()) {
+            case R.id.menu_rate:
+                rateMeMaybe();
+                return true;
+            case R.id.menu_facebook:
+                return true;
+            case R.id.menu_twitter:
+                return true;
+            case R.id.menu_email:
+                return true;
+            case R.id.menu_about:
+                CustomWebView.showWebViewInDialog(Device.context(), "http://kibotu.github.io/net.kibotu.android.deviceinfo/", 0, 0, DisplayHelper.absScreenWidth, DisplayHelper.absScreenHeight);
+                return true;
+            case R.id.menu_github:
+                CustomWebView.showWebViewInDialog(Device.context(), "https://github.com/kibotu/net.kibotu.android.deviceinfo/blob/master/README.md", 0, 0, DisplayHelper.absScreenWidth, DisplayHelper.absScreenHeight);
+                return true;
+            case R.id.menu_feedback:
+                CustomWebView.showWebViewInDialog(Device.context(), "http://blog.kibotu.net/contact", 0, 0, DisplayHelper.absScreenWidth, DisplayHelper.absScreenHeight);
+                return true;
+            case R.id.menu_request:
+                CustomWebView.showWebViewInDialog(Device.context(), "http://blog.kibotu.net/contact", 0, 0, DisplayHelper.absScreenWidth, DisplayHelper.absScreenHeight);
+                return true;
+        }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    private void rateMeMaybe() {
+        RateMeMaybe rmm = new RateMeMaybe(this);
+        rmm.setDialogTitle("Thank you for using this App.");
+        rmm.forceShow();
     }
 
     @Override
@@ -155,20 +193,17 @@ public class MainActivity extends SlidingFragmentActivity {
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-        if (menu.isMenuShowing()) {
+    public void onBackPressed() {
+        if (!getSlidingMenu().isMenuShowing()) {
+            getSlidingMenu().showMenu(true);
+            return;
+        } else {
             Device.killApp();
-            finish();
-            return true;
-//            return moveTaskToBack(true);
+//            finish();
+//            return;
         }
 
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            menu.showMenu();
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
+        super.onBackPressed();
     }
 
     public static class SettingsActionProvider extends ActionProvider {

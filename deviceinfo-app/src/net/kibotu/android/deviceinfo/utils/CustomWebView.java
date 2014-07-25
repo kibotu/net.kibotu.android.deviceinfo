@@ -10,8 +10,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.ContextThemeWrapper;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
@@ -413,7 +415,7 @@ public class CustomWebView {
                 bottomShadowParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
                 bottomShadow.setLayoutParams(bottomShadowParams);
 
-                final WebView webView = new WebView(activity);
+                final LiveWebView webView = new LiveWebView(activity);
                 RelativeLayout.LayoutParams webViewParams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
                 webView.setLayoutParams(webViewParams);
                 webView.loadUrl(url);
@@ -456,8 +458,46 @@ public class CustomWebView {
 
                 // important! call after dialog.show()
                 dialog.getWindow().setLayout(width, height);
+                dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
+                webView.requestFocus(View.FOCUS_DOWN);
+                webView.requestFocusFromTouch();
+                webView.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        switch (event.getAction()) {
+                            case MotionEvent.ACTION_DOWN:
+                            case MotionEvent.ACTION_UP:
+                                if (!v.hasFocus()) {
+                                    v.requestFocus();
+                                }
+                                break;
+                        }
+                        return false;
+                    }
+                });
             }
         });
+    }
+
+    public static class LiveWebView extends WebView {
+
+        public LiveWebView(Context context) {
+            super(context);
+        }
+
+        public LiveWebView(Context context, AttributeSet attrs) {
+            super(context, attrs);
+        }
+
+        public LiveWebView(Context context, AttributeSet attrs, int defStyle) {
+            super(context, attrs, defStyle);
+        }
+
+        @Override
+        public boolean onCheckIsTextEditor() {
+            return true;
+        }
     }
 
     /**
@@ -477,7 +517,7 @@ public class CustomWebView {
         webView.setFocusableInTouchMode(true);
         s.setJavaScriptEnabled(true);
         s.setJavaScriptCanOpenWindowsAutomatically(false);
-        s.setPluginState(PluginState.OFF);
+        s.setPluginState(PluginState.ON_DEMAND);
         s.setRenderPriority(RenderPriority.HIGH);
         s.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK); // WebSettings.LOAD_DEFAULT
         s.setDomStorageEnabled(true);
@@ -493,8 +533,9 @@ public class CustomWebView {
         s.setLoadWithOverviewMode(true);
         s.setSavePassword(false);
         s.setSaveFormData(true);
-        String userAgent = "Mozilla/5.0 (Linux; U; Android 4.2.2; en-gb; GT-I9100 Build/JDQ39E; CyanogenMod-10.1) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30";
-        s.setUserAgentString(userAgent); // custom android user agent
+//        String userAgent = "Mozilla/5.0 (Linux; U; Android 4.2.2; en-gb; GT-I9100 Build/JDQ39E; CyanogenMod-10.1) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30";
+//        s.setUserAgentString(userAgent); // custom android user agent
+//        webView.requestFocus(View.FOCUS_DOWN);
     }
 
     /**

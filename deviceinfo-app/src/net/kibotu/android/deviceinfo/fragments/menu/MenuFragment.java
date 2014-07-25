@@ -63,6 +63,6 @@ public class MenuFragment extends ListFragment {
     public void changeActionBar() {
         Device.context().setTitle(lastItemList.name());
         ((SlidingFragmentActivity) context).getSupportActionBar().setIcon(lastItemList.iconR_i);
-        MainActivity.menu.showContent();
+        ((MainActivity)context).getSlidingMenu().showContent();
     }
 }

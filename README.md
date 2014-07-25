@@ -39,7 +39,11 @@ Library and app for showing tons of device information for your android device.
 
 ### Dependancies 
 * None for the library.
-* (Using [jfeinstein10's Slidemenu](https://github.com/jfeinstein10/SlidingMenu))
-* (and [JakeWharton's ActionBarSherlock](https://github.com/JakeWharton/ActionBarSherlock) in the app though.)
+
+### Thanks to 
+
+* [jfeinstein10](https://github.com/jfeinstein10) for [Slidemenu](https://github.com/jfeinstein10/SlidingMenu)
+* [JakeWharton](https://github.com/JakeWharton) for [ActionBarSherlock](https://github.com/JakeWharton/ActionBarSherlock) 
+* [Kopfgeldjaeger](https://github.com/Kopfgeldjaeger) for [RateMeMaybe](https://github.com/Kopfgeldjaeger/RateMeMaybe)
 
 ## See also

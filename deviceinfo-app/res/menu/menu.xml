@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <!--<item android:id="@+id/daynighttheme"-->
-    <!--android:icon="@drawable/ic_launcher"-->
-    <!--android:title="@string/daynighttheme"-->
-    <!--android:showAsAction="ifRoom"-->
-    <!--android:actionProviderClass="net.kibotu.android.deviceinfo.MainActivity$SettingsActionProvider"-->
-    <!--/>-->
 
-    <item android:id="@+id/daynighttheme" android:icon="@drawable/ic_launcher" android:showAsAction="ifRoom"
-          android:title="@string/app_name" android:titleCondensed="@string/app_name" android:visible="true">
+    <!--android:actionProviderClass="net.kibotu.android.deviceinfo.MainActivity$SettingsActionProvider"-->
+    <item android:id="@+id/menu_rate" android:icon="@drawable/star_i" android:showAsAction="always"
+          android:title="@string/rate" android:titleCondensed="@string/rate" android:visible="true">
+    </item>
+
+    <item android:id="@+id/menu_share" android:icon="@drawable/share_i" android:showAsAction="always"
+          android:title="@string/share" android:titleCondensed="@string/share" android:visible="true">
         <menu>
-            <item android:id="@+id/RedColor" android:title="Red"/>
-            <item android:id="@+id/GreenColor" android:title="Green"/>
+            <item android:id="@+id/menu_facebook" android:title="@string/facebook" android:icon="@drawable/facebook_i"/>
+            <item android:id="@+id/menu_twitter" android:title="@string/twitter" android:icon="@drawable/twitter_i"/>
+            <item android:id="@+id/menu_email" android:title="@string/email" android:icon="@drawable/mail_i"/>
+        </menu>
+    </item>
+
+    <item android:id="@+id/menu_appinfo" android:icon="@drawable/info_i" android:showAsAction="always"
+          android:title="@string/appinfo" android:titleCondensed="@string/appinfo" android:visible="true">
+        <menu>
+            <item android:id="@+id/menu_about" android:title="@string/about" android:icon="@drawable/about_i"/>
+            <item android:id="@+id/menu_github" android:title="@string/github" android:icon="@drawable/github_i"/>
+            <item android:id="@+id/menu_feedback" android:title="@string/feedback" android:icon="@drawable/feedback_i"/>
+            <item android:id="@+id/menu_request" android:title="@string/request" android:icon="@drawable/requests_i"/>
         </menu>
     </item>
 </menu>
