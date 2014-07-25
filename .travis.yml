@@ -70,7 +70,7 @@ before_script:
   - adb wait-for-device
   - adb devices -l
 
-script: mvn -e clean install -Pintegration-tests -Dandroid.device=test -Dandroid.extractDuplicates=true -X #-DignoreTestFailure=true
+script: mvn -P ci -e clean install -Pintegration-tests -Dandroid.device=test -Dandroid.extractDuplicates=true -X #-DignoreTestFailure=true
 
 after_script:
 
