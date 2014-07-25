@@ -31,6 +31,463 @@
       </filter>
     </filters>
   </component>
+  <component name="AndroidExternalApklibDependenciesManager">
+    <artifacts>
+      <entry key="com.actionbarsherlock_actionbarsherlock_4.4.0" value="$MAVEN_REPOSITORY$/com/actionbarsherlock/actionbarsherlock/4.4.0/actionbarsherlock-4.4.0.apklib" />
+    </artifacts>
+    <resolved-infos>
+      <entry key="com.actionbarsherlock_actionbarsherlock_4.4.0">
+        <value>
+          <resolved-info>
+            <option name="apiLevel" value="14" />
+            <dependencies>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="android" />
+                <option name="groupId" value="com.google.android" />
+                <option name="libName" value="Maven: com.google.android:android:4.0.1.2" />
+                <option name="path" value="$MAVEN_REPOSITORY$/com/google/android/android/4.0.1.2/android-4.0.1.2.jar" />
+                <option name="scope" value="provided" />
+                <option name="type" value="jar" />
+                <option name="version" value="4.0.1.2" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="commons-logging" />
+                <option name="groupId" value="commons-logging" />
+                <option name="libName" value="Maven: commons-logging:commons-logging:1.1.1" />
+                <option name="path" value="$MAVEN_REPOSITORY$/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar" />
+                <option name="scope" value="provided" />
+                <option name="type" value="jar" />
+                <option name="version" value="1.1.1" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="httpclient" />
+                <option name="groupId" value="org.apache.httpcomponents" />
+                <option name="libName" value="Maven: org.apache.httpcomponents:httpclient:4.0.1" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpclient/4.0.1/httpclient-4.0.1.jar" />
+                <option name="scope" value="provided" />
+                <option name="type" value="jar" />
+                <option name="version" value="4.0.1" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="httpcore" />
+                <option name="groupId" value="org.apache.httpcomponents" />
+                <option name="libName" value="Maven: org.apache.httpcomponents:httpcore:4.0.1" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpcore/4.0.1/httpcore-4.0.1.jar" />
+                <option name="scope" value="provided" />
+                <option name="type" value="jar" />
+                <option name="version" value="4.0.1" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="commons-codec" />
+                <option name="groupId" value="commons-codec" />
+                <option name="libName" value="Maven: commons-codec:commons-codec:1.3" />
+                <option name="path" value="$MAVEN_REPOSITORY$/commons-codec/commons-codec/1.3/commons-codec-1.3.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="1.3" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="opengl-api" />
+                <option name="groupId" value="org.khronos" />
+                <option name="libName" value="Maven: org.khronos:opengl-api:gl1.1-android-2.1_r1" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/khronos/opengl-api/gl1.1-android-2.1_r1/opengl-api-gl1.1-android-2.1_r1.jar" />
+                <option name="scope" value="provided" />
+                <option name="type" value="jar" />
+                <option name="version" value="gl1.1-android-2.1_r1" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="xmlParserAPIs" />
+                <option name="groupId" value="xerces" />
+                <option name="libName" value="Maven: xerces:xmlParserAPIs:2.6.2" />
+                <option name="path" value="$MAVEN_REPOSITORY$/xerces/xmlParserAPIs/2.6.2/xmlParserAPIs-2.6.2.jar" />
+                <option name="scope" value="provided" />
+                <option name="type" value="jar" />
+                <option name="version" value="2.6.2" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="xpp3" />
+                <option name="groupId" value="xpp3" />
+                <option name="libName" value="Maven: xpp3:xpp3:1.1.4c" />
+                <option name="path" value="$MAVEN_REPOSITORY$/xpp3/xpp3/1.1.4c/xpp3-1.1.4c.jar" />
+                <option name="scope" value="provided" />
+                <option name="type" value="jar" />
+                <option name="version" value="1.1.4c" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="json" />
+                <option name="groupId" value="org.json" />
+                <option name="libName" value="Maven: org.json:json:20080701" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/json/json/20080701/json-20080701.jar" />
+                <option name="scope" value="provided" />
+                <option name="type" value="jar" />
+                <option name="version" value="20080701" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="support-v4" />
+                <option name="groupId" value="com.google.android" />
+                <option name="libName" value="Maven: com.google.android:support-v4:r7" />
+                <option name="path" value="$MAVEN_REPOSITORY$/com/google/android/support-v4/r7/support-v4-r7.jar" />
+                <option name="scope" value="compile" />
+                <option name="type" value="jar" />
+                <option name="version" value="r7" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="junit" />
+                <option name="groupId" value="junit" />
+                <option name="libName" value="Maven: junit:junit:4.10" />
+                <option name="path" value="$MAVEN_REPOSITORY$/junit/junit/4.10/junit-4.10.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="4.10" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="hamcrest-core" />
+                <option name="groupId" value="org.hamcrest" />
+                <option name="libName" value="Maven: org.hamcrest:hamcrest-core:1.1" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="1.1" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="fest-assert-core" />
+                <option name="groupId" value="org.easytesting" />
+                <option name="libName" value="Maven: org.easytesting:fest-assert-core:2.0M10" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/easytesting/fest-assert-core/2.0M10/fest-assert-core-2.0M10.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="2.0M10" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="fest-util" />
+                <option name="groupId" value="org.easytesting" />
+                <option name="libName" value="Maven: org.easytesting:fest-util:1.2.5" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/easytesting/fest-util/1.2.5/fest-util-1.2.5.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="1.2.5" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="robolectric" />
+                <option name="groupId" value="org.robolectric" />
+                <option name="libName" value="Maven: org.robolectric:robolectric:2.0" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/robolectric/robolectric/2.0/robolectric-2.0.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="2.0" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="objenesis" />
+                <option name="groupId" value="org.objenesis" />
+                <option name="libName" value="Maven: org.objenesis:objenesis:1.3" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/objenesis/objenesis/1.3/objenesis-1.3.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="1.3" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="sqlite-jdbc" />
+                <option name="groupId" value="org.xerial" />
+                <option name="libName" value="Maven: org.xerial:sqlite-jdbc:3.7.2" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/xerial/sqlite-jdbc/3.7.2/sqlite-jdbc-3.7.2.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="3.7.2" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="asm" />
+                <option name="groupId" value="org.ow2.asm" />
+                <option name="libName" value="Maven: org.ow2.asm:asm:4.1" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/ow2/asm/asm/4.1/asm-4.1.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="4.1" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="asm-commons" />
+                <option name="groupId" value="org.ow2.asm" />
+                <option name="libName" value="Maven: org.ow2.asm:asm-commons:4.1" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/ow2/asm/asm-commons/4.1/asm-commons-4.1.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="4.1" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="asm-tree" />
+                <option name="groupId" value="org.ow2.asm" />
+                <option name="libName" value="Maven: org.ow2.asm:asm-tree:4.1" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/ow2/asm/asm-tree/4.1/asm-tree-4.1.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="4.1" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="asm-util" />
+                <option name="groupId" value="org.ow2.asm" />
+                <option name="libName" value="Maven: org.ow2.asm:asm-util:4.1" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/ow2/asm/asm-util/4.1/asm-util-4.1.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="4.1" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="asm-analysis" />
+                <option name="groupId" value="org.ow2.asm" />
+                <option name="libName" value="Maven: org.ow2.asm:asm-analysis:4.1" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/ow2/asm/asm-analysis/4.1/asm-analysis-4.1.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="4.1" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="vtd-xml" />
+                <option name="groupId" value="com.ximpleware" />
+                <option name="libName" value="Maven: com.ximpleware:vtd-xml:2.11" />
+                <option name="path" value="$MAVEN_REPOSITORY$/com/ximpleware/vtd-xml/2.11/vtd-xml-2.11.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="2.11" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="fest-reflect" />
+                <option name="groupId" value="org.easytesting" />
+                <option name="libName" value="Maven: org.easytesting:fest-reflect:1.4.1" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/easytesting/fest-reflect/1.4.1/fest-reflect-1.4.1.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="1.4.1" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="catch-exception" />
+                <option name="groupId" value="com.googlecode.catch-exception" />
+                <option name="libName" value="Maven: com.googlecode.catch-exception:catch-exception:1.0.4" />
+                <option name="path" value="$MAVEN_REPOSITORY$/com/googlecode/catch-exception/catch-exception/1.0.4/catch-exception-1.0.4.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="1.0.4" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="mockito-core" />
+                <option name="groupId" value="org.mockito" />
+                <option name="libName" value="Maven: org.mockito:mockito-core:1.8.5" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/mockito/mockito-core/1.8.5/mockito-core-1.8.5.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="1.8.5" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="maven-ant-tasks" />
+                <option name="groupId" value="org.apache.maven" />
+                <option name="libName" value="Maven: org.apache.maven:maven-ant-tasks:2.1.3" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/apache/maven/maven-ant-tasks/2.1.3/maven-ant-tasks-2.1.3.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="2.1.3" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="ant" />
+                <option name="groupId" value="org.apache.ant" />
+                <option name="libName" value="Maven: org.apache.ant:ant:1.8.0" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/apache/ant/ant/1.8.0/ant-1.8.0.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="1.8.0" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="ant-launcher" />
+                <option name="groupId" value="org.apache.ant" />
+                <option name="libName" value="Maven: org.apache.ant:ant-launcher:1.8.0" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/apache/ant/ant-launcher/1.8.0/ant-launcher-1.8.0.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="1.8.0" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="classworlds" />
+                <option name="groupId" value="classworlds" />
+                <option name="libName" value="Maven: classworlds:classworlds:1.1-alpha-2" />
+                <option name="path" value="$MAVEN_REPOSITORY$/classworlds/classworlds/1.1-alpha-2/classworlds-1.1-alpha-2.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="1.1-alpha-2" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="plexus-container-default" />
+                <option name="groupId" value="org.codehaus.plexus" />
+                <option name="libName" value="Maven: org.codehaus.plexus:plexus-container-default:1.0-alpha-9-stable-1" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/codehaus/plexus/plexus-container-default/1.0-alpha-9-stable-1/plexus-container-default-1.0-alpha-9-stable-1.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="1.0-alpha-9-stable-1" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="plexus-utils" />
+                <option name="groupId" value="org.codehaus.plexus" />
+                <option name="libName" value="Maven: org.codehaus.plexus:plexus-utils:1.5.15" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/codehaus/plexus/plexus-utils/1.5.15/plexus-utils-1.5.15.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="1.5.15" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="plexus-interpolation" />
+                <option name="groupId" value="org.codehaus.plexus" />
+                <option name="libName" value="Maven: org.codehaus.plexus:plexus-interpolation:1.11" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/codehaus/plexus/plexus-interpolation/1.11/plexus-interpolation-1.11.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="1.11" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="maven-artifact" />
+                <option name="groupId" value="org.apache.maven" />
+                <option name="libName" value="Maven: org.apache.maven:maven-artifact:2.2.1" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/apache/maven/maven-artifact/2.2.1/maven-artifact-2.2.1.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="2.2.1" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="maven-artifact-manager" />
+                <option name="groupId" value="org.apache.maven" />
+                <option name="libName" value="Maven: org.apache.maven:maven-artifact-manager:2.2.1" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/apache/maven/maven-artifact-manager/2.2.1/maven-artifact-manager-2.2.1.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="2.2.1" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="maven-repository-metadata" />
+                <option name="groupId" value="org.apache.maven" />
+                <option name="libName" value="Maven: org.apache.maven:maven-repository-metadata:2.2.1" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/apache/maven/maven-repository-metadata/2.2.1/maven-repository-metadata-2.2.1.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="2.2.1" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="wagon-provider-api" />
+                <option name="groupId" value="org.apache.maven.wagon" />
+                <option name="libName" value="Maven: org.apache.maven.wagon:wagon-provider-api:1.0-beta-6" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/apache/maven/wagon/wagon-provider-api/1.0-beta-6/wagon-provider-api-1.0-beta-6.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="1.0-beta-6" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="backport-util-concurrent" />
+                <option name="groupId" value="backport-util-concurrent" />
+                <option name="libName" value="Maven: backport-util-concurrent:backport-util-concurrent:3.1" />
+                <option name="path" value="$MAVEN_REPOSITORY$/backport-util-concurrent/backport-util-concurrent/3.1/backport-util-concurrent-3.1.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="3.1" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="maven-model" />
+                <option name="groupId" value="org.apache.maven" />
+                <option name="libName" value="Maven: org.apache.maven:maven-model:2.2.1" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/apache/maven/maven-model/2.2.1/maven-model-2.2.1.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="2.2.1" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="maven-project" />
+                <option name="groupId" value="org.apache.maven" />
+                <option name="libName" value="Maven: org.apache.maven:maven-project:2.2.1" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/apache/maven/maven-project/2.2.1/maven-project-2.2.1.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="2.2.1" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="maven-settings" />
+                <option name="groupId" value="org.apache.maven" />
+                <option name="libName" value="Maven: org.apache.maven:maven-settings:2.2.1" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/apache/maven/maven-settings/2.2.1/maven-settings-2.2.1.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="2.2.1" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="maven-profile" />
+                <option name="groupId" value="org.apache.maven" />
+                <option name="libName" value="Maven: org.apache.maven:maven-profile:2.2.1" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/apache/maven/maven-profile/2.2.1/maven-profile-2.2.1.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="2.2.1" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="maven-plugin-registry" />
+                <option name="groupId" value="org.apache.maven" />
+                <option name="libName" value="Maven: org.apache.maven:maven-plugin-registry:2.2.1" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/apache/maven/maven-plugin-registry/2.2.1/maven-plugin-registry-2.2.1.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="2.2.1" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="maven-error-diagnostics" />
+                <option name="groupId" value="org.apache.maven" />
+                <option name="libName" value="Maven: org.apache.maven:maven-error-diagnostics:2.2.1" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/apache/maven/maven-error-diagnostics/2.2.1/maven-error-diagnostics-2.2.1.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="2.2.1" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="wagon-file" />
+                <option name="groupId" value="org.apache.maven.wagon" />
+                <option name="libName" value="Maven: org.apache.maven.wagon:wagon-file:1.0-beta-6" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/apache/maven/wagon/wagon-file/1.0-beta-6/wagon-file-1.0-beta-6.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="1.0-beta-6" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="wagon-http-lightweight" />
+                <option name="groupId" value="org.apache.maven.wagon" />
+                <option name="libName" value="Maven: org.apache.maven.wagon:wagon-http-lightweight:1.0-beta-6" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/apache/maven/wagon/wagon-http-lightweight/1.0-beta-6/wagon-http-lightweight-1.0-beta-6.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="1.0-beta-6" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="wagon-http-shared" />
+                <option name="groupId" value="org.apache.maven.wagon" />
+                <option name="libName" value="Maven: org.apache.maven.wagon:wagon-http-shared:1.0-beta-6" />
+                <option name="path" value="$MAVEN_REPOSITORY$/org/apache/maven/wagon/wagon-http-shared/1.0-beta-6/wagon-http-shared-1.0-beta-6.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="1.0-beta-6" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="xercesMinimal" />
+                <option name="groupId" value="nekohtml" />
+                <option name="libName" value="Maven: nekohtml:xercesMinimal:1.9.6.2" />
+                <option name="path" value="$MAVEN_REPOSITORY$/nekohtml/xercesMinimal/1.9.6.2/xercesMinimal-1.9.6.2.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="1.9.6.2" />
+              </MavenDependencyInfo>
+              <MavenDependencyInfo>
+                <option name="artifactId" value="nekohtml" />
+                <option name="groupId" value="nekohtml" />
+                <option name="libName" value="Maven: nekohtml:nekohtml:1.9.6.2" />
+                <option name="path" value="$MAVEN_REPOSITORY$/nekohtml/nekohtml/1.9.6.2/nekohtml-1.9.6.2.jar" />
+                <option name="scope" value="test" />
+                <option name="type" value="jar" />
+                <option name="version" value="1.9.6.2" />
+              </MavenDependencyInfo>
+            </dependencies>
+          </resolved-info>
+        </value>
+      </entry>
+    </resolved-infos>
+  </component>
   <component name="AndroidLayoutPreviewToolWindow">
     <option name="state">
       <GlobalState>
@@ -59,33 +516,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac29e572-50bf-4121-b2c4-6f74c649a384" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_android_android_4_1_1_4.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/deviceinfo-app/res/layout/content_frame.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/deviceinfo-app/res/values/dimens.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/deviceinfo-app/res/layout/list.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/deviceinfo-app/res/layout/menu_frame.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/deviceinfo-app/res/layout/responsive_content_frame.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/deviceinfo-app/res/layout/row.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/deviceinfo-app/res/drawable/shadow.xml" />
-      <change type="DELETED" beforePath="D:\programming\android-device\.idea\libraries\android_support_v4.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\deviceinfo-app\lib\FlurryAnalytics-4.1.0.jar" afterPath="" />
-      <change type="DELETED" beforePath="D:\programming\android-device\deviceinfo-app\lib\Parse-1.5.1.jar" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ActionBarSherlock" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/deviceinfo-app/res/drawable/indicator.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/deviceinfo-app/res/menu/main.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/deviceinfo-app/res/drawable/new_indicator.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/deviceinfo-app/res/values/styles.xml" />
+      <change type="DELETED" beforePath="D:\programming\android-device\.idea\libraries\Maven__com_actionbarsherlock_actionbarsherlock_4_4_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="D:\programming\android-device\.idea\libraries\android_support_v4__2_.xml" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SlidingMenu" afterPath="$PROJECT_DIR$/SlidingMenu" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jar/deviceinfo-lib.jar" afterPath="$PROJECT_DIR$/jar/deviceinfo-lib.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo-tests/AndroidManifest.xml" afterPath="$PROJECT_DIR$/deviceinfo-tests/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/FlurryAnalytics_4_1_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/FlurryAnalytics_4_1_0.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitmodules" afterPath="$PROJECT_DIR$/.gitmodules" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo-app/AndroidManifest.xml" afterPath="$PROJECT_DIR$/deviceinfo-app/AndroidManifest.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/MainActivity.java" afterPath="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Parse_1_5_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Parse_1_5_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/android_support_v4__2_.xml" afterPath="$PROJECT_DIR$/.idea/libraries/android_support_v4__2_.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo-app/deviceinfo-app.iml" afterPath="$PROJECT_DIR$/deviceinfo-app/deviceinfo-app.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo-lib/deviceinfo-lib.iml" afterPath="$PROJECT_DIR$/deviceinfo-lib/deviceinfo-lib.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo-tests/deviceinfo-tests.iml" afterPath="$PROJECT_DIR$/deviceinfo-tests/deviceinfo-tests.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo.iml" afterPath="$PROJECT_DIR$/deviceinfo.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo-app/pom.xml" afterPath="$PROJECT_DIR$/deviceinfo-app/pom.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deviceinfo-app/project.properties" afterPath="$PROJECT_DIR$/deviceinfo-app/project.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
@@ -156,107 +605,24 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="2482">
-              <caret line="28" column="24" selection-start-line="28" selection-start-column="24" selection-end-line="28" selection-end-column="24" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainActivity.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/MainActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5889146" vertical-offset="0" max-vertical-offset="2448">
-              <caret line="15" column="34" selection-start-line="15" selection-start-column="34" selection-end-line="15" selection-end-column="34" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/deviceinfo-app/pom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="460" max-vertical-offset="1343">
-              <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SlidingMenu/library/pom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1292">
-              <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="48" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/deviceinfo-lib/pom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1377">
-              <caret line="14" column="28" selection-start-line="13" selection-start-column="33" selection-end-line="14" selection-end-column="28" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SlidingMenu/pom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1819">
-              <caret line="21" column="19" selection-start-line="21" selection-start-column="19" selection-end-line="21" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CustomViewAbove.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SlidingMenu/library/src/com/jeremyfeinstein/slidingmenu/lib/CustomViewAbove.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="357" max-vertical-offset="16473">
-              <caret line="43" column="65" selection-start-line="43" selection-start-column="65" selection-end-line="43" selection-end-column="65" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1689#1690#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="dimens.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/deviceinfo-app/res/values/dimens.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510">
-              <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SlidingFragmentActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SlidingMenu/library/src/com/jeremyfeinstein/slidingmenu/lib/app/SlidingFragmentActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2278">
-              <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="AndroidManifest.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SlidingMenu/library/AndroidManifest.xml">
+        <entry file="file://$PROJECT_DIR$/deviceinfo-app/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="272">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="340" max-vertical-offset="612">
+              <caret line="20" column="85" selection-start-line="20" selection-start-column="85" selection-end-line="20" selection-end-column="85" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SlidingListActivity.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/SlidingMenu/library/src/com/jeremyfeinstein/slidingmenu/lib/app/SlidingListActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.22516556" vertical-offset="306" max-vertical-offset="2482">
+              <caret line="30" column="64" selection-start-line="30" selection-start-column="64" selection-end-line="30" selection-end-column="64" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -281,14 +647,16 @@
       <MyDateState />
     </option>
   </component>
+  <component name="GradleLocalSettings">
+    <option name="modificationStamps">
+      <map>
+        <entry key="$PROJECT_DIR$/../android-bootstrap" value="4218428125824" />
+      </map>
+    </option>
+  </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/fragments/list/vertical/DeviceInfoItem.java" />
-        <option value="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/utils/JSONUtils.java" />
-        <option value="$PROJECT_DIR$/deviceinfo-lib/src/net/kibotu/android/deviceinfo/UncaughtExceptionHandlerDecorator.java" />
-        <option value="$PROJECT_DIR$/../kibotu.github.io/index.html" />
-        <option value="$PROJECT_DIR$/../sandbox/unity/server/ChatServer/public/javascripts/code.js" />
         <option value="$PROJECT_DIR$/../kibotu.github.io/javascripts/main.js" />
         <option value="$PROJECT_DIR$/javascripts/main.js" />
         <option value="$PROJECT_DIR$/deviceinfo-lib/AndroidManifest.xml" />
@@ -314,7 +682,6 @@
         <option value="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/utils/Utils.java" />
         <option value="$PROJECT_DIR$/deviceinfo-app/res/layout/sim.xml" />
         <option value="$PROJECT_DIR$/.travis.yml" />
-        <option value="$PROJECT_DIR$/deviceinfo-app/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/deviceinfo-lib/src/net/kibotu/android/deviceinfo/Proxy.java" />
         <option value="$PROJECT_DIR$/deviceinfo-lib/src/net/kibotu/android/deviceinfo/Device.java" />
         <option value="$PROJECT_DIR$/deviceinfo-lib/src/net/kibotu/android/deviceinfo/ProxySettings.java" />
@@ -332,28 +699,23 @@
         <option value="$PROJECT_DIR$/SlidingMenu/library/src/com/jeremyfeinstein/slidingmenu/lib/app/SlidingPreferenceActivity.java" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/deviceinfo-app/res/menu/main.xml" />
+        <option value="$PROJECT_DIR$/SlidingMenu/library/res/values/styles.xml" />
+        <option value="$PROJECT_DIR$/deviceinfo-app/res/values/styles.xml" />
         <option value="$PROJECT_DIR$/SlidingMenu/library/pom.xml" />
+        <option value="$USER_HOME$/.IntelliJIdea13/system/compile-server/deviceinfo_9bf2eb86/android/preprocessed_manifest/deviceinfo-app/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/deviceinfo-app/pom.xml" />
         <option value="$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/MainActivity.java" />
+        <option value="$PROJECT_DIR$/ActionBarSherlock/actionbarsherlock-samples/demos/src/com/actionbarsherlock/sample/demos/ActionModesNoActionBar.java" />
+        <option value="$PROJECT_DIR$/deviceinfo-app/AndroidManifest.xml" />
       </list>
     </option>
   </component>
   <component name="MavenImportPreferences">
-    <option name="generalSettings">
-      <MavenGeneralSettings>
-        <option name="mavenHome" value="C:\maven\apache-maven-3.2.2" />
-        <option name="usePluginRegistry" value="true" />
-      </MavenGeneralSettings>
-    </option>
     <option name="importingSettings">
       <MavenImportingSettings>
         <option name="importAutomatically" value="true" />
       </MavenImportingSettings>
-    </option>
-    <option name="enabledProfiles">
-      <list>
-        <option value="sonatype-oss-release" />
-      </list>
     </option>
   </component>
   <component name="MavenProjectNavigator">
@@ -422,6 +784,124 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="android-device" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="android-device" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo-app" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="android-device" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo-app" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="android-device" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo-app" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="android-device" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo-app" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="values" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="android-device" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo-app" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="menu" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="PackagesPane">
         <subPane>
           <PATH>
@@ -557,254 +1037,6 @@
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android-device" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android-device" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SlidingMenu" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android-device" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SlidingMenu" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="library" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android-device" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo-lib" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android-device" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo-app" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android-device" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo-app" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android-device" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo-app" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="values-en" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android-device" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo-app" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android-device" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo-app" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="values" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android-device" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo-app" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="menu" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android-device" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo-app" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="layout" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android-device" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo-app" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libs" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android-device" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo-app" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gen" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deviceinfo" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -819,53 +1051,33 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/ActionBarSherlock/actionbarsherlock/pom.xml" />
     <property name="FullScreen" value="false" />
-    <property name="options.lastSelected" value="reference.settings.project.maven.importing" />
-    <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="options.splitter.details.proportions" value="0.2" />
-    <property name="options.searchVisible" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/SlidingMenu/library" />
-    <property name="restartRequiresConfirmation" value="true" />
-    <property name="LayoutCode.rearrangeEntriesJava" value="false" />
-    <property name="LayoutCode.rearrangeEntries" value="false" />
-    <property name="OverrideImplement.combined" value="true" />
-    <property name="OverrideImplement.overriding.sorted" value="false" />
-    <property name="last_directory_selection" value="$PROJECT_DIR$/deviceinfo-lib/src/net/kibotu/android/deviceinfo" />
-    <property name="ExportedModule" value="deviceinfo-app" />
-    <property name="ExportedApkPath" value="D:\programming\android-device\jar\deviceinfo-app.apk" />
-    <property name="AndroidRunProguardForReleaseBuild" value="false" />
-    <property name="GenerateAntBuildDialog.generateSingleFile" value="false" />
-    <property name="GenerateAntBuildDialog.enableUiFormCompile" value="true" />
-    <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
-    <property name="GenerateAntBuildDialog.backupFiles" value="true" />
-    <property name="GenerateAntBuildDialog.inclineRuntiemClasspath" value="false" />
-    <property name="GenerateAntBuildDialog.generateIdeaHomeProperty" value="false" />
-    <property name="GenerateAntBuildDialog.outputFileNameProperty" value="deviceinfo" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="net.kibotu.android.deviceinfo.fragments.list" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\programming\android-device\deviceinfo-app\lib" />
-      <recent name="D:\programming\android-device\deviceinfo-app\res" />
-      <recent name="D:\programming\android-device\deviceinfo-app\res\layout" />
-      <recent name="D:\programming\android-device\deviceinfo-app\res\values-en" />
-      <recent name="D:\programming\android-device\deviceinfo-app\res\values-de" />
+      <recent name="D:\programming\android-device\deviceinfo-app\res\values" />
+      <recent name="D:\programming\android-device\deviceinfo-app\res\drawable" />
+      <recent name="D:\programming\android-device\SlidingMenu\library\res\drawable" />
+      <recent name="D:\programming\android-device\SlidingMenu\library\res\values" />
+      <recent name="D:\programming\android-device\deviceinfo-app\res\values\drawable" />
     </key>
     <key name="CreateClassDialog.RecentsKey">
       <recent name="net.kibotu.android.deviceinfo.fragments.list" />
     </key>
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="net.kibotu.android.deviceinfo" />
-      <recent name="net.kibotu.android.deviceinfo.test" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\programming\android-device\SlidingMenu\library\res\drawable" />
+      <recent name="D:\programming\android-device\deviceinfo-app\res\values" />
       <recent name="D:\programming\android-device\deviceinfo-app\res\drawable-nodpi" />
       <recent name="D:\programming\android-device\deviceinfo-lib\res\values" />
       <recent name="D:\programming\android-device\deviceinfo-app\res\drawable" />
-      <recent name="D:\programming\android-device\deviceinfo-app\lib" />
-      <recent name="D:\programming\android-device\deviceinfo-app\res\values" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="net.kibotu.android.deviceinfo" />
+      <recent name="net.kibotu.android.deviceinfo.test" />
     </key>
   </component>
   <component name="RunManager" selected="Android Application.DeviceInfo USB">
@@ -1131,7 +1343,7 @@
       <option name="ACTIVITY_CLASS" value="" />
       <option name="MODE" value="default_activity" />
       <option name="DEPLOY" value="true" />
-      <option name="ARTIFACT_NAME" value="deviceinfo-app" />
+      <option name="ARTIFACT_NAME" value="" />
       <option name="TARGET_SELECTION_MODE" value="USB_DEVICE" />
       <option name="USE_LAST_SELECTED_DEVICE" value="false" />
       <option name="PREFERRED_AVD" value="" />
@@ -1146,12 +1358,7 @@
       <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
       <RunnerSettings RunnerId="AndroidDebugRunner" />
       <ConfigurationWrapper RunnerId="AndroidDebugRunner" />
-      <method>
-        <option name="Make" enabled="false" />
-        <option name="BuildArtifacts" enabled="true">
-          <artifact name="deviceinfo-app" />
-        </option>
-      </method>
+      <method />
     </configuration>
     <configuration default="false" name="All Tests" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
       <module name="deviceinfo-tests" />
@@ -1277,12 +1484,22 @@
       <workItem from="1406224292619" duration="8655000" />
       <workItem from="1406234974708" duration="409000" />
       <workItem from="1406235872532" duration="1902000" />
-      <workItem from="1406237815830" duration="1567000" />
+      <workItem from="1406237815830" duration="5244000" />
+      <workItem from="1406243151042" duration="1041000" />
+      <workItem from="1406244238876" duration="249000" />
+      <workItem from="1406244495214" duration="309000" />
+      <workItem from="1406244820172" duration="177000" />
+      <workItem from="1406245017997" duration="23000" />
+      <workItem from="1406245088601" duration="56000" />
+      <workItem from="1406245146833" duration="306000" />
+      <workItem from="1406245454919" duration="42000" />
+      <workItem from="1406245499369" duration="1015000" />
+      <workItem from="1406246534980" duration="130000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="378962000" />
+    <option name="totallyTimeSpent" value="385987000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1311,7 +1528,6 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21734476" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32942432" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1319,7 +1535,7 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3993576" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.15458423" sideWeight="0.42719486" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.48171368" sideWeight="0.5" order="14" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25910065" sideWeight="0.5" order="14" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32942432" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.15458423" sideWeight="0.42719486" order="4" side_tool="true" content_ui="tabs" />
@@ -1328,16 +1544,17 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32976446" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17697228" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16950959" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17110874" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15618336" sideWeight="0.57280517" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4817987" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.48072806" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Documentation" active="true" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" x="92" y="122" width="1736" height="866" />
       <window_info id="Maven Repo Search" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32976446" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39978677" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1369,146 +1586,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/fragments/list/vertical/IGetInfoFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="170">
-          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deviceinfo-lib/src/net/kibotu/android/deviceinfo/JsonParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6163142" vertical-offset="0" max-vertical-offset="833">
-          <caret line="41" column="36" selection-start-line="41" selection-start-column="36" selection-end-line="41" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deviceinfo-lib/src/net/kibotu/android/deviceinfo/Battery.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2295">
-          <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/google/android/android/2.3.3/android-2.3.3-sources.jar!/android/bluetooth/BluetoothDevice.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="714">
-          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="29" selection-end-column="118" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deviceinfo-lib/src/net/kibotu/android/deviceinfo/Bluetooth.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="318" max-vertical-offset="1224">
-          <caret line="58" column="0" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/fragments/menu/MenuAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="425">
-          <caret line="19" column="79" selection-start-line="19" selection-start-column="79" selection-end-line="19" selection-end-column="79" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/fragments/menu/MenuFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="148" max-vertical-offset="1054">
-          <caret line="57" column="39" selection-start-line="57" selection-start-column="39" selection-end-line="58" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/fragments/menu/MenuItem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="289">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Libraries/raw/SlidingMenu/library/res/layout/row.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.07962529" vertical-offset="0" max-vertical-offset="854">
-          <caret line="4" column="47" selection-start-line="4" selection-start-column="47" selection-end-line="4" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deviceinfo-app/res/values-en/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.03859251" vertical-offset="0" max-vertical-offset="881">
-          <caret line="2" column="28" selection-start-line="2" selection-start-column="28" selection-end-line="2" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deviceinfo-app/res/values-de/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.03859251" vertical-offset="0" max-vertical-offset="881">
-          <caret line="2" column="28" selection-start-line="2" selection-start-column="28" selection-end-line="2" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Libraries/raw/SlidingMenu/library/res/drawable/shadow.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.15437004" vertical-offset="0" max-vertical-offset="881">
-          <caret line="8" column="8" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Libraries/raw/SlidingMenu/library/src/com/jeremyfeinstein/slidingmenu/lib/SlidingMenu.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.49337748" vertical-offset="14258" max-vertical-offset="15623">
-          <caret line="978" column="0" selection-start-line="978" selection-start-column="0" selection-end-line="978" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/google/android/android/2.3.3/android-2.3.3-sources.jar!/android/R.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="13022" max-vertical-offset="20162">
-          <caret line="781" column="16" selection-start-line="781" selection-start-column="8" selection-end-line="781" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deviceinfo-app/res/layout/sim.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="782">
-          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deviceinfo-lib/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
-          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/utils/Utils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="6395" max-vertical-offset="11339">
-          <caret line="427" column="46" selection-start-line="427" selection-start-column="38" selection-end-line="427" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deviceinfo-lib/src/net/kibotu/android/deviceinfo/Device.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="14391" max-vertical-offset="30498">
-          <caret line="944" column="5" selection-start-line="944" selection-start-column="5" selection-end-line="944" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deviceinfo-lib/src/net/kibotu/android/deviceinfo/ProxySettings.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1139">
-          <caret line="10" column="22" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../android-maven-example/.travis.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.70640177" vertical-offset="57" max-vertical-offset="986">
@@ -1523,14 +1600,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/deviceinfo-app/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="187">
-          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/deviceinfo-app/res/drawable/shadow.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="664">
@@ -1542,7 +1611,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="170">
           <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1560,19 +1628,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/actionbarsherlock/actionbarsherlock/4.4.0/actionbarsherlock-4.4.0-sources.jar!/com/actionbarsherlock/app/SherlockFragmentActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4573">
-          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/Registry.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="14479" max-vertical-offset="16184">
           <caret line="1040" column="21" selection-start-line="1040" selection-start-column="21" selection-end-line="1040" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1580,23 +1639,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1751">
           <caret line="15" column="44" selection-start-line="15" selection-start-column="44" selection-end-line="15" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SlidingMenu/library/src/com/jeremyfeinstein/slidingmenu/lib/SlidingMenu.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="5584" max-vertical-offset="15385">
-          <caret line="380" column="14" selection-start-line="380" selection-start-column="14" selection-end-line="380" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SlidingMenu/library/src/com/jeremyfeinstein/slidingmenu/lib/app/SlidingActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2278">
-          <caret line="11" column="51" selection-start-line="11" selection-start-column="51" selection-end-line="11" selection-end-column="51" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1604,61 +1646,158 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1309">
           <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2975496" vertical-offset="0" max-vertical-offset="857">
+          <caret line="15" column="31" selection-start-line="15" selection-start-column="31" selection-end-line="15" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/google/android/android/4.1.1.4/android-4.1.1.4-sources.jar!/android/animation/TimeInterpolator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.02652106" vertical-offset="0" max-vertical-offset="641">
+          <caret line="1" column="17" selection-start-line="1" selection-start-column="17" selection-end-line="1" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/google/android/android/4.1.1.4/android-4.1.1.4-sources.jar!/android/view/animation/Interpolator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.05304212" vertical-offset="0" max-vertical-offset="641">
+          <caret line="2" column="38" selection-start-line="2" selection-start-column="38" selection-end-line="2" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deviceinfo-lib/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1377">
+          <caret line="14" column="28" selection-start-line="13" selection-start-column="33" selection-end-line="14" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.34654588" vertical-offset="170" max-vertical-offset="2482">
+          <caret line="28" column="24" selection-start-line="28" selection-start-column="24" selection-end-line="28" selection-end-column="24" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deviceinfo-app/res/values/dimens.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.43156734" vertical-offset="0" max-vertical-offset="906">
+          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SlidingMenu/library/src/com/jeremyfeinstein/slidingmenu/lib/app/SlidingActivityHelper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="612" max-vertical-offset="3434">
-          <caret line="73" column="31" selection-start-line="73" selection-start-column="31" selection-end-line="73" selection-end-column="31" />
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="3434">
+          <caret line="32" column="46" selection-start-line="32" selection-start-column="46" selection-end-line="32" selection-end-column="46" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SlidingMenu/library/src/com/jeremyfeinstein/slidingmenu/lib/app/SlidingListActivity.java">
+    <entry file="file://$PROJECT_DIR$/SlidingMenu/library/src/com/jeremyfeinstein/slidingmenu/lib/CustomViewAbove.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2346">
-          <caret line="12" column="62" selection-start-line="12" selection-start-column="62" selection-end-line="12" selection-end-column="62" />
-          <folding />
+        <state vertical-scroll-proportion="0.28145695" vertical-offset="6460" max-vertical-offset="16439">
+          <caret line="431" column="26" selection-start-line="431" selection-start-column="16" selection-end-line="431" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SlidingMenu/library/src/com/jeremyfeinstein/slidingmenu/lib/app/SlidingPreferenceActivity.java">
+    <entry file="file://$PROJECT_DIR$/SlidingMenu/library/src/com/jeremyfeinstein/slidingmenu/lib/app/SlidingActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2261">
-          <caret line="11" column="74" selection-start-line="11" selection-start-column="74" selection-end-line="11" selection-end-column="74" />
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2278">
+          <caret line="11" column="51" selection-start-line="11" selection-start-column="51" selection-end-line="11" selection-end-column="51" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
+    <entry file="file://$PROJECT_DIR$/deviceinfo-app/res/menu/menu.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2975496" vertical-offset="0" max-vertical-offset="857">
-          <caret line="15" column="31" selection-start-line="15" selection-start-column="31" selection-end-line="15" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="MarkdownPreviewEditor">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deviceinfo-app/res/layout/menu_frame.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="614">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="906">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/deviceinfo-app/AndroidManifest.xml">
+    <entry file="file://$PROJECT_DIR$/deviceinfo-app/res/menu/main.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="595">
-          <caret line="10" column="69" selection-start-line="10" selection-start-column="69" selection-end-line="10" selection-end-column="69" />
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="170">
+          <caret line="4" column="7" selection-start-line="4" selection-start-column="7" selection-end-line="4" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SlidingMenu/library/src/com/jeremyfeinstein/slidingmenu/lib/app/SlidingFragmentActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1313" max-vertical-offset="2278">
+          <caret line="110" column="16" selection-start-line="110" selection-start-column="16" selection-end-line="110" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SlidingMenu/example/src/com/jeremyfeinstein/slidingmenu/example/BaseActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="182" max-vertical-offset="1088">
+          <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="52" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/actionbarsherlock/actionbarsherlock/4.4.0/actionbarsherlock-4.4.0-sources.jar!/com/actionbarsherlock/app/SherlockFragmentActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4573">
+          <caret line="40" column="21" selection-start-line="40" selection-start-column="21" selection-end-line="40" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deviceinfo-app/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="187">
+          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deviceinfo-app/ant.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.43524095" vertical-offset="0" max-vertical-offset="664">
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SlidingMenu/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="816" max-vertical-offset="1819">
+          <caret line="76" column="39" selection-start-line="75" selection-start-column="37" selection-end-line="76" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deviceinfo-app/res/drawable/new_indicator.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="664">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deviceinfo-app/res/drawable/indicator.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SlidingMenu/library/res/layout/slidingmenumain.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="170">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SlidingMenu/library/res/values/attrs.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="884">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1670,101 +1809,153 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SlidingMenu/library/src/com/jeremyfeinstein/slidingmenu/lib/app/SlidingFragmentActivity.java">
+    <entry file="file://$PROJECT_DIR$/deviceinfo-app/build.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2278">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1666">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/google/android/android/4.1.1.4/android-4.1.1.4-sources.jar!/android/animation/TimeInterpolator.java">
+    <entry file="file://$PROJECT_DIR$/SlidingMenu/library/src/com/jeremyfeinstein/slidingmenu/lib/SlidingMenu.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.02652106" vertical-offset="0" max-vertical-offset="641">
-          <caret line="1" column="17" selection-start-line="1" selection-start-column="17" selection-end-line="1" selection-end-column="17" />
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="15385">
+          <caret line="35" column="42" selection-start-line="35" selection-start-column="28" selection-end-line="35" selection-end-column="42" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/google/android/android/4.1.1.4/android-4.1.1.4-sources.jar!/android/view/animation/Interpolator.java">
+    <entry file="file://$PROJECT_DIR$/SlidingMenu/library/src/com/jeremyfeinstein/slidingmenu/lib/app/SlidingPreferenceActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.05304212" vertical-offset="0" max-vertical-offset="641">
-          <caret line="2" column="38" selection-start-line="2" selection-start-column="38" selection-end-line="2" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SlidingMenu/library/src/com/jeremyfeinstein/slidingmenu/lib/CustomViewAbove.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="357" max-vertical-offset="16473">
-          <caret line="43" column="65" selection-start-line="43" selection-start-column="65" selection-end-line="43" selection-end-column="65" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1689#1690#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deviceinfo-app/gen/net/kibotu/android/deviceinfo/R.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.1326053" vertical-offset="0" max-vertical-offset="641">
-          <caret line="5" column="19" selection-start-line="5" selection-start-column="19" selection-end-line="5" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deviceinfo-app/res/values/dimens.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510">
-          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="2482">
-          <caret line="28" column="24" selection-start-line="28" selection-start-column="24" selection-end-line="28" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SlidingMenu/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1819">
-          <caret line="21" column="19" selection-start-line="21" selection-start-column="19" selection-end-line="21" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deviceinfo-lib/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1377">
-          <caret line="14" column="28" selection-start-line="13" selection-start-column="33" selection-end-line="14" selection-end-column="28" />
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="391" max-vertical-offset="2380">
+          <caret line="42" column="40" selection-start-line="42" selection-start-column="40" selection-end-line="42" selection-end-column="40" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SlidingMenu/library/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1292">
-          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="48" />
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="636" max-vertical-offset="1530">
+          <caret line="78" column="81" selection-start-line="78" selection-start-column="11" selection-end-line="78" selection-end-column="81" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.IntelliJIdea13/system/compile-server/deviceinfo_9bf2eb86/android/preprocessed_manifest/deviceinfo-app/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="476">
+          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ActionBarSherlock/actionbarsherlock/res/values/abs__themes.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334" vertical-offset="2418" max-vertical-offset="3621">
+          <caret line="160" column="17" selection-start-line="160" selection-start-column="17" selection-end-line="160" selection-end-column="17" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/deviceinfo-app/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="460" max-vertical-offset="1343">
-          <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="675" max-vertical-offset="1581">
+          <caret line="58" column="19" selection-start-line="58" selection-start-column="19" selection-end-line="58" selection-end-column="19" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deviceinfo-app/res/layout/menu_frame.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="879">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deviceinfo-app/res/values/styles.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="238">
+          <caret line="5" column="77" selection-start-line="5" selection-start-column="77" selection-end-line="5" selection-end-column="77" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ActionBarSherlock/actionbarsherlock-samples/demos/src/com/actionbarsherlock/sample/demos/ActionModesNoActionBar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="22" max-vertical-offset="1462">
+          <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ActionBarSherlock/actionbarsherlock-samples/demos/src/com/actionbarsherlock/sample/demos/FeatureToggles.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="217" max-vertical-offset="3859">
+          <caret line="38" column="8" selection-start-line="38" selection-start-column="8" selection-end-line="38" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ActionBarSherlock/actionbarsherlock-samples/demos/src/com/actionbarsherlock/sample/demos/Overlay.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3978">
+          <caret line="26" column="8" selection-start-line="26" selection-start-column="8" selection-end-line="26" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SlidingMenu/example/proguard/mapping.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33274022" vertical-offset="37842" max-vertical-offset="103207">
+          <caret line="2237" column="9" selection-start-line="2237" selection-start-column="9" selection-end-line="2237" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ActionBarSherlock/actionbarsherlock-samples/demos/src/com/actionbarsherlock/sample/demos/Progress.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.50056624" vertical-offset="0" max-vertical-offset="883">
+          <caret line="48" column="74" selection-start-line="48" selection-start-column="74" selection-end-line="48" selection-end-column="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ActionBarSherlock/actionbarsherlock-samples/demos/src/com/actionbarsherlock/sample/demos/IndeterminateProgress.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.24392936" vertical-offset="0" max-vertical-offset="906">
+          <caret line="31" column="8" selection-start-line="31" selection-start-column="8" selection-end-line="31" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/deviceinfo-app/src/net/kibotu/android/deviceinfo/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5889146" vertical-offset="0" max-vertical-offset="2448">
-          <caret line="15" column="34" selection-start-line="15" selection-start-column="34" selection-end-line="15" selection-end-column="34" />
+        <state vertical-scroll-proportion="0.45033112" vertical-offset="119" max-vertical-offset="2618">
+          <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ActionBarSherlock/CHANGELOG.md">
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.19681457" vertical-offset="6729" max-vertical-offset="8704">
+          <caret line="406" column="69" selection-start-line="406" selection-start-column="69" selection-end-line="407" selection-end-column="78" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ActionBarSherlock/actionbarsherlock/src/com/actionbarsherlock/ActionBarSherlock.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2196468" vertical-offset="11412" max-vertical-offset="13073">
+          <caret line="720" column="19" selection-start-line="720" selection-start-column="19" selection-end-line="720" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deviceinfo-app/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="612">
+          <caret line="20" column="85" selection-start-line="20" selection-start-column="85" selection-end-line="20" selection-end-column="85" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SlidingMenu/library/src/com/jeremyfeinstein/slidingmenu/lib/app/SlidingListActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.22516556" vertical-offset="306" max-vertical-offset="2482">
+          <caret line="30" column="64" selection-start-line="30" selection-start-column="64" selection-end-line="30" selection-end-column="64" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1790,7 +1981,7 @@
       </state>
       <state key="FacetStructureConfigurable.UI">
         <settings>
-          <last-edited>Android (deviceinfo-app)|Android</last-edited>
+          <last-edited>Android</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -1802,7 +1993,6 @@
       </state>
       <state key="GlobalLibrariesConfigurable.UI">
         <settings>
-          <last-edited>Node.js v0.10.6 Core Modules</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -1814,7 +2004,7 @@
       </state>
       <state key="JdkListConfigurable.UI">
         <settings>
-          <last-edited>Android API 20, L preview Platform</last-edited>
+          <last-edited>1.7</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -1838,7 +2028,7 @@
       </state>
       <state key="ProjectJDKs.UI">
         <settings>
-          <last-edited>Maven Android API 10 Platform</last-edited>
+          <last-edited>1.7</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -1850,7 +2040,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>android-support-v4 (2)</last-edited>
+          <last-edited>Maven: com.android.support:support-v4:18.0.0</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -1864,10 +2054,10 @@
   </component>
   <component name="mavenExecuteGoalHistory">
     <option value="$PROJECT_DIR$" />
-    <option value="install -X" />
     <option value="android:clean" />
-    <option value="clean:clean" />
     <option value="clean" />
+    <option value="install -X" />
+    <option value="clean:clean" />
     <option value="package" />
     <option value="clean install" />
     <option value="dependency:list -X" />

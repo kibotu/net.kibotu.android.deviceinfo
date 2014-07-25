@@ -2,8 +2,10 @@ package net.kibotu.android.deviceinfo;
 
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
+import android.view.Window;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.flurry.android.FlurryAgent;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
@@ -13,7 +15,7 @@ import net.kibotu.android.error.tracking.JSONUtils;
 import net.kibotu.android.error.tracking.Logger;
 import org.json.JSONObject;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends SlidingFragmentActivity {
 
     public static SlidingMenu menu;
     private volatile MenuFragment arcList;
@@ -23,6 +25,7 @@ public class MainActivity extends FragmentActivity {
     @Override
     public void onStart() {
         super.onStart();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         FlurryAgent.onStartSession(this, appConfig.optString("flurryAgent"));
     }
 
@@ -42,7 +45,7 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
 
         // set theme
-        setTheme(PreferenceManager.getDefaultSharedPreferences(this).getInt(THEME_PREFERENCE, R.style.light_theme));
+//        setTheme(PreferenceManager.getDefaultSharedPreferences(this).getInt(THEME_PREFERENCE, R.style.light_theme));
 
         // load secrets
         appConfig = JSONUtils.loadJsonFromAssets(this, "app.json");
@@ -65,6 +68,7 @@ public class MainActivity extends FragmentActivity {
 
         // set the Above View
         setContentView(R.layout.content_frame);
+        setBehindContentView(R.layout.menu_frame);
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.content_frame, Registry.Build.getFragmentList())
@@ -77,7 +81,7 @@ public class MainActivity extends FragmentActivity {
         menu.setShadowDrawable(R.drawable.shadow);
         menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
         menu.setFadeDegree(0.35f);
-        menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
+        menu.attachToActivity(this, SlidingMenu.SLIDING_WINDOW);
         menu.setMenu(R.layout.menu_frame);
 
         getSupportFragmentManager()
@@ -91,6 +95,25 @@ public class MainActivity extends FragmentActivity {
         // time bomb
         Device.ACTIVATE_TB = false;
         Device.checkTimebombDialog();
+
+        setSlidingActionBarEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.github:
+                Logger.v("github");
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getSupportMenuInflater().inflate(R.menu.main, menu);
+        return true;
     }
 
     // region Option Menu

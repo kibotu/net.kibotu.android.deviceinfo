@@ -48,6 +48,14 @@
             <version>1.0.0</version>
         </dependency>
 
+        <!--<dependency>-->
+            <!--<groupId>com.actionbarsherlock</groupId>-->
+            <!--<artifactId>actionbarsherlock</artifactId>-->
+            <!--<version>4.4.0</version>-->
+            <!--<type>apklib</type>-->
+            <!--&lt;!&ndash;<scope>compile</scope>&ndash;&gt;-->
+        <!--</dependency>-->
+
     </dependencies>
 
     <repositories>
@@ -66,6 +74,12 @@
             <name>project</name>
             <url>file:${project.basedir}/SlidingMenu/library</url>
         </repository>
+
+        <!--<repository>-->
+            <!--<id>project.local</id>-->
+            <!--<name>project</name>-->
+            <!--<url>file:${project.basedir}/ActionBarSherlock/actionbarsherlock</url>-->
+        <!--</repository>-->
 
     </repositories>
 
