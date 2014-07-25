@@ -15,16 +15,6 @@
         <module>deviceinfo-tests</module>
     </modules>
 
-    <profiles>
-        <profile>
-            <id>ci</id>
-            <modules>
-                <module>deviceinfo-lib</module>
-                <module>deviceinfo-tests</module>
-            </modules>
-        </profile>
-    </profiles>
-
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -111,6 +101,15 @@
     </build>
 
     <profiles>
+
+        <profile>
+            <id>ci</id>
+            <modules>
+                <module>deviceinfo-lib</module>
+                <module>deviceinfo-tests</module>
+            </modules>
+        </profile>
+
         <!-- MSOURCES-13 related workaround overriding super-pom.
              http://blog.peterlynch.ca/2010/05/maven-how-to-prevent-generate-sources.html -->
         <profile>
