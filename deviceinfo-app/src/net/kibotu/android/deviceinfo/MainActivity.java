@@ -1,14 +1,9 @@
 package net.kibotu.android.deviceinfo;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewConfiguration;
-import android.widget.ImageButton;
-import com.actionbarsherlock.view.ActionProvider;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.flurry.android.FlurryAgent;
@@ -17,7 +12,6 @@ import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.SaveCallback;
-import net.kibotu.android.deviceinfo.fragments.list.vertical.DeviceInfoFragment;
 import net.kibotu.android.deviceinfo.fragments.list.vertical.DeviceInfoItem;
 import net.kibotu.android.deviceinfo.fragments.menu.MenuFragment;
 import net.kibotu.android.deviceinfo.utils.CustomWebView;
@@ -171,7 +165,8 @@ public class MainActivity extends SlidingFragmentActivity {
                 parseStoreDeviceInfoAsync(infos, new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        Logger.toast("Uploaded ObjectId: " + infos.getObjectId());
+                        String url = "http://kibotu.github.io/net.kibotu.android.deviceinfo/?device=";
+                        Logger.v("Viewable on: " + url + infos.getObjectId());
                     }
                 });
 
@@ -201,15 +196,16 @@ public class MainActivity extends SlidingFragmentActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                final JSONObject allInfo = new JSONObject();
                 for (final Registry topic : Registry.values()) {
                     final JSONObject registryItem = new JSONObject();
                     for (int i = 0; i < topic.getFragmentList().list.getCount(); ++i) {
                         final DeviceInfoItem item = topic.cachedList.list.getItem(i);
                         JSONUtils.safePutOpt(registryItem, item.keys != null ? item.keys : item.tag, item.value);
                     }
-                    Logger.v(topic.name() + ": " + registryItem);
-                    infos.put(topic.name(), ""+ registryItem);
+                    JSONUtils.safePutOpt(allInfo, topic.name(), "" + registryItem);
                 }
+                infos.put("deviceinfo", allInfo);
                 infos.saveEventually(cb);
             }
         }).start();

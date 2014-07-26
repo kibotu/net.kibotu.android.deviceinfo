@@ -15,8 +15,8 @@ import java.util.Comparator;
 
 public class DeviceInfoFragment extends ListFragment {
 
-    public DeviceInfoAdapter list;
-    private Context context;
+    public volatile DeviceInfoAdapter list;
+    private volatile Context context;
 
     public DeviceInfoFragment(Context context) {
         this.context = context;
