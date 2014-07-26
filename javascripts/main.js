@@ -183,7 +183,7 @@ $(document).ready(function () {
 
     var loadQrImage = function (params) {
 
-        var url = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + encodeURIComponent(window.location.pathname.substring(1) + (params ? '&' + params : ''));
+        var url = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + encodeURIComponent('http://kibotu.github.io/' + window.location.pathname.substring(1) + (params ? '&' + params : ''));
         console.log(url);
         $('#qrCode').html('<img src="' + url + '" />');
     };
