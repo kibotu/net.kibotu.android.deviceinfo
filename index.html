@@ -30,17 +30,18 @@
     <script src="javascripts/main.js"></script>
 
     <title>Android Device Information by kibotu</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
-<div id="container">
+<div id="container-fluid">
     <div class="inner">
 
         <header>
             <h3>Android Device Information</h3>
-
-            <!--<h2>Error Tracking</h2>-->
         </header>
+        <div id="qrCode"/>
 
         <!--<section id="downloads" class="clearfix">-->
         <!--<a href="https://github.com/kibotu/net.kibotu.android.deviceinfo/zipball/master" id="download-zip"-->
@@ -50,66 +51,74 @@
         <!--<a href="https://github.com/kibotu/net.kibotu.android.deviceinfo" id="view-on-github" class="button"><span>View on GitHub</span></a>-->
         <!--</section>-->
 
-        <hr>
+    </div>
 
-        <section id="main_content">
+    <hr>
 
-            <div class="panel panel-info">
+    <section id="main_content">
 
-                <div class="panel-heading"><strong>Error Tracking</strong></div>
-                <div class="panel-body">
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li class="active"><a href="#throwablesTab" role="tab" data-toggle="tab">Throwables</a></li>
-                        <li><a href="#stacktraceTab" role="tab" data-toggle="tab">StackTrace</a></li>
-                        <li><a href="#metaDataTab" role="tab" data-toggle="tab">MetaData</a></li>
+        <div id="deviceInfoAccordion"></div>
 
-                        <!--<li class="dropdown">-->
-                            <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">Timespan<span class="caret"></span></a>-->
-                            <!--<ul class="dropdown-menu" role="menu">-->
-                                <!--<li><a href="108000000">30 min</a></li>-->
-                                <!--<li><a href="216000000">1 hour</a></li>-->
-                                <!--<li><a href="5184000000">24 hour</a></li>-->
-                                <!--<li><a href="36288000000">1 week</a></li>-->
-                            <!--</ul>-->
-                        <!--</li>-->
+        <!-- info -->
 
-                    </ul>
+        <div class="panel panel-info" id="error-tracking">
 
-                    <div class="tab-content">
-                        <div class="tab-pane fade in active" id="throwablesTab">
+            <div class="panel-heading" id="pannelHeadingTitle"><strong>Error Tracking</strong></div>
+            <div class="panel-body">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist" id="mytabs">
 
-                            <ul class="list-group" id="throwables"></ul>
+                    <li class="active"><a href="#throwablesTab" role="tab" data-toggle="tab">Throwables</a></li>
+                    <li><a href="#stacktraceTab" role="tab" data-toggle="tab">StackTrace</a></li>
+                    <li><a href="#metaDataTab" role="tab" data-toggle="tab">MetaData</a></li>
+
+                    <!--<li class="dropdown">-->
+                    <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">Timespan<span class="caret"></span></a>-->
+                    <!--<ul class="dropdown-menu" role="menu">-->
+                    <!--<li><a href="108000000">30 min</a></li>-->
+                    <!--<li><a href="216000000">1 hour</a></li>-->
+                    <!--<li><a href="5184000000">24 hour</a></li>-->
+                    <!--<li><a href="36288000000">1 week</a></li>-->
+                    <!--</ul>-->
+                    <!--</li>-->
+
+                </ul>
+
+                <div class="tab-content">
+
+                    <div class="tab-pane fade in  active" id="throwablesTab">
+
+                        <ul class="list-group" id="throwables"></ul>
+
+                    </div>
+                    <div class="tab-pane fade" id="stacktraceTab">
+
+                        <div class="well">
+
+                            <ul id="stacktrace"></ul>
 
                         </div>
-                        <div class="tab-pane fade" id="stacktraceTab">
 
-                            <div class="well">
+                    </div>
+                    <div class="tab-pane fade" id="metaDataTab">
 
-                                <ul id="stacktrace"></ul>
+                        <div class="well" id="metaData"></div>
 
-                            </div>
-
-                        </div>
-                        <div class="tab-pane fade" id="metaDataTab">
-
-                            <div class="well" id="metaData"></div>
-
-                        </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-        </section>
+    </section>
 
-        <footer>
-            Android Device Information is maintained by <a href="https://github.com/kibotu">kibotu</a><br>
-            <!-- This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a
-                href="https://twitter.com/jasonlong">Jason Long</a>. -->
-        </footer>
+    <footer>
+        Android Device Information is maintained by <a href="https://github.com/kibotu">kibotu</a><br>
+        <!-- This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a
+            href="https://twitter.com/jasonlong">Jason Long</a>. -->
+    </footer>
 
 
-    </div>
+</div>
 </div>
 </body>
 </html>

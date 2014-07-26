@@ -45,6 +45,18 @@ $(document).ready(function () {
         });
     };
 
+    var parseGetDeviceInfoById = function (objectId, cb) {
+        var info = Parse.Object.extend("DeviceInfo");
+        var query = new Parse.Query(info);
+        query.get(objectId, {
+            success: function (result) {
+                cb(result);
+            },
+            error: function (object, error) {
+            }
+        });
+    };
+
     var fillFields = function (exceptionJson, metaData) {
 
         $("#metaData").html("");
@@ -116,7 +128,7 @@ $(document).ready(function () {
         }
 
         fillFields(JSON.parse(throwables[0].get('exceptionJson')), throwables[0].get('metaData'));
-		
+
         $("[data-toggle=tooltip]").tooltip();
 
         $(".list-group-item a").click(function (event) {
@@ -158,5 +170,88 @@ $(document).ready(function () {
         });
     };
 
-    parseLoadThrowables(createTimespan(60 * 24 * 2));
+    var getUrlParameter = function (sParam) {
+        var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+        for (var i = 0; i < sURLVariables.length; i++) {
+            var sParameterName = sURLVariables[i].split('=');
+            if (sParameterName[0] == sParam) {
+                return sParameterName[1];
+            }
+        }
+    };
+
+    var loadQrImage = function (params) {
+
+        var url = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + encodeURIComponent(window.location.pathname.substring(1) + (params ? '&' + params : ''));
+        console.log(url);
+        $('#qrCode').html('<img src="' + url + '" />');
+    };
+
+
+    var createCollapseItem = function (topic, info) {
+
+        console.log(info);
+
+        var result = '<div class="panel-group" id="accordion">';
+
+        result += '<div class="panel panel-default">' +
+            '    <div class="panel-heading">' +
+            '    <h4 class="panel-title">' +
+            '        <a data-toggle="collapse" data-parent="#accordion" href="#' + topic + '">' +
+            '        ' + topic +
+            '        </a>' +
+            '    </h4>' +
+            '    </div>' +
+            '<div id="' + topic + '" class="panel-collapse collapse in">' +
+            '    <div class="panel-body">' +
+            '        <table class="table table-striped">';
+
+        var item = '';
+        for (var key in info) {
+            if (info.hasOwnProperty(key)) {
+                console.log(info[key]);
+                item += '<tr><td  style="text-align: left">' +  key + '</td><td  style="text-align: left">' + info[key] + '</td></tr>';
+            }
+        }
+
+        result += item;
+        result += '        </table>' +
+            '    </div>' +
+            '</div>' +
+            '</div>';
+
+        result += '</div>';
+
+        return result;
+    };
+
+    var createCollapseList = function (device) {
+        var result = "";
+        for (var property in device) {
+            if (device.hasOwnProperty(property)) {
+                result += createCollapseItem(property, JSON.parse(device[property]));
+            }
+        }
+        return result;
+    };
+
+    var deviceInfoId = getUrlParameter("deviceInfoId");
+    if (deviceInfoId) {
+
+        loadQrImage(deviceInfoId);
+
+        // hide other elements
+        $('#error-tracking').hide();
+
+        parseGetDeviceInfoById(deviceInfoId, function (device) {
+//            console.log(device.get('deviceinfo'));
+            $("#deviceInfo").html(JSON.stringify(device.get('deviceinfo')));
+            $('#deviceInfoAccordion').html(createCollapseList(device.get('deviceinfo')));
+        });
+    } else {
+        $('#mytabs a[href="#throwablesTab"]').tab('show');
+        parseLoadThrowables(createTimespan(60 * 24 * 2));
+        loadQrImage();
+    }
 });
