@@ -236,7 +236,7 @@ $(document).ready(function () {
         return result;
     };
 
-    var deviceInfoId = getUrlParameter("deviceInfoId");
+    var deviceInfoId = getUrlParameter("device");
     if (deviceInfoId) {
 
         loadQrImage(deviceInfoId);
