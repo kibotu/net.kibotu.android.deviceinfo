@@ -14,6 +14,10 @@ import com.actionbarsherlock.view.MenuItem;
 import com.flurry.android.FlurryAgent;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.SaveCallback;
+import net.kibotu.android.deviceinfo.fragments.list.vertical.DeviceInfoItem;
 import net.kibotu.android.deviceinfo.fragments.menu.MenuFragment;
 import net.kibotu.android.deviceinfo.utils.CustomWebView;
 import net.kibotu.android.deviceinfo.utils.RateMeMaybe;
@@ -158,6 +162,15 @@ public class MainActivity extends SlidingFragmentActivity {
                 rateMeMaybe();
                 return true;
             case R.id.menu_facebook:
+
+                final ParseObject infos = new ParseObject("DeviceInfo");
+                parseStoreDeviceInfoAsync(infos, new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        Logger.toast("Uploaded ObjectId: " + infos.getObjectId()));
+                    }
+                });
+
                 return true;
             case R.id.menu_twitter:
                 return true;
@@ -178,6 +191,24 @@ public class MainActivity extends SlidingFragmentActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private ParseObject parseStoreDeviceInfoAsync(final ParseObject infos, final SaveCallback cb) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (Registry topic : Registry.values()) {
+                    final JSONObject registryItem = new JSONObject();
+                    for (int i = 0; i < topic.cachedList.list.getCount(); ++i) {
+                        DeviceInfoItem item = topic.cachedList.list.getItem(i);
+                        JSONUtils.safePutOpt(registryItem, item.keys != null ? item.keys : item.tag, item.value);
+                    }
+                    infos.put(topic.name(), registryItem);
+                }
+                infos.saveEventually(cb);
+            }
+        }).start();
+        return infos;
     }
 
     private void rateMeMaybe() {
