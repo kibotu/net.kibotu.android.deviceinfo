@@ -17,6 +17,7 @@ import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.SaveCallback;
+import net.kibotu.android.deviceinfo.fragments.list.vertical.DeviceInfoFragment;
 import net.kibotu.android.deviceinfo.fragments.list.vertical.DeviceInfoItem;
 import net.kibotu.android.deviceinfo.fragments.menu.MenuFragment;
 import net.kibotu.android.deviceinfo.utils.CustomWebView;
@@ -107,8 +108,11 @@ public class MainActivity extends SlidingFragmentActivity {
 
         arcList = new MenuFragment(this);
 
-        for (Registry item : Registry.values())
+        for (Registry item : Registry.values()) {
             arcList.addItem(item.name(), item.iconR);
+            // pre-load
+            item.getFragmentList();
+        }
 
         setContentView(R.layout.content_frame);
         setBehindContentView(R.layout.menu_frame);
@@ -167,7 +171,7 @@ public class MainActivity extends SlidingFragmentActivity {
                 parseStoreDeviceInfoAsync(infos, new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        Logger.toast("Uploaded ObjectId: " + infos.getObjectId()));
+                        Logger.toast("Uploaded ObjectId: " + infos.getObjectId());
                     }
                 });
 
@@ -197,13 +201,14 @@ public class MainActivity extends SlidingFragmentActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                for (Registry topic : Registry.values()) {
+                for (final Registry topic : Registry.values()) {
                     final JSONObject registryItem = new JSONObject();
-                    for (int i = 0; i < topic.cachedList.list.getCount(); ++i) {
-                        DeviceInfoItem item = topic.cachedList.list.getItem(i);
+                    for (int i = 0; i < topic.getFragmentList().list.getCount(); ++i) {
+                        final DeviceInfoItem item = topic.cachedList.list.getItem(i);
                         JSONUtils.safePutOpt(registryItem, item.keys != null ? item.keys : item.tag, item.value);
                     }
-                    infos.put(topic.name(), registryItem);
+                    Logger.v(topic.name() + ": " + registryItem);
+                    infos.put(topic.name(), ""+ registryItem);
                 }
                 infos.saveEventually(cb);
             }
@@ -235,58 +240,5 @@ public class MainActivity extends SlidingFragmentActivity {
         }
 
         super.onBackPressed();
-    }
-
-    public static class SettingsActionProvider extends ActionProvider {
-
-        /**
-         * An intent for launching the system settings.
-         */
-        private static final Intent sSettingsIntent = new Intent(Settings.ACTION_SETTINGS);
-
-        /**
-         * Context for accessing resources.
-         */
-        private final Context mContext;
-
-        /**
-         * Creates a new instance.
-         *
-         * @param context Context for accessing resources.
-         */
-        public SettingsActionProvider(Context context) {
-            super(context);
-            mContext = context;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public View onCreateActionView() {
-            // Inflate the action view to be shown on the action bar.
-            LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-            View view = layoutInflater.inflate(R.layout.settings_action_provider, null);
-            ImageButton button = (ImageButton) view.findViewById(R.id.button);
-            // Attach a click listener for launching the system settings.
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mContext.startActivity(sSettingsIntent);
-                }
-            });
-            return view;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean onPerformDefaultAction() {
-            // This is called if the host menu item placed in the overflow menu of the
-            // action bar is clicked and the host activity did not handle the click.
-            mContext.startActivity(sSettingsIntent);
-            return true;
-        }
     }
 }
