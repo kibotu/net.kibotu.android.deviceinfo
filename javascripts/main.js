@@ -183,7 +183,9 @@ $(document).ready(function () {
 
     var loadQrImage = function (params) {
 
-        var url = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + encodeURIComponent('http://kibotu.github.io/' + window.location.pathname.substring(1) + (params ? '&' + params : ''));
+        var siteUrl = 'http://kibotu.github.io/' + window.location.pathname.substring(1) + (params ? '&' + params : '');
+        console.log(siteUrl);
+        var url = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + encodeURIComponent(siteUrl);
         console.log(url);
         $('#qrCode').html('<img src="' + url + '" />');
     };
@@ -239,7 +241,7 @@ $(document).ready(function () {
     var deviceInfoId = getUrlParameter("device");
     if (deviceInfoId) {
 
-        loadQrImage(deviceInfoId);
+        loadQrImage('device=' + deviceInfoId);
 
         // hide other elements
         $('#error-tracking').hide();
