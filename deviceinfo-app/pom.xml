@@ -12,11 +12,6 @@
     <version>1.0</version>
     <packaging>jar</packaging>
 
-    <modules>
-        <module>../SlidingMenu/library</module>
-        <module>../ActionBarSherlock/actionbarsherlock</module>
-    </modules>
-
     <dependencies>
 
         <dependency>
@@ -64,21 +59,21 @@
             <version>4.4.0</version>
         </dependency>
 
-        <dependency>
-            <groupId>FlurryAnalytics</groupId>
-            <artifactId>com.flurry.android.FlurryAgent</artifactId>
-            <version>4.1.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/libs/FlurryAnalytics-4.1.0.jar</systemPath>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>FlurryAnalytics</groupId>-->
+            <!--<artifactId>com.flurry.android.FlurryAgent</artifactId>-->
+            <!--<version>4.1.0</version>-->
+            <!--<scope>system</scope>-->
+            <!--<systemPath>${project.basedir}/libs/FlurryAnalytics-4.1.0.jar</systemPath>-->
+        <!--</dependency>-->
 
-        <dependency>
-            <groupId>Parse</groupId>
-            <artifactId>com.parse</artifactId>
-            <version>1.5.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/libs/Parse-1.5.1.jar</systemPath>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>Parse</groupId>-->
+            <!--<artifactId>com.parse</artifactId>-->
+            <!--<version>1.5.1</version>-->
+            <!--<scope>system</scope>-->
+            <!--<systemPath>${project.basedir}/libs/Parse-1.5.1.jar</systemPath>-->
+        <!--</dependency>-->
 
     </dependencies>
 
