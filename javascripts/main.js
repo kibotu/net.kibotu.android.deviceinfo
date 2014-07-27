@@ -185,9 +185,9 @@ $(document).ready(function () {
 
         var siteUrl = 'http://kibotu.github.io/' + window.location.pathname.substring(1) + (params ? '?' + params : '');
         console.log(siteUrl);
-        var url = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + encodeURIComponent(siteUrl);
+        var url = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" + encodeURIComponent(siteUrl);
         console.log(url);
-        $('#qrCode').html('<a title="qr" href="' + siteUrl + '"><img src="' + url + '"></a>');
+        $('#qrCode').html('<a title="qr" href="' + siteUrl + '"><img width="150" src="' + url + '"></a>');
     };
 
 
