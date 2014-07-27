@@ -940,6 +940,10 @@ public class Device {
         return new ProxySettings(context());
     }
 
+    public static String getMarketUrl() {
+        return "market://details?id=" + Device.context().getPackageName();
+    }
+
     public interface AsyncCallback<T> {
         void onComplete(final T result);
     }

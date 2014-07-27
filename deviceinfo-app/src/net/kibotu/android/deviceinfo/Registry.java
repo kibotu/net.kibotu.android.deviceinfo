@@ -1088,7 +1088,7 @@ public enum Registry implements IGetInfoFragment {
                         public void run() {
 
                             // redraw listview
-                            if (cachedList != null) cachedList.list.notifyDataSetChanged();
+                            if (cachedList != null && cachedList.list != null) cachedList.list.notifyDataSetChanged();
                         }
                     });
                 }

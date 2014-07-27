@@ -37,6 +37,7 @@
     <orderEntry type="library" name="Maven: com.google.android:support-v4:r7" level="project" />
     <orderEntry type="module" module-name="slidingmenu" />
     <orderEntry type="module" module-name="actionbarsherlock" />
+    <orderEntry type="module" module-name="facebook" />
   </component>
 </module>
 

@@ -16,6 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/fb_app_id"/>
     </application>
     <!--<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" android:required="false"/>-->
     <uses-feature android:name="android.hardware.LOCATION" android:required="false"/>
@@ -27,4 +28,4 @@
                       android:resizeable="true"
                       android:smallScreens="true"
                       android:xlargeScreens="true"/>
-</manifest> 
+</manifest>

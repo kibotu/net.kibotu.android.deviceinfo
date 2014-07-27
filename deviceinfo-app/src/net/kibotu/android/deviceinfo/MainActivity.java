@@ -1,11 +1,19 @@
 package net.kibotu.android.deviceinfo;
 
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewConfiguration;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.facebook.UiLifecycleHelper;
+import com.facebook.widget.FacebookDialog;
 import com.flurry.android.FlurryAgent;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
@@ -22,12 +30,40 @@ import net.kibotu.android.error.tracking.Logger;
 import org.json.JSONObject;
 
 import java.lang.reflect.Field;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class MainActivity extends SlidingFragmentActivity {
 
     private volatile MenuFragment arcList;
     public static final String THEME_PREFERENCE = "themePreference";
     public static JSONObject appConfig;
+
+    private UiLifecycleHelper uiHelper;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        uiHelper.onResume();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        uiHelper.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        uiHelper.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        uiHelper.onDestroy();
+    }
 
     @Override
     public void onStart() {
@@ -90,7 +126,7 @@ public class MainActivity extends SlidingFragmentActivity {
 
         // start error tracking
         ErrorTracking.startSession(this, appConfig.optString("applicationId"), appConfig.optString("clientKey"));
-        Logger.setLogLevel(Logger.Level.SILENT);
+        Logger.setLogLevel(Logger.Level.VERBOSE);
 
         // add api level
         JSONObject metaData = new JSONObject();
@@ -99,6 +135,9 @@ public class MainActivity extends SlidingFragmentActivity {
 
         // init device
         Device.setContext(this);
+
+        // get fb keyhash
+        fbKeyHash();
 
         arcList = new MenuFragment(this);
 
@@ -151,10 +190,45 @@ public class MainActivity extends SlidingFragmentActivity {
 
         setTitle("Build");
         getSupportActionBar().setIcon(Registry.Build.iconR_i);
+
+        // add facebook
+        uiHelper = new UiLifecycleHelper(this, null);
+        uiHelper.onCreate(savedInstanceState);
+    }
+
+    private void fbKeyHash() {
+        // Add code to print out the key hash
+        try {
+            final PackageInfo info = getPackageManager().getPackageInfo("net.kibotu.android.deviceinfo", PackageManager.GET_SIGNATURES);
+            for (final Signature signature : info.signatures) {
+                final MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Logger.d("KeyHash: " + Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (final PackageManager.NameNotFoundException | NoSuchAlgorithmException e) {
+            Logger.e(e);
+        }
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        uiHelper.onActivityResult(requestCode, resultCode, data, new FacebookDialog.Callback() {
+            @Override
+            public void onError(final FacebookDialog.PendingCall pendingCall, final Exception error, final Bundle data) {
+                Logger.e(String.format("Error: %s", error.toString()));
+            }
+
+            @Override
+            public void onComplete(final FacebookDialog.PendingCall pendingCall, final Bundle data) {
+                Logger.i("Success!");
+            }
+        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_rate:
                 rateMeMaybe();
@@ -164,9 +238,19 @@ public class MainActivity extends SlidingFragmentActivity {
                 final ParseObject infos = new ParseObject("DeviceInfo");
                 parseStoreDeviceInfoAsync(infos, new SaveCallback() {
                     @Override
-                    public void done(ParseException e) {
-                        String url = "http://kibotu.github.io/net.kibotu.android.deviceinfo/?device=";
-                        Logger.v("Viewable on: " + url + infos.getObjectId());
+                    public void done(final ParseException e) {
+                        final String url = "http://kibotu.github.io/net.kibotu.android.deviceinfo/?device=" + infos.getObjectId();
+                        final String qr = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=";
+                        Logger.v("Viewable on: " + url);
+
+                        final FacebookDialog shareDialog = new FacebookDialog.ShareDialogBuilder(Device.context())
+                                .setLink(url)
+                                .setPicture(qr + url)
+                                .setApplicationName("Android Device Information")
+                                .setCaption("blog.kibotu.net")
+                                .setDescription(Build.MODEL)
+                                .build();
+                        uiHelper.trackPendingDialogCall(shareDialog.present());
                     }
                 });
 
