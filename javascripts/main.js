@@ -187,7 +187,7 @@ $(document).ready(function () {
         console.log(siteUrl);
         var url = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + encodeURIComponent(siteUrl);
         console.log(url);
-        $('#qrCode').html('<img src="' + url + '" />');
+        $('#qrCode').html('<a title="qr" href="' + siteUrl + '"><img src="' + url + '"></a>');
     };
 
 
@@ -213,7 +213,7 @@ $(document).ready(function () {
         for (var key in info) {
             if (info.hasOwnProperty(key)) {
                 console.log(info[key]);
-                item += '<tr><td  style="text-align: left">' +  key + '</td><td  style="text-align: left">' + info[key] + '</td></tr>';
+                item += '<tr><td  style="text-align: left">' + key + '</td><td  style="text-align: left">' + info[key] + '</td></tr>';
             }
         }
 
