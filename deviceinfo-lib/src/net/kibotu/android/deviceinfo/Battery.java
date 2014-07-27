@@ -10,7 +10,7 @@ import android.os.BatteryManager;
 /**
  * @see <a href="http://developer.android.com/reference/android/os/BatteryManager.html">BatteryManager</a>
  */
-public class Battery extends BroadcastReceiver {
+public class Battery extends BroadcastReceiver implements IPausable {
 
     int scale = 0;
     int level = 0;
@@ -142,5 +142,13 @@ public class Battery extends BroadcastReceiver {
 
     public String getStatus() {
         return nameStatus(status);
+    }
+
+    public void onResume() {
+        registerReceiver(Device.context());
+    }
+
+    public void onPause() {
+        Device.context().unregisterReceiver(this);
     }
 }

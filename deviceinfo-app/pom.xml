@@ -59,6 +59,12 @@
             <version>4.4.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.twitter4j</groupId>
+            <artifactId>twitter4j-core</artifactId>
+            <version>[4.0,)</version>
+        </dependency>
+
         <!--<dependency>-->
             <!--<groupId>FlurryAnalytics</groupId>-->
             <!--<artifactId>com.flurry.android.FlurryAgent</artifactId>-->

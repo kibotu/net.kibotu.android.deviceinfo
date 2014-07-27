@@ -24,6 +24,7 @@ import net.kibotu.android.deviceinfo.fragments.list.vertical.DeviceInfoItem;
 import net.kibotu.android.deviceinfo.fragments.menu.MenuFragment;
 import net.kibotu.android.deviceinfo.utils.CustomWebView;
 import net.kibotu.android.deviceinfo.utils.RateMeMaybe;
+import net.kibotu.android.deviceinfo.utils.TweetToTwitter;
 import net.kibotu.android.error.tracking.ErrorTracking;
 import net.kibotu.android.error.tracking.JSONUtils;
 import net.kibotu.android.error.tracking.Logger;
@@ -37,14 +38,15 @@ public class MainActivity extends SlidingFragmentActivity {
 
     private volatile MenuFragment arcList;
     public static final String THEME_PREFERENCE = "themePreference";
-    public static JSONObject appConfig;
+    public volatile static JSONObject appConfig;
 
-    private UiLifecycleHelper uiHelper;
+    private volatile UiLifecycleHelper uiHelper;
 
     @Override
     public void onResume() {
         super.onResume();
         uiHelper.onResume();
+        Registry.onResume();
     }
 
     @Override
@@ -57,6 +59,7 @@ public class MainActivity extends SlidingFragmentActivity {
     public void onPause() {
         super.onPause();
         uiHelper.onPause();
+        Registry.onPause();
     }
 
     @Override
@@ -137,7 +140,7 @@ public class MainActivity extends SlidingFragmentActivity {
         Device.setContext(this);
 
         // get fb keyhash
-        fbKeyHash();
+//        fbKeyHash();
 
         arcList = new MenuFragment(this);
 
@@ -234,28 +237,10 @@ public class MainActivity extends SlidingFragmentActivity {
                 rateMeMaybe();
                 return true;
             case R.id.menu_facebook:
-
-                final ParseObject infos = new ParseObject("DeviceInfo");
-                parseStoreDeviceInfoAsync(infos, new SaveCallback() {
-                    @Override
-                    public void done(final ParseException e) {
-                        final String url = "http://kibotu.github.io/net.kibotu.android.deviceinfo/?device=" + infos.getObjectId();
-                        final String qr = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=";
-                        Logger.v("Viewable on: " + url);
-
-                        final FacebookDialog shareDialog = new FacebookDialog.ShareDialogBuilder(Device.context())
-                                .setLink(url)
-                                .setPicture(qr + url)
-                                .setApplicationName("Android Device Information")
-                                .setCaption("blog.kibotu.net")
-                                .setDescription(Build.MODEL)
-                                .build();
-                        uiHelper.trackPendingDialogCall(shareDialog.present());
-                    }
-                });
-
+                shareLinkOnFacebook();
                 return true;
             case R.id.menu_twitter:
+                tweet();
                 return true;
             case R.id.menu_email:
                 return true;
@@ -274,6 +259,51 @@ public class MainActivity extends SlidingFragmentActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private TweetToTwitter tweetToTwitter;
+
+    public void tweet() {
+        if (tweetToTwitter == null)
+            tweetToTwitter = new TweetToTwitter(this, appConfig.optString("twitterApiKey"), appConfig.optString("twitterSecret"));
+        final ParseObject p = new ParseObject("DeviceInfo");
+        parseStoreDeviceInfoAsync(p, new SaveCallback() {
+            @Override
+            public void done(final ParseException e) {
+                tweetToTwitter.login(new AsyncCallback() {
+                    @Override
+                    public void callback(Object o) {
+                        CustomWebView.destroy();
+                        tweetToTwitter.tweetMessage("Android Device Information for " + Build.MODEL + " at " + createSiteUrl(p));
+                    }
+                });
+            }
+        });
+    }
+
+    public String createSiteUrl(final ParseObject p) {
+        return "http://kibotu.github.io/net.kibotu.android.deviceinfo/?device=" + p.getObjectId();
+    }
+
+    public String createQrUrl(final ParseObject p) {
+        return "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + createSiteUrl(p);
+    }
+
+    private void shareLinkOnFacebook() {
+        final ParseObject infos = new ParseObject("DeviceInfo");
+        parseStoreDeviceInfoAsync(infos, new SaveCallback() {
+            @Override
+            public void done(final ParseException e) {
+                final FacebookDialog shareDialog = new FacebookDialog.ShareDialogBuilder(Device.context())
+                        .setLink(createSiteUrl(infos))
+                        .setPicture(createQrUrl(infos))
+                        .setApplicationName("Android Device Information")
+                        .setCaption("blog.kibotu.net")
+                        .setDescription(Build.MODEL)
+                        .build();
+                uiHelper.trackPendingDialogCall(shareDialog.present());
+            }
+        });
     }
 
     private ParseObject parseStoreDeviceInfoAsync(final ParseObject infos, final SaveCallback cb) {

@@ -400,6 +400,7 @@ public enum Registry implements IGetInfoFragment {
         public void createFragmentList() {
 
             final Battery battery = Device.getBattery();
+            pausables.add(battery);
 
             cachedList.addItem("Technology", "Technology of the current battery.", 1f, true, new DeviceInfoItemAsync() {
                 @Override
@@ -1118,4 +1119,18 @@ public enum Registry implements IGetInfoFragment {
     }
 
     // endregion
+
+    public static volatile ArrayList<IPausable> pausables = new ArrayList<>();
+
+    public static void onResume() {
+        for (IPausable p : pausables) {
+            p.onResume();
+        }
+    }
+
+    public static void onPause() {
+        for (IPausable p : pausables) {
+            p.onPause();
+        }
+    }
 }

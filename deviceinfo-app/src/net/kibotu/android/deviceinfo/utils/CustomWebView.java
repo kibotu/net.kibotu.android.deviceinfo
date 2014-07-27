@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.http.SslError;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.ContextThemeWrapper;
@@ -17,6 +18,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.PluginState;
 import android.webkit.WebSettings.RenderPriority;
@@ -24,6 +26,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import net.kibotu.android.deviceinfo.Device;
 import net.kibotu.android.deviceinfo.DisplayHelper;
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.error.tracking.Logger;
@@ -47,6 +50,7 @@ import net.kibotu.android.error.tracking.Logger;
 public class CustomWebView {
 
     private static final String LOGGING_TAG = CustomWebView.class.getSimpleName();
+    public volatile static AlertDialog dialog;
 
     /**
      * Context.
@@ -66,7 +70,7 @@ public class CustomWebView {
     /**
      * Current Webview.
      */
-    private static WebView webView;
+    public static volatile WebView webView;
 
     /**
      * Top shadow.
@@ -382,7 +386,27 @@ public class CustomWebView {
      * @param height   - Height.
      */
     public static void showWebViewInDialog(final Activity activity, final String url, final int x, final int y, final int width, final int height) {
+        showWebViewInDialog(activity, url, x, y, width, height, null);
+    }
 
+    public static void destroy() {
+        Device.context().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(webView != null) CustomWebView.webView.destroy();
+                if(dialog != null) CustomWebView.dialog.cancel();
+            }
+        });
+    }
+
+    public static interface UrlHandler {
+
+        public String getUrlQualifier();
+
+        public boolean dealWithUrl(final String url);
+    }
+
+    public static void showWebViewInDialog(final Activity activity, final String url, final int x, final int y, final int width, final int height, final UrlHandler dealer) {
         Logger.v(LOGGING_TAG, "[" + url + "|x=" + x + "|y=" + y + "|w=" + width + "|h=" + height + "]");
 
         activity.runOnUiThread(new Runnable() {
@@ -415,7 +439,7 @@ public class CustomWebView {
                 bottomShadowParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
                 bottomShadow.setLayoutParams(bottomShadowParams);
 
-                final LiveWebView webView = new LiveWebView(activity);
+                webView = new LiveWebView(activity);
                 RelativeLayout.LayoutParams webViewParams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
                 webView.setLayoutParams(webViewParams);
                 webView.loadUrl(url);
@@ -424,14 +448,34 @@ public class CustomWebView {
                 webView.setWebViewClient(new WebViewClient() {
                     @Override
                     public boolean shouldOverrideUrlLoading(final WebView view, final String url) {
+
+                        if (dealer != null && url.startsWith(dealer.getUrlQualifier())) {
+                            return dealer.dealWithUrl(url);
+                        }
+
                         if (restrictedUrl != null && url.contains(restrictedUrl))
                             return true;
                         return false;
                     }
 
                     @Override
-                    public void onPageFinished(WebView view, String url) {
+                    public void onPageFinished(final WebView view, final String url) {
                         view.setMinimumHeight(height);
+                        if (dealer != null && url.startsWith(dealer.getUrlQualifier())) {
+                            view.setVisibility(View.GONE);
+                        }
+                    }
+
+                    @Override
+                    public void onReceivedError(final WebView view, final int errorCode, final String description, final String failingUrl) {
+                        super.onReceivedError(view, errorCode, description, failingUrl);
+                        Logger.v("onReceivedError " + errorCode + " " + description);
+                    }
+
+                    @Override
+                    public void onReceivedSslError(final WebView view, final SslErrorHandler handler, final SslError error) {
+                        super.onReceivedSslError(view, handler, error);
+                        Logger.v("onReceivedSslError " + error);
                     }
                 });
 
@@ -439,7 +483,7 @@ public class CustomWebView {
                 //AlertDialog dialog = AlertDialog.Builder(new ContextThemeWrapper(mActivity,android.R.style.Theme_Translucent_NoTitleBar_Fullscreen)).create();
 
                 Builder builder = new Builder(new ContextThemeWrapper(activity, android.R.style.Theme_Translucent_NoTitleBar_Fullscreen));
-                AlertDialog dialog = builder.create();
+                dialog = builder.create();
 
                 WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
