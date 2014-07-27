@@ -243,6 +243,7 @@ public class MainActivity extends SlidingFragmentActivity {
                 tweet();
                 return true;
             case R.id.menu_email:
+                sendEmail();
                 return true;
             case R.id.menu_about:
                 CustomWebView.showWebViewInDialog(Device.context(), "http://kibotu.github.io/net.kibotu.android.deviceinfo/", 0, 0, DisplayHelper.absScreenWidth, DisplayHelper.absScreenHeight);
@@ -277,6 +278,21 @@ public class MainActivity extends SlidingFragmentActivity {
                         tweetToTwitter.tweetMessage("Android Device Information for " + Build.MODEL + " at " + createSiteUrl(p));
                     }
                 });
+            }
+        });
+    }
+
+    public void sendEmail() {
+        final ParseObject p = new ParseObject("DeviceInfo");
+        parseStoreDeviceInfoAsync(p, new SaveCallback() {
+            @Override
+            public void done(final ParseException e) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("message/rfc822");
+                intent.putExtra(Intent.EXTRA_EMAIL, "me@gmail.com");
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Android Device Information for " + Build.MODEL);
+                intent.putExtra(Intent.EXTRA_TEXT, createSiteUrl(p));
+                startActivity(Intent.createChooser(intent, "Send Email"));
             }
         });
     }
