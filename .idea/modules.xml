@@ -3,11 +3,13 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ActionBarSherlock/actionbarsherlock/actionbarsherlock.iml" filepath="$PROJECT_DIR$/ActionBarSherlock/actionbarsherlock/actionbarsherlock.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ActionBarSherlock/actionbarsherlock/actionbarsherlock.iml" filepath="$PROJECT_DIR$/ActionBarSherlock/actionbarsherlock/actionbarsherlock.iml" />
       <module fileurl="file://$PROJECT_DIR$/deviceinfo.iml" filepath="$PROJECT_DIR$/deviceinfo.iml" />
       <module fileurl="file://$PROJECT_DIR$/deviceinfo-app/deviceinfo-app.iml" filepath="$PROJECT_DIR$/deviceinfo-app/deviceinfo-app.iml" />
       <module fileurl="file://$PROJECT_DIR$/deviceinfo-lib/deviceinfo-lib.iml" filepath="$PROJECT_DIR$/deviceinfo-lib/deviceinfo-lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/deviceinfo-tests/deviceinfo-tests.iml" filepath="$PROJECT_DIR$/deviceinfo-tests/deviceinfo-tests.iml" />
       <module fileurl="file://$PROJECT_DIR$/facebook-android-sdk/facebook/facebook.iml" filepath="$PROJECT_DIR$/facebook-android-sdk/facebook/facebook.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SlidingMenu/library/slidingmenu.iml" filepath="$PROJECT_DIR$/SlidingMenu/library/slidingmenu.iml" />
       <module fileurl="file://$PROJECT_DIR$/SlidingMenu/library/slidingmenu.iml" filepath="$PROJECT_DIR$/SlidingMenu/library/slidingmenu.iml" />
     </modules>
   </component>
