@@ -1,10 +1,12 @@
 package net.kibotu.android.deviceinfo;
 
+import net.kibotu.android.error.tracking.LogcatLogger;
+import net.kibotu.android.error.tracking.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class BlaTest extends ActivityInstrumentationImpl {
+public class DeviceTest extends ActivityInstrumentationImpl {
 
     @Before
     public void setUp() throws Exception {
@@ -13,8 +15,8 @@ public class BlaTest extends ActivityInstrumentationImpl {
         // api 19 tests fail without setting it @see http://stackoverflow.com/questions/12267572/mockito-dexmaker-on-android
         System.setProperty("dexmaker.dexcache", getInstrumentation().getTargetContext().getCacheDir().getPath());
 
-//        Logger.init(new LogcatLogger(getActivity()));
-//        Logger.v("test");
+        Logger.init(new LogcatLogger(getActivity()));
+        Device.init(getActivity());
     }
 
     @After
@@ -22,10 +24,18 @@ public class BlaTest extends ActivityInstrumentationImpl {
         super.tearDown();
     }
 
-    //
     @Test
-    public void testBuildPayload() throws Exception {
+    public void testInit() throws Exception {
+        try {
+            Device.context();
+            assertTrue(true);
+        } catch (final Exception e) {
+            assertNull(e);
+        }
+    }
 
-//        assertTrue(d.x == 100);
+    @Test
+    public void testSomething() throws Exception {
+
     }
 }

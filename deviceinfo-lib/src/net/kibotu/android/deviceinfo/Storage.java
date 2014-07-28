@@ -26,7 +26,7 @@ public enum Storage {
     public void update() {
         final long blockSize = statFs.getBlockSize();
         total = statFs.getBlockCount() * blockSize;
-        if (Device.getApiLevel() >= 18)
+        if (DeviceOld.getApiLevel() >= 18)
             available = ReflectionHelper.get(StatFs.class, "getAvailableBlocksLong", null);
         else
             available = statFs.getAvailableBlocks() * blockSize;

@@ -26,7 +26,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import net.kibotu.android.deviceinfo.Device;
+import net.kibotu.android.deviceinfo.DeviceOld;
 import net.kibotu.android.deviceinfo.DisplayHelper;
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.error.tracking.Logger;
@@ -390,7 +390,7 @@ public class CustomWebView {
     }
 
     public static void destroy() {
-        Device.context().runOnUiThread(new Runnable() {
+        DeviceOld.context().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if(webView != null) CustomWebView.webView.destroy();

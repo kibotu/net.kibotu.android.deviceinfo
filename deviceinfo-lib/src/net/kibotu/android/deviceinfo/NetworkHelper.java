@@ -11,7 +11,7 @@ public class NetworkHelper {
         throw new IllegalAccessException("static class");
     }
 
-    public static void request(final String url, final Device.AsyncCallback<JSONObject> callback) {
+    public static void request(final String url, final DeviceOld.AsyncCallback<JSONObject> callback) {
 
         new AsyncTask<String, Integer, JSONObject>() {
 

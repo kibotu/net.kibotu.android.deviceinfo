@@ -8,7 +8,7 @@ import net.kibotu.android.deviceinfo.R;
 
 import java.util.Map;
 
-import static net.kibotu.android.deviceinfo.Device.context;
+import static net.kibotu.android.deviceinfo.DeviceOld.context;
 
 public class DeviceInfoItem implements Comparable<DeviceInfoItem> {
 

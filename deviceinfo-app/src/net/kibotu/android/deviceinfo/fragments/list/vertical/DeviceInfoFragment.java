@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import net.kibotu.android.deviceinfo.Device;
+import net.kibotu.android.deviceinfo.DeviceOld;
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.error.tracking.Logger;
 
@@ -52,50 +52,36 @@ public class DeviceInfoFragment extends ListFragment {
     }
 
     /**
-     * @param delay - Delay in seconds.
+     * @param time - Delay in seconds.
      */
-    public Thread addItem(final String tag, final String description, final float delay, final boolean loop, final DeviceInfoItemAsync asyncValue) {
+    public DeviceInfoItemAsync addItem(final String tag, final String description, final float time, final boolean loop, final DeviceInfoItemAsync asyncValue) {
 
-        Thread t = new Thread(new Runnable() {
+        asyncValue.tag = tag;
+        asyncValue.description = description;
+        asyncValue.setSleepTime(time);
+
+        DeviceOld.context().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                getFragmentListAdapter().add(asyncValue);
 
-                asyncValue.tag = tag;
-                asyncValue.description = description;
-                Device.context().runOnUiThread(new Runnable() {
+                // sort
+                list.sort(new Comparator<DeviceInfoItem>() {
                     @Override
-                    public void run() {
-                        getFragmentListAdapter().add(asyncValue);
-
-                        // sort
-                        list.sort(new Comparator<DeviceInfoItem>() {
-                            @Override
-                            public int compare(final DeviceInfoItem a, final DeviceInfoItem b) {
-                                return a.order - b.order;
-                            }
-                        });
+                    public int compare(final DeviceInfoItem a, final DeviceInfoItem b) {
+                        return a.order - b.order;
                     }
                 });
-
-                do {
-                    try {
-                        Thread.sleep((long) (delay * 1000));
-                    } catch (final InterruptedException e) {
-                        Logger.e(e);
-                    }
-
-                    asyncValue.run();
-
-                } while (loop);
             }
         });
 
-        t.start();
+        if(loop) asyncValue.start();
+        else asyncValue.async();
 
-        return t;
+        return asyncValue;
     }
 
-    public Thread addItem(final String tag, final String description, final DeviceInfoItemAsync asyncValue) {
+    public DeviceInfoItemAsync addItem(final String tag, final String description, final DeviceInfoItemAsync asyncValue) {
         return addItem(tag, description, 0f, false, asyncValue);
     }
 

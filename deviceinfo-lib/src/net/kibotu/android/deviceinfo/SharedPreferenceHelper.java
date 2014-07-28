@@ -3,7 +3,7 @@ package net.kibotu.android.deviceinfo;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import static net.kibotu.android.deviceinfo.Device.context;
+import static net.kibotu.android.deviceinfo.DeviceOld.context;
 
 public enum SharedPreferenceHelper {
 

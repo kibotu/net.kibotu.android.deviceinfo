@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import net.kibotu.android.deviceinfo.AsyncCallback;
-import net.kibotu.android.deviceinfo.Device;
+import net.kibotu.android.deviceinfo.DeviceOld;
 import net.kibotu.android.deviceinfo.DisplayHelper;
 import net.kibotu.android.error.tracking.Logger;
 import twitter4j.Twitter;
@@ -115,7 +115,7 @@ public class TweetToTwitter implements CustomWebView.UrlHandler {
                 try {
                     mReqToken = mTwitter.getOAuthRequestToken(CALLBACK_URL);
                     Logger.v("Starting Webview to login to twitter");
-                    CustomWebView.showWebViewInDialog(Device.context(), mReqToken.getAuthenticationURL(), 0, 0, DisplayHelper.absScreenWidth, DisplayHelper.absScreenHeight, TweetToTwitter.this);
+                    CustomWebView.showWebViewInDialog(DeviceOld.context(), mReqToken.getAuthenticationURL(), 0, 0, DisplayHelper.absScreenWidth, DisplayHelper.absScreenHeight, TweetToTwitter.this);
                 } catch (final TwitterException e) {
                     Logger.e(e);
                 }

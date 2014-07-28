@@ -133,11 +133,11 @@ public class MainActivity extends SlidingFragmentActivity {
 
         // add api level
         JSONObject metaData = new JSONObject();
-        JSONUtils.safePut(metaData, "SDK", "" + Device.getApiLevel());
+        JSONUtils.safePut(metaData, "SDK", "" + DeviceOld.getApiLevel());
         ErrorTracking.addMetaData(metaData);
 
         // init device
-        Device.setContext(this);
+        DeviceOld.setContext(this);
 
         // get fb keyhash
 //        fbKeyHash();
@@ -174,8 +174,8 @@ public class MainActivity extends SlidingFragmentActivity {
         arcList.lastItemList = Registry.Build;
 
         // time bomb
-        Device.ACTIVATE_TB = false;
-        Device.checkTimebombDialog();
+        DeviceOld.ACTIVATE_TB = false;
+        DeviceOld.checkTimebombDialog();
 
         View customNav = LayoutInflater.from(this).inflate(R.layout.navigation, null);
 //        final ImageButton button = (ImageButton) customNav.findViewById(R.id.imageButton);
@@ -246,16 +246,16 @@ public class MainActivity extends SlidingFragmentActivity {
                 sendEmail();
                 return true;
             case R.id.menu_about:
-                CustomWebView.showWebViewInDialog(Device.context(), "http://kibotu.github.io/net.kibotu.android.deviceinfo/", 0, 0, DisplayHelper.absScreenWidth, DisplayHelper.absScreenHeight);
+                CustomWebView.showWebViewInDialog(DeviceOld.context(), "http://kibotu.github.io/net.kibotu.android.deviceinfo/", 0, 0, DisplayHelper.absScreenWidth, DisplayHelper.absScreenHeight);
                 return true;
             case R.id.menu_github:
-                CustomWebView.showWebViewInDialog(Device.context(), "https://github.com/kibotu/net.kibotu.android.deviceinfo/blob/master/README.md", 0, 0, DisplayHelper.absScreenWidth, DisplayHelper.absScreenHeight);
+                CustomWebView.showWebViewInDialog(DeviceOld.context(), "https://github.com/kibotu/net.kibotu.android.deviceinfo/blob/master/README.md", 0, 0, DisplayHelper.absScreenWidth, DisplayHelper.absScreenHeight);
                 return true;
             case R.id.menu_feedback:
-                CustomWebView.showWebViewInDialog(Device.context(), "http://blog.kibotu.net/contact", 0, 0, DisplayHelper.absScreenWidth, DisplayHelper.absScreenHeight);
+                CustomWebView.showWebViewInDialog(DeviceOld.context(), "http://blog.kibotu.net/contact", 0, 0, DisplayHelper.absScreenWidth, DisplayHelper.absScreenHeight);
                 return true;
             case R.id.menu_request:
-                CustomWebView.showWebViewInDialog(Device.context(), "http://blog.kibotu.net/contact", 0, 0, DisplayHelper.absScreenWidth, DisplayHelper.absScreenHeight);
+                CustomWebView.showWebViewInDialog(DeviceOld.context(), "http://blog.kibotu.net/contact", 0, 0, DisplayHelper.absScreenWidth, DisplayHelper.absScreenHeight);
                 return true;
         }
 
@@ -310,7 +310,7 @@ public class MainActivity extends SlidingFragmentActivity {
         parseStoreDeviceInfoAsync(infos, new SaveCallback() {
             @Override
             public void done(final ParseException e) {
-                final FacebookDialog shareDialog = new FacebookDialog.ShareDialogBuilder(Device.context())
+                final FacebookDialog shareDialog = new FacebookDialog.ShareDialogBuilder(DeviceOld.context())
                         .setLink(createSiteUrl(infos))
                         .setPicture(createQrUrl(infos))
                         .setApplicationName("Android Device Information")
@@ -360,7 +360,7 @@ public class MainActivity extends SlidingFragmentActivity {
             getSlidingMenu().showMenu(true);
             return;
         } else {
-            Device.killApp();
+            DeviceOld.killApp();
 //            finish();
 //            return;
         }

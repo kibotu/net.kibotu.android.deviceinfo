@@ -7,7 +7,7 @@ import android.graphics.ImageFormat;
 import android.graphics.PixelFormat;
 import android.hardware.Sensor;
 import android.view.Surface;
-import net.kibotu.android.deviceinfo.Device;
+import net.kibotu.android.deviceinfo.DeviceOld;
 import net.kibotu.android.deviceinfo.GPU;
 import net.kibotu.android.deviceinfo.Storage;
 import net.kibotu.android.error.tracking.Logger;
@@ -517,7 +517,7 @@ final public class Utils {
                 result = "SIZE_UNDEFINED";
         }
 
-        if (!Device.supportsApi(17)) {
+        if (!DeviceOld.supportsApi(17)) {
             result += "\n(LAYOUTDIR_MASK Added in Api 17)";
         } else {
             result += "\n";

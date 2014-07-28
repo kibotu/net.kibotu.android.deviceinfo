@@ -1,6 +1,5 @@
 package net.kibotu.android.deviceinfo;
 
-import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -145,10 +144,10 @@ public class Battery extends BroadcastReceiver implements IPausable {
     }
 
     public void onResume() {
-        registerReceiver(Device.context());
+        registerReceiver(DeviceOld.context());
     }
 
     public void onPause() {
-        Device.context().unregisterReceiver(this);
+        DeviceOld.context().unregisterReceiver(this);
     }
 }

@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
-import net.kibotu.android.deviceinfo.Device;
+import net.kibotu.android.deviceinfo.DeviceOld;
 import net.kibotu.android.deviceinfo.MainActivity;
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.Registry;
@@ -51,7 +51,7 @@ public class MenuFragment extends ListFragment {
 //        currentItemList.resumeThreads();
 
         if (lastItemList != currentItemList)
-            ((FragmentActivity) Device.context()).getSupportFragmentManager()
+            ((FragmentActivity) DeviceOld.context()).getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.content_frame, currentItemList.getFragmentList())
                     .commit();
@@ -61,7 +61,7 @@ public class MenuFragment extends ListFragment {
     }
 
     public void changeActionBar() {
-        Device.context().setTitle(lastItemList.name());
+        DeviceOld.context().setTitle(lastItemList.name());
         ((SlidingFragmentActivity) context).getSupportActionBar().setIcon(lastItemList.iconR_i);
         ((MainActivity)context).getSlidingMenu().showContent();
     }

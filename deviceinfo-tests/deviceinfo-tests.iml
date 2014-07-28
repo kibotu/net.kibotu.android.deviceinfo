@@ -5,10 +5,10 @@
       <configuration>
         <option name="GEN_FOLDER_RELATIVE_PATH_APT" value="/target/generated-sources/r" />
         <option name="GEN_FOLDER_RELATIVE_PATH_AIDL" value="/target/generated-sources/aidl" />
-        <option name="MANIFEST_FILE_RELATIVE_PATH" value="/target/AndroidManifest.xml" />
         <option name="CUSTOM_APK_RESOURCE_FOLDER" value="/target/generated-sources/combined-resources/res" />
         <option name="APK_PATH" value="/target/deviceinfo-tests.apk" />
         <option name="RUN_PROCESS_RESOURCES_MAVEN_TASK" value="false" />
+        <option name="UPDATE_PROPERTY_FILES" value="true" />
         <option name="ENABLE_MANIFEST_MERGING" value="true" />
         <option name="COMPILE_CUSTOM_GENERATED_SOURCES" value="false" />
         <includeAssetsFromLibraries>true</includeAssetsFromLibraries>
@@ -42,6 +42,8 @@
     <orderEntry type="library" name="Maven: com.google.android:android-test:2.3.3" level="project" />
     <orderEntry type="library" name="Maven: junit:junit:4.11" level="project" />
     <orderEntry type="library" name="Maven: com.android.support:support-v4:18.0.0" level="project" />
+    <orderEntry type="module" module-name="deviceinfo-lib" />
+    <orderEntry type="library" name="Maven: net.kibotu.android.error.tracking:error-tracking-lib:1.0.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.intellij:annotations:12.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.google.android:annotations:4.1.1.4" level="project" />
     <orderEntry type="library" name="Maven: com.jayway.android.robotium:robotium-solo:3.6" level="project" />
