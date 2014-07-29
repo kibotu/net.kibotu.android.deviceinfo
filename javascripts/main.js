@@ -187,7 +187,7 @@ $(document).ready(function () {
         console.log(siteUrl);
         var url = "https://api.qrserver.com/v1/create-qr-code/?size=280x280&data=" + encodeURIComponent(siteUrl);
         console.log(url);
-        $('#qrCode').html('<a title="qr" href="' + siteUrl + '"><img width="280" src="' + url + '"></a>');
+        $('#qrCode').html('<a title="qr" href="' + siteUrl + '"><img width="150" src="' + url + '"></a>');
     };
 
 
