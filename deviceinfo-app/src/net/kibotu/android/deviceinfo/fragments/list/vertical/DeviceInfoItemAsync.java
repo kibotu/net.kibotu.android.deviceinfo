@@ -8,6 +8,8 @@ public abstract class DeviceInfoItemAsync extends DeviceInfoItem implements Runn
     public static final int DEFAULT_SLEEP_TIME = 1;
     private volatile int sleepTime;
     private volatile boolean isRunning;
+    public volatile Complete completeHandler;
+    public volatile Error errorHandler;
 
     public DeviceInfoItemAsync(final int order) {
         this(DEFAULT_SLEEP_TIME, "", "", "", order);
@@ -47,12 +49,23 @@ public abstract class DeviceInfoItemAsync extends DeviceInfoItem implements Runn
     final public void run() {
         isRunning = true;
         do {
-            async();
             try {
+                async();
                 Thread.sleep(sleepTime);
-            } catch (final InterruptedException e) {
+            } catch (final Exception e) {
+                if (errorHandler != null) errorHandler.onError(e);
                 Logger.e(e);
             }
         } while (isRunning);
+
+        if (completeHandler != null) completeHandler.onComplete();
+    }
+
+    public interface Complete {
+        void onComplete();
+    }
+
+    public interface Error {
+        void onError(final Exception result);
     }
 }

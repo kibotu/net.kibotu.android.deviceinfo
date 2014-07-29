@@ -32,7 +32,7 @@ public class NetworkHelper {
 
             @Override
             protected void onPostExecute(final JSONObject json) {
-                callback.onComplete(json);
+                callback.onComplete(json == null ? new JSONObject() : json);
             }
         }.execute(url);
     }

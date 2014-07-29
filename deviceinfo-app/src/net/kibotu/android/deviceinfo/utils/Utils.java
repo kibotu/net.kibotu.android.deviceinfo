@@ -385,26 +385,21 @@ final public class Utils {
 
     public static Map<String, String> parseTelize(final JSONObject geo) {
         final LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-        try {
-            map.put("Timezone", geo.getString("timezone"));
-            map.put("ISP", geo.getString("isp"));
-            map.put("Region Code", geo.getString("region_code"));
-            map.put("Country", geo.getString("country"));
-            map.put("DMA Code", geo.getString("dma_code"));
-            map.put("Area Code", geo.getString("area_code"));
-            map.put("Region", geo.getString("region"));
-            map.put("IP", geo.getString("ip"));
-            map.put("ASN", geo.getString("asn"));
-            map.put("Continent Code", geo.getString("continent_code"));
-            map.put("City", geo.getString("city"));
-            map.put("Postal Code", geo.getString("postal_code"));
-            map.put("Longitude", geo.getString("longitude"));
-            map.put("Latitude", geo.getString("latitude"));
-            map.put("Country Code", geo.getString("country_code"));
-        } catch (final JSONException e) {
-            Logger.e(e);
-        }
-
+        map.put("Timezone", geo.optString("timezone"));
+        map.put("ISP", geo.optString("isp"));
+        map.put("Region Code", geo.optString("region_code"));
+        map.put("Country", geo.optString("country"));
+        map.put("DMA Code", geo.optString("dma_code"));
+        map.put("Area Code", geo.optString("area_code"));
+        map.put("Region", geo.optString("region"));
+        map.put("IP", geo.optString("ip"));
+        map.put("ASN", geo.optString("asn"));
+        map.put("Continent Code", geo.optString("continent_code"));
+        map.put("City", geo.optString("city"));
+        map.put("Postal Code", geo.optString("postal_code"));
+        map.put("Longitude", geo.optString("longitude"));
+        map.put("Latitude", geo.optString("latitude"));
+        map.put("Country Code", geo.optString("country_code"));
         return map;
     }
 
