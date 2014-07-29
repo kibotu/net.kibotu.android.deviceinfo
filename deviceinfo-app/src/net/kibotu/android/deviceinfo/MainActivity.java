@@ -106,6 +106,11 @@ public class MainActivity extends SlidingFragmentActivity {
         }
         super.onPostCreate(savedInstanceState);
 
+        // pre-load
+        for (Registry item : Registry.values()) {
+            item.getFragmentList();
+        }
+
         // More customized example
 //        RateMeMaybe rmm = new RateMeMaybe(this);
 //        rmm.setPromptMinimums(3, 14, 10, 30);
@@ -146,8 +151,6 @@ public class MainActivity extends SlidingFragmentActivity {
 
         for (Registry item : Registry.values()) {
             arcList.addItem(item.name(), item.iconR);
-            // pre-load
-            item.getFragmentList();
         }
 
         setContentView(R.layout.content_frame);
