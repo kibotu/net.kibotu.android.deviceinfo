@@ -781,7 +781,7 @@ public enum Registry implements IGetInfoFragment {
 
     // region Sensor
 
-    Sensor(R.drawable.sensors, R.drawable.sensors_i) {
+    Sensors(R.drawable.sensors, R.drawable.sensors_i) {
         @Override
         public void createFragmentList() {
 

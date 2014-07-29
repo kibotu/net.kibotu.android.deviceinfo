@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ActionBarSherlock/actionbarsherlock/actionbarsherlock.iml" filepath="$PROJECT_DIR$/ActionBarSherlock/actionbarsherlock/actionbarsherlock.iml" />
-      <module fileurl="file://$PROJECT_DIR$/deviceinfo.iml" filepath="$PROJECT_DIR$/deviceinfo.iml" />
       <module fileurl="file://$PROJECT_DIR$/deviceinfo-app/deviceinfo-app.iml" filepath="$PROJECT_DIR$/deviceinfo-app/deviceinfo-app.iml" />
       <module fileurl="file://$PROJECT_DIR$/deviceinfo-lib/deviceinfo-lib.iml" filepath="$PROJECT_DIR$/deviceinfo-lib/deviceinfo-lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/deviceinfo-tests/deviceinfo-tests.iml" filepath="$PROJECT_DIR$/deviceinfo-tests/deviceinfo-tests.iml" />
