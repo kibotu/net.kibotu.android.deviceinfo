@@ -27,11 +27,21 @@ Library and app for showing tons of device information for your android device.
 ### Contact
 * [Jan Rabe](mailto:jan.rabe@wooga.com)
 
-### TODO
+### Known Issues aka To-Do
 
-* write readme file :D 
+- slow starting of the app and missing of a loading screen / progress bar
+- crashes on changing orientation
+- formatting for some fields are off on certain devices
+- icon size in actionbar is too big on tablets
+- cpu details only showing non idling cpu
+- missing of proper way to exit the app
+ 
+# To-Do
 
-### Known Issues
+- settings for: 
+    - enabling / disabling error reporting
+    - changing celcius / farenheit, cm / inch etc.
+    - dark / light theme
 
 ### Contact
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Device Information Android</string>
+    <string name="app_name">Device Info Android</string>
     <string name="rate">Rate</string>
     <string name="share">Share</string>
     <string name="appinfo">App</string>
