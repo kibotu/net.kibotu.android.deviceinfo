@@ -36,7 +36,7 @@ Library and app for showing tons of device information for your android device.
 - cpu details only showing non idling cpu
 - missing of proper way to exit the app
  
-# To-Do
+### To-Do
 
 - settings for: 
     - enabling / disabling error reporting
