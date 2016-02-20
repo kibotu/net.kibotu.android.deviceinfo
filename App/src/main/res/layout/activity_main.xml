@@ -1,12 +1,65 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="${relativePackage}.${activityClass}">
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="${relativePackage}.${activityClass}">
 
-    <TextView
-        android:text="@string/hello_world"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <android.support.v4.widget.DrawerLayout
+            android:id="@+id/drawer_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <include
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    layout="@layout/toolbar"/>
+
+            <FrameLayout
+                    android:id="@+id/fragment_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+        <android.support.design.widget.NavigationView
+                android:id="@+id/left_drawer"
+                android:layout_gravity="start"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="0dp">
+
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                <TextView
+                        android:text="Title"
+                        android:id="@+id/drawer_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"/>
+
+                <android.support.v7.widget.RecyclerView
+                        android:id="@+id/main_menu_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+
+            </LinearLayout>
+
+        </android.support.design.widget.NavigationView>
+
+    </android.support.v4.widget.DrawerLayout>
+
+    <FrameLayout
+            android:id="@+id/overlay_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
 </RelativeLayout>

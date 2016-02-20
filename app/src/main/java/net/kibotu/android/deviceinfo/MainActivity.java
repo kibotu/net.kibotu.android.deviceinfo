@@ -1,15 +1,42 @@
 package net.kibotu.android.deviceinfo;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.app.AppCompatActivity;
+import android.view.WindowManager;
+import butterknife.ButterKnife;
+import net.kibotu.android.deviceinfo.ui.menu.IMainMenu;
+import net.kibotu.android.deviceinfo.ui.menu.IMenuProvider;
+import net.kibotu.android.deviceinfo.ui.menu.MainMenu;
 
-public class MainActivity extends Activity {
+import static net.kibotu.android.deviceinfo.ui.FragmentProvider.showBuildConfigFragment;
+
+public class MainActivity extends AppCompatActivity implements IMenuProvider {
+
+    IMainMenu mainMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+
+        // Keep the screen always on
+        if (BuildConfig.DEBUG)
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        showBuildConfigFragment();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getMainMenu().prepareDrawers();
+    }
+
+    @Override
+    public IMainMenu getMainMenu() {
+        if (mainMenu == null)
+            mainMenu = new MainMenu();
+        return mainMenu;
     }
 }
