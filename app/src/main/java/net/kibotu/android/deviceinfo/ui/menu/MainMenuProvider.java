@@ -3,6 +3,8 @@ package net.kibotu.android.deviceinfo.ui.menu;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 
+import java.util.List;
+
 import static com.common.android.utils.ContextHelper.getContext;
 
 /**
@@ -43,6 +45,11 @@ public class MainMenuProvider {
 
             @Override
             public IMainMenu setLeftDrawerLockMode(@LockMode int lockMode) {
+                return this;
+            }
+
+            @Override
+            public IMainMenu setMenuItems(List<MenuItem> menu) {
                 return this;
             }
         };

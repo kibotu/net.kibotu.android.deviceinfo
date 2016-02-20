@@ -2,16 +2,21 @@ package net.kibotu.android.deviceinfo.ui.menu;
 
 import android.app.ActionBar;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import com.common.android.utils.ui.recyclerView.DataBindAdapter;
+import com.common.android.utils.ui.recyclerView.DividerItemDecoration;
 import net.kibotu.android.deviceinfo.R;
+
+import java.util.List;
 
 import static com.common.android.utils.ContextHelper.getContext;
 import static com.common.android.utils.extensions.ViewExtensions.getContentRoot;
@@ -34,13 +39,23 @@ public class MainMenu implements IMainMenu {
     NavigationView leftDrawer;
 
     @NonNull
+    @Bind(R.id.main_menu_list)
+    RecyclerView list;
+
+    @NonNull
     @Bind(R.id.toolbar)
     Toolbar toolbar;
 
     private ActionBarDrawerToggle drawerToggle;
 
+    DataBindAdapter<MenuItem> adapter;
+
     public MainMenu() {
         ButterKnife.bind(this, getContentRoot());
+
+        adapter = new DataBindAdapter<>();
+        list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        list.setAdapter(adapter);
     }
 
     @Override
@@ -105,6 +120,15 @@ public class MainMenu implements IMainMenu {
     @Override
     public IMainMenu setLeftDrawerLockMode(@LockMode int lockMode) {
         drawerLayout.setDrawerLockMode(lockMode, leftDrawer);
+        return this;
+    }
+
+    @Override
+    public IMainMenu setMenuItems(@NonNull final List<MenuItem> menu) {
+        adapter.clear();
+        for (MenuItem item : menu)
+            adapter.add(item, MenuItemBinder.class);
+        adapter.notifyDataSetChanged();
         return this;
     }
 }

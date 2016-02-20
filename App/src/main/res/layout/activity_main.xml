@@ -28,9 +28,10 @@
         </LinearLayout>
 
         <android.support.design.widget.NavigationView
+                android:background="@color/white"
                 android:id="@+id/left_drawer"
                 android:layout_gravity="start"
-                android:layout_width="wrap_content"
+                android:layout_width="250dp"
                 android:layout_height="match_parent"
                 android:divider="@android:color/transparent"
                 android:dividerHeight="0dp">
