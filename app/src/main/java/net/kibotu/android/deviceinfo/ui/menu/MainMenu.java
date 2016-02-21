@@ -63,7 +63,7 @@ public class MainMenu implements IMainMenu {
         setupDefaultActionbar();
     }
 
-    private void setupDefaultActionbar() {
+    protected void setupDefaultActionbar() {
         getAppCompatActivity().setSupportActionBar(toolbar);
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowCustomEnabled(true);
@@ -129,12 +129,12 @@ public class MainMenu implements IMainMenu {
     }
 
     @NonNull
-    private AppCompatActivity getAppCompatActivity() {
+    protected AppCompatActivity getAppCompatActivity() {
         return (AppCompatActivity) getContext();
     }
 
     @NonNull
-    private android.support.v7.app.ActionBar getSupportActionBar() {
+    protected android.support.v7.app.ActionBar getSupportActionBar() {
         return getAppCompatActivity().getSupportActionBar();
     }
 
@@ -162,7 +162,7 @@ public class MainMenu implements IMainMenu {
         return this;
     }
 
-    private boolean isLeftDrawerOpen() {
+    protected boolean isLeftDrawerOpen() {
         return drawerLayout.isDrawerOpen(Gravity.LEFT);
     }
 

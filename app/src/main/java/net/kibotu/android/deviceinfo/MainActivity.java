@@ -13,7 +13,6 @@ import com.canelmas.let.DeniedPermission;
 import com.canelmas.let.Let;
 import com.canelmas.let.RuntimePermissionListener;
 import com.canelmas.let.RuntimePermissionRequest;
-import com.common.android.utils.ContextHelper;
 import com.common.android.utils.interfaces.ILogTag;
 import com.common.android.utils.logging.Logger;
 import net.kibotu.android.deviceinfo.ui.menu.*;
@@ -51,13 +50,11 @@ public class MainActivity extends AppCompatActivity implements ILogTag, IMenuPro
         getMainMenu().prepareDrawers();
     }
 
-    @NonNull
     @Override
-    public IMainMenu getMainMenu() {
-        if (mainMenu == null)
-            mainMenu = new MainMenu();
-        return mainMenu;
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
+
 
     @Override
     public void onBackStackChanged() {
@@ -75,11 +72,9 @@ public class MainActivity extends AppCompatActivity implements ILogTag, IMenuPro
         if (MainMenuProvider.provide().isDrawerOpen() && currentFragment(R.id.overlay_container) == null)
             MainMenuProvider.provide().closeDrawers();
         else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            if (getSupportFragmentManager().getBackStackEntryCount() > 0 && !ContextHelper.getContext().isFinishing())
-                popBackStackImmediate(getSupportFragmentManager());
-            else
-                super.onBackPressed();
-        }
+            popBackStackImmediate(getSupportFragmentManager());
+        } else
+            super.onBackPressed();
     }
 
     @Override
@@ -114,8 +109,11 @@ public class MainActivity extends AppCompatActivity implements ILogTag, IMenuPro
         return getClass().getSimpleName();
     }
 
+    @NonNull
     @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    public IMainMenu getMainMenu() {
+        if (mainMenu == null)
+            mainMenu = new MainMenu();
+        return mainMenu;
     }
 }

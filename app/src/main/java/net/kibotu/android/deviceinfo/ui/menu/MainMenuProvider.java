@@ -21,7 +21,7 @@ public class MainMenuProvider {
                 : stub;
     }
 
-    private static IMainMenu createStub() {
+    protected static IMainMenu createStub() {
         return new IMainMenu() {
             @Override
             public IMainMenu prepareDrawers() {
