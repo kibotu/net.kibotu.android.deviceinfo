@@ -11,6 +11,7 @@
             android:clickable="false"
             android:focusable="false"
             android:longClickable="false"
+            android:text="hallo world"
             android:gravity="center"
             android:layout_gravity="center"
             android:textColor="@color/white"

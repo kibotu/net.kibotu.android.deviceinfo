@@ -37,6 +37,8 @@ public abstract class BaseFragment extends Fragment implements ILogTag, ILayout,
         if (rootView == null)
             rootView = inflater.inflate(getLayout(), container, false);
 
+        updateMainMenu();
+
         return rootView;
     }
 
