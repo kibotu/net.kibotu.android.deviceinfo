@@ -44,6 +44,7 @@ public abstract class BaseFragment extends Fragment implements ILogTag, ILayout,
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+        onViewCreated();
     }
 
     @Override
@@ -63,6 +64,8 @@ public abstract class BaseFragment extends Fragment implements ILogTag, ILayout,
     }
 
     protected abstract String getTitle();
+
+    protected abstract void onViewCreated();
 
     @Override
     public boolean lockLeftMenu() {

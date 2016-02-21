@@ -125,6 +125,7 @@ public class MainMenu implements IMainMenu {
     @Override
     public IMainMenu setTitle(@NonNull final String title) {
         getSupportActionBar().setTitle(title);
+        actionbarViewHolder.title.setText("" + title);
         return this;
     }
 

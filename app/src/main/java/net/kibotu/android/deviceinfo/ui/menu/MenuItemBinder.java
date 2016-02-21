@@ -26,6 +26,11 @@ public class MenuItemBinder extends DataBinder<MenuItem, MenuItemBinder.ViewHold
     }
 
     @Override
+    public int getLayout() {
+        return R.layout.menu_item;
+    }
+
+    @Override
     public void bindViewHolder(@NotNull final ViewHolder viewHolder, final int position) {
         final MenuItem item = get(position);
 
@@ -47,11 +52,6 @@ public class MenuItemBinder extends DataBinder<MenuItem, MenuItemBinder.ViewHold
                 MainMenuProvider.provide().closeDrawers();
             }
         });
-    }
-
-    @Override
-    public int getLayout() {
-        return R.layout.menu_item;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

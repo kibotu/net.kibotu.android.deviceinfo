@@ -12,6 +12,7 @@ import com.common.android.utils.logging.Logger;
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.HawkBuilder;
 import com.orhanobut.hawk.LogLevel;
+import net.kibotu.android.deviceinfo.library.Device;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -105,5 +106,7 @@ public class MainApplication extends MultiDexApplication {
     private void setContext(Activity activity) {
         if (activity instanceof FragmentActivity)
             ContextHelper.setContext((FragmentActivity) activity);
+
+        Device.setContext(activity);
     }
 }
