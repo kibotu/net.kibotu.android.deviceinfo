@@ -2,26 +2,50 @@ package net.kibotu.android.deviceinfo;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 import android.support.v4.app.FragmentActivity;
 import com.common.android.utils.ContextHelper;
+import com.common.android.utils.logging.Logger;
+import com.orhanobut.hawk.Hawk;
+import com.orhanobut.hawk.HawkBuilder;
+import com.orhanobut.hawk.LogLevel;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by Nyaruhodo on 20.02.2016.
  */
-public class MainApplication extends Application {
+public class MainApplication extends MultiDexApplication {
 
-    ActivityLifecycleCallbacks callbacks = createActivityLifecycleCallbacks();
+    ActivityLifecycleCallbacks activityLifecycleCallbacks = createActivityLifecycleCallbacks();
 
     @Override
     public void onCreate() {
+        MultiDex.install(getApplicationContext());
         super.onCreate();
-        registerActivityLifecycleCallbacks(callbacks);
+        registerActivityLifecycleCallbacks(activityLifecycleCallbacks);
+
+        // TODO: 21.02.2016
+//        // Default font
+//        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+//                .setDefaultFontPath(UiLight.getResourcePath(getApplicationContext()))
+//                .setFontAttrId(R.attr.fontPath)
+//                .build());
     }
 
     @Override
     public void onTerminate() {
+        unregisterActivityLifecycleCallbacks(activityLifecycleCallbacks);
         super.onTerminate();
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 
     private ActivityLifecycleCallbacks createActivityLifecycleCallbacks() {
@@ -29,6 +53,21 @@ public class MainApplication extends Application {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
                 setContext(activity);
+
+                Logger.setLogLevel(BuildConfig.DEBUG
+                        ? Logger.Level.VERBOSE
+                        : Logger.Level.SILENT);
+
+                // Secure shared preferences
+                Hawk.init(activity)
+                        .setEncryptionMethod(BuildConfig.DEBUG
+                                ? HawkBuilder.EncryptionMethod.NO_ENCRYPTION
+                                : HawkBuilder.EncryptionMethod.MEDIUM)
+                        .setStorage(HawkBuilder.newSharedPrefStorage(activity))
+                        .setLogLevel(BuildConfig.DEBUG
+                                ? LogLevel.FULL
+                                : LogLevel.NONE)
+                        .build();
             }
 
             @Override

@@ -20,4 +20,8 @@ public interface IMainMenu {
     IMainMenu setLeftDrawerLockMode(@LockMode int lockMode);
 
     IMainMenu setMenuItems(List<MenuItem> menu);
+
+    boolean isDrawerOpen();
+
+    IMainMenu closeDrawers();
 }

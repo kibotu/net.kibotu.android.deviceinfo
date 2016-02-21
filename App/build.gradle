@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'android-apt'
+apply plugin: 'let'
 
 android {
     compileSdkVersion 23
@@ -6,10 +8,13 @@ android {
 
     defaultConfig {
         applicationId "net.kibotu.android.deviceinfo"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 23
-        versionCode 1
+        versionCode commitCount()
         versionName "1.0"
+        multiDexEnabled = true
+        renderscriptTargetApi 20
+        renderscriptSupportModeEnabled true
     }
 
     buildTypes {
@@ -55,6 +60,7 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile project(':lib')
     compile 'com.android.support:design:23.1.1'
@@ -65,4 +71,40 @@ dependencies {
         exclude group: 'com.mcxiaoke.volley'
         exclude group: 'com.intellij.annotations'
     }
+
+    // recyclerview animations
+    compile 'jp.wasabeef:recyclerview-animators:2.2.0'
+
+    // recyclerview overscroll effect
+    compile 'me.everything:overscroll-decor-android:1.0.0'
+
+    // fonts
+    compile('uk.co.chrisjenx:calligraphy:2.1.0')
+
+    // crouton notifications
+    compile('de.keyboardsurfer.android.widget:crouton:1.8.5@aar') {
+        exclude group: 'com.google.android', module: 'support-v4'
+    }
+
+    // network layer
+    compile ('com.github.orhanobut:wasp:1.15') {
+        exclude module: 'hawk'
+    }
+
+    // local storage
+    compile 'com.github.orhanobut:hawk:1.21'
+}
+
+def commitCount() {
+    def stdout = new ByteArrayOutputStream()
+    description = "git rev-list --full-history --all"
+    println(description)
+    exec {
+        commandLine 'git', 'rev-list', '--full-history', '--all'
+        standardOutput = stdout
+    }
+    String output = stdout.toString();
+    List<String> commits = output.split("\n");
+    println("Version Code: " + commits.size())
+    return commits.size();
 }

@@ -1,19 +1,20 @@
 package net.kibotu.android.deviceinfo.ui.menu;
 
-import android.app.ActionBar;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.common.android.utils.ui.recyclerView.DataBindAdapter;
-import com.common.android.utils.ui.recyclerView.DividerItemDecoration;
 import net.kibotu.android.deviceinfo.R;
 
 import java.util.List;
@@ -46,7 +47,9 @@ public class MainMenu implements IMainMenu {
     @Bind(R.id.toolbar)
     Toolbar toolbar;
 
-    private ActionBarDrawerToggle drawerToggle;
+    ActionBarDrawerToggle drawerToggle;
+
+    ActionbarViewHolder actionbarViewHolder;
 
     DataBindAdapter<MenuItem> adapter;
 
@@ -56,6 +59,27 @@ public class MainMenu implements IMainMenu {
         adapter = new DataBindAdapter<>();
         list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         list.setAdapter(adapter);
+
+        setupDefaultActionbar();
+    }
+
+    private void setupDefaultActionbar() {
+        getAppCompatActivity().setSupportActionBar(toolbar);
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setIcon(R.color.transparent);
+        actionBar.setHomeButtonEnabled(true);
+
+        final View viewActionBar = getContext().getLayoutInflater().inflate(R.layout.custom_toolbar, null);
+        ActionBar.LayoutParams params = new ActionBar.LayoutParams(
+                ActionBar.LayoutParams.WRAP_CONTENT,
+                ActionBar.LayoutParams.MATCH_PARENT,
+                Gravity.CENTER);
+        actionBar.setCustomView(viewActionBar, params);
+
+        actionbarViewHolder = new ActionbarViewHolder(viewActionBar);
     }
 
     @Override
@@ -100,20 +124,26 @@ public class MainMenu implements IMainMenu {
 
     @Override
     public IMainMenu setTitle(@NonNull final String title) {
-        getActionBar().setTitle(title);
+        getSupportActionBar().setTitle(title);
         return this;
     }
 
-    private ActionBar getActionBar() {
-        return getContext().getActionBar();
+    @NonNull
+    private AppCompatActivity getAppCompatActivity() {
+        return (AppCompatActivity) getContext();
+    }
+
+    @NonNull
+    private android.support.v7.app.ActionBar getSupportActionBar() {
+        return getAppCompatActivity().getSupportActionBar();
     }
 
     @Override
     public IMainMenu showActionBar(boolean isShowing) {
         if (isShowing)
-            getActionBar().show();
+            getSupportActionBar().show();
         else
-            getActionBar().hide();
+            getSupportActionBar().hide();
         return this;
     }
 
@@ -129,6 +159,21 @@ public class MainMenu implements IMainMenu {
         for (MenuItem item : menu)
             adapter.add(item, MenuItemBinder.class);
         adapter.notifyDataSetChanged();
+        return this;
+    }
+
+    private boolean isLeftDrawerOpen() {
+        return drawerLayout.isDrawerOpen(Gravity.LEFT);
+    }
+
+    @Override
+    public boolean isDrawerOpen() {
+        return isLeftDrawerOpen();
+    }
+
+    @Override
+    public IMainMenu closeDrawers() {
+        drawerLayout.closeDrawers();
         return this;
     }
 }

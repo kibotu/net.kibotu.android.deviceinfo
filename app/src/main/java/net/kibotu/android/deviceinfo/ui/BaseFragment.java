@@ -1,10 +1,8 @@
 package net.kibotu.android.deviceinfo.ui;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,20 +10,19 @@ import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import com.common.android.utils.interfaces.ILayout;
 import com.common.android.utils.interfaces.ILogTag;
-import com.common.android.utils.interfaces.ITitleProvider;
-import net.kibotu.android.deviceinfo.ui.menu.ISupportMainMenu;
+import net.kibotu.android.deviceinfo.ui.menu.ISupportMenu;
 import net.kibotu.android.deviceinfo.ui.menu.MainMenuProvider;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by Nyaruhodo on 20.02.2016.
  */
-public abstract class BaseFragment extends Fragment implements ILogTag, ILayout, ISupportMainMenu {
+public abstract class BaseFragment extends Fragment implements ILogTag, ILayout, ISupportMenu {
 
     View rootView;
 
     public BaseFragment() {
-        //
+        // mandatory for fragment transactions
     }
 
     @NotNull

@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide;
 import com.common.android.utils.ui.recyclerView.DataBindAdapter;
 import com.common.android.utils.ui.recyclerView.DataBinder;
 import net.kibotu.android.deviceinfo.R;
+import net.kibotu.android.deviceinfo.ui.BaseFragment;
 import org.jetbrains.annotations.NotNull;
 
 import static com.common.android.utils.ContextHelper.getContext;
@@ -37,8 +38,13 @@ public class MenuItemBinder extends DataBinder<MenuItem, MenuItemBinder.ViewHold
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (dataBindAdapter.getOnItemClickListener() != null)
-                    dataBindAdapter.getOnItemClickListener().onItemClick(item, viewHolder.itemView, position);
+                final BaseFragment fragment = item.getFragment();
+                getContext().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, fragment)
+                        .addToBackStack(fragment.tag())
+                        .commit();
+                MainMenuProvider.provide().closeDrawers();
             }
         });
     }

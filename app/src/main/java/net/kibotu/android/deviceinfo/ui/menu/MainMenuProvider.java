@@ -52,6 +52,16 @@ public class MainMenuProvider {
             public IMainMenu setMenuItems(List<MenuItem> menu) {
                 return this;
             }
+
+            @Override
+            public boolean isDrawerOpen() {
+                return false;
+            }
+
+            @Override
+            public IMainMenu closeDrawers() {
+                return this;
+            }
         };
     }
 }
