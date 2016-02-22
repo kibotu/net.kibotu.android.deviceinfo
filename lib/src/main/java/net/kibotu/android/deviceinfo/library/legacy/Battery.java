@@ -23,8 +23,18 @@ public class Battery extends BroadcastReceiver {
     String technology = "";
     int status;
 
-    public Battery(final Context context) {
-        registerReceiver(context);
+    public Battery() {
+    }
+
+    public Battery registerReceiver() {
+        final IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+        getContext().registerReceiver(this, filter);
+        return this;
+    }
+
+    public Battery unregesterReceiver() {
+        getContext().unregisterReceiver(this);
+        return this;
     }
 
     @Override
@@ -118,11 +128,6 @@ public class Battery extends BroadcastReceiver {
         return ret;
     }
 
-    public void registerReceiver(final Context context) {
-        final IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-        context.registerReceiver(this, filter);
-    }
-
     public String getTemperatureCelcius() {
         return convertFahrenheitToCelcius(temperature / 10f) + " °C";
     }
@@ -145,11 +150,29 @@ public class Battery extends BroadcastReceiver {
         return nameStatus(status);
     }
 
-    public void onResume() {
-        registerReceiver(getContext());
+    public String getTechnology() {
+        return technology;
     }
 
-    public void onPause() {
-        getContext().unregisterReceiver(this);
+    public int getVoltage() {
+        return voltage;
+    }
+
+    public String getHealth() {
+        return health;
+    }
+
+    public int getTemperature() {
+        return temperature;
+    }
+
+    public String getPlugged() {
+        return plugged.equalsIgnoreCase("0")
+                ? "Battery"
+                : plugged;
+    }
+
+    public boolean getPresent() {
+        return present;
     }
 }

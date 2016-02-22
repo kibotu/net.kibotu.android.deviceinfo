@@ -14,6 +14,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.webkit.WebView;
+import net.kibotu.android.deviceinfo.library.legacy.Battery;
 import net.kibotu.android.deviceinfo.library.legacy.Bluetooth;
 import net.kibotu.android.deviceinfo.library.legacy.DisplayHelper;
 import net.kibotu.android.deviceinfo.library.legacy.ProxySettings;
@@ -546,5 +547,9 @@ final public class Device {
 //            Logger.v(""+apps.get(i).activityInfo.name);
 //        }
         return apps;
+    }
+
+    public static Battery getBattery() {
+        return new Battery();
     }
 }
