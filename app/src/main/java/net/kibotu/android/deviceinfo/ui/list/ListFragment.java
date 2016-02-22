@@ -33,18 +33,18 @@ public abstract class ListFragment extends BaseFragment {
         adapter.notifyDataSetChanged();
     }
 
-    protected void addListItemHorizontally(String label, String value, String description) {
+    protected void addListItemHorizontally(String label, Object value, String description) {
         ((DataBindAdapter<ListItem>) list.getAdapter()).add(new ListItem()
                         .setLabel(label)
-                        .setValue(value)
+                        .setValue(String.valueOf(value))
                         .setDescription(description),
                 HorizontalListItemBinder.class);
     }
 
-    protected void addListItemVertically(String label, String value, String description) {
+    protected void addListItemVertically(String label, Object value, String description) {
         ((DataBindAdapter<ListItem>) list.getAdapter()).add(new ListItem()
                         .setLabel(label)
-                        .setValue(value)
+                        .setValue(String.valueOf(value))
                         .setDescription(description),
                 VerticalListItemBinder.class);
     }

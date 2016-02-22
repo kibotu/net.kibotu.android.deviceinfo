@@ -1,5 +1,6 @@
 package net.kibotu.android.deviceinfo.library;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.FeatureInfo;
 import android.content.pm.PackageManager;
@@ -24,7 +25,7 @@ final public class Device {
         Device.context = context;
     }
 
-    private static Context getContext() {
+    public static Context getContext() {
         if (context == null)
             throw new IllegalStateException("'context' must not be null. Please invoke Device.setContext().");
         return context;
@@ -66,5 +67,16 @@ final public class Device {
             }
         }
         return featureMap;
+    }
+
+    public static boolean supportsOpenGLES2() {
+        return getOpenGLVersion() >= 0x20000;
+    }
+
+    public static int getOpenGLVersion() {
+        return ((ActivityManager) getContext()
+                .getSystemService(Context.ACTIVITY_SERVICE))
+                .getDeviceConfigurationInfo()
+                .reqGlEsVersion;
     }
 }
