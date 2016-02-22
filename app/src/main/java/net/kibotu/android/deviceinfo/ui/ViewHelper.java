@@ -18,6 +18,7 @@ import org.json.JSONObject;
 
 import java.util.*;
 
+import static android.hardware.Sensor.*;
 import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR1;
 
 /**
@@ -83,47 +84,68 @@ final public class ViewHelper {
         }).start();
     }
 
-    @Deprecated
-    public static String getSensorName(final int type) {
 
-        String name = "" + type;
+    public static String getSensorName(final Sensor sensor) {
 
-        switch (type) {
-            case Sensor.TYPE_ACCELEROMETER:
-                name = "Accelerometer";
-                break;
-            case Sensor.TYPE_MAGNETIC_FIELD:
-                name = "Magnetic Field";
-                break;
-            case Sensor.TYPE_ORIENTATION:
-                name = "Orientation";
-                break;
-            case Sensor.TYPE_GYROSCOPE:
-                name = "Gyroscope";
-                break;
-            case Sensor.TYPE_LIGHT:
-                name = "Light";
-                break;
-            case Sensor.TYPE_PRESSURE:
-                name = "Pressure";
-                break;
-            case Sensor.TYPE_TEMPERATURE:
-                name = "Temperature";
-                break;
-            case Sensor.TYPE_PROXIMITY:
-                name = "Proximity";
-                break;
-            case Sensor.TYPE_GRAVITY:
-                name = "Gravity";
-                break;
-            case Sensor.TYPE_LINEAR_ACCELERATION:
-                name = "Linear Acceleration";
-                break;
-            case Sensor.TYPE_ROTATION_VECTOR:
-                name = "Rotation Vector";
-                break;
+        if (Device.isAtLeastVersion(Build.VERSION_CODES.KITKAT_WATCH))
+            return sensor.getStringType();
+
+        String name;
+
+        switch (sensor.getType()) {
+            case TYPE_ACCELEROMETER:
+                name = STRING_TYPE_ACCELEROMETER;
+            case TYPE_AMBIENT_TEMPERATURE:
+                name = STRING_TYPE_AMBIENT_TEMPERATURE;
+            case TYPE_GAME_ROTATION_VECTOR:
+                name = STRING_TYPE_GAME_ROTATION_VECTOR;
+            case TYPE_GEOMAGNETIC_ROTATION_VECTOR:
+                name = STRING_TYPE_GEOMAGNETIC_ROTATION_VECTOR;
+            case 24:
+                name = "android.sensor.glance_gesture";
+            case TYPE_GRAVITY:
+                name = STRING_TYPE_GRAVITY;
+            case TYPE_GYROSCOPE:
+                name = STRING_TYPE_GYROSCOPE;
+            case TYPE_GYROSCOPE_UNCALIBRATED:
+                name = STRING_TYPE_GYROSCOPE_UNCALIBRATED;
+            case TYPE_HEART_RATE:
+                name = STRING_TYPE_HEART_RATE;
+            case TYPE_LIGHT:
+                name = STRING_TYPE_LIGHT;
+            case TYPE_LINEAR_ACCELERATION:
+                name = STRING_TYPE_LINEAR_ACCELERATION;
+            case TYPE_MAGNETIC_FIELD:
+                name = STRING_TYPE_MAGNETIC_FIELD;
+            case TYPE_MAGNETIC_FIELD_UNCALIBRATED:
+                name = STRING_TYPE_MAGNETIC_FIELD_UNCALIBRATED;
+            case 25:
+                name = "android.sensor.pick_up_gesture";
+            case TYPE_PRESSURE:
+                name = STRING_TYPE_PRESSURE;
+            case TYPE_PROXIMITY:
+                name = STRING_TYPE_PROXIMITY;
+            case TYPE_RELATIVE_HUMIDITY:
+                name = STRING_TYPE_RELATIVE_HUMIDITY;
+            case TYPE_ROTATION_VECTOR:
+                name = STRING_TYPE_ROTATION_VECTOR;
+            case TYPE_SIGNIFICANT_MOTION:
+                name = STRING_TYPE_SIGNIFICANT_MOTION;
+            case TYPE_STEP_COUNTER:
+                name = STRING_TYPE_STEP_COUNTER;
+            case TYPE_STEP_DETECTOR:
+                name = STRING_TYPE_STEP_DETECTOR;
+            case 22:
+                name = "android.sensor.tilt_detector";
+            case 23:
+                name = "android.sensor.wake_gesture";
+            case TYPE_ORIENTATION:
+                name = STRING_TYPE_ORIENTATION;
+            case TYPE_TEMPERATURE:
+                name = STRING_TYPE_TEMPERATURE;
+            default:
+                name = android.os.Build.UNKNOWN;
         }
-
         return name;
     }
 

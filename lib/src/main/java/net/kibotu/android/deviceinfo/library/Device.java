@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.FeatureInfo;
 import android.content.pm.PackageManager;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Build;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
@@ -272,5 +274,9 @@ final public class Device {
 
     public static Bluetooth getBluetooth() {
         return new Bluetooth(getContext());
+    }
+
+    public static List<Sensor> getSensorList() {
+        return getSensorManager().getSensorList(Sensor.TYPE_ALL); // SensorManager.SENSOR_ALL
     }
 }
