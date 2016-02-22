@@ -1,11 +1,16 @@
 package net.kibotu.android.deviceinfo.library;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.FeatureInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.provider.Settings;
+import android.util.DisplayMetrics;
+import android.view.Display;
+import android.view.WindowManager;
+import net.kibotu.android.deviceinfo.library.legacy.DisplayHelper;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -16,13 +21,15 @@ import java.util.Map;
 final public class Device {
 
     private static Context context;
+    private static DisplayHelper displayHelper;
 
     private Device() throws IllegalAccessException {
         throw new IllegalAccessException();
     }
 
-    public static void setContext(Context context) {
+    public static void setContext(Activity context) {
         Device.context = context;
+        displayHelper = new DisplayHelper(context);
     }
 
     public static Context getContext() {
@@ -78,5 +85,39 @@ final public class Device {
                 .getSystemService(Context.ACTIVITY_SERVICE))
                 .getDeviceConfigurationInfo()
                 .reqGlEsVersion;
+    }
+
+    @Deprecated
+    public static String getUsableResolution() {
+        return String.format("%dx%d", Math.max(DisplayHelper.mScreenWidth, DisplayHelper.mScreenHeight), Math.min(DisplayHelper.mScreenWidth, DisplayHelper.mScreenHeight));
+    }
+
+    @Deprecated
+    public static String getUsableResolutionDp() {
+        return String.format("%.0fx%.0f", Math.max(DisplayHelper.mScreenWidth, DisplayHelper.mScreenHeight) / DisplayHelper.mDensity, Math.min(DisplayHelper.mScreenWidth, DisplayHelper.mScreenHeight) / DisplayHelper.mDensity);
+    }
+
+    @Deprecated
+    public static String getResolution() {
+        return String.format("%dx%d", Math.max(DisplayHelper.absScreenWidth, DisplayHelper.absScreenHeight), Math.min(DisplayHelper.absScreenWidth, DisplayHelper.absScreenHeight));
+    }
+
+    @Deprecated
+    public static String getResolutionDp() {
+        return String.format("%.0fx%.0f", Math.max(DisplayHelper.absScreenWidth, DisplayHelper.absScreenHeight) / DisplayHelper.mDensity, Math.min(DisplayHelper.absScreenWidth, DisplayHelper.absScreenHeight) / DisplayHelper.mDensity);
+    }
+
+    public static float getRefreshRate() {
+        return getDefaultDisplay().getRefreshRate();
+    }
+
+    public static Display getDefaultDisplay() {
+        return ((WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+    }
+
+    public static DisplayMetrics getDisplayMetrics() {
+        DisplayMetrics metrics = new DisplayMetrics();
+        getDefaultDisplay().getMetrics(metrics);
+        return metrics;
     }
 }
