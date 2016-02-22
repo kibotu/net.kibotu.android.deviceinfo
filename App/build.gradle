@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
 apply plugin: 'android-apt'
 apply plugin: 'let'
 
@@ -93,6 +94,9 @@ dependencies {
 
     // local storage
     compile 'com.github.orhanobut:hawk:1.21'
+    compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
+        transitive = true;
+    }
 }
 
 def commitCount() {
