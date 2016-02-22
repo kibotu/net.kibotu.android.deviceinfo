@@ -11,7 +11,7 @@
             android:layout_height="wrap_content">
 
         <TextView
-                android:text="Label"
+                android:text="Title"
                 android:id="@+id/label"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

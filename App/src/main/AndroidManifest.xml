@@ -4,6 +4,7 @@
         package="net.kibotu.android.deviceinfo">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <application
             android:name=".MainApplication"

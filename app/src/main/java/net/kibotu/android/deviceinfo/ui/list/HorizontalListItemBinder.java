@@ -12,6 +12,8 @@ import com.common.android.utils.ui.recyclerView.DataBinder;
 import net.kibotu.android.deviceinfo.R;
 import org.jetbrains.annotations.NotNull;
 
+import static android.text.Html.fromHtml;
+
 /**
  * Created by Nyaruhodo on 21.02.2016.
  */
@@ -31,7 +33,7 @@ public class HorizontalListItemBinder extends DataBinder<ListItem, HorizontalLis
         final ListItem item = get(position);
 
         viewHolder.label.setText(item.getLabel());
-        viewHolder.value.setText(item.getValue());
+        viewHolder.value.setText(fromHtml(item.getValue()));
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

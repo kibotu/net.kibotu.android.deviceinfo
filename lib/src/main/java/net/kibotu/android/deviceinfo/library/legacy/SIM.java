@@ -13,6 +13,9 @@ public class SIM {
     public String simSerial;
     public String simState;
 
+    /**
+     * Requires {@link android.Manifest.permission#READ_PHONE_STATE}
+     */
     public SIM() {
         load();
     }

@@ -7,6 +7,7 @@ import android.content.pm.FeatureInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.provider.Settings;
+import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
@@ -14,6 +15,9 @@ import net.kibotu.android.deviceinfo.library.legacy.DisplayHelper;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import static net.kibotu.android.deviceinfo.library.SystemService.getActivityManager;
+import static net.kibotu.android.deviceinfo.library.SystemService.getWindowManager;
 
 /**
  * Created by Nyaruhodo on 20.02.2016.
@@ -81,8 +85,7 @@ final public class Device {
     }
 
     public static int getOpenGLVersion() {
-        return ((ActivityManager) getContext()
-                .getSystemService(Context.ACTIVITY_SERVICE))
+        return getActivityManager()
                 .getDeviceConfigurationInfo()
                 .reqGlEsVersion;
     }
@@ -107,12 +110,12 @@ final public class Device {
         return String.format("%.0fx%.0f", Math.max(DisplayHelper.absScreenWidth, DisplayHelper.absScreenHeight) / DisplayHelper.mDensity, Math.min(DisplayHelper.absScreenWidth, DisplayHelper.absScreenHeight) / DisplayHelper.mDensity);
     }
 
-    public static float getRefreshRate() {
-        return getDefaultDisplay().getRefreshRate();
+    public static Display getDefaultDisplay() {
+        return getWindowManager().getDefaultDisplay();
     }
 
-    public static Display getDefaultDisplay() {
-        return ((WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+    public static float getRefreshRate() {
+        return getDefaultDisplay().getRefreshRate();
     }
 
     public static DisplayMetrics getDisplayMetrics() {
@@ -120,4 +123,37 @@ final public class Device {
         getDefaultDisplay().getMetrics(metrics);
         return metrics;
     }
+
+    /**
+     * Returns the unique subscriber ID, for example, the IMSI for a GSM phone.
+     * <p/>
+     * Disadvantages:
+     * - Android devices should have telephony services
+     * - It doesn't work reliably
+     * - Serial Number
+     * - When it does work, that value survives device wipes (Factory resets)
+     * and thus you could end up making a nasty mistake when one of your customers wipes their device
+     * and passes it on to another person.
+     */
+    public static String getSubscriberIdFromTelephonyManager() {
+        return getTelephonyManager().getSubscriberId();
+    }
+
+    /**
+     * Returns the unique device ID. for example,the IMEI for GSM and the MEID or ESN for CDMA phones.
+     * <p/>
+     * IMPORTANT! it requires READ_PHONE_STATE permission in AndroidManifest.xml
+     * <p/>
+     * Disadvantages:
+     * - Android devices should have telephony services
+     * - It doesn't work reliably
+     * - Serial Number
+     * - When it does work, that value survives device wipes (Factory resets)
+     * and thus you could end up making a nasty mistake when one of your customers wipes their device
+     * and passes it on to another person.
+     */
+    public static String getDeviceIdFromTelephonyManager() {
+        return getTelephonyManager().getDeviceId();
+    }
+
 }

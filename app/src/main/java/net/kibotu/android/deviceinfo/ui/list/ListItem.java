@@ -6,6 +6,7 @@ package net.kibotu.android.deviceinfo.ui.list;
 public class ListItem {
 
     private String label;
+    private String key;
     private String value;
     private String description;
 
@@ -16,6 +17,15 @@ public class ListItem {
 
     public String getLabel() {
         return label;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public ListItem setKey(String key) {
+        this.key = key;
+        return this;
     }
 
     public ListItem setValue(String value) {
@@ -44,6 +54,7 @@ public class ListItem {
         ListItem listItem = (ListItem) o;
 
         if (label != null ? !label.equals(listItem.label) : listItem.label != null) return false;
+        if (key != null ? !key.equals(listItem.key) : listItem.key != null) return false;
         if (value != null ? !value.equals(listItem.value) : listItem.value != null) return false;
         return description != null ? description.equals(listItem.description) : listItem.description == null;
 
@@ -52,6 +63,7 @@ public class ListItem {
     @Override
     public int hashCode() {
         int result = label != null ? label.hashCode() : 0;
+        result = 31 * result + (key != null ? key.hashCode() : 0);
         result = 31 * result + (value != null ? value.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
@@ -61,6 +73,7 @@ public class ListItem {
     public String toString() {
         return "ListItem{" +
                 "label='" + label + '\'' +
+                ", key='" + key + '\'' +
                 ", value='" + value + '\'' +
                 ", description='" + description + '\'' +
                 '}';

@@ -1,5 +1,6 @@
 package net.kibotu.android.deviceinfo.ui.list;
 
+import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,7 +23,7 @@ public abstract class ListFragment extends BaseFragment {
         return R.layout.fragment_list;
     }
 
-
+    @CallSuper
     @Override
     protected void onViewCreated() {
 
@@ -47,5 +48,14 @@ public abstract class ListFragment extends BaseFragment {
                         .setValue(String.valueOf(value))
                         .setDescription(description),
                 VerticalListItemBinder.class);
+    }
+
+    public void addListItemWithTitle(String label, String keys, String value, String description) {
+        ((DataBindAdapter<ListItem>) list.getAdapter()).add(new ListItem()
+                        .setLabel(label)
+                        .setKey(String.valueOf(keys))
+                        .setValue(String.valueOf(value))
+                        .setDescription(description),
+                HorizontalListItemBinderWithTitle.class);
     }
 }
