@@ -1,23 +1,27 @@
 package net.kibotu.android.deviceinfo.library;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.FeatureInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.provider.Settings;
-import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.view.Display;
-import android.view.WindowManager;
+import android.webkit.WebView;
+import net.kibotu.android.deviceinfo.library.legacy.Bluetooth;
 import net.kibotu.android.deviceinfo.library.legacy.DisplayHelper;
+import net.kibotu.android.deviceinfo.library.legacy.ProxySettings;
 
+import java.lang.reflect.Method;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
-import static net.kibotu.android.deviceinfo.library.SystemService.getActivityManager;
-import static net.kibotu.android.deviceinfo.library.SystemService.getWindowManager;
+import static net.kibotu.android.deviceinfo.library.SystemService.*;
 
 /**
  * Created by Nyaruhodo on 20.02.2016.
@@ -156,4 +160,117 @@ final public class Device {
         return getTelephonyManager().getDeviceId();
     }
 
+    /**
+     * System Property ro.serialno returns the serial number as unique number Works for Android 2.3 and above. Can return null.
+     * <p/>
+     * Disadvantages:
+     * - Serial Number is not available with all android devices
+     */
+    public static String getSerialNumber() {
+        String hwID = null;
+        try {
+            Class<?> c = Class.forName("android.os.SystemProperties");
+            Method get = c.getMethod("get", String.class, String.class);
+            hwID = (String) (get.invoke(c, "ro.serialno", "unknown"));
+        } catch (final Exception ignored) {
+        }
+        if (hwID != null) return hwID;
+        try {
+            Class<?> myclass = Class.forName("android.os.SystemProperties");
+            Method[] methods = myclass.getMethods();
+            Object[] params = new Object[]{"ro.serialno", "Unknown"};
+            hwID = (String) (methods[2].invoke(myclass, params));
+        } catch (final Exception ignored) {
+        }
+        return hwID;
+    }
+
+    /**
+     * Returns MAC Address.
+     * <p/>
+     * IMPORTANT! requires {@link android.Manifest.permission#ACCESS_WIFI_STATE}
+     * <p/>
+     * Disadvantages:
+     * - Device should have Wi-Fi (where not all devices have Wi-Fi)
+     * - If Wi-Fi present in Device should be turned on otherwise does not report the MAC address
+     */
+    public static String getMacAdress() {
+        return getWifiManager().getConnectionInfo().getMacAddress();
+    }
+
+    /**
+     * Returns MAC address of the given interface name.
+     *
+     * @param interfaceName eth0, wlan0 or NULL=use first interface
+     * @return mac address or empty string
+     */
+    public static String getMACAddress(String interfaceName) {
+        try {
+            List<NetworkInterface> interfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
+            for (NetworkInterface intf : interfaces) {
+                if (interfaceName != null) {
+                    if (!intf.getName().equalsIgnoreCase(interfaceName)) continue;
+                }
+                byte[] mac = intf.getHardwareAddress();
+                if (mac == null) return "";
+                StringBuilder buf = new StringBuilder();
+                for (final byte aMac : mac) buf.append(String.format("%02X:", aMac));
+                if (buf.length() > 0) buf.deleteCharAt(buf.length() - 1);
+                return buf.toString();
+            }
+        } catch (final Exception ignored) {
+        } // for now eat exceptions
+        return "";
+       /*try {
+           // this is so Linux hack
+           return loadFileAsString("/sys/class/net/" +interfaceName + "/address").toUpperCase().trim();
+       } catch (IOException ex) {
+           return null;
+       }*/
+    }
+
+    /**
+     * Get IP address from first non-localhost interface
+     *
+     * @param useIPv4 true=return ipv4, false=return ipv6
+     * @return address or empty string
+     */
+    public static String getIPAddress(boolean useIPv4) {
+        try {
+            List<NetworkInterface> interfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
+            for (NetworkInterface intf : interfaces) {
+                List<InetAddress> addrs = Collections.list(intf.getInetAddresses());
+                for (InetAddress addr : addrs) {
+                    if (!addr.isLoopbackAddress()) {
+                        String sAddr = addr.getHostAddress().toUpperCase();
+                        boolean isIPv4 = InetAddressUtils.isIPv4Address(sAddr);
+                        if (useIPv4) {
+                            if (isIPv4)
+                                return sAddr;
+                        } else {
+                            if (!isIPv4) {
+                                int delim = sAddr.indexOf('%'); // drop ip6 port suffix
+                                return delim < 0 ? sAddr : sAddr.substring(0, delim);
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (final Exception ignored) {
+            // for now eat exceptions
+        }
+        return "";
+    }
+
+    public static String getUserAgent() {
+        return new WebView(getContext()).getSettings().getUserAgentString();
+    }
+
+    public static ProxySettings getProxySettings() {
+        return new ProxySettings(getContext());
+    }
+
+    public static Bluetooth getBluetooth() {
+        return new Bluetooth(getContext());
+    }
 }

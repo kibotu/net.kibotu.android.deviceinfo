@@ -3,10 +3,13 @@ package net.kibotu.android.deviceinfo.ui.network;
 import com.canelmas.let.AskPermission;
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.library.Device;
+import net.kibotu.android.deviceinfo.library.legacy.Bluetooth;
+import net.kibotu.android.deviceinfo.library.legacy.ProxySettings;
 import net.kibotu.android.deviceinfo.library.legacy.SIM;
 import net.kibotu.android.deviceinfo.ui.list.ListFragment;
 
 import static android.Manifest.permission.READ_PHONE_STATE;
+import static net.kibotu.android.deviceinfo.library.Device.*;
 import static net.kibotu.android.deviceinfo.ui.ViewHelper.BR;
 
 /**
@@ -25,48 +28,23 @@ public class NetworkFragment extends ListFragment {
 
         addSimInfos();
 
-        addListItemHorizontally();
+        addListItemHorizontally("IMSI No", getSubscriberIdFromTelephonyManager(), "");
+        addListItemHorizontally("hwID", Device.getSerialNumber(), "");
 
-        addListItemHorizontally("IMSI No", Device.getSubscriberIdFromTelephonyManager(),"");
-        addListItemHorizontally("hwID", "description", DeviceOld.getSerialNummer());
-        addListItemHorizontally("IMEI No", "description", DeviceOld.getDeviceIdFromTelephonyManager());
+        addImeiNumber();
 
-        addListItemHorizontally("MAC Address: wlan0", "description", DeviceOld.getMACAddress("wlan0"));
-        addListItemHorizontally("MAC Address: eth0", "description", DeviceOld.getMACAddress("eth0"));
-        addListItemHorizontally("IP4 Address", "description", DeviceOld.getIPAddress(true));
-        addListItemHorizontally("IP6 Address", "description", DeviceOld.getIPAddress(false));
-//        addListItemHorizontally("UserAgent", "description", new DeviceInfoItemAsync() {
-//            @Override
-//            protected void async() {
-//                DeviceOld.getUserAgent(new DeviceOld.AsyncCallback<String>() {
-//                    @Override
-//                    public void onComplete(final String result) {
-//                        value = result;
-//                    }
-//                });
-//            }
-//        });
-//
-//        final ProxySettings proxySettings = DeviceOld.getProxySettings();
-//        final LinearLayout lProxy = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.sim, null);
-//        addListItemHorizontally("Proxy Settings", "description", new DeviceInfoItemAsync() {
-//            @Override
-//            protected void async() {
-//
-//                customView = lProxy;
-//                useHtml = true;
-//
-//                keys = "Host:" + BR;
-//                value = proxySettings.Host == null ? "" : proxySettings.Host + BR;
-//                keys += "Port:" + BR;
-//                value += proxySettings.Port == 0 ? "" : proxySettings.Port + BR;
-//                keys += "Exclusion List:" + BR;
-//                value += proxySettings.ExclusionList == null ? "" : proxySettings.ExclusionList + BR;
-//            }
-//        });
+        addListItemVertically("MAC Address: wlan0", getMACAddress("wlan0"), "");
+        addListItemVertically("MAC Address: eth0", getMACAddress("eth0"), "");
+        addListItemHorizontally("IP4 Address", getIPAddress(true), "");
+        addListItemHorizontally("IP6 Address", getIPAddress(false), "");
+        addListItemVertically("UserAgent", Device.getUserAgent(), "");
+
+        addProxySettings();
+
+        // addBluetooth(); // TODO: 22.02.2016 http://stackoverflow.com/questions/30222409/android-broadcast-receiver-bluetooth-events-catching
+
 /*
-            final Bluetooth bluetooth = new Bluetooth(Device.context());
-
+//
             addListItemHorizontally("EXTRA_BOND_STATE", "Used as an int extra field in ACTION_BOND_STATE_CHANGED intents. Contains the bond state of the remote device.\n" +
                     "Possible values are: BOND_NONE, BOND_BONDING, BOND_BONDED.\n" +
                     "Constant Value: \"android.bluetooth.device.extra.BOND_STATE", 1f, true, new DeviceInfoItemAsync() {
@@ -191,6 +169,11 @@ public class NetworkFragment extends ListFragment {
     }
 
     @AskPermission(READ_PHONE_STATE)
+    private void addImeiNumber() {
+        addListItemHorizontally("IMEI No", getDeviceIdFromTelephonyManager(), "");
+    }
+
+    @AskPermission(READ_PHONE_STATE)
     private void addSimInfos() {
         final SIM sim = new SIM();
 
@@ -205,5 +188,29 @@ public class NetworkFragment extends ListFragment {
         keys += "State:" + BR;
         values += sim.simState + BR;
         addListItemWithTitle("SIM", keys, values, "");
+    }
+
+    private void addProxySettings() {
+
+        final ProxySettings proxySettings = getProxySettings();
+
+        String keys = "Host:" + BR;
+        String values = proxySettings.Host == null ? "" : proxySettings.Host + BR;
+        keys += "Port:" + BR;
+        values += proxySettings.Port == 0 ? "" : proxySettings.Port + BR;
+        keys += "Exclusion List:" + BR;
+        values += proxySettings.ExclusionList == null ? "" : proxySettings.ExclusionList + BR;
+
+        addListItemWithTitle("Proxy Settings", keys, values, "");
+    }
+
+    private void addBluetooth() {
+
+        final Bluetooth bluetooth = Device.getBluetooth();
+
+        String keys = "" + BR;
+        String values = "" + BR;
+
+        addListItemWithTitle("Bluetooth", keys, values, "");
     }
 }

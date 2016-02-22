@@ -42,4 +42,12 @@
 
     </LinearLayout>
 
+    <View
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey_stripe"/>
+
 </LinearLayout>

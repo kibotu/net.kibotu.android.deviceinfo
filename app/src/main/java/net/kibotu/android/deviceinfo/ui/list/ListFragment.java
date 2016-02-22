@@ -9,6 +9,8 @@ import com.common.android.utils.ui.recyclerView.DataBindAdapter;
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.ui.BaseFragment;
 
+import static android.text.TextUtils.isEmpty;
+
 /**
  * Created by Nyaruhodo on 20.02.2016.
  */
@@ -35,14 +37,24 @@ public abstract class ListFragment extends BaseFragment {
     }
 
     protected void addListItemHorizontally(String label, Object value, String description) {
+        final String content = String.valueOf(value);
+
+        if (isEmpty(content))
+            return;
+
         ((DataBindAdapter<ListItem>) list.getAdapter()).add(new ListItem()
                         .setLabel(label)
-                        .setValue(String.valueOf(value))
+                        .setValue(content)
                         .setDescription(description),
                 HorizontalListItemBinder.class);
     }
 
     protected void addListItemVertically(String label, Object value, String description) {
+        final String content = String.valueOf(value);
+
+        if (isEmpty(content))
+            return;
+
         ((DataBindAdapter<ListItem>) list.getAdapter()).add(new ListItem()
                         .setLabel(label)
                         .setValue(String.valueOf(value))
@@ -51,6 +63,11 @@ public abstract class ListFragment extends BaseFragment {
     }
 
     public void addListItemWithTitle(String label, String keys, String value, String description) {
+        final String content = String.valueOf(value);
+
+        if (isEmpty(content))
+            return;
+
         ((DataBindAdapter<ListItem>) list.getAdapter()).add(new ListItem()
                         .setLabel(label)
                         .setKey(String.valueOf(keys))

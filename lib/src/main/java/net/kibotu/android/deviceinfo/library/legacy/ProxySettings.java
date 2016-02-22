@@ -2,6 +2,7 @@ package net.kibotu.android.deviceinfo.library.legacy;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
+import net.kibotu.android.deviceinfo.library.SystemService;
 
 import java.lang.reflect.Method;
 
@@ -29,7 +30,7 @@ public class ProxySettings {
         }
 
         try {
-            final ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            final ConnectivityManager connectivityManager = SystemService.getConnectivityManager();
             final Object pp = method.invoke(connectivityManager);
             if (pp == null)
                 return;
