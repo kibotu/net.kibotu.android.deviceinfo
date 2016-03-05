@@ -3,10 +3,12 @@ package net.kibotu.android.deviceinfo.ui.battery;
 import android.os.BatteryManager;
 import com.orhanobut.hawk.Hawk;
 import net.kibotu.android.deviceinfo.R;
-import net.kibotu.android.deviceinfo.library.legacy.Battery;
+import net.kibotu.android.deviceinfo.library.hardware.battery.Battery;
+import net.kibotu.android.deviceinfo.library.hardware.battery.BatteryReceiver;
+import net.kibotu.android.deviceinfo.library.hardware.battery.BatteryUpdateListener;
 import net.kibotu.android.deviceinfo.ui.list.ListFragment;
 
-import static net.kibotu.android.deviceinfo.library.Device.getBattery;
+import static net.kibotu.android.deviceinfo.library.Device.getBatteryReceiver;
 import static net.kibotu.android.deviceinfo.ui.ViewHelper.formatBool;
 
 /**
@@ -14,7 +16,7 @@ import static net.kibotu.android.deviceinfo.ui.ViewHelper.formatBool;
  */
 public class BatteryFragment extends ListFragment {
 
-    private Battery battery;
+    private BatteryReceiver batteryReceiver;
 
     @Override
     protected String getTitle() {
@@ -23,7 +25,7 @@ public class BatteryFragment extends ListFragment {
 
     @Override
     public void onDestroyView() {
-        battery.unregesterReceiver();
+        batteryReceiver.unregisterReceiver();
         super.onDestroyView();
     }
 
@@ -31,24 +33,36 @@ public class BatteryFragment extends ListFragment {
     protected void onViewCreated() {
         super.onViewCreated();
 
-        battery = getBattery();
-        battery.registerReceiver();
+        batteryReceiver = getBatteryReceiver();
+        batteryReceiver.batteryObservable.addObserver(new BatteryUpdateListener() {
 
-        addListItemVertically("Technology", battery.getTechnology(), "Technology of the current battery.");
-        addListItemVertically("Status", battery.getStatus(), "Current status constant.");
-        addListItemVertically("Charging Level", (int) (battery.getChargingLevel() * 100) + " %", "Current battery level, from 0 to the maximum battery level.");
-        addListItemVertically("Voltage", battery.getVoltage() + " mV", "Current battery voltage level.");
-        addListItemVertically("Temperature", battery.getTemperatureCelcius() + " °C [" + battery.getTemperatureFarenheit() + "]", "Current battery temperature.");
-        addListItemVertically("Voltage", battery.getVoltage() + " mV", "Current battery voltage level.");
-        addListItemVertically("Health", battery.getHealth(), "Current health constant.");
-        addListItemVertically("Power Source", battery.getPlugged(), "Indicating whether the device is plugged in to a power source; 0 means it is on battery, other constants are different types of power sources.");
-        addListItemVertically("Last Charging Source", getLastChargingSource(), "Last recorded charging power source.");
-        addListItemVertically("Battery Present", formatBool(battery.getPresent()), "Indicating whether a battery is present or not.");
+            @Override
+            protected void update(Battery battery) {
+                updateWithBattery(battery);
+            }
+        });
+        batteryReceiver.registerReceiver();
     }
 
-    public String getLastChargingSource() {
+    private void updateWithBattery(Battery battery) {
+        clear();
+
+        addListItemHorizontally("Technology", battery.getTechnology(), "Technology of the current batteryReceiver.");
+        addListItemHorizontally("Status", battery.getStatusAsString(), "Current status constant.");
+        addListItemHorizontally("Charging Level", battery.getChargingLevelAsString(), "Current batteryReceiver level, from 0 to the maximum batteryReceiver level.");
+        addListItemHorizontally("Voltage", battery.getVoltage() + " mV", "Current batteryReceiver voltage level.");
+        addListItemHorizontally("Temperature", battery.getTemperatureCelcius() + " [" + battery.getTemperatureFarenheit() + "]", "Current batteryReceiver temperature.");
+        addListItemHorizontally("Battery Present", formatBool(battery.isPresent()), "Indicating whether a batteryReceiver is present or not.");
+        addListItemHorizontally("Health", battery.getHealthAsString(), "Current health constant.");
+        addListItemHorizontally("Power Source", battery.getPluggedAsString(), "Indicating whether the device is plugged in to a power source; 0 means it is on batteryReceiver, other constants are different types of power sources.");
+        addListItemHorizontally("Last Charging Source", getLastChargingSource(battery), "Last recorded charging power source.");
+
+        notifyDataSetChanged();
+    }
+
+    public String getLastChargingSource(Battery battery) {
         final String value = Hawk.get(BatteryManager.EXTRA_PLUGGED, "Unknown");
-        Hawk.put(BatteryManager.EXTRA_PLUGGED, battery.getPlugged());
+        Hawk.put(BatteryManager.EXTRA_PLUGGED, battery.getPluggedAsString());
         return value;
     }
 }

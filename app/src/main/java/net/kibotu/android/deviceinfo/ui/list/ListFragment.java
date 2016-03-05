@@ -19,6 +19,7 @@ public abstract class ListFragment extends BaseFragment {
     @NonNull
     @Bind(R.id.list)
     RecyclerView list;
+    private DataBindAdapter<ListItem> adapter;
 
     @Override
     public int getLayout() {
@@ -29,11 +30,19 @@ public abstract class ListFragment extends BaseFragment {
     @Override
     protected void onViewCreated() {
 
-        final DataBindAdapter<ListItem> adapter = new DataBindAdapter<>();
+        adapter = new DataBindAdapter<>();
         list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         list.setAdapter(adapter);
 
         adapter.notifyDataSetChanged();
+    }
+
+    protected void notifyDataSetChanged() {
+        adapter.notifyDataSetChanged();
+    }
+
+    protected void clear() {
+        adapter.clear();
     }
 
     protected void addListItemHorizontally(String label, Object value, String description) {

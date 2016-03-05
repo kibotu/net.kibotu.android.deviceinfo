@@ -2,6 +2,8 @@ package net.kibotu.android.deviceinfo.ui;
 
 import android.support.v4.app.FragmentManager;
 import net.kibotu.android.deviceinfo.R;
+import net.kibotu.android.deviceinfo.library.hardware.battery.Battery;
+import net.kibotu.android.deviceinfo.ui.battery.BatteryFragment;
 import net.kibotu.android.deviceinfo.ui.build.BuildFragment;
 import net.kibotu.android.deviceinfo.ui.list.ListFragment;
 
@@ -19,7 +21,7 @@ public class FragmentProvider {
 
     public static void showBuildConfigFragment() {
         final FragmentManager fm = getContext().getSupportFragmentManager();
-        final BaseFragment fragment = newInstance(BuildFragment.class, null);
+        final BaseFragment fragment = newInstance(BatteryFragment.class, null);
         fm.beginTransaction()
                 .replace(R.id.fragment_container, fragment)
                 .commit();

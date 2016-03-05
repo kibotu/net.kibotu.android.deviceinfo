@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity implements ILogTag, IMenuPro
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
-
     @Override
     public void onBackStackChanged() {
         hideKeyboard();
