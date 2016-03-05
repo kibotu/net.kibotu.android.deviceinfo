@@ -9,6 +9,10 @@ public class Battery {
     int scale = 0;
     int level = 0;
     int voltage = 0;
+    /**
+     * The returned value is an int representing, for example, 27.5 Degrees Celcius as "275" ,
+     * so it is accurate to a tenth of a centigrade. Simply cast this to a float and divide by 10.
+     */
     int temperature = 0;
     int health = 0;
     int plugged = 0;
@@ -115,12 +119,13 @@ public class Battery {
     public float getChargingLevel() {
         return level / (float) scale;
     }
+
     public String getChargingLevelAsString() {
         return DecimalFormat.getPercentInstance().format(getChargingLevel());
     }
 
     public String getTemperatureCelcius() {
-        return DecimalFormat.getNumberInstance().format(convertFahrenheitToCelcius(temperature / 10f)) + " °C";
+        return DecimalFormat.getNumberInstance().format(temperature / 10f) + " °C";
     }
 
     public String getTemperatureFarenheit() {
@@ -155,10 +160,8 @@ public class Battery {
                 ret = "Not Charging";
                 break;
             case BatteryManager.BATTERY_STATUS_UNKNOWN:
-                ret = "Unknown";
-                break;
             default:
-                ret = "" + status;
+                ret = "Unknown " + status;
         }
 
         return ret;
