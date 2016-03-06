@@ -305,41 +305,6 @@ final public class ViewHelper {
         return String.format("%.2f px", screenDiagonalPixel);
     }
 
-    public static Map<String, String> mapStorage(final StorageSpace s) {
-        final LinkedHashMap<String, String> map = new LinkedHashMap<>();
-
-        map.put("Path:", s.absolutePath);
-        map.put("Total:", formatBytes(s.getAvailable()));
-        map.put("Available:", formatBytes(s.getAvailable()));
-        map.put("Free:", formatBytes(s.getFree()));
-        map.put("Used:", formatBytes(s.getTotal() - s.getFree()));
-
-        if (s.getFree() - s.getAvailable() > 0)
-            map.put("Busy:", formatBytes(s.getFree() - s.getAvailable()));
-
-        return map;
-    }
-
-    public static Map<String, String> parseTelize(final JSONObject geo) {
-        final LinkedHashMap<String, String> map = new LinkedHashMap<>();
-        map.put("Timezone", geo.optString("timezone"));
-        map.put("ISP", geo.optString("isp"));
-        map.put("Region Code", geo.optString("region_code"));
-        map.put("Country", geo.optString("country"));
-        map.put("DMA Code", geo.optString("dma_code"));
-        map.put("Area Code", geo.optString("area_code"));
-        map.put("Region", geo.optString("region"));
-        map.put("IP", geo.optString("ip"));
-        map.put("ASN", geo.optString("asn"));
-        map.put("Continent Code", geo.optString("continent_code"));
-        map.put("City", geo.optString("city"));
-        map.put("Postal Code", geo.optString("postal_code"));
-        map.put("Longitude", geo.optString("longitude"));
-        map.put("Latitude", geo.optString("latitude"));
-        map.put("Country Code", geo.optString("country_code"));
-        return map;
-    }
-
     public static Map<String, String> parseRamSmall(final String procMem) {
         final LinkedHashMap<String, String> ramMap = new LinkedHashMap<>();
 

@@ -1,8 +1,11 @@
 package net.kibotu.android.deviceinfo.ui.memory;
 
 import net.kibotu.android.deviceinfo.R;
+import net.kibotu.android.deviceinfo.library.storage.StorageSpace;
 import net.kibotu.android.deviceinfo.model.ListItem;
 import net.kibotu.android.deviceinfo.ui.list.ListFragment;
+
+import static net.kibotu.android.deviceinfo.ui.ViewHelper.formatBytes;
 
 /**
  * Created by Nyaruhodo on 21.02.2016.
@@ -18,28 +21,8 @@ public class MemoryFragment extends ListFragment {
     protected void onViewCreated() {
         super.onViewCreated();
 
-        addExternalStorage();
+        addAllStorageSpace();
 
-//
-//        final LinearLayout lData = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.ram, null);
-//        Memory.threads.add(cachedList.addItem("Internal StorageSpace", "You can save files directly on the device's internal storage. By default, files saved to the internal storage are private to your application and other applications cannot access them (nor can the user). When the user uninstalls your application, these files are removed.", 1f, true, new DeviceInfoItemAsync(2) {
-//            @Override
-//            protected void async() {
-//                customView = lData;
-//                StorageSpace.DATA.update();
-//                setMap(mapStorage(StorageSpace.DATA));
-//            }
-//        }));
-//
-////            final LinearLayout lRoot = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.ram, null);
-////            cachedList.addItem("Root StorageSpace", "description", 1f, true, new DeviceInfoItemAsync(3) {
-////                @Override
-////                protected void async() {
-////                    customView = lRoot;
-////                    StorageSpace.ROOT.update();
-////                    setMap(mapStorage(StorageSpace.ROOT));
-////                }
-////            });
 //
 //        final LinearLayout l = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.ram, null);
 //
@@ -176,22 +159,24 @@ public class MemoryFragment extends ListFragment {
 //            }
 //        });
     }
+    //
+    private void addAllStorageSpace() {
+        addStorageSpace(StorageSpace.EXTERNAL, "External StorageSpace", "Environment.getExternalStorageDirectory() Every Android-compatible device supports a shared \"external storage\" that you can use to save files. This can be a removable storage media (such as an SD card) or an internal (non-removable) storage. Files saved to the external storage are world-readable and can be modified by the user when they enable USB mass storage to transfer files on a computer.");
+        addStorageSpace(StorageSpace.DATA, "Internal StorageSpace", "Environment.getDataDirectory() You can save files directly on the device's internal storage. By default, files saved to the internal storage are private to your application and other applications cannot access them (nor can the user). When the user uninstalls your application, these files are removed.");
+        addStorageSpace(StorageSpace.ROOT, "Root", "Environment.getRootDirectory()");
+    }
 
-    private void addExternalStorage() {
-        ListItem item = new ListItem().setLabel("External StorageSpace").setDescription("Every Android-compatible device supports a shared \"external storage\" that you can use to save files. This can be a removable storage media (such as an SD card) or an internal (non-removable) storage. Files saved to the external storage are world-readable and can be modified by the user when they enable USB mass storage to transfer files on a computer.");
+    private void addStorageSpace(StorageSpace storageSpace, String label, String description) {
+        ListItem item = new ListItem().setLabel(label).setDescription(description)
+                .addChild(new ListItem().setLabel("Path").setValue(storageSpace.absolutePath))
+                .addChild(new ListItem().setLabel("Available").setValue(formatBytes(storageSpace.getAvailable())))
+                .addChild(new ListItem().setLabel("Free").setValue(formatBytes(storageSpace.getFree())))
+                .addChild(new ListItem().setLabel("Total").setValue(formatBytes(storageSpace.getTotal() - storageSpace.getFree())));
+
+        if (storageSpace.getFree() - storageSpace.getAvailable() > 0)
+            item.addChild(new ListItem().setLabel("Busy").setValue(formatBytes(storageSpace.getFree() - storageSpace.getAvailable())));
 
         addSubListItem(item);
-
-
-//        final LinearLayout lExternal = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.ram, null);
-//        Memory.threads.add(cachedList.addItem("External StorageSpace",, 1f, true, new DeviceInfoItemAsync(0) {
-//            @Override
-//            protected void async() {
-//                customView = lExternal;
-//                StorageSpace.EXTERNAL.update();
-//                setMap(mapStorage(StorageSpace.EXTERNAL));
-//            }
-//        }));
     }
 
     @Override

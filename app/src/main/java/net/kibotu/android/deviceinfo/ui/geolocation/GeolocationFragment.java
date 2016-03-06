@@ -31,6 +31,7 @@ public class GeolocationFragment extends ListFragment {
 
         addIpInfo();
 
+        // TODO: 06.03.2016 google maps
 //                cachedList.addItem("<b>Google Maps</b>", "description", new DeviceInfoItemAsync(1) {
 //
 //                    @Override
