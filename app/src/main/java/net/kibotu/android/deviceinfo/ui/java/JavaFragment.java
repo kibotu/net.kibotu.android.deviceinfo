@@ -22,7 +22,7 @@ public class JavaFragment extends ListFragment {
         super.onViewCreated();
 
         final StringWriter strOut = new StringWriter();
-        PrintWriter out = new PrintWriter(strOut);
+        final PrintWriter out = new PrintWriter(strOut);
 
         final Properties props = System.getProperties();
         props.list(out);
@@ -33,7 +33,7 @@ public class JavaFragment extends ListFragment {
             final String[] split = line.split("=");
             final String key = split.length > 1 ? split[0] : "";
             final String value = split.length > 1 ? split[1] : "";
-            addListItemHorizontally(key, value, "");
+            addVerticallyCard(key, value, "");
         }
     }
 }

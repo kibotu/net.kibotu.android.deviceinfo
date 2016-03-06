@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public abstract class BaseFragment extends Fragment implements ILogTag, ILayout, ISupportMenu {
 
-    View rootView;
+    protected View rootView;
 
     public BaseFragment() {
         // mandatory for fragment transactions

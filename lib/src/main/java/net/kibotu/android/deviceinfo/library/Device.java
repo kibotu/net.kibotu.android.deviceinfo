@@ -13,8 +13,12 @@ import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.View;
 import android.webkit.WebView;
 import net.kibotu.android.deviceinfo.library.hardware.battery.BatteryReceiver;
+import net.kibotu.android.deviceinfo.library.hardware.gpu.InfoLoader;
+import net.kibotu.android.deviceinfo.library.hardware.gpu.OpenGLGles10Info;
+import net.kibotu.android.deviceinfo.library.hardware.gpu.OpenGLGles20Info;
 import net.kibotu.android.deviceinfo.library.legacy.Bluetooth;
 import net.kibotu.android.deviceinfo.library.legacy.DisplayHelper;
 import net.kibotu.android.deviceinfo.library.legacy.ProxySettings;
@@ -59,7 +63,7 @@ final public class Device {
      * that is randomly generated on the device's first boot and should remain constant
      * for the lifetime of the device (The value may change if a factory reset is performed on the device.)
      * ANDROID_ID seems a good choice for a unique device identifier.
-     * <p/>
+     * <p>
      * Disadvantages:
      * - Not 100% reliable of Android prior to 2.2 (�Froyo�) devices
      * - Also, there has been at least one widely-observed bug in a popular
@@ -138,7 +142,7 @@ final public class Device {
 
     /**
      * Returns the unique subscriber ID, for example, the IMSI for a GSM phone.
-     * <p/>
+     * <p>
      * Disadvantages:
      * - Android devices should have telephony services
      * - It doesn't work reliably
@@ -153,9 +157,9 @@ final public class Device {
 
     /**
      * Returns the unique device ID. for example,the IMEI for GSM and the MEID or ESN for CDMA phones.
-     * <p/>
+     * <p>
      * IMPORTANT! it requires READ_PHONE_STATE permission in AndroidManifest.xml
-     * <p/>
+     * <p>
      * Disadvantages:
      * - Android devices should have telephony services
      * - It doesn't work reliably
@@ -170,7 +174,7 @@ final public class Device {
 
     /**
      * System Property ro.serialno returns the serial number as unique number Works for Android 2.3 and above. Can return null.
-     * <p/>
+     * <p>
      * Disadvantages:
      * - Serial Number is not available with all android devices
      */
@@ -195,9 +199,9 @@ final public class Device {
 
     /**
      * Returns MAC Address.
-     * <p/>
+     * <p>
      * IMPORTANT! requires {@link android.Manifest.permission#ACCESS_WIFI_STATE}
-     * <p/>
+     * <p>
      * Disadvantages:
      * - Device should have Wi-Fi (where not all devices have Wi-Fi)
      * - If Wi-Fi present in Device should be turned on otherwise does not report the MAC address
@@ -551,5 +555,20 @@ final public class Device {
 
     public static BatteryReceiver getBatteryReceiver() {
         return new BatteryReceiver();
+    }
+
+    public static void loadOpenGLGles10Info(final Callback<OpenGLGles10Info> callback) {
+        new InfoLoader<>(new OpenGLGles10Info()).loadInfo(callback);
+    }
+
+    public static void loadOpenGLGles20Info(final Callback<OpenGLGles20Info> callback) {
+        new InfoLoader<>(new OpenGLGles20Info()).loadInfo(callback);
+    }
+
+    public static View getContentRootView() {
+        return ((Activity) getContext())
+                .getWindow()
+                .getDecorView()
+                .findViewById(android.R.id.content);
     }
 }

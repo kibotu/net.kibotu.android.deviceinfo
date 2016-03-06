@@ -1,8 +1,5 @@
 package net.kibotu.android.deviceinfo.ui.memory;
 
-import android.os.Environment;
-import android.view.LayoutInflater;
-import android.widget.LinearLayout;
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.ui.list.ListFragment;
 
@@ -13,7 +10,7 @@ public class MemoryFragment extends ListFragment {
 
     @Override
     protected String getTitle() {
-        return getString(R.string.menu_item_memory);
+        return getContext().getString(R.string.menu_item_memory);
     }
 
     @Override
@@ -99,7 +96,7 @@ public class MemoryFragment extends ListFragment {
 //        });
 //
 //        // http://developer.android.com/reference/android/os/Environment.html
-//        cachedList.addItem("Directory Alarms", "Standard directory in which to place any audio files that should be in the list of alarms that the user can select (not as regular music).", new DeviceInfoItemAsync() {
+//        cachedList.addItem("Directory Alarms", "Standard directory in which to place any audio files that should be in the fragment_list of alarms that the user can select (not as regular music).", new DeviceInfoItemAsync() {
 //            @Override
 //            protected void async() {
 //                useDirectoryLayout();
@@ -145,7 +142,7 @@ public class MemoryFragment extends ListFragment {
 //            }
 //        });
 //
-//        cachedList.addItem("Directory Music", "Standard directory in which to place any audio files that should be in the regular list of music for the user.", new DeviceInfoItemAsync() {
+//        cachedList.addItem("Directory Music", "Standard directory in which to place any audio files that should be in the regular fragment_list of music for the user.", new DeviceInfoItemAsync() {
 //            @Override
 //            protected void async() {
 //                useDirectoryLayout();
@@ -153,7 +150,7 @@ public class MemoryFragment extends ListFragment {
 //            }
 //        });
 //
-//        cachedList.addItem("Directory Notifications", "Standard directory in which to place any audio files that should be in the list of notifications that the user can select (not as regular music).", new DeviceInfoItemAsync() {
+//        cachedList.addItem("Directory Notifications", "Standard directory in which to place any audio files that should be in the fragment_list of notifications that the user can select (not as regular music).", new DeviceInfoItemAsync() {
 //            @Override
 //            protected void async() {
 //                useDirectoryLayout();
@@ -169,7 +166,7 @@ public class MemoryFragment extends ListFragment {
 //            }
 //        });
 //
-//        cachedList.addItem("Directory Podcasts", "Standard directory in which to place any audio files that should be in the list of podcasts that the user can select (not as regular music).", new DeviceInfoItemAsync() {
+//        cachedList.addItem("Directory Podcasts", "Standard directory in which to place any audio files that should be in the fragment_list of podcasts that the user can select (not as regular music).", new DeviceInfoItemAsync() {
 //            @Override
 //            protected void async() {
 //                useDirectoryLayout();
@@ -177,7 +174,7 @@ public class MemoryFragment extends ListFragment {
 //            }
 //        });
 //
-//        cachedList.addItem("Directory Ringtones", "Standard directory in which to place any audio files that should be in the list of ringtones that the user can select (not as regular music).", new DeviceInfoItemAsync() {
+//        cachedList.addItem("Directory Ringtones", "Standard directory in which to place any audio files that should be in the fragment_list of ringtones that the user can select (not as regular music).", new DeviceInfoItemAsync() {
 //            @Override
 //            protected void async() {
 //                useDirectoryLayout();

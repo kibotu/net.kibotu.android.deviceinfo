@@ -23,18 +23,18 @@ public class DisplayFragment extends ListFragment {
     protected void onViewCreated() {
         super.onViewCreated();
 
-        addListItemVertically("Display Screen Resolution", getResolution() + " px | " + getResolutionDp() + " dp", "");
-        addListItemVertically("Usable Screen Resolution", getUsableResolution() + " px | " + getUsableResolutionDp() + " dp", "");
-        addListItemVertically("Screen Diagonal Length", inchToCm(getScreenDiagonalInches()) + " | " + formatInches(getScreenDiagonalInches()) + " | " + formatPixel(DisplayHelper.getScreenDiagonalPixel()), "");
-        addListItemHorizontally("Refresh Rate", Device.getRefreshRate() + " FPS", "");
-        addListItemHorizontally("Is Tablet", formatBool(DisplayHelper.isTablet()), "");
-        addListItemHorizontally("Has Softkeys", formatBool(DisplayHelper.hasSoftKeys()), "");
-        addListItemHorizontally("Screen Class", getString(R.string.screen_size), "");
-        addListItemHorizontally("Density", getString(R.string.density) + " | " + getDisplayMetrics().densityDpi + " | " + getDisplayMetrics().density, "");
-        addListItemHorizontally("DPI", DisplayHelper.xDpi + " x " + DisplayHelper.yDpi, "");
-        addListItemHorizontally("Orientation", getString(R.string.orientation), "");
-        addListItemHorizontally("Rotation", nameForRotation(getDefaultDisplay().getRotation()), "");
-        addListItemHorizontally("Display ID", getDefaultDisplay().getDisplayId(), "Each logical display has a unique id. The default display has id DEFAULT_DISPLAY. (" + android.view.Display.DEFAULT_DISPLAY + ")");
-        addListItemHorizontally("PixelFormat", nameForPixelFormat(getDefaultDisplay().getPixelFormat()), "");
+        addVerticallyCard("Display Screen Resolution", getResolution() + " px | " + getResolutionDp() + " dp", "");
+        addVerticallyCard("Usable Screen Resolution", getUsableResolution() + " px | " + getUsableResolutionDp() + " dp", "");
+        addVerticallyCard("Screen Diagonal Length", inchToCm(getScreenDiagonalInches()) + " | " + formatInches(getScreenDiagonalInches()) + " | " + formatPixel(DisplayHelper.getScreenDiagonalPixel()), "");
+        addHorizontallyCard("Refresh Rate", Device.getRefreshRate() + " FPS", "");
+        addHorizontallyCard("Is Tablet", formatBool(DisplayHelper.isTablet()), "");
+        addHorizontallyCard("Has Softkeys", formatBool(DisplayHelper.hasSoftKeys()), "");
+        addHorizontallyCard("Screen Class", getString(R.string.screen_size), "");
+        addHorizontallyCard("Density", getString(R.string.density) + " | " + getDisplayMetrics().densityDpi + " | " + getDisplayMetrics().density, "");
+        addHorizontallyCard("DPI", DisplayHelper.xDpi + " x " + DisplayHelper.yDpi, "");
+        addHorizontallyCard("Orientation", getString(R.string.orientation), "");
+        addHorizontallyCard("Rotation", nameForRotation(getDefaultDisplay().getRotation()), "");
+        addHorizontallyCard("Display ID", getDefaultDisplay().getDisplayId(), "Each logical display has a unique id. The default display has id DEFAULT_DISPLAY. (" + android.view.Display.DEFAULT_DISPLAY + ")");
+        addHorizontallyCard("PixelFormat", nameForPixelFormat(getDefaultDisplay().getPixelFormat()), "");
     }
 }

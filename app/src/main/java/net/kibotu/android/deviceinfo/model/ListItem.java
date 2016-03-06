@@ -1,4 +1,7 @@
-package net.kibotu.android.deviceinfo.ui.list;
+package net.kibotu.android.deviceinfo.model;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Nyaruhodo on 21.02.2016.
@@ -6,12 +9,29 @@ package net.kibotu.android.deviceinfo.ui.list;
 public class ListItem {
 
     private String label;
-    private String key;
     private String value;
     private String description;
+    private List<ListItem> children;
 
     public ListItem setLabel(String label) {
         this.label = label;
+        return this;
+    }
+
+    public List<ListItem> getChildren() {
+        return children;
+    }
+
+    public ListItem setChildren(List<ListItem> children) {
+        this.children = children;
+        return this;
+    }
+
+    public ListItem addChild(ListItem child) {
+        if (children == null)
+            children = new ArrayList<>();
+
+        this.children.add(child);
         return this;
     }
 
@@ -19,17 +39,9 @@ public class ListItem {
         return label;
     }
 
-    public String getKey() {
-        return key;
-    }
 
-    public ListItem setKey(String key) {
-        this.key = key;
-        return this;
-    }
-
-    public ListItem setValue(String value) {
-        this.value = value;
+    public ListItem setValue(Object value) {
+        this.value = value.toString();
         return this;
     }
 
@@ -54,18 +66,19 @@ public class ListItem {
         ListItem listItem = (ListItem) o;
 
         if (label != null ? !label.equals(listItem.label) : listItem.label != null) return false;
-        if (key != null ? !key.equals(listItem.key) : listItem.key != null) return false;
         if (value != null ? !value.equals(listItem.value) : listItem.value != null) return false;
-        return description != null ? description.equals(listItem.description) : listItem.description == null;
+        if (description != null ? !description.equals(listItem.description) : listItem.description != null)
+            return false;
+        return children != null ? children.equals(listItem.children) : listItem.children == null;
 
     }
 
     @Override
     public int hashCode() {
         int result = label != null ? label.hashCode() : 0;
-        result = 31 * result + (key != null ? key.hashCode() : 0);
         result = 31 * result + (value != null ? value.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (children != null ? children.hashCode() : 0);
         return result;
     }
 
@@ -73,9 +86,9 @@ public class ListItem {
     public String toString() {
         return "ListItem{" +
                 "label='" + label + '\'' +
-                ", key='" + key + '\'' +
                 ", value='" + value + '\'' +
                 ", description='" + description + '\'' +
+                ", children=" + children +
                 '}';
     }
 }

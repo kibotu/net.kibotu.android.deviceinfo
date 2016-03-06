@@ -28,16 +28,16 @@ public class NetworkFragment extends ListFragment {
 
         addSimInfos();
 
-        addListItemHorizontally("IMSI No", getSubscriberIdFromTelephonyManager(), "");
-        addListItemHorizontally("hwID", Device.getSerialNumber(), "");
+        addHorizontallyCard("IMSI No", getSubscriberIdFromTelephonyManager(), "");
+        addHorizontallyCard("hwID", Device.getSerialNumber(), "");
 
         addImeiNumber();
 
-        addListItemVertically("MAC Address: wlan0", getMACAddress("wlan0"), "");
-        addListItemVertically("MAC Address: eth0", getMACAddress("eth0"), "");
-        addListItemHorizontally("IP4 Address", getIPAddress(true), "");
-        addListItemHorizontally("IP6 Address", getIPAddress(false), "");
-        addListItemVertically("UserAgent", Device.getUserAgent(), "");
+        addVerticallyCard("MAC Address: wlan0", getMACAddress("wlan0"), "");
+        addVerticallyCard("MAC Address: eth0", getMACAddress("eth0"), "");
+        addHorizontallyCard("IP4 Address", getIPAddress(true), "");
+        addHorizontallyCard("IP6 Address", getIPAddress(false), "");
+        addVerticallyCard("UserAgent", Device.getUserAgent(), "");
 
         addProxySettings();
 
@@ -45,7 +45,7 @@ public class NetworkFragment extends ListFragment {
 
 /*
 //
-            addListItemHorizontally("EXTRA_BOND_STATE", "Used as an int extra field in ACTION_BOND_STATE_CHANGED intents. Contains the bond state of the remote device.\n" +
+            addHorizontallyCard("EXTRA_BOND_STATE", "Used as an int extra field in ACTION_BOND_STATE_CHANGED intents. Contains the bond state of the remote device.\n" +
                     "Possible values are: BOND_NONE, BOND_BONDING, BOND_BONDED.\n" +
                     "Constant Value: \"android.bluetooth.device.extra.BOND_STATE", 1f, true, new DeviceInfoItemAsync() {
                 @Override
@@ -54,7 +54,7 @@ public class NetworkFragment extends ListFragment {
                 }
             });
 
-            addListItemHorizontally("EXTRA_CLASS", "Used as a Parcelable BluetoothClass extra field in ACTION_FOUND and ACTION_CLASS_CHANGED intents.\n" +
+            addHorizontallyCard("EXTRA_CLASS", "Used as a Parcelable BluetoothClass extra field in ACTION_FOUND and ACTION_CLASS_CHANGED intents.\n" +
                     "Constant Value: \"android.bluetooth.device.extra.CLASS", 1f, true, new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
@@ -62,7 +62,7 @@ public class NetworkFragment extends ListFragment {
                 }
             });
 
-            addListItemHorizontally("EXTRA_DEVICE", "Used as a Parcelable BluetoothDevice extra field in every intent broadcast by this class. It contains the BluetoothDevice that the intent applies to.\n" +
+            addHorizontallyCard("EXTRA_DEVICE", "Used as a Parcelable BluetoothDevice extra field in every intent broadcast by this class. It contains the BluetoothDevice that the intent applies to.\n" +
                     "Constant Value: \"android.bluetooth.device.extra.DEVICE", 1f, true, new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
@@ -70,7 +70,7 @@ public class NetworkFragment extends ListFragment {
                 }
             });
 
-            addListItemHorizontally("EXTRA_NAME", "Used as a String extra field in ACTION_NAME_CHANGED and ACTION_FOUND intents. It contains the friendly Bluetooth name.\n" +
+            addHorizontallyCard("EXTRA_NAME", "Used as a String extra field in ACTION_NAME_CHANGED and ACTION_FOUND intents. It contains the friendly Bluetooth name.\n" +
                     "Constant Value: \"android.bluetooth.device.extra.NAME", 1f, true, new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
@@ -78,7 +78,7 @@ public class NetworkFragment extends ListFragment {
                 }
             });
 
-            addListItemHorizontally("EXTRA_PAIRING_KEY", "Used as an int extra field in ACTION_PAIRING_REQUEST intents as the value of passkey.\n" +
+            addHorizontallyCard("EXTRA_PAIRING_KEY", "Used as an int extra field in ACTION_PAIRING_REQUEST intents as the value of passkey.\n" +
                     "Constant Value: \"android.bluetooth.device.extra.PAIRING_KEY\"", 1f, true, new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
@@ -86,7 +86,7 @@ public class NetworkFragment extends ListFragment {
                 }
             });
 
-            addListItemHorizontally("EXTRA_PAIRING_VARIANT", "Used as an int extra field in ACTION_PAIRING_REQUEST intents to indicate pairing method used. Possible values are: PAIRING_VARIANT_PIN, PAIRING_VARIANT_PASSKEY_CONFIRMATION,\n" +
+            addHorizontallyCard("EXTRA_PAIRING_VARIANT", "Used as an int extra field in ACTION_PAIRING_REQUEST intents to indicate pairing method used. Possible values are: PAIRING_VARIANT_PIN, PAIRING_VARIANT_PASSKEY_CONFIRMATION,\n" +
                     "Constant Value: \"android.bluetooth.device.extra.PAIRING_VARIANT\"", 1f, true, new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
@@ -94,7 +94,7 @@ public class NetworkFragment extends ListFragment {
                 }
             });
 
-            addListItemHorizontally("EXTRA_PREVIOUS_BOND_STATE", "Used as an int extra field in ACTION_BOND_STATE_CHANGED intents. Contains the previous bond state of the remote device.\n" +
+            addHorizontallyCard("EXTRA_PREVIOUS_BOND_STATE", "Used as an int extra field in ACTION_BOND_STATE_CHANGED intents. Contains the previous bond state of the remote device.\n" +
                     "Possible values are: BOND_NONE, BOND_BONDING, BOND_BONDED.\n" +
                     "Constant Value: \"android.bluetooth.device.extra.PREVIOUS_BOND_STATE\"", 1f, true, new DeviceInfoItemAsync() {
                 @Override
@@ -103,7 +103,7 @@ public class NetworkFragment extends ListFragment {
                 }
             });
 
-            addListItemHorizontally("EXTRA_RSSI", "Used as an optional short extra field in ACTION_FOUND intents. Contains the RSSI value of the remote device as reported by the Bluetooth hardware.\n" +
+            addHorizontallyCard("EXTRA_RSSI", "Used as an optional short extra field in ACTION_FOUND intents. Contains the RSSI value of the remote device as reported by the Bluetooth hardware.\n" +
                     "Constant Value: \"android.bluetooth.device.extra.RSSI\"", 1f, true, new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
@@ -111,7 +111,7 @@ public class NetworkFragment extends ListFragment {
                 }
             });
 
-            addListItemHorizontally("EXTRA_UUID", "Used as an extra field in ACTION_UUID intents, Contains the ParcelUuids of the remote device which is a parcelable version of UUID.\n" +
+            addHorizontallyCard("EXTRA_UUID", "Used as an extra field in ACTION_UUID intents, Contains the ParcelUuids of the remote device which is a parcelable version of UUID.\n" +
                     "Constant Value: \"android.bluetooth.device.extra.UUID\"", 1f, true, new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
@@ -119,7 +119,7 @@ public class NetworkFragment extends ListFragment {
                 }
             });
 
-            addListItemHorizontally("PAIRING_VARIANT_PASSKEY_CONFIRMATION", "The user will be prompted to confirm the passkey displayed on the screen or an app will confirm the passkey for the user.\n" +
+            addHorizontallyCard("PAIRING_VARIANT_PASSKEY_CONFIRMATION", "The user will be prompted to confirm the passkey displayed on the screen or an app will confirm the passkey for the user.\n" +
                     "Constant Value: 2 (0x00000002)", 1f, true, new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
@@ -127,50 +127,50 @@ public class NetworkFragment extends ListFragment {
                 }
             });
 
-            addListItemHorizontally("PAIRING_VARIANT_PIN", "The user will be prompted to enter a pin or an app will enter a pin for user.\n" +
+            addHorizontallyCard("PAIRING_VARIANT_PIN", "The user will be prompted to enter a pin or an app will enter a pin for user.\n" +
                     "Constant Value: 0 (0x00000000)", 1f, true, new DeviceInfoItemAsync() {
                 @Override
                 protected void async() {
                     value = "RSSI:  " + bluetooth.VARIANT_PIN + " dBm";
                 }
             });
-            addListItemHorizontally("NFC", "description", "").setHorizontal();
-            addListItemHorizontally("CONSUMER_IR_SERVICE", "description", "").setHorizontal();
-            addListItemHorizontally("NETWORK_INFO_WIFI", "description", "").setHorizontal();
-            addListItemHorizontally("WIFI_BSSID", "description", "").setHorizontal();
-            addListItemHorizontally("WIFI_HIDDEN_SSID", "description", "").setHorizontal();
-            addListItemHorizontally("WIFI_IP_ADDRESS", "description", "").setHorizontal();
-            addListItemHorizontally("WIFI_LINK_SPEED", "description", "").setHorizontal();
-            addListItemHorizontally("WIFI_MAC_ADDRESS", "description", "").setHorizontal();
-            addListItemHorizontally("WIFI_RSSI", "description", "").setHorizontal();
-            addListItemHorizontally("WIFI_SSID", "description", "").setHorizontal();
+            addHorizontallyCard("NFC", "description", "").setHorizontal();
+            addHorizontallyCard("CONSUMER_IR_SERVICE", "description", "").setHorizontal();
+            addHorizontallyCard("NETWORK_INFO_WIFI", "description", "").setHorizontal();
+            addHorizontallyCard("WIFI_BSSID", "description", "").setHorizontal();
+            addHorizontallyCard("WIFI_HIDDEN_SSID", "description", "").setHorizontal();
+            addHorizontallyCard("WIFI_IP_ADDRESS", "description", "").setHorizontal();
+            addHorizontallyCard("WIFI_LINK_SPEED", "description", "").setHorizontal();
+            addHorizontallyCard("WIFI_MAC_ADDRESS", "description", "").setHorizontal();
+            addHorizontallyCard("WIFI_RSSI", "description", "").setHorizontal();
+            addHorizontallyCard("WIFI_SSID", "description", "").setHorizontal();
 
-            addListItemHorizontally("CALL_STATE", "description", "").setHorizontal();
-            addListItemHorizontally("CELL_LOCATION", "description", "").setHorizontal();
-            addListItemHorizontally("CELL_ACTIVITY", "description", "").setHorizontal();
-            addListItemHorizontally("DATA_ACTIVITY", "description", "").setHorizontal();
-            addListItemHorizontally("DATA_STATE", "description", "").setHorizontal();
-            addListItemHorizontally("DEVICE_ID", "description", "").setHorizontal();
-            addListItemHorizontally("DEVICE_SOFTWARE_VERSION", "description", "").setHorizontal();
-            addListItemHorizontally("DEVICE_SOFTWARE_VERSION", "description", "").setHorizontal();
-            addListItemHorizontally("LINE1_NUMBER", "description", "").setHorizontal();
-            addListItemHorizontally("MMS_UA_PROF_URL", "description", "").setHorizontal(); // 19
-            addListItemHorizontally("MMS_USER_AGENT", "description", "").setHorizontal(); // 19
-            addListItemHorizontally("NEIGHBORING_CELL_INFO", "description", "").setHorizontal();
-            addListItemHorizontally("NETWORK_COUNTRY_ISO", "description", "").setHorizontal();
-            addListItemHorizontally("NETWORK_OPERATOR", "description", "").setHorizontal();
-            addListItemHorizontally("NETWORK_OPERATOR_NAME", "description", "").setHorizontal();
-            addListItemHorizontally("NETWORK_TYPE", "description", "").setHorizontal();
-            addListItemHorizontally("PHONE_TYPE", "description", "").setHorizontal();
-            addListItemHorizontally("SUBSCRIBER_ID", "description", "").setHorizontal();
-            addListItemHorizontally("VOICE_MAIL_ALPHA_TAG", "description", "").setHorizontal();
-            addListItemHorizontally("VOICE_MAIL_NUMBER", "description", "").setHorizontal();
+            addHorizontallyCard("CALL_STATE", "description", "").setHorizontal();
+            addHorizontallyCard("CELL_LOCATION", "description", "").setHorizontal();
+            addHorizontallyCard("CELL_ACTIVITY", "description", "").setHorizontal();
+            addHorizontallyCard("DATA_ACTIVITY", "description", "").setHorizontal();
+            addHorizontallyCard("DATA_STATE", "description", "").setHorizontal();
+            addHorizontallyCard("DEVICE_ID", "description", "").setHorizontal();
+            addHorizontallyCard("DEVICE_SOFTWARE_VERSION", "description", "").setHorizontal();
+            addHorizontallyCard("DEVICE_SOFTWARE_VERSION", "description", "").setHorizontal();
+            addHorizontallyCard("LINE1_NUMBER", "description", "").setHorizontal();
+            addHorizontallyCard("MMS_UA_PROF_URL", "description", "").setHorizontal(); // 19
+            addHorizontallyCard("MMS_USER_AGENT", "description", "").setHorizontal(); // 19
+            addHorizontallyCard("NEIGHBORING_CELL_INFO", "description", "").setHorizontal();
+            addHorizontallyCard("NETWORK_COUNTRY_ISO", "description", "").setHorizontal();
+            addHorizontallyCard("NETWORK_OPERATOR", "description", "").setHorizontal();
+            addHorizontallyCard("NETWORK_OPERATOR_NAME", "description", "").setHorizontal();
+            addHorizontallyCard("NETWORK_TYPE", "description", "").setHorizontal();
+            addHorizontallyCard("PHONE_TYPE", "description", "").setHorizontal();
+            addHorizontallyCard("SUBSCRIBER_ID", "description", "").setHorizontal();
+            addHorizontallyCard("VOICE_MAIL_ALPHA_TAG", "description", "").setHorizontal();
+            addHorizontallyCard("VOICE_MAIL_NUMBER", "description", "").setHorizontal();
 */
     }
 
     @AskPermission(READ_PHONE_STATE)
     private void addImeiNumber() {
-        addListItemHorizontally("IMEI No", getDeviceIdFromTelephonyManager(), "");
+        addHorizontallyCard("IMEI No", getDeviceIdFromTelephonyManager(), "");
     }
 
     @AskPermission(READ_PHONE_STATE)
@@ -187,7 +187,7 @@ public class NetworkFragment extends ListFragment {
         values += sim.simSerial + BR;
         keys += "State:" + BR;
         values += sim.simState + BR;
-        addListItemWithTitle("SIM", keys, values, "");
+//        addListItemWithTitle("SIM", keys, values, "");
     }
 
     private void addProxySettings() {
@@ -201,7 +201,7 @@ public class NetworkFragment extends ListFragment {
         keys += "Exclusion List:" + BR;
         values += proxySettings.ExclusionList == null ? "" : proxySettings.ExclusionList + BR;
 
-        addListItemWithTitle("Proxy Settings", keys, values, "");
+//        addListItemWithTitle("Proxy Settings", keys, values, "");
     }
 
     private void addBluetooth() {
@@ -211,6 +211,6 @@ public class NetworkFragment extends ListFragment {
         String keys = "" + BR;
         String values = "" + BR;
 
-        addListItemWithTitle("Bluetooth", keys, values, "");
+//        addListItemWithTitle("Bluetooth", keys, values, "");
     }
 }

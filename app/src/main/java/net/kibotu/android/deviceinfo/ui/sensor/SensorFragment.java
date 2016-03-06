@@ -44,7 +44,7 @@ public class SensorFragment extends ListFragment {
             keys += "Power:";
             values += s.getPower();
 
-            addListItemWithTitle(s.getName(), keys, values, "");
+//            addListItemWithTitle(s.getName(), keys, values, "");
         }
     }
 }

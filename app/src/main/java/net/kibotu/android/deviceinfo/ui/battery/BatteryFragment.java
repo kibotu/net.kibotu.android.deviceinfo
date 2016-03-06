@@ -47,15 +47,15 @@ public class BatteryFragment extends ListFragment {
     private void updateWithBattery(Battery battery) {
         clear();
 
-        addListItemHorizontally("Technology", battery.getTechnology(), "Technology of the current batteryReceiver.");
-        addListItemHorizontally("Status", battery.getStatusAsString(), "Current status constant.");
-        addListItemHorizontally("Charging Level", battery.getChargingLevelAsString(), "Current batteryReceiver level, from 0 to the maximum batteryReceiver level.");
-        addListItemHorizontally("Voltage", battery.getVoltage() + " mV", "Current batteryReceiver voltage level.");
-        addListItemHorizontally("Temperature", battery.getTemperatureCelcius() + " [" + battery.getTemperatureFarenheit() + "]", "Current batteryReceiver temperature.");
-        addListItemHorizontally("Battery Present", formatBool(battery.isPresent()), "Indicating whether a batteryReceiver is present or not.");
-        addListItemHorizontally("Health", battery.getHealthAsString(), "Current health constant.");
-        addListItemHorizontally("Power Source", battery.getPluggedAsString(), "Indicating whether the device is plugged in to a power source; 0 means it is on batteryReceiver, other constants are different types of power sources.");
-        addListItemHorizontally("Last Charging Source", getLastChargingSource(battery), "Last recorded charging power source.");
+        addHorizontallyCard("Technology", battery.getTechnology(), "Technology of the current batteryReceiver.");
+        addHorizontallyCard("Status", battery.getStatusAsString(), "Current status constant.");
+        addHorizontallyCard("Charging Level", battery.getChargingLevelAsString(), "Current batteryReceiver level, from 0 to the maximum batteryReceiver level.");
+        addHorizontallyCard("Voltage", battery.getVoltage() + " mV", "Current batteryReceiver voltage level.");
+        addHorizontallyCard("Temperature", battery.getTemperatureCelcius() + " [" + battery.getTemperatureFarenheit() + "]", "Current batteryReceiver temperature.");
+        addHorizontallyCard("Battery Present", formatBool(battery.isPresent()), "Indicating whether a batteryReceiver is present or not.");
+        addHorizontallyCard("Health", battery.getHealthAsString(), "Current health constant.");
+        addHorizontallyCard("Power Source", battery.getPluggedAsString(), "Indicating whether the device is plugged in to a power source; 0 means it is on batteryReceiver, other constants are different types of power sources.");
+        addHorizontallyCard("Last Charging Source", getLastChargingSource(battery), "Last recorded charging power source.");
 
         notifyDataSetChanged();
     }

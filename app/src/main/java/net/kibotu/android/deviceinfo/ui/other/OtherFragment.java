@@ -20,8 +20,8 @@ public class OtherFragment extends ListFragment {
     protected void onViewCreated() {
         super.onViewCreated();
 
-        addListItemHorizontally("Rooted", isPhoneRooted(), "Determines if this device has been rooted.");
-        addListItemHorizontally("Installed Apps", installedApps().size(), "Amount of currently installed applications.");
+        addHorizontallyCard("Rooted", isPhoneRooted(), "Determines if this device has been rooted.");
+        addHorizontallyCard("Installed Apps", installedApps().size(), "Amount of currently installed applications.");
 
     }
 }

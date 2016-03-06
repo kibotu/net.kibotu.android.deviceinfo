@@ -10,7 +10,6 @@ import android.os.Build;
 import android.view.Surface;
 import net.kibotu.android.deviceinfo.library.Device;
 import net.kibotu.android.deviceinfo.library.ReflectionHelper;
-import net.kibotu.android.deviceinfo.library.legacy.GPU;
 import net.kibotu.android.deviceinfo.library.legacy.Storage;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -252,110 +251,11 @@ final public class ViewHelper {
         return ret;
     }
 
-    public synchronized static String formatOpenGles20info(final GPU.OpenGLGles20Info i) {
-        final StringBuffer buffer = new StringBuffer();
 
-        // general
-        buffer.append("General\n\n");
-        buffer.append("Renderer:").append(t(4)).append(i.GL_RENDERER).append("\n");
-        buffer.append("Version:").append(t(5)).append(i.GL_VERSION).append("\n");
-        buffer.append("Vendor:").append(t(5)).append(i.GL_VENDOR).append("\n");
-        buffer.append("GLSL Version:").append(t(2)).append(i.GL_SHADING_LANGUAGE_VERSION).append("\n\n");
-
-        // texture related
-        buffer.append("Textures\n\n");
-        buffer.append("Max Texture Size:").append(t(6)).append(i.GL_MAX_TEXTURE_SIZE).append("x").append(i.GL_MAX_TEXTURE_SIZE).append("\n");
-        buffer.append("Max Texture Units:").append(t(6)).append(i.GL_MAX_TEXTURE_UNITS).append("\n");
-        buffer.append("Max Texture Image Units:").append(t(3)).append(i.GL_MAX_TEXTURE_IMAGE_UNITS).append("\n");
-        buffer.append("Max Combined Texture Units:").append(t(1)).append(i.GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS).append("\n");
-        buffer.append("Max Cube Map Texture Size:").append(t(1)).append(i.GL_MAX_CUBE_MAP_TEXTURE_SIZE).append("x").append(i.GL_MAX_CUBE_MAP_TEXTURE_SIZE).append("\n");
-        buffer.append("Max Vertex Texture Images:").append(t(1)).append(i.GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS).append("\n");
-        buffer.append("Vertex Texture Fetch:").append(t(5)).append(formatBool(i.Vertex_Texture_Fetch)).append("\n");
-        buffer.append("Max Viewport Dimension:").append(t(3)).append(i.GL_MAX_VIEWPORT_DIMS[0]).append("x").append(i.GL_MAX_VIEWPORT_DIMS[0]).append("\n");
-        buffer.append("Max Renderbuffer Size:").append(t(4)).append(i.GL_MAX_RENDERBUFFER_SIZE).append("x").append(i.GL_MAX_RENDERBUFFER_SIZE).append("\n\n");
-
-        // shader constrains
-        buffer.append("Attributes\n\n");
-        buffer.append("Max Vertex Uniform Vectors:").append(t(3)).append(i.GL_MAX_VERTEX_UNIFORM_VECTORS).append("\n");
-        buffer.append("Max Vertex Attributes:").append(t(6)).append(i.GL_MAX_VERTEX_ATTRIBS).append("\n");
-        buffer.append("Max Varying Vectors:").append(t(7)).append(i.GL_MAX_VARYING_VECTORS).append("\n");
-        buffer.append("Max Fragment Uniform Vectors:").append(t(2)).append(i.GL_MAX_FRAGMENT_UNIFORM_VECTORS).append("\n\n");
-
-        // compressed texture formats
-        buffer.append("Compressed Texture Formats\n\n");
-
-        final String[] token = i.GL_EXTENSIONS.split("_");
-        for (int j = 0; j < token.length; ++j)
-            if (token[j].equalsIgnoreCase("compressed"))
-                buffer.append(firstLetterToUpperCase(token[j + 1])).append("\n");
-
-        // extensions
-        buffer.append("\nGL Extensions\n\n").append(i.GL_EXTENSIONS).append("\n\n");
-
-        // precision [] { -range, range, precision }
-        buffer.append("Vertex Numeric Precision\n\n");
-        buffer.append(appendGLInfoArray("Low Int" + t(4), i.GL_VERTEX_SHADER_GL_LOW_INT)).append("\n");
-        buffer.append(appendGLInfoArray("Medium Int" + t(2), i.GL_VERTEX_SHADER_GL_MEDIUM_INT)).append("\n");
-        buffer.append(appendGLInfoArray("High Int" + t(4), i.GL_VERTEX_SHADER_GL_HIGH_INT)).append("\n");
-        buffer.append(appendGLInfoArray("Low Float" + t(3), i.GL_VERTEX_SHADER_GL_LOW_FLOAT)).append("\n");
-        buffer.append(appendGLInfoArray("Medium Float" + t(1), i.GL_VERTEX_SHADER_GL_MEDIUM_FLOAT)).append("\n");
-        buffer.append(appendGLInfoArray("High Float" + t(3), i.GL_VERTEX_SHADER_GL_HIGH_FLOAT)).append("\n\n");
-
-        buffer.append("Fragment Numeric Precision\n\n");
-        buffer.append(appendGLInfoArray("Low Int" + t(4), i.GL_FRAGMENT_SHADER_GL_LOW_INT)).append("\n");
-        buffer.append(appendGLInfoArray("Medium Int" + t(2), i.GL_FRAGMENT_SHADER_GL_MEDIUM_INT)).append("\n");
-        buffer.append(appendGLInfoArray("High Int" + t(4), i.GL_FRAGMENT_SHADER_GL_HIGH_INT)).append("\n");
-        buffer.append(appendGLInfoArray("Low Float" + t(3), i.GL_FRAGMENT_SHADER_GL_LOW_FLOAT)).append("\n");
-        buffer.append(appendGLInfoArray("Medium Float" + t(1), i.GL_FRAGMENT_SHADER_GL_MEDIUM_FLOAT)).append("\n");
-        buffer.append(appendGLInfoArray("High Float" + t(3), i.GL_FRAGMENT_SHADER_GL_HIGH_FLOAT)).append("\n");
-
-        return buffer.toString();
-    }
-
-    private synchronized static String appendGLInfoArray(final String name, final int[] a) {
+    public synchronized static String appendGLInfoArray(final String name, final int[] a) {
         return a[0] + a[1] + a[2] == 0 ? name + "Not Available." : name + "[-2^" + a[0] + ", 2^" + a[1] + "]" + (a[2] > 0 ? ", 2^" + a[2] : "");
     }
 
-    public synchronized static String formatOpenGles10info(final GPU.OpenGLGles10Info i) {
-        final StringBuffer buffer = new StringBuffer();
-
-        // general
-        buffer.append("General\n\n");
-        buffer.append("Renderer:").append(t(4)).append(i.GL_RENDERER).append("\n");
-        buffer.append("Version:").append(t(5)).append(i.GL_VERSION).append("\n");
-        buffer.append("Vendor:").append(t(5)).append(i.GL_VENDOR).append("\n\n");
-
-        // texture related
-        buffer.append("Textures\n\n");
-        buffer.append("Max Texture Size:").append(t(6)).append(i.GL_MAX_TEXTURE_SIZE).append("x").append(i.GL_MAX_TEXTURE_SIZE).append("\n");
-        buffer.append("Max Texture Units:").append(t(6)).append(i.GL_MAX_TEXTURE_UNITS).append("\n");
-        buffer.append("Max Viewport Dimension:").append(t(3)).append(i.GL_MAX_VIEWPORT_DIMS[0]).append("x").append(i.GL_MAX_VIEWPORT_DIMS[0]).append("\n\n");
-
-        // fixed function pipeline constrains
-        buffer.append("Fixed Function Pipeline Constrains\n\n");
-        buffer.append("Max ModelView Stack Depth:").append(t(2)).append(i.GL_MAX_MODELVIEW_STACK_DEPTH).append("\n");
-        buffer.append("Max Projection Stack Depth:").append(t(2)).append(i.GL_MAX_PROJECTION_STACK_DEPTH).append("\n");
-        buffer.append("Max Texture Stack Depth:").append(t(3)).append(i.GL_MAX_TEXTURE_STACK_DEPTH).append("\n");
-        buffer.append("Max Lights:").append(t(10)).append(i.GL_MAX_LIGHTS).append("\n");
-        buffer.append("Max Depth Bits:").append(t(8)).append(i.GL_DEPTH_BITS).append("\n");
-        buffer.append("Max Stencil Bits:").append(t(8)).append(i.GL_STENCIL_BITS).append("\n");
-        buffer.append("Max Subpixel Bits:").append(t(7)).append(i.GL_SUBPIXEL_BITS).append("\n");
-        buffer.append("Max Element Indices:").append(t(5)).append(i.GL_MAX_ELEMENTS_INDICES).append("\n");
-        buffer.append("Max Element Vertices:").append(t(5)).append(i.GL_MAX_ELEMENTS_VERTICES).append("\n\n");
-
-        // compressed texture formats
-        buffer.append("Compressed Texture Formats\n\n");
-
-        final String[] token = i.GL_EXTENSIONS.split("_");
-        for (int j = 0; j < token.length; ++j)
-            if (token[j].equalsIgnoreCase("compressed"))
-                buffer.append(firstLetterToUpperCase(token[j + 1])).append("\n");
-
-        // extensions
-        buffer.append("\nGL Extensions\n\n").append(i.GL_EXTENSIONS).append("\n\n");
-
-        return buffer.toString();
-    }
 
     public synchronized static String firstLetterToUpperCase(final String word) {
         return Character.toString(word.charAt(0)).toUpperCase() + word.substring(1);
