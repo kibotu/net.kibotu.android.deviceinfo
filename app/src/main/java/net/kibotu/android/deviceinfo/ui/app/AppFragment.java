@@ -2,7 +2,7 @@ package net.kibotu.android.deviceinfo.ui.app;
 
 import android.content.pm.FeatureInfo;
 import net.kibotu.android.deviceinfo.R;
-import net.kibotu.android.deviceinfo.library.build.BuildInfo;
+import net.kibotu.android.deviceinfo.library.buildinfo.BuildInfo;
 import net.kibotu.android.deviceinfo.model.ListItem;
 import net.kibotu.android.deviceinfo.ui.list.ListFragment;
 
