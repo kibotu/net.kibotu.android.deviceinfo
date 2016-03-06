@@ -1,9 +1,12 @@
 package net.kibotu.android.deviceinfo.ui.app;
 
+import android.content.pm.FeatureInfo;
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.library.build.Build;
 import net.kibotu.android.deviceinfo.model.ListItem;
 import net.kibotu.android.deviceinfo.ui.list.ListFragment;
+
+import java.util.Map;
 
 import static net.kibotu.android.deviceinfo.library.Device.*;
 import static net.kibotu.android.deviceinfo.ui.ViewHelper.formatBytes;
@@ -25,10 +28,10 @@ public class AppFragment extends ListFragment {
         addHorizontallyCard("App Version", Build.getVersionFromPackageManager(), "");
         addHorizontallyCard("Threads Count", Thread.getAllStackTraces().keySet().size(), "");
         addAppRuntimeMemory();
-        addHorizontallyCard("APK Storage Path", getFileSize(getContext().getPackageCodePath()), "");
-        addHorizontallyCard("Internal Storage Path", getFileSize(getContext().getFilesDir().getParent()), "");
-        addVerticallyCard("Permissions", Build.getPermissions(), "All enabled permissions for this app.");
-        addVerticallyCard("Shared Libraries", Build.getSharedLibraries(), "List of shared libraries that are available on the system.");
+        addVerticallyCard("APK Storage Path", getFileSize(getContext().getPackageCodePath()), "");
+        addVerticallyCard("Internal Storage Path", getFileSize(getContext().getFilesDir().getParent()), "");
+        addPermissions();
+        addSharedLibraries();
     }
 
     private void addAppRuntimeMemory() {
@@ -38,6 +41,24 @@ public class AppFragment extends ListFragment {
                 .addChild(new ListItem().setLabel("Free").setValue(formatBytes(getRuntimeFreeMemory())))
                 .addChild(new ListItem().setLabel("Used").setValue(formatBytes(getUsedMemorySize())))
                 .addChild(new ListItem().setLabel("Max").setValue(formatBytes(getRuntimeMaxMemory()))));
+    }
+
+    private void addPermissions() {
+        final Map<String, FeatureInfo> systemAvailableFeatures = Build.getSystemAvailableFeatures();
+        final ListItem item = new ListItem().setLabel("Permissions").setDescription("All enabled permissions for this app.");
+        for(String permission:  Build.getPermissions())
+            item.addChild(new ListItem().setLabel(permission));
+
+        addSubListItem(item);
+    }
+
+    private void addSharedLibraries() {
+        final Map<String, FeatureInfo> systemAvailableFeatures = Build.getSystemAvailableFeatures();
+        final ListItem item = new ListItem().setLabel("Shared Libraries").setDescription( "List of shared libraries that are available on the system.");
+        for(String lib:  Build.getSharedLibraries())
+            item.addChild(new ListItem().setLabel(lib));
+
+        addSubListItem(item);
     }
 
     @Override
