@@ -8,6 +8,7 @@ import android.graphics.PixelFormat;
 import android.hardware.Sensor;
 import android.os.Build;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.view.Surface;
 import net.kibotu.android.deviceinfo.library.misc.ReflectionHelper;
 import net.kibotu.android.deviceinfo.library.storage.Storage;
@@ -18,6 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -615,7 +617,9 @@ final public class ViewHelper {
     }
 
     public static String formatPercent(final float usage) {
-        return DecimalFormat.getPercentInstance().format(usage);
+        final NumberFormat formatter = DecimalFormat.getPercentInstance();
+        formatter.setMaximumFractionDigits(2);
+        return formatter.format(usage );
     }
 
     public static Bitmap invert(final Bitmap src) {
@@ -666,4 +670,11 @@ final public class ViewHelper {
 
         return TextUtils.join(" ", result);
     }
+
+    public static CharSequence getFormattedTimeDifference(long createdAt) {
+        final Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(createdAt);
+        return DateUtils.getRelativeTimeSpanString(c.getTimeInMillis(), Calendar.getInstance().getTimeInMillis(), DateUtils.MINUTE_IN_MILLIS);
+    }
+
 }

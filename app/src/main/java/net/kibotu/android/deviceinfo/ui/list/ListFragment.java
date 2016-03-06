@@ -13,9 +13,10 @@ import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.model.ListItem;
 import net.kibotu.android.deviceinfo.ui.BaseFragment;
-import net.kibotu.android.deviceinfo.ui.list.binder.*;
 import net.kibotu.android.deviceinfo.ui.list.binder.CardViewHorizontalListItemBinder;
+import net.kibotu.android.deviceinfo.ui.list.binder.CardViewSubListItemBinder;
 import net.kibotu.android.deviceinfo.ui.list.binder.VerticalListItemBinderCardView;
+import org.jetbrains.annotations.NotNull;
 
 import static android.text.TextUtils.isEmpty;
 
@@ -39,20 +40,28 @@ public abstract class ListFragment extends BaseFragment {
     protected void onViewCreated() {
 
         list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        setListItemAnimator();
+
+        adapter = new DataBindAdapter<>();
+        list.setAdapter(injectAdapterAnimation(adapter));
+    }
+
+    @NotNull
+    protected RecyclerView.Adapter injectAdapterAnimation(RecyclerView.Adapter adapter) {
+        final ScaleInAnimationAdapter animationAdapter = new ScaleInAnimationAdapter(adapter, 0.90f);
+        animationAdapter.setDuration(200);
+        animationAdapter.setFirstOnly(false);
+        animationAdapter.setInterpolator(new OvershootInterpolator(1f));
+        return animationAdapter;
+    }
+
+    protected void setListItemAnimator() {
         OverScrollDecoratorHelper.setUpOverScroll(list, OverScrollDecoratorHelper.ORIENTATION_VERTICAL);
         list.setItemAnimator(new LandingAnimator(new OvershootInterpolator(1f)));
         list.getItemAnimator().setAddDuration(125);
         list.getItemAnimator().setRemoveDuration(125);
         list.getItemAnimator().setMoveDuration(125);
         list.getItemAnimator().setChangeDuration(125);
-
-        adapter = new DataBindAdapter<>();
-        final ScaleInAnimationAdapter animationAdapter = new ScaleInAnimationAdapter(adapter, 0.90f);
-        animationAdapter.setDuration(200);
-        animationAdapter.setFirstOnly(false);
-        animationAdapter.setInterpolator(new OvershootInterpolator(1f));
-
-        list.setAdapter(animationAdapter);
     }
 
     protected void notifyDataSetChanged() {

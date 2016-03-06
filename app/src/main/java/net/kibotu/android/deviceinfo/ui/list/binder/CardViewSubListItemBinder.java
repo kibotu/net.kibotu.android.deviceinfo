@@ -50,6 +50,13 @@ public class CardViewSubListItemBinder extends DataBinder<ListItem, CardViewSubL
                 viewHolder.adapter.add(child, HorizontalListItemBinder.class);
 
         viewHolder.adapter.notifyDataSetChanged();
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Logger.toast(item.getDescription());
+            }
+        });
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

@@ -2,44 +2,16 @@ package net.kibotu.android.deviceinfo.library.cpu;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * @see <a href="https://www.kernel.org/doc/Documentation/filesystems/proc.txt">proc stat</a>
  */
 public class ProcStat {
 
-    public ArrayList<Cpu> cpuUsageReceiver;
+    public static Cpu load() {
 
-    /**
-     * context switches across all CPUs.
-     */
-    int ctxt;
-
-    /**
-     * time at which the system booted
-     */
-    int btime;
-
-    /**
-     * number of processes and threads created
-     */
-    int processes;
-
-    /**
-     * number of processes currently running on CPUs
-     */
-    int procs_running;
-
-    /**
-     * processes currently blocked
-     */
-    int procs_blocked;
-
-    public static ProcStat loadProcStat() {
-
-        ProcStat procStat = new ProcStat();
-        procStat.cpuUsageReceiver = new ArrayList<>();
+        final Cpu cpu = new Cpu();
 
         try {
             final RandomAccessFile reader = new RandomAccessFile("/proc/stat", "r");
@@ -48,23 +20,25 @@ public class ProcStat {
 
             while (line != null) {
 
-                if (line.startsWith("cpuUsageReceiver"))
-                    procStat.cpuUsageReceiver.add(CpuUsageReceiver.parseCpu(line));
+                if (line.startsWith("cpu "))
+                    cpu.allCores = parse(line);
+                else if (line.startsWith("cpu"))
+                    cpu.cores.add(parse(line));
 
                 if (line.startsWith("ctxt"))
-                    procStat.ctxt = Integer.parseInt(line.split(" ")[1]);
+                    cpu.ctxt = Integer.parseInt(line.split(" ")[1]);
 
                 if (line.startsWith("btime"))
-                    procStat.btime = Integer.parseInt(line.split(" ")[1]);
+                    cpu.btime = Integer.parseInt(line.split(" ")[1]);
 
                 if (line.startsWith("processes"))
-                    procStat.processes = Integer.parseInt(line.split(" ")[1]);
+                    cpu.processes = Integer.parseInt(line.split(" ")[1]);
 
                 if (line.startsWith("procs_running"))
-                    procStat.procs_running = Integer.parseInt(line.split(" ")[1]);
+                    cpu.procs_running = Integer.parseInt(line.split(" ")[1]);
 
                 if (line.startsWith("procs_blocked"))
-                    procStat.procs_blocked = Integer.parseInt(line.split(" ")[1]);
+                    cpu.procs_blocked = Integer.parseInt(line.split(" ")[1]);
 
                 line = reader.readLine();
             }
@@ -72,18 +46,26 @@ public class ProcStat {
             e.printStackTrace();
         }
 
-        return procStat;
+        return cpu;
     }
 
-    @Override
-    public String toString() {
-        return "ProcStat{" +
-                "cpuUsageReceiver=" + cpuUsageReceiver +
-                ", ctxt=" + ctxt +
-                ", btime=" + btime +
-                ", processes=" + processes +
-                ", procs_running=" + procs_running +
-                ", procs_blocked=" + procs_blocked +
-                '}';
+    private static Core parse(final String procStatString) {
+        final Core core = new Core();
+
+        final Scanner s = new Scanner(procStatString);
+
+        if (s.hasNext()) s.next();
+        if (s.hasNextInt()) core.user = s.nextInt();
+        if (s.hasNextInt()) core.nice = s.nextInt();
+        if (s.hasNextInt()) core.system = s.nextInt();
+        if (s.hasNextInt()) core.idle = s.nextInt();
+        if (s.hasNextInt()) core.iowait = s.nextInt();
+        if (s.hasNextInt()) core.irq = s.nextInt();
+        if (s.hasNextInt()) core.softirq = s.nextInt();
+        if (s.hasNextInt()) core.steal = s.nextInt();
+        if (s.hasNextInt()) core.guest = s.nextInt();
+        if (s.hasNextInt()) core.guest_nice = s.nextInt();
+
+        return core;
     }
 }

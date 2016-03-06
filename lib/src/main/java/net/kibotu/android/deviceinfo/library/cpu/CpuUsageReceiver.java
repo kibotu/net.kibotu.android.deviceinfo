@@ -1,30 +1,25 @@
 package net.kibotu.android.deviceinfo.library.cpu;
 
 import android.app.Activity;
-import android.util.Log;
 import net.kibotu.android.deviceinfo.library.Device;
 import net.kibotu.android.deviceinfo.library.misc.ShellUtils;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Pattern;
 
 public class CpuUsageReceiver {
 
     private static final String TAG = CpuUsageReceiver.class.getSimpleName();
-    private static int amountCoresCache = -1;
-    private float[] cpuUsage;
-    private ProcStat lastPs;
+    private Cpu previousCpu;
 
     private final CpuObservable cpuObservable;
     private Timer timer;
+    private long updateInterval;
 
     public CpuUsageReceiver() {
         cpuObservable = new CpuObservable();
+        updateInterval = TimeUnit.SECONDS.toMillis(1);
     }
 
     public CpuUsageReceiver addCpuUpdateListener(CpuUpdateListener listener) {
@@ -49,19 +44,14 @@ public class CpuUsageReceiver {
             public void run() {
 
                 // doing ui updates on main thread
-                ((Activity)Device.getContext()).runOnUiThread(new Runnable() {
+                ((Activity) Device.getContext()).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-
-                        Log.v(TAG, "update cpu");
-
-                        // TODO: 06.03.2016 getting usage updates
-
-                        cpuObservable.notifyObservers(new Cpu().setNumCores(getNumCores()));
+                        cpuObservable.notifyObservers(getCpuUsage());
                     }
                 });
             }
-        }, TimeUnit.SECONDS.toMillis(1), TimeUnit.SECONDS.toMillis(1));
+        }, 0, updateInterval);
 
         return this;
     }
@@ -74,60 +64,41 @@ public class CpuUsageReceiver {
         return this;
     }
 
-//    /**
-//     * @credits to https://github.com/takke/cpustats
-//     */
-//    public synchronized static float[] getCpuUsage() {
-//        if (cpuUsage == null) cpuUsage = new float[getNumCores()];
-//
-//        if (lastPs == null) {
-//            lastPs = ProcStat.loadProcStat();
-//            return cpuUsage;
-//        }
-//
-//        final ProcStat ps = ProcStat.loadProcStat();
-//
-//        int usedCores = Math.min(ps.cpuUsageReceiver.size(), lastPs.cpuUsageReceiver.size());
-//        cpuUsage = new float[usedCores + 1];
-//        for (int i = 0; i < usedCores; ++i) {
-//            cpuUsage[i] = 0;
-//            final CpuUsageReceiver cpuUsageReceiverC = ps.cpuUsageReceiver.get(i);
-//            final CpuUsageReceiver cpuUsageReceiverL = lastPs.cpuUsageReceiver.get(i);
-//
-//            int totalC = cpuUsageReceiverC.total();
-//            int totalL = cpuUsageReceiverL.total();
-//
-//            final int totalDiff = totalC - totalL;
-//            if (totalDiff > 0) {
-//                final int idleDiff = cpuUsageReceiverC.idle - cpuUsageReceiverL.idle;
-//
-//                cpuUsage[i] = 100 - idleDiff * 100 / (float) totalDiff;
-//            }
-//        }
-//        return cpuUsage;
-//    }
-
     /**
-     * Gets the number of cores available in this device, across all processors.
-     * Requires: Ability to peruse the filesystem at "/sys/devices/system/cpuUsageReceiver"
-     *
-     * @return The number of cores, or 1 if failed to get result
+     * @see <a href="https://github.com/takke/cpustats">cpustats</a>
      */
-    public static int getNumCores() {
-        if (amountCoresCache != -1)
-            return amountCoresCache;
+    public Cpu getCpuUsage() {
+        if (previousCpu == null) {
+            previousCpu = ProcStat.load();
+            return previousCpu;
+        }
 
-        try {
-            //Get directory containing CPU info
-            File dir = new File("/sys/devices/system/cpu/");
-            //Filter to only list the devices we care about
-            final File[] files = dir.listFiles(new CpuFilter());
-            //Return the number of cores (virtual CPU devices)
-            return amountCoresCache = files.length;
-        } catch (final Exception e) {
-            e.printStackTrace();
-            //Default to return 1 core
-            return 1;
+        final Cpu cpu = ProcStat.load();
+
+        // the amount of cores can be different since don't receive infos about idling cores
+        final int usedCores = Math.min(cpu.cores.size(), previousCpu.cores.size());
+
+        computeCoreUsage(cpu.allCores, previousCpu.allCores);
+
+        for (int i = 0; i < usedCores; ++i) {
+            final Core core = cpu.cores.get(i);
+            final Core previousCore = previousCpu.cores.get(i);
+            computeCoreUsage(core, previousCore);
+        }
+
+        return cpu;
+    }
+
+    private static void computeCoreUsage(Core core, Core previousCore) {
+        // usuage can only be determined by the difference between previous and current total usage
+        int total = core.total();
+        int previousTotal = previousCore.total();
+
+        final int totalDiff = total - previousTotal;
+        if (totalDiff > 0) {
+            final int idleDiff = core.idle - previousCore.idle;
+
+            core.usage = 100 - idleDiff * 100 / (float) totalDiff;
         }
     }
 
@@ -147,25 +118,10 @@ public class CpuUsageReceiver {
         return ShellUtils.readIntegerFile("/sys/devices/system/cpuUsageReceiver/cpu0/cpufreq/cpuinfo_max_freq");
     }
 
-    // endregion
-
-    static Cpu parseCpu(final String cpuString) {
-        final Cpu cpu = new Cpu();
-
-        final Scanner s = new Scanner(cpuString);
-
-        if (s.hasNext()) s.next();
-        if (s.hasNextInt()) cpu.user = s.nextInt();
-        if (s.hasNextInt()) cpu.nice = s.nextInt();
-        if (s.hasNextInt()) cpu.system = s.nextInt();
-        if (s.hasNextInt()) cpu.idle = s.nextInt();
-        if (s.hasNextInt()) cpu.iowait = s.nextInt();
-        if (s.hasNextInt()) cpu.irq = s.nextInt();
-        if (s.hasNextInt()) cpu.softirq = s.nextInt();
-        if (s.hasNextInt()) cpu.steal = s.nextInt();
-        if (s.hasNextInt()) cpu.guest = s.nextInt();
-        if (s.hasNextInt()) cpu.guest_nice = s.nextInt();
-
-        return cpu;
+    public CpuUsageReceiver setUpdateInterval(long timeInMillis) {
+        updateInterval = timeInMillis;
+        return this;
     }
+
+    // endregion
 }
