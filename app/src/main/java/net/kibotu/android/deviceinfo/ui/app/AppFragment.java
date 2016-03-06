@@ -39,4 +39,9 @@ public class AppFragment extends ListFragment {
 //        values += formatBytes(getUsedMemorySize()) + BR;
 //        addSubListItem(new ListItem().setLabel("Runtime Memory App").addChild(new ListItem().setLabel()), keys, values, "Currently reserved runtime memory by this App.");
     }
+
+    @Override
+    protected int getHomeIcon() {
+        return R.drawable.info_i;
+    }
 }

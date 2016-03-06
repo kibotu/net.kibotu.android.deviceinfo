@@ -1,5 +1,6 @@
 package net.kibotu.android.deviceinfo.ui.menu;
 
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 
@@ -40,6 +41,11 @@ public class MainMenuProvider {
 
             @Override
             public IMainMenu showActionBar(boolean isShowing) {
+                return this;
+            }
+
+            @Override
+            public IMainMenu setHomeIcon(@DrawableRes int drawable) {
                 return this;
             }
 

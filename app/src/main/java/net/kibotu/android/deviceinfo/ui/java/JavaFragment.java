@@ -36,4 +36,9 @@ public class JavaFragment extends ListFragment {
             addVerticallyCard(key, value, "");
         }
     }
+
+    @Override
+    protected int getHomeIcon() {
+        return R.drawable.java_i;
+    }
 }

@@ -65,4 +65,9 @@ public class BatteryFragment extends ListFragment {
         Hawk.put(BatteryManager.EXTRA_PLUGGED, battery.getPluggedAsString());
         return value;
     }
+
+    @Override
+    protected int getHomeIcon() {
+        return R.drawable.battery_i;
+    }
 }

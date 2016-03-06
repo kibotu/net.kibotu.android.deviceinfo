@@ -1,7 +1,9 @@
 package net.kibotu.android.deviceinfo.ui.menu;
 
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -11,15 +13,19 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import com.bumptech.glide.Glide;
+import com.common.android.utils.extensions.ResourceExtensions;
 import com.common.android.utils.ui.recyclerView.DataBindAdapter;
 import net.kibotu.android.deviceinfo.R;
 
 import java.util.List;
 
 import static com.common.android.utils.ContextHelper.getContext;
+import static com.common.android.utils.extensions.ResourceExtensions.drawable;
 import static com.common.android.utils.extensions.ViewExtensions.getContentRoot;
 
 /**
@@ -60,6 +66,8 @@ public class MainMenu implements IMainMenu {
         list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         list.setAdapter(adapter);
 
+        drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+
         setupDefaultActionbar();
     }
 
@@ -68,9 +76,9 @@ public class MainMenu implements IMainMenu {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(false);
         actionBar.setIcon(R.color.transparent);
-        actionBar.setHomeButtonEnabled(true);
+        actionBar.setHomeButtonEnabled(false);
 
         final View viewActionBar = getContext().getLayoutInflater().inflate(R.layout.custom_toolbar, null);
         ActionBar.LayoutParams params = new ActionBar.LayoutParams(
@@ -80,6 +88,13 @@ public class MainMenu implements IMainMenu {
         actionBar.setCustomView(viewActionBar, params);
 
         actionbarViewHolder = new ActionbarViewHolder(viewActionBar);
+
+        actionbarViewHolder.homeIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openLeftDrawer();
+            }
+        });
     }
 
     @Override
@@ -107,9 +122,10 @@ public class MainMenu implements IMainMenu {
         drawerLayout.post(new Runnable() {
             @Override
             public void run() {
+                drawerToggle.setHomeAsUpIndicator(null);
+                drawerToggle.setDrawerIndicatorEnabled(false);
+                drawerLayout.addDrawerListener(drawerToggle);
                 drawerToggle.syncState();
-                drawerToggle.setDrawerIndicatorEnabled(true);
-                drawerLayout.setDrawerListener(drawerToggle);
             }
         });
 
@@ -149,9 +165,20 @@ public class MainMenu implements IMainMenu {
     }
 
     @Override
+    public IMainMenu setHomeIcon(@DrawableRes int drawable) {
+//        getSupportActionBar().setHomeAsUpIndicator(drawable(drawable));
+        Glide.with(getContext()).load(drawable).fitCenter().into(actionbarViewHolder.homeIcon);
+        return this;
+    }
+
+    @Override
     public IMainMenu setLeftDrawerLockMode(@LockMode int lockMode) {
         drawerLayout.setDrawerLockMode(lockMode, leftDrawer);
         return this;
+    }
+
+    public void openLeftDrawer() {
+        drawerLayout.openDrawer(Gravity.LEFT);
     }
 
     @Override

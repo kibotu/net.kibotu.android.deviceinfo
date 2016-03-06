@@ -37,4 +37,9 @@ public class DisplayFragment extends ListFragment {
         addHorizontallyCard("Display ID", getDefaultDisplay().getDisplayId(), "Each logical display has a unique id. The default display has id DEFAULT_DISPLAY. (" + android.view.Display.DEFAULT_DISPLAY + ")");
         addHorizontallyCard("PixelFormat", nameForPixelFormat(getDefaultDisplay().getPixelFormat()), "");
     }
+
+    @Override
+    protected int getHomeIcon() {
+        return R.drawable.display_i;
+    }
 }

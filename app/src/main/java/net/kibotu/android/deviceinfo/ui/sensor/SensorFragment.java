@@ -47,4 +47,9 @@ public class SensorFragment extends ListFragment {
 //            addListItemWithTitle(s.getName(), keys, values, "");
         }
     }
+
+    @Override
+    protected int getHomeIcon() {
+        return R.drawable.sensors_i;
+    }
 }

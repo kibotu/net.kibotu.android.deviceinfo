@@ -166,4 +166,9 @@ public class GpuFragment extends ListFragment {
 
         addSubListItem(item);
     }
+
+    @Override
+    protected int getHomeIcon() {
+        return R.drawable.gpu_i;
+    }
 }

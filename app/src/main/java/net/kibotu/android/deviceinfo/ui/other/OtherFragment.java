@@ -24,4 +24,9 @@ public class OtherFragment extends ListFragment {
         addHorizontallyCard("Installed Apps", installedApps().size(), "Amount of currently installed applications.");
 
     }
+
+    @Override
+    protected int getHomeIcon() {
+        return R.drawable.others_i;
+    }
 }

@@ -1,5 +1,6 @@
 package net.kibotu.android.deviceinfo.ui.menu;
 
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 
 import java.util.List;
@@ -16,6 +17,8 @@ public interface IMainMenu {
     IMainMenu setTitle(@NonNull String title);
 
     IMainMenu showActionBar(boolean isShowing);
+
+    IMainMenu setHomeIcon(@DrawableRes int drawable);
 
     IMainMenu setLeftDrawerLockMode(@LockMode int lockMode);
 

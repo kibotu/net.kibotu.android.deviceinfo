@@ -59,4 +59,9 @@ public class ConfigurationFragment extends ListFragment {
                 "The UI_MODE_NIGHT_MASK defines whether the screen is in a special mode. They may be one of UI_MODE_NIGHT_UNDEFINED, UI_MODE_NIGHT_NO or UI_MODE_NIGHT_YES.");
 
     }
+
+    @Override
+    protected int getHomeIcon() {
+        return R.drawable.config_i;
+    }
 }

@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_height="wrap_content">
+
+    <ImageView
+            android:layout_centerVertical="true"
+            android:src="@drawable/build_i"
+            android:id="@+id/home_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"/>
 
     <TextView
+            android:layout_centerVertical="true"
             android:maxLines="1"
             android:clickable="false"
             android:focusable="false"
             android:longClickable="false"
-            android:text="hallo world"
+            android:text="Title"
             android:gravity="center"
-            android:layout_gravity="center"
             android:textColor="@color/white"
             android:textAppearance="@android:style/TextAppearance.Medium"
             android:id="@+id/actionbar_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-</LinearLayout>
+</RelativeLayout>

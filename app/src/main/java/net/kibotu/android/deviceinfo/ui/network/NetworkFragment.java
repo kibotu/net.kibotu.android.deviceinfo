@@ -213,4 +213,9 @@ public class NetworkFragment extends ListFragment {
 
 //        addListItemWithTitle("Bluetooth", keys, values, "");
     }
+
+    @Override
+    protected int getHomeIcon() {
+        return R.drawable.network_i;
+    }
 }
