@@ -5,11 +5,11 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 
 /**
- * @see https://www.kernel.org/doc/Documentation/filesystems/proc.txt
+ * @see <a href="https://www.kernel.org/doc/Documentation/filesystems/proc.txt">proc stat</a>
  */
 public class ProcStat {
 
-    public ArrayList<Cpu> cpu;
+    public ArrayList<Cpu> cpuUsageReceiver;
 
     /**
      * context switches across all CPUs.
@@ -39,7 +39,7 @@ public class ProcStat {
     public static ProcStat loadProcStat() {
 
         ProcStat procStat = new ProcStat();
-        procStat.cpu = new ArrayList<Cpu>();
+        procStat.cpuUsageReceiver = new ArrayList<>();
 
         try {
             final RandomAccessFile reader = new RandomAccessFile("/proc/stat", "r");
@@ -48,8 +48,8 @@ public class ProcStat {
 
             while (line != null) {
 
-                if (line.startsWith("cpu"))
-                    procStat.cpu.add(Cpu.parseCpu(line));
+                if (line.startsWith("cpuUsageReceiver"))
+                    procStat.cpuUsageReceiver.add(CpuUsageReceiver.parseCpu(line));
 
                 if (line.startsWith("ctxt"))
                     procStat.ctxt = Integer.parseInt(line.split(" ")[1]);
@@ -78,7 +78,7 @@ public class ProcStat {
     @Override
     public String toString() {
         return "ProcStat{" +
-                "cpu=" + cpu +
+                "cpuUsageReceiver=" + cpuUsageReceiver +
                 ", ctxt=" + ctxt +
                 ", btime=" + btime +
                 ", processes=" + processes +

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import com.common.android.utils.logging.Logger;
 import com.common.android.utils.ui.recyclerView.DataBindAdapter;
 import com.common.android.utils.ui.recyclerView.DataBinder;
 import net.kibotu.android.deviceinfo.R;
@@ -37,15 +38,16 @@ public class CardViewSubListItemBinder extends DataBinder<ListItem, CardViewSubL
     }
 
     @Override
-    public void bindViewHolder(@NotNull ViewHolder viewHolder, int position) {
+    public void bindViewHolder(@NotNull final ViewHolder viewHolder, int position) {
         final ListItem item = get(position);
 
         viewHolder.label.setText(item.getLabel());
 
         viewHolder.adapter.clear();
 
-        for (ListItem child : item.getChildren())
-            viewHolder.adapter.add(child, HorizontalListItemBinder.class);
+        if (item.hasChildren())
+            for (ListItem child : item.getChildren())
+                viewHolder.adapter.add(child, HorizontalListItemBinder.class);
 
         viewHolder.adapter.notifyDataSetChanged();
     }

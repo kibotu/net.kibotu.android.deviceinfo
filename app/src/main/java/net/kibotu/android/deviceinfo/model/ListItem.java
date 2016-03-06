@@ -4,11 +4,24 @@ import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Created by Nyaruhodo on 21.02.2016.
  */
 public class ListItem {
+
+    public ListItem clear() {
+        if (hasChildren()) {
+            children.clear();
+        }
+        return this;
+    }
+
+    public boolean hasChildren() {
+        return children != null && !children.isEmpty();
+    }
 
     private String label;
     private String value;
@@ -43,7 +56,7 @@ public class ListItem {
 
 
     public ListItem setValue(@Nullable Object value) {
-        if(value != null)
+        if (value != null)
             this.value = value.toString();
         return this;
     }

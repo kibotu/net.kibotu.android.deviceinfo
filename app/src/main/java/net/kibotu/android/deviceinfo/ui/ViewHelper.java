@@ -17,6 +17,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -614,7 +615,7 @@ final public class ViewHelper {
     }
 
     public static String formatPercent(final float usage) {
-        return String.format("%.2f %s", usage, "%");
+        return DecimalFormat.getPercentInstance().format(usage);
     }
 
     public static Bitmap invert(final Bitmap src) {

@@ -5,10 +5,7 @@ package net.kibotu.android.deviceinfo.library.misc;
 
 import android.util.Log;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.util.StringTokenizer;
 
 public class ShellUtils {
@@ -223,6 +220,30 @@ public class ShellUtils {
                 }
             }
         }
+    }
+
+    public static int readIntegerFile(final String filePath) {
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)));
+            final String line = reader.readLine();
+            return Integer.parseInt(line);
+        } catch (final Exception e) {
+            try {
+                Thread.currentThread().join();
+            } catch (final InterruptedException ex) {
+                ex.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                if (reader != null)
+                    reader.close();
+            } catch (final IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return 0;
     }
 
     public interface ShellCallback {

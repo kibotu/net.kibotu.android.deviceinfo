@@ -1,10 +1,11 @@
 package net.kibotu.android.deviceinfo.library.cpu;
 
-import java.io.*;
-import java.util.Scanner;
-import java.util.regex.Pattern;
-
+/**
+ * Created by Nyaruhodo on 06.03.2016.
+ */
 public class Cpu {
+
+    private int numCores = -1;
 
     /**
      * normal processes executing in user mode
@@ -47,24 +48,142 @@ public class Cpu {
      */
     public int guest_nice;
 
-    public static Cpu parseCpu(final String cpuString) {
-        final Cpu cpu = new Cpu();
+    public int total() {
+        return user + nice + system + idle + iowait + irq + softirq + steal + guest + guest_nice;
+    }
 
-        final Scanner s = new Scanner(cpuString);
+    public int getNumCores() {
+        return numCores;
+    }
 
-        if (s.hasNext()) s.next();
-        if (s.hasNextInt()) cpu.user = s.nextInt();
-        if (s.hasNextInt()) cpu.nice = s.nextInt();
-        if (s.hasNextInt()) cpu.system = s.nextInt();
-        if (s.hasNextInt()) cpu.idle = s.nextInt();
-        if (s.hasNextInt()) cpu.iowait = s.nextInt();
-        if (s.hasNextInt()) cpu.irq = s.nextInt();
-        if (s.hasNextInt()) cpu.softirq = s.nextInt();
-        if (s.hasNextInt()) cpu.steal = s.nextInt();
-        if (s.hasNextInt()) cpu.guest = s.nextInt();
-        if (s.hasNextInt()) cpu.guest_nice = s.nextInt();
+    public Cpu setNumCores(int numCores) {
+        this.numCores = numCores;
+        return this;
+    }
 
-        return cpu;
+    public int getUser() {
+        return user;
+    }
+
+    public Cpu setUser(int user) {
+        this.user = user;
+        return this;
+    }
+
+    public int getNice() {
+        return nice;
+    }
+
+    public Cpu setNice(int nice) {
+        this.nice = nice;
+        return this;
+    }
+
+    public int getSystem() {
+        return system;
+    }
+
+    public Cpu setSystem(int system) {
+        this.system = system;
+        return this;
+    }
+
+    public int getIdle() {
+        return idle;
+    }
+
+    public Cpu setIdle(int idle) {
+        this.idle = idle;
+        return this;
+    }
+
+    public int getIowait() {
+        return iowait;
+    }
+
+    public Cpu setIowait(int iowait) {
+        this.iowait = iowait;
+        return this;
+    }
+
+    public int getIrq() {
+        return irq;
+    }
+
+    public Cpu setIrq(int irq) {
+        this.irq = irq;
+        return this;
+    }
+
+    public int getSoftirq() {
+        return softirq;
+    }
+
+    public Cpu setSoftirq(int softirq) {
+        this.softirq = softirq;
+        return this;
+    }
+
+    public int getSteal() {
+        return steal;
+    }
+
+    public Cpu setSteal(int steal) {
+        this.steal = steal;
+        return this;
+    }
+
+    public int getGuest() {
+        return guest;
+    }
+
+    public Cpu setGuest(int guest) {
+        this.guest = guest;
+        return this;
+    }
+
+    public int getGuest_nice() {
+        return guest_nice;
+    }
+
+    public Cpu setGuest_nice(int guest_nice) {
+        this.guest_nice = guest_nice;
+        return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Cpu cpu = (Cpu) o;
+
+        if (user != cpu.user) return false;
+        if (nice != cpu.nice) return false;
+        if (system != cpu.system) return false;
+        if (idle != cpu.idle) return false;
+        if (iowait != cpu.iowait) return false;
+        if (irq != cpu.irq) return false;
+        if (softirq != cpu.softirq) return false;
+        if (steal != cpu.steal) return false;
+        if (guest != cpu.guest) return false;
+        return guest_nice == cpu.guest_nice;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = user;
+        result = 31 * result + nice;
+        result = 31 * result + system;
+        result = 31 * result + idle;
+        result = 31 * result + iowait;
+        result = 31 * result + irq;
+        result = 31 * result + softirq;
+        result = 31 * result + steal;
+        result = 31 * result + guest;
+        result = 31 * result + guest_nice;
+        return result;
     }
 
     @Override
@@ -82,129 +201,4 @@ public class Cpu {
                 ", guest_nice=" + guest_nice +
                 '}';
     }
-
-    public int total() {
-        return user + nice + system + idle + iowait + irq + softirq + steal + guest + guest_nice;
-    }
-
-    // region usage
-    private static float[] cpuUsage;
-    private static ProcStat lastPs;
-
-    /**
-     * @credits to https://github.com/takke/cpustats
-     */
-    public synchronized static float[] getCpuUsage() {
-        if (cpuUsage == null) cpuUsage = new float[getNumCores()];
-
-        if (lastPs == null) {
-            lastPs = ProcStat.loadProcStat();
-            return cpuUsage;
-        }
-
-        final ProcStat ps = ProcStat.loadProcStat();
-
-        int usedCores = Math.min(ps.cpu.size(), lastPs.cpu.size());
-        cpuUsage = new float[usedCores + 1];
-        for (int i = 0; i < usedCores; ++i) {
-            cpuUsage[i] = 0;
-            final Cpu cpuC = ps.cpu.get(i);
-            final Cpu cpuL = lastPs.cpu.get(i);
-
-            int totalC = cpuC.total();
-            int totalL = cpuL.total();
-
-            final int totalDiff = totalC - totalL;
-            if (totalDiff > 0) {
-                final int idleDiff = cpuC.idle - cpuL.idle;
-
-                cpuUsage[i] = 100 - idleDiff * 100 / (float) totalDiff;
-            }
-        }
-        return cpuUsage;
-    }
-
-    // endregion
-
-    // region amount cores
-
-    private static int numCores = -1;
-
-    /**
-     * Gets the number of cores available in this device, across all processors.
-     * Requires: Ability to peruse the filesystem at "/sys/devices/system/cpu"
-     *
-     * @return The number of cores, or 1 if failed to get result
-     */
-    public static int getNumCores() {
-
-        if (numCores != -1)
-            return numCores;
-
-        //Private Class to display only CPU devices in the directory listing
-        class CpuFilter implements FileFilter {
-            @Override
-            public boolean accept(File pathname) {
-                //Check if filename is "cpu", followed by a single digit number
-                if (Pattern.matches("cpu[0-9]+", pathname.getName())) {
-                    return true;
-                }
-                return false;
-            }
-        }
-
-        try {
-            //Get directory containing CPU info
-            File dir = new File("/sys/devices/system/cpu/");
-            //Filter to only list the devices we care about
-            File[] files = dir.listFiles(new CpuFilter());
-            //Return the number of cores (virtual CPU devices)
-            return numCores = files.length;
-        } catch (final Exception e) {
-            //Default to return 1 core
-            return numCores = 1;
-        }
-    }
-
-    // endregion
-
-    // region frequency
-
-    public static int getCurrentCpuFreq() {
-        return readIntegerFile("/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq");
-    }
-
-    public static int getMinCpuFreq() {
-        return readIntegerFile("/sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_min_freq");
-    }
-
-    public static int getMaxCpuFreq() {
-        return readIntegerFile("/sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq");
-    }
-
-    private static int readIntegerFile(final String filePath) {
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)));
-            final String line = reader.readLine();
-            return Integer.parseInt(line);
-        } catch (final Exception e) {
-            try {
-                Thread.currentThread().join();
-            } catch (final InterruptedException ex) {
-                ex.printStackTrace();
-            }
-            e.printStackTrace();
-        } finally {
-            try {
-                if (reader != null)
-                    reader.close();
-            } catch (final IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return 0;
-    }
-
-    // endregion
 }

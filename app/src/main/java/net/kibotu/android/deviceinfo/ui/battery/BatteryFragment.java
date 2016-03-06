@@ -33,15 +33,13 @@ public class BatteryFragment extends ListFragment {
     protected void onViewCreated() {
         super.onViewCreated();
 
-        batteryReceiver = getBatteryReceiver();
-        batteryReceiver.batteryObservable.addObserver(new BatteryUpdateListener() {
+        batteryReceiver = getBatteryReceiver().addObserver(new BatteryUpdateListener() {
 
             @Override
             protected void update(Battery battery) {
                 updateWithBattery(battery);
             }
-        });
-        batteryReceiver.registerReceiver();
+        }).registerReceiver();
     }
 
     private void updateWithBattery(Battery battery) {

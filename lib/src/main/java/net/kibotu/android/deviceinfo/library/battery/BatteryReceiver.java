@@ -13,10 +13,20 @@ import static net.kibotu.android.deviceinfo.library.Device.getContext;
  */
 public class BatteryReceiver extends BroadcastReceiver {
 
-    public final BatteryObservable batteryObservable;
+    private final BatteryObservable batteryObservable;
 
     public BatteryReceiver() {
         batteryObservable = new BatteryObservable();
+    }
+
+    public BatteryReceiver addObserver(BatteryUpdateListener listener) {
+        batteryObservable.addObserver(listener);
+        return this;
+    }
+
+    public BatteryReceiver deleteObserver(BatteryUpdateListener listener) {
+        batteryObservable.deleteObserver(listener);
+        return this;
     }
 
     public BatteryReceiver registerReceiver() {
