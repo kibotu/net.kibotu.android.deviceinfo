@@ -16,7 +16,7 @@
     <string name="menu_item_java">Java</string>
     <string name="menu_item_geolocation">Geolocation</string>
     <string name="menu_item_app">App</string>
-    <string name="menu_item_other">Other</string>
+    <string name="menu_item_other">Miscellaneous</string>
     <string name="left_drawer_title">Device Information</string>
     <string name="title_build">Build</string>
 </resources>

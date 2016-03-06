@@ -4,7 +4,7 @@ import com.canelmas.let.AskPermission;
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.library.Device;
 import net.kibotu.android.deviceinfo.library.bluetooth.Bluetooth;
-import net.kibotu.android.deviceinfo.library.build.Build;
+import net.kibotu.android.deviceinfo.library.build.BuildInfo;
 import net.kibotu.android.deviceinfo.library.network.Network;
 import net.kibotu.android.deviceinfo.library.network.ProxySettings;
 import net.kibotu.android.deviceinfo.library.network.SIM;
@@ -37,7 +37,7 @@ public class NetworkFragment extends ListFragment {
         addVerticallyCard("UserAgent", Network.getUserAgent(), "");
 
         addHorizontallyCard("IMSI No", getSubscriberIdFromTelephonyManager(), "");
-        addHorizontallyCard("hwID", Build.getSerialNumber(), "");
+        addHorizontallyCard("hwID", BuildInfo.getSerialNumber(), "");
 
         addImeiNumber();
 

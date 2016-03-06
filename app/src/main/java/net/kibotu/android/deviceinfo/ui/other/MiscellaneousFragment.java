@@ -9,7 +9,7 @@ import static net.kibotu.android.deviceinfo.library.Device.isPhoneRooted;
 /**
  * Created by Nyaruhodo on 21.02.2016.
  */
-public class OtherFragment extends ListFragment {
+public class MiscellaneousFragment extends ListFragment {
 
     @Override
     protected String getTitle() {

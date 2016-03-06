@@ -12,7 +12,7 @@ import net.kibotu.android.deviceinfo.ui.java.JavaFragment;
 import net.kibotu.android.deviceinfo.ui.memory.MemoryFragment;
 import net.kibotu.android.deviceinfo.ui.menu.MenuItem;
 import net.kibotu.android.deviceinfo.ui.network.NetworkFragment;
-import net.kibotu.android.deviceinfo.ui.other.OtherFragment;
+import net.kibotu.android.deviceinfo.ui.other.MiscellaneousFragment;
 import net.kibotu.android.deviceinfo.ui.sensor.SensorFragment;
 
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class MainMenuFactory {
         items.add(new MenuItem(R.string.menu_item_java, R.drawable.java, JavaFragment.class));
         items.add(new MenuItem(R.string.menu_item_geolocation, R.drawable.geo, GeolocationFragment.class));
         items.add(new MenuItem(R.string.menu_item_app, R.drawable.info, AppFragment.class));
-        items.add(new MenuItem(R.string.menu_item_other, R.drawable.others, OtherFragment.class));
+        items.add(new MenuItem(R.string.menu_item_other, R.drawable.others, MiscellaneousFragment.class));
 
         return items;
     }

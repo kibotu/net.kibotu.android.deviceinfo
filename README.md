@@ -30,11 +30,31 @@ Step 2. Add the dependency
 
 ### How to build the lib:
 
-    gradle clean build
+    gradle clean lib:build
 
 ### Features
 
+##### Build
 
+    Build.getSystemAvailableFeatures()
+
+##### Configuration
+##### Cpu
+##### Gpu
+##### Memory
+##### Battery
+##### Display
+##### Network
+##### Sensor
+##### Java
+##### Geolocation
+##### App
+##### Misc
+
+
+    
+    
+    
 
 ###  Contributers
 

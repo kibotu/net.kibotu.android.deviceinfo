@@ -2,7 +2,7 @@ package net.kibotu.android.deviceinfo.ui.app;
 
 import android.content.pm.FeatureInfo;
 import net.kibotu.android.deviceinfo.R;
-import net.kibotu.android.deviceinfo.library.build.Build;
+import net.kibotu.android.deviceinfo.library.build.BuildInfo;
 import net.kibotu.android.deviceinfo.model.ListItem;
 import net.kibotu.android.deviceinfo.ui.list.ListFragment;
 
@@ -25,7 +25,7 @@ public class AppFragment extends ListFragment {
     protected void onViewCreated() {
         super.onViewCreated();
 
-        addHorizontallyCard("App Version", Build.getVersionFromPackageManager(), "");
+        addHorizontallyCard("App Version", BuildInfo.getVersionFromPackageManager(), "");
         addHorizontallyCard("Threads Count", Thread.getAllStackTraces().keySet().size(), "");
         addAppRuntimeMemory();
         addVerticallyCard("APK Storage Path", getFileSize(getContext().getPackageCodePath()), "");
@@ -44,18 +44,18 @@ public class AppFragment extends ListFragment {
     }
 
     private void addPermissions() {
-        final Map<String, FeatureInfo> systemAvailableFeatures = Build.getSystemAvailableFeatures();
+        final Map<String, FeatureInfo> systemAvailableFeatures = BuildInfo.getSystemAvailableFeatures();
         final ListItem item = new ListItem().setLabel("Permissions").setDescription("All enabled permissions for this app.");
-        for(String permission:  Build.getPermissions())
+        for(String permission:  BuildInfo.getPermissions())
             item.addChild(new ListItem().setLabel(permission));
 
         addSubListItem(item);
     }
 
     private void addSharedLibraries() {
-        final Map<String, FeatureInfo> systemAvailableFeatures = Build.getSystemAvailableFeatures();
+        final Map<String, FeatureInfo> systemAvailableFeatures = BuildInfo.getSystemAvailableFeatures();
         final ListItem item = new ListItem().setLabel("Shared Libraries").setDescription( "List of shared libraries that are available on the system.");
-        for(String lib:  Build.getSharedLibraries())
+        for(String lib:  BuildInfo.getSharedLibraries())
             item.addChild(new ListItem().setLabel(lib));
 
         addSubListItem(item);
