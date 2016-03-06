@@ -3,12 +3,14 @@ package net.kibotu.android.deviceinfo.ui.gpu;
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.library.Callback;
 import net.kibotu.android.deviceinfo.library.Device;
+import net.kibotu.android.deviceinfo.library.hardware.gpu.Egl;
 import net.kibotu.android.deviceinfo.library.hardware.gpu.OpenGLGles10Info;
 import net.kibotu.android.deviceinfo.library.hardware.gpu.OpenGLGles20Info;
 import net.kibotu.android.deviceinfo.model.ListItem;
 import net.kibotu.android.deviceinfo.ui.list.ListFragment;
 
-import static net.kibotu.android.deviceinfo.ui.ViewHelper.*;
+import static net.kibotu.android.deviceinfo.ui.ViewHelper.appendGLInfoArray;
+import static net.kibotu.android.deviceinfo.ui.ViewHelper.firstLetterToUpperCase;
 
 /**
  * Created by Nyaruhodo on 21.02.2016.
@@ -24,13 +26,6 @@ public class GpuFragment extends ListFragment {
     protected void onViewCreated() {
         super.onViewCreated();
 
-        Device.loadOpenGLGles10Info(new Callback<OpenGLGles10Info>() {
-            @Override
-            public void onComplete(final OpenGLGles10Info openGLGles10Info) {
-                addOpenGLGles10Info(openGLGles10Info);
-            }
-        });
-
         Device.loadOpenGLGles20Info(new Callback<OpenGLGles20Info>() {
             @Override
             public void onComplete(final OpenGLGles20Info openGLGles20Info) {
@@ -38,55 +33,26 @@ public class GpuFragment extends ListFragment {
             }
         });
 
-//        cachedList.addItem("OpenGL ES 2.0", "description", new DeviceInfoItemAsync() {
-//            @Override
-//            protected void async() {
-//                gpu.loadOpenGLGles20Info(new Gpu.OnCompleteCallback<OpenGLGles20Info>() {
-//
-//                    @Override
-//                    public void onComplete(final OpenGLGles20Info info) {
-//                        value = formatOpenGles20info(info);
-//                    }
-//                });
-//            }
-//        });
-//
-//        cachedList.addItem("OpenGL ES-CM 1.1", "description", new DeviceInfoItemAsync() {
-//            @Override
-//            protected void async() {
-//                gpu.loadOpenGLGles10Info(new Gpu.OnCompleteCallback<OpenGLGles10Info>() {
-//
-//                    @Override
-//                    public void onComplete(final OpenGLGles10Info info) {
-//                        value = formatOpenGles10info(info);
-//                        cachedList.addItem("Graphic Modes", "description", new DeviceInfoItemAsync() {
-//
-//                            @Override
-//                            protected void async() {
-//                                value = "";
-//                                for (final Gpu.Egl egl : info.eglconfigs)
-//                                    value += egl.toString() + "\n";
-//                            }
-//                        });
-//                    }
-//                });
-//            }
-//        });
+        Device.loadOpenGLGles10Info(new Callback<OpenGLGles10Info>() {
+            @Override
+            public void onComplete(final OpenGLGles10Info openGLGles10Info) {
+                addGLES10Constraints(openGLGles10Info);
+            }
+        });
     }
 
-    private void addOpenGLGles10Info(OpenGLGles10Info info) {
-
-        // general
-        String keys = "General" + BR;
-        String values = BR;
-        keys += "Renderer" + BR;
-        values += info.GL_RENDERER + BR;
-        keys += "Version" + BR;
-        values += info.GL_VERSION + BR;
-        keys += "Vendor" + BR + BR;
-        values += info.GL_VENDOR + BR + BR;
-
-//        addListItemWithTitle("OpenGLGles10", keys, values, "");
+    private void addGLES10Constraints(OpenGLGles10Info info) {
+        ListItem item = new ListItem().setLabel("Fixed Function Pipeline")
+                .addChild(new ListItem().setLabel("Version").setValue(info.GL_VERSION))
+                .addChild(new ListItem().setLabel("Max ModelView Stack Depth").setValue(info.GL_MAX_MODELVIEW_STACK_DEPTH))
+                .addChild(new ListItem().setLabel("Max Projection Stack Depth").setValue(info.GL_MAX_PROJECTION_STACK_DEPTH))
+                .addChild(new ListItem().setLabel("Max Lights").setValue(info.GL_MAX_LIGHTS))
+                .addChild(new ListItem().setLabel("Max Depth Bits").setValue(info.GL_DEPTH_BITS))
+                .addChild(new ListItem().setLabel("Max Stencil Bits").setValue(info.GL_STENCIL_BITS))
+                .addChild(new ListItem().setLabel("Max Subpixel Bits").setValue(info.GL_SUBPIXEL_BITS))
+                .addChild(new ListItem().setLabel("Max Element Indices").setValue(info.GL_MAX_ELEMENTS_INDICES))
+                .addChild(new ListItem().setLabel("Max Element Vertices").setValue(info.GL_MAX_ELEMENTS_VERTICES));
+        addSubListItem(item);
 
         notifyDataSetChanged();
     }
@@ -105,9 +71,19 @@ public class GpuFragment extends ListFragment {
 
         addFragmentNumericPrecision(info);
 
+        addEglConfigs(info);
+
         addExtensions(info);
 
         notifyDataSetChanged();
+    }
+
+    private void addEglConfigs(OpenGLGles20Info info) {
+        ListItem item = new ListItem().setLabel("Graphic Modes");
+        for (final Egl egl : info.eglconfigs)
+            item.addChild(new ListItem().setLabel(egl.toString()));
+
+        addSubListItem(item);
     }
 
     private void addFragmentNumericPrecision(OpenGLGles20Info info) {
