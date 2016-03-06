@@ -63,6 +63,6 @@ public class AppFragment extends ListFragment {
 
     @Override
     protected int getHomeIcon() {
-        return R.drawable.info_i;
+        return R.drawable.info;
     }
 }

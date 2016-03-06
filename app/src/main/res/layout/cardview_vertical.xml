@@ -22,7 +22,7 @@
         <TextView
                 android:text="Label"
                 android:id="@+id/label"
-                android:background="#EFEFEF"
+                android:background="@color/card_topic_background"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"

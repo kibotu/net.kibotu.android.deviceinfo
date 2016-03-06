@@ -68,6 +68,6 @@ public class BatteryFragment extends ListFragment {
 
     @Override
     protected int getHomeIcon() {
-        return R.drawable.battery_i;
+        return R.drawable.battery;
     }
 }

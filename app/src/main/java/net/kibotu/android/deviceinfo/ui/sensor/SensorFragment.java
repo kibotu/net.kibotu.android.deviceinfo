@@ -44,6 +44,6 @@ public class SensorFragment extends ListFragment {
 
     @Override
     protected int getHomeIcon() {
-        return R.drawable.sensors_i;
+        return R.drawable.sensors;
     }
 }

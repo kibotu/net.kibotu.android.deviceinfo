@@ -185,6 +185,6 @@ public class MemoryFragment extends ListFragment {
 
     @Override
     protected int getHomeIcon() {
-        return R.drawable.memory_i;
+        return R.drawable.memory;
     }
 }

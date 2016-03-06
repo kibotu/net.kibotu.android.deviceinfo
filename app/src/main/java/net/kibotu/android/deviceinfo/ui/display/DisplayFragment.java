@@ -40,6 +40,6 @@ public class DisplayFragment extends ListFragment {
 
     @Override
     protected int getHomeIcon() {
-        return R.drawable.display_i;
+        return R.drawable.display;
     }
 }

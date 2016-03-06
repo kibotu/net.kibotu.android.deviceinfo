@@ -21,7 +21,7 @@
             android:layout_width="match_parent">
 
         <TextView
-                android:background="#EFEFEF"
+                android:background="@color/fragment_background"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:id="@+id/label"

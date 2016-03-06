@@ -70,6 +70,6 @@ public class CpuFragment extends ListFragment {
 
     @Override
     protected int getHomeIcon() {
-        return R.drawable.cpu_i;
+        return R.drawable.cpu;
     }
 }

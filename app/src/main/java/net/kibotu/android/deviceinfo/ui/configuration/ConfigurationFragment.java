@@ -62,6 +62,6 @@ public class ConfigurationFragment extends ListFragment {
 
     @Override
     protected int getHomeIcon() {
-        return R.drawable.config_i;
+        return R.drawable.config;
     }
 }

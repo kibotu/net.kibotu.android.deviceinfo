@@ -169,6 +169,6 @@ public class GpuFragment extends ListFragment {
 
     @Override
     protected int getHomeIcon() {
-        return R.drawable.gpu_i;
+        return R.drawable.gpu;
     }
 }

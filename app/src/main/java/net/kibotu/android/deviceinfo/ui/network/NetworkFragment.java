@@ -208,6 +208,6 @@ public class NetworkFragment extends ListFragment {
 
     @Override
     protected int getHomeIcon() {
-        return R.drawable.network_i;
+        return R.drawable.network;
     }
 }

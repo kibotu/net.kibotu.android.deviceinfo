@@ -39,6 +39,6 @@ public class JavaFragment extends ListFragment {
 
     @Override
     protected int getHomeIcon() {
-        return R.drawable.java_i;
+        return R.drawable.java;
     }
 }

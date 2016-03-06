@@ -63,6 +63,6 @@ public class GeolocationFragment extends ListFragment {
 
     @Override
     protected int getHomeIcon() {
-        return R.drawable.geo_i;
+        return R.drawable.geo;
     }
 }

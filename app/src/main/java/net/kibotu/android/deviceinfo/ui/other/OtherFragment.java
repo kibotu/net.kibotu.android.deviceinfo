@@ -27,6 +27,6 @@ public class OtherFragment extends ListFragment {
 
     @Override
     protected int getHomeIcon() {
-        return R.drawable.others_i;
+        return R.drawable.others;
     }
 }

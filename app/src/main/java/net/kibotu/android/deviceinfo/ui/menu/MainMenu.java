@@ -1,5 +1,8 @@
 package net.kibotu.android.deviceinfo.ui.menu;
 
+import android.graphics.Bitmap;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -13,11 +16,15 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.bumptech.glide.request.target.Target;
 import com.common.android.utils.extensions.ResourceExtensions;
 import com.common.android.utils.ui.recyclerView.DataBindAdapter;
 import net.kibotu.android.deviceinfo.R;
@@ -25,6 +32,7 @@ import net.kibotu.android.deviceinfo.R;
 import java.util.List;
 
 import static com.common.android.utils.ContextHelper.getContext;
+import static com.common.android.utils.extensions.ResourceExtensions.color;
 import static com.common.android.utils.extensions.ResourceExtensions.drawable;
 import static com.common.android.utils.extensions.ViewExtensions.getContentRoot;
 
@@ -167,7 +175,20 @@ public class MainMenu implements IMainMenu {
     @Override
     public IMainMenu setHomeIcon(@DrawableRes int drawable) {
 //        getSupportActionBar().setHomeAsUpIndicator(drawable(drawable));
-        Glide.with(getContext()).load(drawable).fitCenter().into(actionbarViewHolder.homeIcon);
+
+        Glide.with(getContext())
+                .load(drawable)
+                .asBitmap()
+                .fitCenter()
+                .into(new BitmapImageViewTarget(actionbarViewHolder.homeIcon) {
+                    @Override
+                    public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                        super.onResourceReady(drawable, anim);
+                        // colorizing icon for contrast also making sure we don't accidentally cache the colorized image with same name as the original
+                        actionbarViewHolder.homeIcon.setColorFilter(color(R.color.white), PorterDuff.Mode.SRC_IN);
+                    }
+                });
+
         return this;
     }
 
