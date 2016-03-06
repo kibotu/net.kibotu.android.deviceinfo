@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <dimen name="space_15">15dp</dimen>
-    <dimen name="space_10">10dp</dimen>
-    <dimen name="cardMarginVertical">8dp</dimen>
-    <dimen name="cardMarginHorizontal">10dp</dimen>
-</resources>
