@@ -102,6 +102,9 @@ dependencies {
 
     // auto resizing text views
     compile 'me.grantland:autofittextview:0.2.1'
+
+    // fancy time calculations
+    compile 'joda-time:joda-time:2.9.2'
 }
 
 def commitCount() {
