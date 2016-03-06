@@ -23,7 +23,7 @@ public class FragmentProvider {
 
     public static void showBuildConfigFragment() {
         final FragmentManager fm = getContext().getSupportFragmentManager();
-        final BaseFragment fragment = newInstance(GpuFragment.class, null);
+        final BaseFragment fragment = newInstance(BuildFragment.class, null);
         fm.beginTransaction()
                 .replace(R.id.fragment_container, fragment)
                 .commit();

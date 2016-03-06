@@ -7,15 +7,19 @@ import android.graphics.ImageFormat;
 import android.graphics.PixelFormat;
 import android.hardware.Sensor;
 import android.os.Build;
+import android.text.TextUtils;
 import android.view.Surface;
 import net.kibotu.android.deviceinfo.library.Device;
 import net.kibotu.android.deviceinfo.library.ReflectionHelper;
 import net.kibotu.android.deviceinfo.library.legacy.Storage;
+import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static android.hardware.Sensor.*;
 import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR1;
@@ -634,5 +638,31 @@ final public class ViewHelper {
         }
 
         return output;
+    }
+
+    @Nullable
+    public static String formatSdkString(String fieldName) {
+        fieldName = fieldName.replaceAll("_", " ");
+        String firstLetter = fieldName.substring(0, 1);
+        fieldName = firstLetter.toUpperCase() + fieldName.substring(1).toLowerCase();
+
+        Pattern p = Pattern.compile(" [a-z]");
+        Matcher m = p.matcher(fieldName);
+        while (m.find()) {
+            int index = m.start();
+            fieldName = fieldName.substring(0, index) + fieldName.substring(index, index + 2).toUpperCase() + fieldName.substring(index + 2);
+        }
+
+        Pattern mrPattern = Pattern.compile(" (Mr\\d)");
+        Matcher mrMatcher = mrPattern.matcher(fieldName);
+
+        String[] result;
+        if (mrMatcher.find()) {
+            fieldName = fieldName.replaceAll(" Mr\\d", "");
+            result = new String[]{fieldName, mrMatcher.group(1).toUpperCase()};
+        } else
+            result = new String[]{fieldName, null};
+
+        return TextUtils.join(" ", result);
     }
 }
