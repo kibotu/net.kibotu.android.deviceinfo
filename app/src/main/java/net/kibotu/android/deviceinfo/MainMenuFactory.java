@@ -2,7 +2,7 @@ package net.kibotu.android.deviceinfo;
 
 import net.kibotu.android.deviceinfo.ui.app.AppFragment;
 import net.kibotu.android.deviceinfo.ui.battery.BatteryFragment;
-import net.kibotu.android.deviceinfo.ui.build.BuildFragment;
+import net.kibotu.android.deviceinfo.ui.buildinfo.BuildFragment;
 import net.kibotu.android.deviceinfo.ui.configuration.ConfigurationFragment;
 import net.kibotu.android.deviceinfo.ui.cpu.CpuFragment;
 import net.kibotu.android.deviceinfo.ui.display.DisplayFragment;
