@@ -7,14 +7,13 @@ import net.kibotu.android.deviceinfo.library.cpu.Cpu;
 import net.kibotu.android.deviceinfo.library.cpu.CpuUpdateListener;
 import net.kibotu.android.deviceinfo.library.cpu.CpuUsageReceiver;
 import net.kibotu.android.deviceinfo.model.ListItem;
-import net.kibotu.android.deviceinfo.ui.ViewHelper;
 import net.kibotu.android.deviceinfo.ui.list.ListFragment;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Map;
 
-import static net.kibotu.android.deviceinfo.ui.ViewHelper.formatPercent;
-import static net.kibotu.android.deviceinfo.ui.ViewHelper.getFormattedTimeDifference;
+import static net.kibotu.android.deviceinfo.ui.ViewHelper.*;
 
 /**
  * Created by Nyaruhodo on 21.02.2016.
@@ -45,12 +44,54 @@ public class CpuFragment extends ListFragment {
     protected void onViewCreated() {
         super.onViewCreated();
 
-        // create new cpu card
-        final ListItem item = new ListItem().setLabel("CPU Utilization").setDescription("Output from /proc/stat.");
+        cpuUsageReceiver = new CpuUsageReceiver();
+
+        addFrequency();
+
+        addCoreUtilization();
+
+        addMisc();
+
+        addCpuInfo();
+
+        // updating adapter
+        cpuUsageReceiver.addCpuUpdateListener(new CpuUpdateListener() {
+            @Override
+            protected void update(Cpu cpu) {
+                notifyDataSetChanged();
+            }
+        }).registerReceiver();
+    }
+
+    private void addCpuInfo() {
+        final ListItem item = new ListItem().setLabel("CPU Details").setDescription("Output /proc/cpuinfo.");
+
+        for (Map.Entry<String, String> entry : CpuUsageReceiver.getCpuInfo().entrySet())
+            item.addChild(new ListItem().setLabel(entry.getKey()).setValue(entry.getValue()));
+
+        addSubListItem(item);
+    }
+
+    private void addFrequency() {
+        final ListItem item = new ListItem().setLabel("Frequency").setDescription("Output cpuinfo_max_freq, cpuinfo_min_freq and scaling_cur_freq from /sys/devices/system/cpuUsageReceiver/cpu0/cpufreq/.");
+        cpuUsageReceiver.addCpuUpdateListener(new CpuUpdateListener() {
+            @Override
+            protected void update(Cpu cpu) {
+                item.clear()
+                        .addChild(new ListItem().setLabel("Max").setValue(formatFrequency(CpuUsageReceiver.getMaxCpuFreq())))
+                        .addChild(new ListItem().setLabel("Min").setValue(formatFrequency(CpuUsageReceiver.getMinCpuFreq())))
+                        .addChild(new ListItem().setLabel("Current").setValue(formatFrequency(CpuUsageReceiver.getCurrentCpuFreq())));
+            }
+        });
+        addSubListItem(item);
+    }
+
+    private void addCoreUtilization() {
+        // create new cpu utilization card
+        final ListItem item = new ListItem().setLabel("Core Utilization").setDescription("Output from /proc/stat.");
         addSubListItem(item);
 
         // register for cpu update events
-        cpuUsageReceiver = new CpuUsageReceiver();
         cpuUsageReceiver.addCpuUpdateListener(new CpuUpdateListener() {
             @Override
             protected void update(Cpu cpu) {
@@ -66,58 +107,29 @@ public class CpuFragment extends ListFragment {
                             ? "Idle"
                             : formatPercent(core.usage / 100)));
                 }
-
-                item
-                        .addChild(new ListItem().setLabel("Currently Running Processes").setValue(cpu.getProcs_running()))
-                        .addChild(new ListItem().setLabel("Currently blocked Processes").setValue(cpu.getProcs_blocked()))
-                        .addChild(new ListItem().setLabel("Booted").setValue(getFormattedTimeDifference(cpu.getBtimeAsEpoch() * 1000L)))
-                        .addChild(new ListItem().setLabel("Context switches across all CPUs").setValue(cpu.getCtxt()))
-                        .addChild(new ListItem().setLabel("Processes and threads created").setValue(cpu.getProcesses()));
-
-                notifyDataSetChanged();
             }
-        }).registerReceiver();
-
-
-//        final LinearLayout lFreq = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.tablewithtag, null);
-//        CPU.threads.add(cachedList.addItem("Frequency", "Output cpuinfo_max_freq, cpuinfo_min_freq and scaling_cur_freq from /sys/devices/system/cpuUsageReceiver/cpu0/cpufreq/.", 1f, true, new DeviceInfoItemAsync(cores + 2) {
-//            @Override
-//            protected void async() {
-//
-//                customView = lFreq;
-//                useHtml = true;
-//
-//                keys = "Max:" + BR;
-//                value = formatFrequency(CpuUsageReceiver.getMaxCpuFreq()) + BR;
-//                keys += "Min:" + BR;
-//                value += formatFrequency(CpuUsageReceiver.getMinCpuFreq()) + BR;
-//                keys += "Current:" + BR;
-//                value += formatFrequency(CpuUsageReceiver.getCurrentCpuFreq());
-//            }
-//        }));
-//
-//        cachedList.addItem("CPU Details", "Output /proc/cpuinfo.", new DeviceInfoItemAsync(cores + 5) {
-//            @Override
-//            protected void async() {
-//                value = DeviceOld.getCpuInfo();
-//            }
-//        });
+        });
     }
-//
-//    private void updateWithCpu(Cpu cpu) {
-//
-//        ListItem item = new ListItem().setLabel("CPU Utilization").setDescription("Output from /proc/stat.")
-//                .addChild(new ListItem().setLabel("Cores").setValue(cpu.getNumCores()))
-//                .addChild(new ListItem().setLabel("Utilization All Cores").setValue(formatPercent(cpuUsages[0]) + ""));
-//        for (int i = 1; i < numCores + 1; ++i) {
-//            if (cpuUsages.length <= i) break;
-//            final float usage = cpuUsages[i];
-//
-//            item.addChild(new ListItem().setLabel("Utilization Core").setValue(usage <= 0.01f
-//                    ? "Idle"
-//                    : formatPercent(usage)));
-//        }
-//    }
+
+    private void addMisc() {
+        // create new cpu utiliyation card
+        final ListItem item = new ListItem().setLabel("Misc").setDescription("Output from /proc/stat.");
+        addSubListItem(item);
+
+        // register for cpu update events
+        cpuUsageReceiver.addCpuUpdateListener(new CpuUpdateListener() {
+            @Override
+            protected void update(Cpu cpu) {
+
+                item.clear()
+                        .addChild(new ListItem().setLabel("Booted").setValue(getFormattedTimeDifference(cpu.getBtimeAsEpoch() * 1000L)))
+                        .addChild(new ListItem().setLabel("Currently running processes").setValue(cpu.getProcs_running()))
+                        .addChild(new ListItem().setLabel("Currently blocked processes").setValue(cpu.getProcs_blocked()))
+                        .addChild(new ListItem().setLabel("Context switches across all cores").setValue(cpu.getCtxt()))
+                        .addChild(new ListItem().setLabel("Processes and threads created").setValue(cpu.getProcesses()));
+            }
+        });
+    }
 
     @Override
     protected int getHomeIcon() {

@@ -2,11 +2,13 @@ package net.kibotu.android.deviceinfo.library.cpu;
 
 import android.app.Activity;
 import net.kibotu.android.deviceinfo.library.Device;
-import net.kibotu.android.deviceinfo.library.misc.ShellUtils;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
+
+import static java.lang.Integer.parseInt;
+import static net.kibotu.android.deviceinfo.library.misc.ShellExtensions.readLineFrom;
+import static net.kibotu.android.deviceinfo.library.misc.ShellExtensions.readRandomAcccessFileFrom;
 
 public class CpuUsageReceiver {
 
@@ -107,21 +109,40 @@ public class CpuUsageReceiver {
     // region frequency
 
     public static int getCurrentCpuFreq() {
-        return ShellUtils.readIntegerFile("/sys/devices/system/cpuUsageReceiver/cpu0/cpufreq/scaling_cur_freq");
+        return parseInt(readLineFrom("/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq"));
     }
 
     public static int getMinCpuFreq() {
-        return ShellUtils.readIntegerFile("/sys/devices/system/cpuUsageReceiver/cpu0/cpufreq/cpuinfo_min_freq");
+        return parseInt(readLineFrom("/sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_min_freq"));
     }
 
     public static int getMaxCpuFreq() {
-        return ShellUtils.readIntegerFile("/sys/devices/system/cpuUsageReceiver/cpu0/cpufreq/cpuinfo_max_freq");
+        return parseInt(readLineFrom("/sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq"));
     }
+
+    // endregion
 
     public CpuUsageReceiver setUpdateInterval(long timeInMillis) {
         updateInterval = timeInMillis;
         return this;
     }
 
-    // endregion
+    public static Map<String, String> getCpuInfo() {
+        HashMap<String, String> map = new HashMap<>();
+
+        String s = readRandomAcccessFileFrom("/proc/cpuinfo");
+
+        Scanner scanner = new Scanner(s);
+
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+            String[] split = line.split(":");
+            if(split.length > 1)
+                map.put(split[0].trim(), split[1].trim());
+            else
+                map.put(line, "");
+        }
+
+        return map;
+    }
 }

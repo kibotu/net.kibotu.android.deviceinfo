@@ -8,9 +8,9 @@ import android.util.Log;
 import java.io.*;
 import java.util.StringTokenizer;
 
-public class ShellUtils {
+public class ShellExtensions {
 
-    private static final String TAG = ShellUtils.class.getSimpleName();
+    private static final String TAG = ShellExtensions.class.getSimpleName();
 
     //various console cmds
     public final static String SHELL_CMD_CHMOD = "chmod";
@@ -33,7 +33,7 @@ public class ShellUtils {
 
             //Check for 'su' binary
             String[] cmd = {"which su"};
-            int exitCode = ShellUtils.doShellCommand(null, cmd, new ShellCallback() {
+            int exitCode = ShellExtensions.doShellCommand(null, cmd, new ShellCallback() {
 
                 @Override
                 public void shellOut(String msg) {
@@ -222,18 +222,12 @@ public class ShellUtils {
         }
     }
 
-    public static int readIntegerFile(final String filePath) {
+    public static String readLineFrom(final String path) {
         BufferedReader reader = null;
         try {
-            reader = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)));
-            final String line = reader.readLine();
-            return Integer.parseInt(line);
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(path)));
+            return reader.readLine();
         } catch (final Exception e) {
-            try {
-                Thread.currentThread().join();
-            } catch (final InterruptedException ex) {
-                ex.printStackTrace();
-            }
             e.printStackTrace();
         } finally {
             try {
@@ -243,7 +237,23 @@ public class ShellUtils {
                 e.printStackTrace();
             }
         }
-        return 0;
+        return null;
+    }
+
+    public static String readRandomAcccessFileFrom(String path) {
+        final StringBuilder buffer = new StringBuilder();
+        try {
+            final RandomAccessFile reader = new RandomAccessFile(path, "r");
+            String load = reader.readLine();
+            while (load != null) {
+                buffer.append(load).append("\n");
+                load = reader.readLine();
+            }
+        } catch (final IOException e) {
+            e.printStackTrace();
+        }
+
+        return buffer.toString();
     }
 
     public interface ShellCallback {

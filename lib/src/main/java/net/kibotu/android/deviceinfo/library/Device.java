@@ -22,7 +22,7 @@ import net.kibotu.android.deviceinfo.library.gpu.InfoLoader;
 import net.kibotu.android.deviceinfo.library.gpu.OpenGLGles10Info;
 import net.kibotu.android.deviceinfo.library.gpu.OpenGLGles20Info;
 import net.kibotu.android.deviceinfo.library.misc.Callback;
-import net.kibotu.android.deviceinfo.library.misc.ShellUtils;
+import net.kibotu.android.deviceinfo.library.misc.ShellExtensions;
 import net.kibotu.android.deviceinfo.library.version.Version;
 
 import java.io.File;
@@ -314,7 +314,7 @@ final public class Device {
         }
 
         // from excecuting shell command
-        return ShellUtils.executeShellCommand("which su");
+        return ShellExtensions.executeShellCommand("which su");
     }
 
     public static List<ResolveInfo> installedApps() {
