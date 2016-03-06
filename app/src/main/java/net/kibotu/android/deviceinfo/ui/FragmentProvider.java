@@ -4,6 +4,8 @@ import android.support.v4.app.FragmentManager;
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.ui.build.BuildFragment;
 import net.kibotu.android.deviceinfo.ui.cpu.CpuFragment;
+import net.kibotu.android.deviceinfo.ui.geolocation.GeolocationFragment;
+import net.kibotu.android.deviceinfo.ui.memory.MemoryFragment;
 
 import static com.common.android.utils.ContextHelper.getContext;
 import static com.common.android.utils.extensions.FragmentExtensions.newInstance;
@@ -19,7 +21,7 @@ public class FragmentProvider {
 
     public static void showBuildConfigFragment() {
         final FragmentManager fm = getContext().getSupportFragmentManager();
-        final BaseFragment fragment = newInstance(CpuFragment.class, null);
+        final BaseFragment fragment = newInstance(MemoryFragment.class, null);
         fm.beginTransaction()
                 .replace(R.id.fragment_container, fragment)
                 .commit();

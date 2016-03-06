@@ -1,6 +1,7 @@
 package net.kibotu.android.deviceinfo.ui.memory;
 
 import net.kibotu.android.deviceinfo.R;
+import net.kibotu.android.deviceinfo.model.ListItem;
 import net.kibotu.android.deviceinfo.ui.list.ListFragment;
 
 /**
@@ -17,33 +18,26 @@ public class MemoryFragment extends ListFragment {
     protected void onViewCreated() {
         super.onViewCreated();
 
-//        final LinearLayout lExternal = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.ram, null);
-//        Memory.threads.add(cachedList.addItem("External Storage", "Every Android-compatible device supports a shared \"external storage\" that you can use to save files. This can be a removable storage media (such as an SD card) or an internal (non-removable) storage. Files saved to the external storage are world-readable and can be modified by the user when they enable USB mass storage to transfer files on a computer.", 1f, true, new DeviceInfoItemAsync(0) {
-//            @Override
-//            protected void async() {
-//                customView = lExternal;
-//                Storage.EXTERNAL.update();
-//                setMap(mapStorage(Storage.EXTERNAL));
-//            }
-//        }));
+        addExternalStorage();
+
 //
 //        final LinearLayout lData = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.ram, null);
-//        Memory.threads.add(cachedList.addItem("Internal Storage", "You can save files directly on the device's internal storage. By default, files saved to the internal storage are private to your application and other applications cannot access them (nor can the user). When the user uninstalls your application, these files are removed.", 1f, true, new DeviceInfoItemAsync(2) {
+//        Memory.threads.add(cachedList.addItem("Internal StorageSpace", "You can save files directly on the device's internal storage. By default, files saved to the internal storage are private to your application and other applications cannot access them (nor can the user). When the user uninstalls your application, these files are removed.", 1f, true, new DeviceInfoItemAsync(2) {
 //            @Override
 //            protected void async() {
 //                customView = lData;
-//                Storage.DATA.update();
-//                setMap(mapStorage(Storage.DATA));
+//                StorageSpace.DATA.update();
+//                setMap(mapStorage(StorageSpace.DATA));
 //            }
 //        }));
 //
 ////            final LinearLayout lRoot = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.ram, null);
-////            cachedList.addItem("Root Storage", "description", 1f, true, new DeviceInfoItemAsync(3) {
+////            cachedList.addItem("Root StorageSpace", "description", 1f, true, new DeviceInfoItemAsync(3) {
 ////                @Override
 ////                protected void async() {
 ////                    customView = lRoot;
-////                    Storage.ROOT.update();
-////                    setMap(mapStorage(Storage.ROOT));
+////                    StorageSpace.ROOT.update();
+////                    setMap(mapStorage(StorageSpace.ROOT));
 ////                }
 ////            });
 //
@@ -59,7 +53,7 @@ public class MemoryFragment extends ListFragment {
 //            }
 //        }));
 //
-//        cachedList.addItem("External Storage State", "Returns the current state of the primary \"external\" storage device.", firstLetterToUpperCase(Environment.getExternalStorageState()), 6);
+//        cachedList.addItem("External StorageSpace State", "Returns the current state of the primary \"external\" storage device.", firstLetterToUpperCase(Environment.getExternalStorageState()), 6);
 //
 //        Memory.threads.add(cachedList.addItem("Low Memory", "description", 1f, true, new DeviceInfoItemAsync(7) {
 //            @Override
@@ -79,7 +73,7 @@ public class MemoryFragment extends ListFragment {
 //            }
 //        });
 //
-//        cachedList.addItem("External Storage Directory", "description", new DeviceInfoItemAsync() {
+//        cachedList.addItem("External StorageSpace Directory", "description", new DeviceInfoItemAsync() {
 //            @Override
 //            protected void async() {
 //                useDirectoryLayout();
@@ -181,6 +175,23 @@ public class MemoryFragment extends ListFragment {
 //                value = DeviceOld.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_RINGTONES));
 //            }
 //        });
+    }
+
+    private void addExternalStorage() {
+        ListItem item = new ListItem().setLabel("External StorageSpace").setDescription("Every Android-compatible device supports a shared \"external storage\" that you can use to save files. This can be a removable storage media (such as an SD card) or an internal (non-removable) storage. Files saved to the external storage are world-readable and can be modified by the user when they enable USB mass storage to transfer files on a computer.");
+
+        addSubListItem(item);
+
+
+//        final LinearLayout lExternal = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.ram, null);
+//        Memory.threads.add(cachedList.addItem("External StorageSpace",, 1f, true, new DeviceInfoItemAsync(0) {
+//            @Override
+//            protected void async() {
+//                customView = lExternal;
+//                StorageSpace.EXTERNAL.update();
+//                setMap(mapStorage(StorageSpace.EXTERNAL));
+//            }
+//        }));
     }
 
     @Override

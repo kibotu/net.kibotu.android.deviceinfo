@@ -11,7 +11,7 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.Surface;
 import net.kibotu.android.deviceinfo.library.misc.ReflectionHelper;
-import net.kibotu.android.deviceinfo.library.storage.Storage;
+import net.kibotu.android.deviceinfo.library.storage.StorageSpace;
 import net.kibotu.android.deviceinfo.library.version.Version;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
@@ -305,17 +305,17 @@ final public class ViewHelper {
         return String.format("%.2f px", screenDiagonalPixel);
     }
 
-    public static Map<String, String> mapStorage(final Storage s) {
+    public static Map<String, String> mapStorage(final StorageSpace s) {
         final LinkedHashMap<String, String> map = new LinkedHashMap<>();
 
         map.put("Path:", s.absolutePath);
-        map.put("Total:", formatBytes(s.total));
-        map.put("Available:", formatBytes(s.available));
-        map.put("Free:", formatBytes(s.free));
-        map.put("Used:", formatBytes(s.total - s.free));
+        map.put("Total:", formatBytes(s.getAvailable()));
+        map.put("Available:", formatBytes(s.getAvailable()));
+        map.put("Free:", formatBytes(s.getFree()));
+        map.put("Used:", formatBytes(s.getTotal() - s.getFree()));
 
-        if (s.free - s.available > 0)
-            map.put("Busy:", formatBytes(s.free - s.available));
+        if (s.getFree() - s.getAvailable() > 0)
+            map.put("Busy:", formatBytes(s.getFree() - s.getAvailable()));
 
         return map;
     }
@@ -619,7 +619,7 @@ final public class ViewHelper {
     public static String formatPercent(final float usage) {
         final NumberFormat formatter = DecimalFormat.getPercentInstance();
         formatter.setMaximumFractionDigits(2);
-        return formatter.format(usage );
+        return formatter.format(usage);
     }
 
     public static Bitmap invert(final Bitmap src) {

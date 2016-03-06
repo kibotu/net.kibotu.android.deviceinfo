@@ -1,11 +1,15 @@
 package net.kibotu.android.deviceinfo.ui.geolocation;
 
-import android.view.LayoutInflater;
-import android.webkit.WebView;
-import android.widget.LinearLayout;
+import com.orhanobut.wasp.Callback;
+import com.orhanobut.wasp.Response;
+import com.orhanobut.wasp.WaspError;
 import net.kibotu.android.deviceinfo.R;
+import net.kibotu.android.deviceinfo.model.FreeGeoIpResponseModel;
+import net.kibotu.android.deviceinfo.model.IpApiComResponseModel;
+import net.kibotu.android.deviceinfo.model.IpInfoResponseModel;
+import net.kibotu.android.deviceinfo.model.ListItem;
+import net.kibotu.android.deviceinfo.network.RequestProvider;
 import net.kibotu.android.deviceinfo.ui.list.ListFragment;
-import org.json.JSONObject;
 
 /**
  * Created by Nyaruhodo on 21.02.2016.
@@ -21,24 +25,12 @@ public class GeolocationFragment extends ListFragment {
     protected void onViewCreated() {
         super.onViewCreated();
 
-        // todo freegeoip.net
+        addIpApiCom();
 
-//        NetworkHelper.request("http://www.telize.com/geoip", new DeviceOld.AsyncCallback<JSONObject>() {
-//            @Override
-//            public void onComplete(final JSONObject result) {
-//
-//                final LinearLayout l = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.tablewithtag, null);
-//                final Map<String, String> geoMap = parseTelize(result);
-//
-//                cachedList.addItem("<b>Geolocation</b>", "description", new DeviceInfoItemAsync(0) {
-//
-//                    @Override
-//                    protected void async() {
-//                        customView = l;
-//                        setMap(geoMap);
-//                    }
-//                });
-//
+        addFreeGeoIp();
+
+        addIpInfo();
+
 //                cachedList.addItem("<b>Google Maps</b>", "description", new DeviceInfoItemAsync(1) {
 //
 //                    @Override
@@ -58,7 +50,101 @@ public class GeolocationFragment extends ListFragment {
 //                    }
 //                });
 //            }
-//        });
+    }
+
+    private void addFreeGeoIp() {
+        final ListItem item = new ListItem().setLabel("freegeoip.net").setDescription("source: https://freegeoip.net");
+
+        addSubListItem(item);
+
+        RequestProvider.freeGeoIpService().getGeoIp(new Callback<FreeGeoIpResponseModel>() {
+            @Override
+            public void onSuccess(Response response, FreeGeoIpResponseModel responseModel) {
+
+                item
+                        .addChild(new ListItem().setLabel("Ip").setValue(responseModel.getIp()))
+                        .addChild(new ListItem().setLabel("Country Name").setValue(responseModel.getCountryName()))
+                        .addChild(new ListItem().setLabel("Country Code").setValue(responseModel.getCountryCode()))
+                        .addChild(new ListItem().setLabel("Region Name").setValue(responseModel.getRegionName()))
+                        .addChild(new ListItem().setLabel("Region Code").setValue(responseModel.getRegionCode()))
+                        .addChild(new ListItem().setLabel("City").setValue(responseModel.getCity()))
+                        .addChild(new ListItem().setLabel("Postal Code").setValue(responseModel.getZipCode()))
+                        .addChild(new ListItem().setLabel("Timezone").setValue(responseModel.getTimeZone()))
+                        .addChild(new ListItem().setLabel("Latitude").setValue(responseModel.getLatitude()))
+                        .addChild(new ListItem().setLabel("Longitude").setValue(responseModel.getLongitude()))
+                        .addChild(new ListItem().setLabel("Metro Code").setValue(responseModel.getMetroCode()));
+
+                notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError(WaspError waspError) {
+                waspError.printStackTrace();
+            }
+        });
+    }
+
+    private void addIpInfo() {
+        final ListItem item = new ListItem().setLabel("ipinfo.io").setDescription("source: http://ipinfo.io");
+
+        addSubListItem(item);
+
+        RequestProvider.ipInfoIoService().getGeoIp(new Callback<IpInfoResponseModel>() {
+            @Override
+            public void onSuccess(Response response, IpInfoResponseModel responseModel) {
+
+                item
+                        .addChild(new ListItem().setLabel("Ip").setValue(responseModel.getIp()))
+                        .addChild(new ListItem().setLabel("Hostname").setValue(responseModel.getHostname()))
+                        .addChild(new ListItem().setLabel("City").setValue(responseModel.getCity()))
+                        .addChild(new ListItem().setLabel("Region").setValue(responseModel.getRegion()))
+                        .addChild(new ListItem().setLabel("Country").setValue(responseModel.getCountry()))
+                        .addChild(new ListItem().setLabel("Location").setValue(responseModel.getLoc()))
+                        .addChild(new ListItem().setLabel("Org").setValue(responseModel.getOrg()))
+                        .addChild(new ListItem().setLabel("Postal Code").setValue(responseModel.getPostal()));
+
+                notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError(WaspError waspError) {
+                waspError.printStackTrace();
+            }
+        });
+    }
+
+    private void addIpApiCom() {
+        final ListItem item = new ListItem().setLabel("ip-api.com/json").setDescription("source: http://ip-api.com/json");
+
+        addSubListItem(item);
+
+        RequestProvider.ipApiComService().getGeoIp(new Callback<IpApiComResponseModel>() {
+            @Override
+            public void onSuccess(Response response, IpApiComResponseModel responseModel) {
+
+                item.
+                        addChild(new ListItem().setLabel("As").setValue(responseModel.getAs()))
+                        .addChild(new ListItem().setLabel("City").setValue(responseModel.getCity()))
+                        .addChild(new ListItem().setLabel("Country").setValue(responseModel.getCountry()))
+                        .addChild(new ListItem().setLabel("Country Code").setValue(responseModel.getCountryCode()))
+                        .addChild(new ListItem().setLabel("Isp").setValue(responseModel.getIsp()))
+                        .addChild(new ListItem().setLabel("Latitude").setValue(responseModel.getLatitude()))
+                        .addChild(new ListItem().setLabel("Longitude").setValue(responseModel.getLongitude()))
+                        .addChild(new ListItem().setLabel("Org").setValue(responseModel.getOrg()))
+                        .addChild(new ListItem().setLabel("Query").setValue(responseModel.getQuery()))
+                        .addChild(new ListItem().setLabel("Region").setValue(responseModel.getRegion()))
+                        .addChild(new ListItem().setLabel("RegionName").setValue(responseModel.getRegionName()))
+                        .addChild(new ListItem().setLabel("Status").setValue(responseModel.getStatus()))
+                        .addChild(new ListItem().setLabel("Timezone").setValue(responseModel.getTimezone()));
+
+                notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError(WaspError waspError) {
+                waspError.printStackTrace();
+            }
+        });
     }
 
     @Override

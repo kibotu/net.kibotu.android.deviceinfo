@@ -105,6 +105,9 @@ dependencies {
 
     // fancy time calculations
     compile 'joda-time:joda-time:2.9.2'
+
+    // network layer
+    compile('com.github.orhanobut:wasp:1.15')
 }
 
 def commitCount() {
