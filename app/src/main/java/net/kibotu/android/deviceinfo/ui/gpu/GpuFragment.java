@@ -1,11 +1,11 @@
 package net.kibotu.android.deviceinfo.ui.gpu;
 
 import net.kibotu.android.deviceinfo.R;
-import net.kibotu.android.deviceinfo.library.Callback;
+import net.kibotu.android.deviceinfo.library.misc.Callback;
 import net.kibotu.android.deviceinfo.library.Device;
-import net.kibotu.android.deviceinfo.library.hardware.gpu.Egl;
-import net.kibotu.android.deviceinfo.library.hardware.gpu.OpenGLGles10Info;
-import net.kibotu.android.deviceinfo.library.hardware.gpu.OpenGLGles20Info;
+import net.kibotu.android.deviceinfo.library.gpu.Egl;
+import net.kibotu.android.deviceinfo.library.gpu.OpenGLGles10Info;
+import net.kibotu.android.deviceinfo.library.gpu.OpenGLGles20Info;
 import net.kibotu.android.deviceinfo.model.ListItem;
 import net.kibotu.android.deviceinfo.ui.list.ListFragment;
 

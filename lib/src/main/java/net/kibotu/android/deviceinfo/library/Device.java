@@ -1,39 +1,37 @@
 package net.kibotu.android.deviceinfo.library;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.*;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.hardware.Sensor;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
-import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
-import android.webkit.WebView;
-import net.kibotu.android.deviceinfo.library.hardware.battery.BatteryReceiver;
-import net.kibotu.android.deviceinfo.library.hardware.gpu.InfoLoader;
-import net.kibotu.android.deviceinfo.library.hardware.gpu.OpenGLGles10Info;
-import net.kibotu.android.deviceinfo.library.hardware.gpu.OpenGLGles20Info;
-import net.kibotu.android.deviceinfo.library.legacy.Bluetooth;
-import net.kibotu.android.deviceinfo.library.legacy.DisplayHelper;
-import net.kibotu.android.deviceinfo.library.legacy.ProxySettings;
+import net.kibotu.android.deviceinfo.library.battery.BatteryReceiver;
+import net.kibotu.android.deviceinfo.library.bluetooth.Bluetooth;
+import net.kibotu.android.deviceinfo.library.display.DisplayHelper;
+import net.kibotu.android.deviceinfo.library.gpu.InfoLoader;
+import net.kibotu.android.deviceinfo.library.gpu.OpenGLGles10Info;
+import net.kibotu.android.deviceinfo.library.gpu.OpenGLGles20Info;
+import net.kibotu.android.deviceinfo.library.misc.Callback;
+import net.kibotu.android.deviceinfo.library.misc.ShellUtils;
+import net.kibotu.android.deviceinfo.library.version.Version;
 
 import java.io.File;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
 
 import static android.os.Build.TAGS;
-import static android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH;
 import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR2;
-import static net.kibotu.android.deviceinfo.library.SystemService.*;
+import static net.kibotu.android.deviceinfo.library.services.SystemService.*;
 
 /**
  * Created by Nyaruhodo on 20.02.2016.
@@ -57,44 +55,6 @@ final public class Device {
         if (context == null)
             throw new IllegalStateException("'context' must not be null. Please invoke Device.setContext().");
         return context;
-    }
-
-    /**
-     * More specifically, Settings.Secure.ANDROID_ID. A 64-bit number (as a hex string)
-     * that is randomly generated on the device's first boot and should remain constant
-     * for the lifetime of the device (The value may change if a factory reset is performed on the device.)
-     * ANDROID_ID seems a good choice for a unique device identifier.
-     * <p/>
-     * Disadvantages:
-     * - Not 100% reliable of Android prior to 2.2 (�Froyo�) devices
-     * - Also, there has been at least one widely-observed bug in a popular
-     * handset from a major manufacturer, where every instance has the same ANDROID_ID.
-     */
-    public static String getAndroidId() {
-        return Settings.Secure.getString(getContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-    }
-
-    public static String getRadio() {
-        if (isAtLeastVersion(ICE_CREAM_SANDWICH)) {
-            return ReflectionHelper.get(Build.class, "getRadioVersion", null);
-        } else
-            return android.os.Build.RADIO;
-    }
-
-    public static boolean isAtLeastVersion(@VersionCode final int version) {
-        return Build.VERSION.SDK_INT >= version;
-    }
-
-    public static Map<String, FeatureInfo> getSystemAvailableFeatures() {
-        final PackageManager pm = getContext().getPackageManager();
-        final FeatureInfo[] features = pm.getSystemAvailableFeatures();
-        final LinkedHashMap<String, FeatureInfo> featureMap = new LinkedHashMap<>();
-        for (final FeatureInfo f : features) {
-            if (f.name != null) {
-                featureMap.put(f.name, f);
-            }
-        }
-        return featureMap;
     }
 
     public static boolean supportsOpenGLES2() {
@@ -173,148 +133,12 @@ final public class Device {
         return getTelephonyManager().getDeviceId();
     }
 
-    /**
-     * System Property ro.serialno returns the serial number as unique number Works for Android 2.3 and above. Can return null.
-     * <p/>
-     * Disadvantages:
-     * - Serial Number is not available with all android devices
-     */
-    public static String getSerialNumber() {
-        String hwID = null;
-        try {
-            Class<?> c = Class.forName("android.os.SystemProperties");
-            Method get = c.getMethod("get", String.class, String.class);
-            hwID = (String) (get.invoke(c, "ro.serialno", "unknown"));
-        } catch (final Exception ignored) {
-        }
-        if (hwID != null) return hwID;
-        try {
-            Class<?> myclass = Class.forName("android.os.SystemProperties");
-            Method[] methods = myclass.getMethods();
-            Object[] params = new Object[]{"ro.serialno", "Unknown"};
-            hwID = (String) (methods[2].invoke(myclass, params));
-        } catch (final Exception ignored) {
-        }
-        return hwID;
-    }
-
-    /**
-     * Returns MAC Address.
-     * <p/>
-     * IMPORTANT! requires {@link android.Manifest.permission#ACCESS_WIFI_STATE}
-     * <p/>
-     * Disadvantages:
-     * - Device should have Wi-Fi (where not all devices have Wi-Fi)
-     * - If Wi-Fi present in Device should be turned on otherwise does not report the MAC address
-     */
-    public static String getMacAdress() {
-        return getWifiManager().getConnectionInfo().getMacAddress();
-    }
-
-    /**
-     * Returns MAC address of the given interface name.
-     *
-     * @param interfaceName eth0, wlan0 or NULL=use first interface
-     * @return mac address or empty string
-     */
-    public static String getMACAddress(String interfaceName) {
-        try {
-            List<NetworkInterface> interfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
-            for (NetworkInterface intf : interfaces) {
-                if (interfaceName != null) {
-                    if (!intf.getName().equalsIgnoreCase(interfaceName)) continue;
-                }
-                byte[] mac = intf.getHardwareAddress();
-                if (mac == null) return "";
-                StringBuilder buf = new StringBuilder();
-                for (final byte aMac : mac) buf.append(String.format("%02X:", aMac));
-                if (buf.length() > 0) buf.deleteCharAt(buf.length() - 1);
-                return buf.toString();
-            }
-        } catch (final Exception ignored) {
-        } // for now eat exceptions
-        return "";
-       /*try {
-           // this is so Linux hack
-           return loadFileAsString("/sys/class/net/" +interfaceName + "/address").toUpperCase().trim();
-       } catch (IOException ex) {
-           return null;
-       }*/
-    }
-
-    /**
-     * Get IP address from first non-localhost interface
-     *
-     * @param useIPv4 true=return ipv4, false=return ipv6
-     * @return address or empty string
-     */
-    public static String getIPAddress(boolean useIPv4) {
-        try {
-            List<NetworkInterface> interfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
-            for (NetworkInterface intf : interfaces) {
-                List<InetAddress> addrs = Collections.list(intf.getInetAddresses());
-                for (InetAddress addr : addrs) {
-                    if (!addr.isLoopbackAddress()) {
-                        String sAddr = addr.getHostAddress().toUpperCase();
-                        boolean isIPv4 = InetAddressUtils.isIPv4Address(sAddr);
-                        if (useIPv4) {
-                            if (isIPv4)
-                                return sAddr;
-                        } else {
-                            if (!isIPv4) {
-                                int delim = sAddr.indexOf('%'); // drop ip6 port suffix
-                                return delim < 0 ? sAddr : sAddr.substring(0, delim);
-                            }
-                        }
-                    }
-                }
-            }
-        } catch (final Exception ignored) {
-            // for now eat exceptions
-        }
-        return "";
-    }
-
-    public static String getUserAgent() {
-        return new WebView(getContext()).getSettings().getUserAgentString();
-    }
-
-    public static ProxySettings getProxySettings() {
-        return new ProxySettings(getContext());
-    }
-
     public static Bluetooth getBluetooth() {
         return new Bluetooth(getContext());
     }
 
     public static List<Sensor> getSensorList() {
         return getSensorManager().getSensorList(Sensor.TYPE_ALL); // SensorManager.SENSOR_ALL
-    }
-
-    public static int getVersionFromPackageManager() {
-        PackageManager packageManager = getContext().getPackageManager();
-        FeatureInfo[] featureInfos = packageManager.getSystemAvailableFeatures();
-        if (featureInfos != null && featureInfos.length > 0) {
-            for (FeatureInfo featureInfo : featureInfos) {
-                // Null feature name means this feature is the open gl es
-                // version feature.
-                if (featureInfo.name == null) {
-                    if (featureInfo.reqGlEsVersion != FeatureInfo.GL_ES_VERSION_UNDEFINED) {
-                        return getMajorVersion(featureInfo.reqGlEsVersion);
-                    } else {
-                        return 1; // Lack of property means OpenGL ES version 1
-                    }
-                }
-            }
-        }
-        return 1;
-    }
-
-    /**
-     * @see android.content.pm.FeatureInfo#getGlEsVersion()
-     */
-    private static int getMajorVersion(int glEsVersion) {
-        return ((glEsVersion & 0xffff0000) >> 16);
     }
 
 
@@ -422,6 +246,7 @@ final public class Device {
         return ret;
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     public static long getFileSizeDir(String path) {
         File directory = new File(path);
 
@@ -429,7 +254,7 @@ final public class Device {
 
         StatFs statFs = new StatFs(directory.getAbsolutePath());
         long blockSize;
-        if (isAtLeastVersion(JELLY_BEAN_MR2)) {
+        if (Version.isAtLeastVersion(JELLY_BEAN_MR2)) {
             blockSize = statFs.getBlockSizeLong();
         } else {
             blockSize = statFs.getBlockSize();
@@ -461,29 +286,6 @@ final public class Device {
         return size;
     }
 
-    public static ArrayList<String> getPermissions() {
-        final PackageManager pm = getContext().getPackageManager();
-        final ArrayList<String> permissions = new ArrayList<>();
-        final List<PermissionGroupInfo> lstGroups = pm.getAllPermissionGroups(0);
-        for (final PermissionGroupInfo pgi : lstGroups) {
-            // permissions.add(pgi.name);
-            try {
-                final List<PermissionInfo> lstPermissions = pm.queryPermissionsByGroup(pgi.name, 0);
-                for (final PermissionInfo pi : lstPermissions) {
-                    if (getContext().checkCallingOrSelfPermission(pi.name) == PackageManager.PERMISSION_GRANTED)
-                        permissions.add(pi.name);
-                }
-            } catch (final Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return permissions;
-    }
-
-    public static List<String> getSharedLibraries() {
-        return Arrays.asList(getContext().getPackageManager().getSystemSharedLibraryNames());
-    }
-
     /**
      * Checks if the phone is rooted.
      *
@@ -512,35 +314,7 @@ final public class Device {
         }
 
         // from excecuting shell command
-        return executeShellCommand("which su");
-    }
-
-    /**
-     * Executes a shell command.
-     *
-     * @param command - Unix shell command.
-     * @return <code>true</code> if shell command was successful.
-     * @credits http://stackoverflow.com/a/15485210
-     */
-    public static boolean executeShellCommand(final String command) {
-        Process process = null;
-        try {
-            process = Runtime.getRuntime().exec(command);
-            Log.v(TAG, "'" + command + "' successfully excecuted.");
-            Log.v(TAG, "is rooted by su command");
-            return true;
-        } catch (final Exception e) {
-            Log.e(TAG, "" + e.getMessage());
-            return false;
-        } finally {
-            if (process != null) {
-                try {
-                    process.destroy();
-                } catch (final Exception e) {
-                    Log.e(TAG, "" + e.getMessage());
-                }
-            }
-        }
+        return ShellUtils.executeShellCommand("which su");
     }
 
     public static List<ResolveInfo> installedApps() {
@@ -573,25 +347,4 @@ final public class Device {
                 .findViewById(android.R.id.content);
     }
 
-    public static String getOsAsString(final int sdk) {
-        Field[] fields = Build.VERSION_CODES.class.getFields();
-        for (Field field : fields) {
-            String fieldName = field.getName();
-            int fieldValue = -1;
-
-            try {
-                fieldValue = field.getInt(new Object());
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (NullPointerException e) {
-                e.printStackTrace();
-            }
-
-            if (sdk == fieldValue)
-                return fieldName;
-        }
-        return "";
-    }
 }

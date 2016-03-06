@@ -1,5 +1,7 @@
 package net.kibotu.android.deviceinfo.model;
 
+import android.support.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,8 +42,9 @@ public class ListItem {
     }
 
 
-    public ListItem setValue(Object value) {
-        this.value = value.toString();
+    public ListItem setValue(@Nullable Object value) {
+        if(value != null)
+            this.value = value.toString();
         return this;
     }
 

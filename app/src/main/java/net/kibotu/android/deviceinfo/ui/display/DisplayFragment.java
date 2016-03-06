@@ -2,11 +2,11 @@ package net.kibotu.android.deviceinfo.ui.display;
 
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.library.Device;
-import net.kibotu.android.deviceinfo.library.legacy.DisplayHelper;
+import net.kibotu.android.deviceinfo.library.display.DisplayHelper;
 import net.kibotu.android.deviceinfo.ui.list.ListFragment;
 
 import static net.kibotu.android.deviceinfo.library.Device.*;
-import static net.kibotu.android.deviceinfo.library.legacy.DisplayHelper.getScreenDiagonalInches;
+import static net.kibotu.android.deviceinfo.library.display.DisplayHelper.getScreenDiagonalInches;
 import static net.kibotu.android.deviceinfo.ui.ViewHelper.*;
 
 /**

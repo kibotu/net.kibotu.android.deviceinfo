@@ -3,9 +3,11 @@ package net.kibotu.android.deviceinfo.ui.network;
 import com.canelmas.let.AskPermission;
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.library.Device;
-import net.kibotu.android.deviceinfo.library.legacy.Bluetooth;
-import net.kibotu.android.deviceinfo.library.legacy.ProxySettings;
-import net.kibotu.android.deviceinfo.library.legacy.SIM;
+import net.kibotu.android.deviceinfo.library.bluetooth.Bluetooth;
+import net.kibotu.android.deviceinfo.library.build.Build;
+import net.kibotu.android.deviceinfo.library.network.Network;
+import net.kibotu.android.deviceinfo.library.network.ProxySettings;
+import net.kibotu.android.deviceinfo.library.network.SIM;
 import net.kibotu.android.deviceinfo.model.ListItem;
 import net.kibotu.android.deviceinfo.ui.list.ListFragment;
 
@@ -28,16 +30,16 @@ public class NetworkFragment extends ListFragment {
 
         addSimInfos();
 
+        addVerticallyCard("MAC Address: wlan0", Network.getMACAddress("wlan0"), "");
+        addVerticallyCard("MAC Address: eth0", Network.getMACAddress("eth0"), "");
+        addVerticallyCard("IP4 Address", Network.getIPAddress(true), "");
+        addVerticallyCard("IP6 Address", Network.getIPAddress(false), "");
+        addVerticallyCard("UserAgent", Network.getUserAgent(), "");
+
         addHorizontallyCard("IMSI No", getSubscriberIdFromTelephonyManager(), "");
-        addHorizontallyCard("hwID", Device.getSerialNumber(), "");
+        addHorizontallyCard("hwID", Build.getSerialNumber(), "");
 
         addImeiNumber();
-
-        addVerticallyCard("MAC Address: wlan0", getMACAddress("wlan0"), "");
-        addVerticallyCard("MAC Address: eth0", getMACAddress("eth0"), "");
-        addHorizontallyCard("IP4 Address", getIPAddress(true), "");
-        addHorizontallyCard("IP6 Address", getIPAddress(false), "");
-        addVerticallyCard("UserAgent", Device.getUserAgent(), "");
 
         addProxySettings();
 
@@ -188,7 +190,7 @@ public class NetworkFragment extends ListFragment {
 
     private void addProxySettings() {
 
-        final ProxySettings proxySettings = getProxySettings();
+        final ProxySettings proxySettings = Network.getProxySettings();
 
         addSubListItem(new ListItem().setLabel("Proxy Settings")
                 .addChild(new ListItem().setLabel("Host").setValue(proxySettings.Host == null ? "" : proxySettings.Host))

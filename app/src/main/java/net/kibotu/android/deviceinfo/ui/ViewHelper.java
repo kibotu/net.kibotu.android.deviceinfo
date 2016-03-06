@@ -9,9 +9,9 @@ import android.hardware.Sensor;
 import android.os.Build;
 import android.text.TextUtils;
 import android.view.Surface;
-import net.kibotu.android.deviceinfo.library.Device;
-import net.kibotu.android.deviceinfo.library.ReflectionHelper;
-import net.kibotu.android.deviceinfo.library.legacy.Storage;
+import net.kibotu.android.deviceinfo.library.misc.ReflectionHelper;
+import net.kibotu.android.deviceinfo.library.storage.Storage;
+import net.kibotu.android.deviceinfo.library.version.Version;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -90,7 +90,7 @@ final public class ViewHelper {
 
     public static String getSensorName(final Sensor sensor) {
 
-        if (Device.isAtLeastVersion(Build.VERSION_CODES.KITKAT_WATCH))
+        if (Version.isAtLeastVersion(Build.VERSION_CODES.KITKAT_WATCH))
             return sensor.getStringType();
 
         String name;
@@ -446,7 +446,7 @@ final public class ViewHelper {
                 result = "SIZE_UNDEFINED";
         }
 
-        if (!Device.isAtLeastVersion(JELLY_BEAN_MR1)) {
+        if (!Version.isAtLeastVersion(JELLY_BEAN_MR1)) {
             result += "\n(LAYOUTDIR_MASK Added in Api 17)";
         } else {
             result += "\n";

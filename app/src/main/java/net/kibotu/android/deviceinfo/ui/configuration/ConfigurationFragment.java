@@ -5,7 +5,7 @@ import net.kibotu.android.deviceinfo.ui.list.ListFragment;
 
 import static android.os.Build.VERSION_CODES.HONEYCOMB_MR2;
 import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR1;
-import static net.kibotu.android.deviceinfo.library.Device.isAtLeastVersion;
+import static net.kibotu.android.deviceinfo.library.version.Version.isAtLeastVersion;
 import static net.kibotu.android.deviceinfo.ui.ViewHelper.*;
 import static net.kibotu.android.deviceinfo.utils.Extensions.configuration;
 

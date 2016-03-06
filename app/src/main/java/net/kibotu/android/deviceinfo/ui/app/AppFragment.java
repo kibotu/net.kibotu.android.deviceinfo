@@ -1,6 +1,7 @@
 package net.kibotu.android.deviceinfo.ui.app;
 
 import net.kibotu.android.deviceinfo.R;
+import net.kibotu.android.deviceinfo.library.build.Build;
 import net.kibotu.android.deviceinfo.model.ListItem;
 import net.kibotu.android.deviceinfo.ui.list.ListFragment;
 
@@ -21,13 +22,13 @@ public class AppFragment extends ListFragment {
     protected void onViewCreated() {
         super.onViewCreated();
 
-        addHorizontallyCard("App Version", getVersionFromPackageManager(), "");
+        addHorizontallyCard("App Version", Build.getVersionFromPackageManager(), "");
         addHorizontallyCard("Threads Count", Thread.getAllStackTraces().keySet().size(), "");
         addAppRuntimeMemory();
         addHorizontallyCard("APK Storage Path", getFileSize(getContext().getPackageCodePath()), "");
         addHorizontallyCard("Internal Storage Path", getFileSize(getContext().getFilesDir().getParent()), "");
-        addVerticallyCard("Permissions", getPermissions(), "All enabled permissions for this app.");
-        addVerticallyCard("Shared Libraries", getSharedLibraries(), "List of shared libraries that are available on the system.");
+        addVerticallyCard("Permissions", Build.getPermissions(), "All enabled permissions for this app.");
+        addVerticallyCard("Shared Libraries", Build.getSharedLibraries(), "List of shared libraries that are available on the system.");
     }
 
     private void addAppRuntimeMemory() {
