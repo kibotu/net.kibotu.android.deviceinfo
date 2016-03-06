@@ -25,3 +25,8 @@
 -keepclasseswithmembernames class * {
     @com.canelmas.let.* <methods>;
 }
+-dontobfuscate
+-keepattributes *Annotation*
+-keepattributes Signature
+-keepattributes InnerClasses
+-keepattributes InnerClasses,EnclosingMethod
