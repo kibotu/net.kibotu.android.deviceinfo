@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.library.Device;
+import net.kibotu.android.deviceinfo.model.ListItem;
 import net.kibotu.android.deviceinfo.ui.ViewHelper;
 import net.kibotu.android.deviceinfo.ui.list.ListFragment;
 
@@ -28,23 +29,16 @@ public class SensorFragment extends ListFragment {
 
         final List<Sensor> list = Device.getSensorList();
         for (final Sensor s : list) {
-
-            String keys = "Type:" + BR;
-            String values = ViewHelper.getSensorName(s) + BR;
-            keys += "Vendor:" + BR;
-            values += s.getVendor() + BR;
-            keys += "Version:" + BR;
-            values += s.getVersion() + BR;
-            keys += "Resolution:" + BR;
-            values += s.getResolution() + BR;
-            keys += "Min Delay:" + BR;
-            values += s.getMinDelay() + BR;
-            keys += "Max Range:" + BR;
-            values += s.getMaximumRange() + BR;
-            keys += "Power:";
-            values += s.getPower();
-
-//            addListItemWithTitle(s.getName(), keys, values, "");
+            ListItem listItem = new ListItem().setLabel(s.getName());
+            addSubListItem(listItem
+                    .addChild(new ListItem().setLabel("Type").setValue(ViewHelper.getSensorName(s)))
+                    .addChild(new ListItem().setLabel("Vendor").setValue(s.getVendor()))
+                    .addChild(new ListItem().setLabel("Version").setValue(s.getVersion()))
+                    .addChild(new ListItem().setLabel("Resolution").setValue(s.getResolution()))
+                    .addChild(new ListItem().setLabel("Min Delay").setValue(s.getMinDelay()))
+                    .addChild(new ListItem().setLabel("Max Range").setValue(s.getMaximumRange()))
+                    .addChild(new ListItem().setLabel("Power").setValue(s.getPower()))
+            );
         }
     }
 

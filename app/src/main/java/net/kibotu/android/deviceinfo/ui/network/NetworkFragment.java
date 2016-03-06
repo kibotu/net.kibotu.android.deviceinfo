@@ -6,11 +6,11 @@ import net.kibotu.android.deviceinfo.library.Device;
 import net.kibotu.android.deviceinfo.library.legacy.Bluetooth;
 import net.kibotu.android.deviceinfo.library.legacy.ProxySettings;
 import net.kibotu.android.deviceinfo.library.legacy.SIM;
+import net.kibotu.android.deviceinfo.model.ListItem;
 import net.kibotu.android.deviceinfo.ui.list.ListFragment;
 
 import static android.Manifest.permission.READ_PHONE_STATE;
 import static net.kibotu.android.deviceinfo.library.Device.*;
-import static net.kibotu.android.deviceinfo.ui.ViewHelper.BR;
 
 /**
  * Created by Nyaruhodo on 21.02.2016.
@@ -177,41 +177,31 @@ public class NetworkFragment extends ListFragment {
     private void addSimInfos() {
         final SIM sim = new SIM();
 
-        String keys = "Country:" + BR;
-        String values = sim.simCountry + BR;
-        keys += "Operator Code:" + BR;
-        values += sim.simOperatorCode + BR;
-        keys += "Operator Name:" + BR;
-        values += sim.simOperatorName + BR;
-        keys += "Serial:" + BR;
-        values += sim.simSerial + BR;
-        keys += "State:" + BR;
-        values += sim.simState + BR;
-//        addListItemWithTitle("SIM", keys, values, "");
+        addSubListItem(new ListItem().setLabel("SIM")
+                .addChild(new ListItem().setLabel("Country").setValue(sim.simCountry))
+                .addChild(new ListItem().setLabel("Operator Code").setValue(sim.simOperatorCode))
+                .addChild(new ListItem().setLabel("Operator Name").setValue(sim.simOperatorName))
+                .addChild(new ListItem().setLabel("Serial").setValue(sim.simSerial))
+                .addChild(new ListItem().setLabel("State").setValue(sim.simState))
+        );
     }
 
     private void addProxySettings() {
 
         final ProxySettings proxySettings = getProxySettings();
 
-        String keys = "Host:" + BR;
-        String values = proxySettings.Host == null ? "" : proxySettings.Host + BR;
-        keys += "Port:" + BR;
-        values += proxySettings.Port == 0 ? "" : proxySettings.Port + BR;
-        keys += "Exclusion List:" + BR;
-        values += proxySettings.ExclusionList == null ? "" : proxySettings.ExclusionList + BR;
-
-//        addListItemWithTitle("Proxy Settings", keys, values, "");
+        addSubListItem(new ListItem().setLabel("Proxy Settings")
+                .addChild(new ListItem().setLabel("Host").setValue(proxySettings.Host == null ? "" : proxySettings.Host))
+                .addChild(new ListItem().setLabel("Port").setValue(proxySettings.Port == 0 ? "" : proxySettings.Port))
+                .addChild(new ListItem().setLabel("Exclusion List").setValue(proxySettings.ExclusionList == null ? "" : proxySettings.ExclusionList))
+        );
     }
 
     private void addBluetooth() {
 
         final Bluetooth bluetooth = Device.getBluetooth();
 
-        String keys = "" + BR;
-        String values = "" + BR;
-
-//        addListItemWithTitle("Bluetooth", keys, values, "");
+        addSubListItem(new ListItem().setLabel("Bluetooth"));
     }
 
     @Override
