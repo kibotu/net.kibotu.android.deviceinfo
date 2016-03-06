@@ -1,5 +1,5 @@
-Android Device Info [![Build Status](https://travis-ci.org/kibotu/net.kibotu.android.deviceinfo.svg?branch=master)](https://travis-ci.org/kibotu/net.kibotu.android.deviceinfo) [![API](https://img.shields.io/badge/API-15%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=15) [![](https://jitpack.io/v/kibotu/net.kibotu.android.deviceinfo.svg)](https://jitpack.io/#kibotu/net.kibotu.android.deviceinfo)
-===
+Android Device Info [![Build Status](https://travis-ci.org/kibotu/net.kibotu.android.deviceinfo.svg?branch=develop)](https://travis-ci.org/kibotu/net.kibotu.android.deviceinfo) [![API](https://img.shields.io/badge/API-15%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=15) [![](https://jitpack.io/v/kibotu/net.kibotu.android.deviceinfo.svg)](https://jitpack.io/#kibotu/net.kibotu.android.deviceinfo)
+=====================================================================================================================================================================================================================================================================================================================================================================================================================================
 
 ### Introduction
 
