@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        app:cardCornerRadius="2dp"
+        app:cardElevation="2dp"
+        android:layout_marginBottom="@dimen/cardMarginVertical"
+        android:layout_marginLeft="@dimen/cardMarginHorizontal"
+        android:layout_marginRight="@dimen/cardMarginHorizontal"
+        android:layout_marginTop="@dimen/cardMarginVertical"
+        app:cardPreventCornerOverlap="false"
+        app:contentPadding="0dp">
+
+    <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:autofit="http://schemas.android.com/apk/res-auto"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <me.grantland.widget.AutofitTextView
+                android:background="@color/card_topic_background"
+                android:id="@+id/label"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.50"
+                android:layout_gravity="center"
+                android:maxLines="1"
+                android:gravity="center_vertical"
+                android:padding="@dimen/space_10"
+                android:textColor="@color/black"
+                android:textAppearance="@android:style/TextAppearance.Small"
+                android:textSize="14sp"
+                android:singleLine="true"
+                autofit:minTextSize="8sp"/>
+
+        <me.grantland.widget.AutofitTextView
+                android:id="@+id/value"
+                android:layout_width="0dp"
+                android:singleLine="true"
+                android:layout_height="match_parent"
+                android:layout_weight="0.50"
+                android:layout_gravity="center"
+                android:maxLines="1"
+                android:gravity="center_vertical"
+                android:padding="@dimen/space_10"
+                android:textColor="@color/black"
+                android:textAppearance="@android:style/TextAppearance.Small"
+                android:textSize="14sp"
+                autofit:minTextSize="8sp"/>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

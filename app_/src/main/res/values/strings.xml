@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Device Information for Android</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="drawer_open">Drawer Open</string>
+    <string name="drawer_close">Drawer Close</string>
+
+    <string name="menu_item_build">Build</string>
+    <string name="menu_item_configuration">Configuration</string>
+    <string name="menu_item_cpu">CPU</string>
+    <string name="menu_item_gpu">GPU</string>
+    <string name="menu_item_memory">Memory</string>
+    <string name="menu_item_battery">Battery</string>
+    <string name="menu_item_display">Display</string>
+    <string name="menu_item_network">Network</string>
+    <string name="menu_item_sensor">Sensor</string>
+    <string name="menu_item_java">Java</string>
+    <string name="menu_item_geolocation">Geolocation</string>
+    <string name="menu_item_app">App</string>
+    <string name="menu_item_other">Other</string>
+    <string name="left_drawer_title">Device Information</string>
+    <string name="title_build">Build</string>
+</resources>
