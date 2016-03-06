@@ -251,11 +251,11 @@ final public class ViewHelper {
         return ret;
     }
 
-
-    public synchronized static String appendGLInfoArray(final String name, final int[] a) {
-        return a[0] + a[1] + a[2] == 0 ? name + "Not Available." : name + "[-2^" + a[0] + ", 2^" + a[1] + "]" + (a[2] > 0 ? ", 2^" + a[2] : "");
+    public synchronized static String appendGLInfoArray(final int[] a) {
+        return a[0] + a[1] + a[2] == 0
+                ? "Not Available."
+                : "[-2^" + a[0] + ", 2^" + a[1] + "]" + (a[2] > 0 ? ", 2^" + a[2] : "");
     }
-
 
     public synchronized static String firstLetterToUpperCase(final String word) {
         return Character.toString(word.charAt(0)).toUpperCase() + word.substring(1);

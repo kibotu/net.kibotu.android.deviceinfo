@@ -1,10 +1,13 @@
 package net.kibotu.android.deviceinfo.library.hardware.gpu;
 
+import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ConfigurationInfo;
 import android.opengl.GLES10;
 import android.opengl.GLES20;
+import android.opengl.GLES30;
+import android.os.Build;
 import net.kibotu.android.deviceinfo.library.Device;
 
 import javax.microedition.khronos.egl.EGL10;
@@ -62,7 +65,14 @@ public class OpenGLExtensions {
         return getOpenGLVersion() >= 0x20000;
     }
 
-    public synchronized static String glGetString(int value) {
+    public static String glGetString(int value) {
         return GLES10.glGetString(value);
     }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
+    public static String glGetStringi(int value, int index) {
+        return GLES30.glGetStringi(value, index);
+    }
+
+
 }

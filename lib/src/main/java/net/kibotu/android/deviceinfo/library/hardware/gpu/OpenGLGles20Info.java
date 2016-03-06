@@ -2,6 +2,9 @@ package net.kibotu.android.deviceinfo.library.hardware.gpu;
 
 import android.opengl.GLES10;
 import android.opengl.GLES20;
+import android.opengl.GLES30;
+import android.os.Build;
+import net.kibotu.android.deviceinfo.library.Device;
 
 import java.util.Arrays;
 
@@ -71,7 +74,15 @@ public class OpenGLGles20Info extends OpenGLInfo {
         Vertex_Texture_Fetch = OpenGLExtensions.isVTFSupported();
         GL_MAX_TEXTURE_IMAGE_UNITS = OpenGLExtensions.glGetIntegerv(GLES20.GL_MAX_TEXTURE_IMAGE_UNITS);
         GL_MAX_VIEWPORT_DIMS = OpenGLExtensions.glGetIntegerv(GLES10.GL_MAX_VIEWPORT_DIMS, 2);
-        GL_EXTENSIONS = OpenGLExtensions.glGetString(GLES10.GL_EXTENSIONS);
+
+        if (Device.isAtLeastVersion(Build.VERSION_CODES.JELLY_BEAN_MR2)) {
+            int n = OpenGLExtensions.glGetIntegerv(GLES30.GL_NUM_EXTENSIONS);
+            for (int i = 0; i < n; i++) {
+                GL_EXTENSIONS += OpenGLExtensions.glGetStringi(GLES30.GL_EXTENSIONS, i);
+            }
+        } else
+            GL_EXTENSIONS = OpenGLExtensions.glGetString(GLES10.GL_EXTENSIONS);
+
         GL_MAX_RENDERBUFFER_SIZE = OpenGLExtensions.glGetIntegerv(GLES20.GL_MAX_RENDERBUFFER_SIZE);
         GL_MAX_CUBE_MAP_TEXTURE_SIZE = OpenGLExtensions.glGetIntegerv(GLES20.GL_MAX_CUBE_MAP_TEXTURE_SIZE);
         GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS = OpenGLExtensions.glGetIntegerv(GLES20.GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS);

@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -41,11 +42,21 @@ public class HorizontalListItemBinder extends DataBinder<ListItem, HorizontalLis
     public void bindViewHolder(@NotNull ViewHolder viewHolder, int position) {
         final ListItem item = get(position);
 
-        if (!isEmpty(item.getLabel()))
+        if (!isEmpty(item.getLabel())) {
+            viewHolder.label.setVisibility(View.VISIBLE);
             viewHolder.label.setText(fromHtml(item.getLabel()));
+        }
+        else {
+            viewHolder.label.setVisibility(View.GONE);
+        }
 
-        if (!isEmpty(item.getValue()))
+        if (!isEmpty(item.getValue())) {
+            viewHolder.value.setVisibility(View.VISIBLE);
             viewHolder.value.setText(fromHtml(item.getValue()));
+        }
+        else {
+            viewHolder.value.setVisibility(View.GONE);
+        }
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

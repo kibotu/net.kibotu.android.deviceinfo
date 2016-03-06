@@ -93,16 +93,68 @@ public class GpuFragment extends ListFragment {
 
     private void addOpenGLGles20Info(OpenGLGles20Info info) {
 
-        addSubListItem(new ListItem()
-                .setLabel("OpenGLGles20")
+        addGeneral(info);
 
-                .addChild(new ListItem().setLabel("General"))
-                .addChild(new ListItem().setLabel("GLSL Version").setValue(info.GL_SHADING_LANGUAGE_VERSION))
-                .addChild(new ListItem().setLabel("Version").setValue(info.GL_VERSION))
-                .addChild(new ListItem().setLabel("Vendor").setValue(info.GL_VENDOR))
-                .addChild(new ListItem().setLabel("Renderer").setValue(info.GL_RENDERER))
+        addCompressedTextures(info);
 
-                .addChild(new ListItem().setLabel("Textures"))
+        addTexture(info);
+
+        addShaderAttributes(info);
+
+        addVertexNumericPrecision(info);
+
+        addFragmentNumericPrecision(info);
+
+        addExtensions(info);
+
+        notifyDataSetChanged();
+    }
+
+    private void addFragmentNumericPrecision(OpenGLGles20Info info) {
+        // precision [] { -range, range, precision }
+        ListItem item = new ListItem().setLabel("Fragment Numeric Precision");
+        item.addChild(new ListItem().setLabel("Low Int").setValue(appendGLInfoArray(info.GL_FRAGMENT_SHADER_GL_LOW_INT)));
+        item.addChild(new ListItem().setLabel("Medium Int").setValue(appendGLInfoArray(info.GL_FRAGMENT_SHADER_GL_MEDIUM_INT)));
+        item.addChild(new ListItem().setLabel("High Int").setValue(appendGLInfoArray(info.GL_FRAGMENT_SHADER_GL_HIGH_INT)));
+        item.addChild(new ListItem().setLabel("Low Float").setValue(appendGLInfoArray(info.GL_FRAGMENT_SHADER_GL_LOW_FLOAT)));
+        item.addChild(new ListItem().setLabel("Medium Float").setValue(appendGLInfoArray(info.GL_FRAGMENT_SHADER_GL_MEDIUM_FLOAT)));
+        item.addChild(new ListItem().setLabel("High Float").setValue(appendGLInfoArray(info.GL_FRAGMENT_SHADER_GL_HIGH_FLOAT)));
+        addSubListItem(item);
+    }
+
+    private void addVertexNumericPrecision(OpenGLGles20Info info) {
+        // precision [] { -range, range, precision }
+        ListItem item = new ListItem().setLabel("Vertex Numeric Precision");
+        item.addChild(new ListItem().setLabel("Low Int").setValue(appendGLInfoArray(info.GL_VERTEX_SHADER_GL_LOW_INT)));
+        item.addChild(new ListItem().setLabel("Medium Int").setValue(appendGLInfoArray(info.GL_VERTEX_SHADER_GL_MEDIUM_INT)));
+        item.addChild(new ListItem().setLabel("High Int").setValue(appendGLInfoArray(info.GL_VERTEX_SHADER_GL_HIGH_INT)));
+        item.addChild(new ListItem().setLabel("Low Float").setValue(appendGLInfoArray(info.GL_VERTEX_SHADER_GL_LOW_FLOAT)));
+        item.addChild(new ListItem().setLabel("Medium Float").setValue(appendGLInfoArray(info.GL_VERTEX_SHADER_GL_MEDIUM_FLOAT)));
+        item.addChild(new ListItem().setLabel("High Float").setValue(appendGLInfoArray(info.GL_VERTEX_SHADER_GL_HIGH_FLOAT)));
+        addSubListItem(item);
+    }
+
+    private void addCompressedTextures(OpenGLGles20Info info) {
+        ListItem item = new ListItem().setLabel("Compressed Texture Formats");
+        final String[] token = info.GL_EXTENSIONS.split("_");
+        for (int j = 0; j < token.length; ++j)
+            if (token[j].equalsIgnoreCase("compressed"))
+                item.addChild(new ListItem().setLabel(firstLetterToUpperCase(token[j + 1])));
+
+        addSubListItem(item);
+    }
+
+    private void addShaderAttributes(OpenGLGles20Info info) {
+        ListItem item = new ListItem().setLabel("Shader Attributes")
+                .addChild(new ListItem().setLabel("Max Vertex Uniform Vectors").setValue(info.GL_MAX_VERTEX_UNIFORM_VECTORS))
+                .addChild(new ListItem().setLabel("Max Fragment Uniform Vectors").setValue(info.GL_MAX_FRAGMENT_UNIFORM_VECTORS))
+                .addChild(new ListItem().setLabel("Max Vertex Attributes").setValue(info.GL_MAX_VERTEX_ATTRIBS))
+                .addChild(new ListItem().setLabel("Max Varying Vectors").setValue(info.GL_MAX_VARYING_VECTORS));
+        addSubListItem(item);
+    }
+
+    private void addTexture(OpenGLGles20Info info) {
+        ListItem item = new ListItem().setLabel("Texture Attributes")
                 .addChild(new ListItem().setLabel("Max Texture Size").setValue(info.GL_MAX_TEXTURE_SIZE + "x" + info.GL_MAX_TEXTURE_SIZE))
                 .addChild(new ListItem().setLabel("Max Texture Units").setValue(info.GL_MAX_TEXTURE_UNITS))
                 .addChild(new ListItem().setLabel("Max Texture Image Units").setValue(info.GL_MAX_TEXTURE_IMAGE_UNITS))
@@ -111,70 +163,31 @@ public class GpuFragment extends ListFragment {
                 .addChild(new ListItem().setLabel("Max Vertex Texture Image").setValue(info.GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS))
                 .addChild(new ListItem().setLabel("Vertex Texture Fetch").setValue(info.Vertex_Texture_Fetch))
                 .addChild(new ListItem().setLabel("Max Viewport Dimension").setValue(info.GL_MAX_VIEWPORT_DIMS[0] + "x" + info.GL_MAX_VIEWPORT_DIMS[0]))
-                .addChild(new ListItem().setLabel("Max Renderbuffer Size").setValue(info.GL_MAX_RENDERBUFFER_SIZE + "x" + info.GL_MAX_RENDERBUFFER_SIZE))
-
-        );
-
-        notifyDataSetChanged();
+                .addChild(new ListItem().setLabel("Max Renderbuffer Size").setValue(info.GL_MAX_RENDERBUFFER_SIZE + "x" + info.GL_MAX_RENDERBUFFER_SIZE));
+        addSubListItem(item);
     }
 
-    public synchronized static String formatOpenGles20info(final OpenGLGles20Info i) {
-        final StringBuffer buffer = new StringBuffer();
-//
-//        // general
-//        buffer.append("General").append(BR).append(BR);
-//        buffer.append("Renderer:").append(t(4)).append(i.GL_RENDERER).append("\n");
-//        buffer.append("Version:").append(t(5)).append(i.GL_VERSION).append("\n");
-//        buffer.append("Vendor:").append(t(5)).append(i.GL_VENDOR).append("\n");
-//        buffer.append("GLSL Version:").append(t(2)).append(i.GL_SHADING_LANGUAGE_VERSION).append("\n\n");
-//
-//        // texture related
-//        buffer.append("Textures\n\n");
-//        buffer.append("Max Texture Size:").append(t(6)).append(i.GL_MAX_TEXTURE_SIZE).append("x").append(i.GL_MAX_TEXTURE_SIZE).append("\n");
-//        buffer.append("Max Texture Units:").append(t(6)).append(i.GL_MAX_TEXTURE_UNITS).append("\n");
-//        buffer.append("Max Texture Image Units:").append(t(3)).append(i.GL_MAX_TEXTURE_IMAGE_UNITS).append("\n");
-//        buffer.append("Max Combined Texture Units:").append(t(1)).append(i.GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS).append("\n");
-//        buffer.append("Max Cube Map Texture Size:").append(t(1)).append(i.GL_MAX_CUBE_MAP_TEXTURE_SIZE).append("x").append(i.GL_MAX_CUBE_MAP_TEXTURE_SIZE).append("\n");
-//        buffer.append("Max Vertex Texture Images:").append(t(1)).append(i.GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS).append("\n");
-//        buffer.append("Vertex Texture Fetch:").append(t(5)).append(formatBool(i.Vertex_Texture_Fetch)).append("\n");
-//        buffer.append("Max Viewport Dimension:").append(t(3)).append(i.GL_MAX_VIEWPORT_DIMS[0]).append("x").append(i.GL_MAX_VIEWPORT_DIMS[0]).append("\n");
-//        buffer.append("Max Renderbuffer Size:").append(t(4)).append(i.GL_MAX_RENDERBUFFER_SIZE).append("x").append(i.GL_MAX_RENDERBUFFER_SIZE).append("\n\n");
+    private void addGeneral(OpenGLGles20Info info) {
+        ListItem item = new ListItem().setLabel("General")
+                .addChild(new ListItem().setLabel("GLSL Version").setValue(info.GL_SHADING_LANGUAGE_VERSION))
+                .addChild(new ListItem().setLabel("Version").setValue(info.GL_VERSION))
+                .addChild(new ListItem().setLabel("Vendor").setValue(info.GL_VENDOR))
+                .addChild(new ListItem().setLabel("Renderer").setValue(info.GL_RENDERER));
+        addSubListItem(item);
+    }
 
-        // shader constrains
-        buffer.append("Attributes\n\n");
-        buffer.append("Max Vertex Uniform Vectors:").append(t(3)).append(i.GL_MAX_VERTEX_UNIFORM_VECTORS).append("\n");
-        buffer.append("Max Vertex Attributes:").append(t(6)).append(i.GL_MAX_VERTEX_ATTRIBS).append("\n");
-        buffer.append("Max Varying Vectors:").append(t(7)).append(i.GL_MAX_VARYING_VECTORS).append("\n");
-        buffer.append("Max Fragment Uniform Vectors:").append(t(2)).append(i.GL_MAX_FRAGMENT_UNIFORM_VECTORS).append("\n\n");
+    private void addExtensions(OpenGLGles20Info info) {
+        final ListItem item = new ListItem().setLabel("GL Extensions");
+        item.addChild(new ListItem().setLabel("GL Extensions"));
+        final String[] extensions = info.GL_EXTENSIONS.replace("GL_", "-GL_").split("-");
+        for (int j = 0; j < extensions.length; ++j) {
+            final String extension = extensions[j];
+            if (extension.equalsIgnoreCase("null"))
+                continue;
 
-        // compressed texture formats
-        buffer.append("Compressed Texture Formats\n\n");
+            item.addChild(new ListItem().setLabel(extension));
+        }
 
-        final String[] token = i.GL_EXTENSIONS.split("_");
-        for (int j = 0; j < token.length; ++j)
-            if (token[j].equalsIgnoreCase("compressed"))
-                buffer.append(firstLetterToUpperCase(token[j + 1])).append("\n");
-
-        // extensions
-        buffer.append("\nGL Extensions\n\n").append(i.GL_EXTENSIONS).append("\n\n");
-
-        // precision [] { -range, range, precision }
-        buffer.append("Vertex Numeric Precision\n\n");
-        buffer.append(appendGLInfoArray("Low Int" + t(4), i.GL_VERTEX_SHADER_GL_LOW_INT)).append("\n");
-        buffer.append(appendGLInfoArray("Medium Int" + t(2), i.GL_VERTEX_SHADER_GL_MEDIUM_INT)).append("\n");
-        buffer.append(appendGLInfoArray("High Int" + t(4), i.GL_VERTEX_SHADER_GL_HIGH_INT)).append("\n");
-        buffer.append(appendGLInfoArray("Low Float" + t(3), i.GL_VERTEX_SHADER_GL_LOW_FLOAT)).append("\n");
-        buffer.append(appendGLInfoArray("Medium Float" + t(1), i.GL_VERTEX_SHADER_GL_MEDIUM_FLOAT)).append("\n");
-        buffer.append(appendGLInfoArray("High Float" + t(3), i.GL_VERTEX_SHADER_GL_HIGH_FLOAT)).append("\n\n");
-
-        buffer.append("Fragment Numeric Precision\n\n");
-        buffer.append(appendGLInfoArray("Low Int" + t(4), i.GL_FRAGMENT_SHADER_GL_LOW_INT)).append("\n");
-        buffer.append(appendGLInfoArray("Medium Int" + t(2), i.GL_FRAGMENT_SHADER_GL_MEDIUM_INT)).append("\n");
-        buffer.append(appendGLInfoArray("High Int" + t(4), i.GL_FRAGMENT_SHADER_GL_HIGH_INT)).append("\n");
-        buffer.append(appendGLInfoArray("Low Float" + t(3), i.GL_FRAGMENT_SHADER_GL_LOW_FLOAT)).append("\n");
-        buffer.append(appendGLInfoArray("Medium Float" + t(1), i.GL_FRAGMENT_SHADER_GL_MEDIUM_FLOAT)).append("\n");
-        buffer.append(appendGLInfoArray("High Float" + t(3), i.GL_FRAGMENT_SHADER_GL_HIGH_FLOAT)).append("\n");
-
-        return buffer.toString();
+        addSubListItem(item);
     }
 }
