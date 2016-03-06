@@ -11,4 +11,7 @@
     <color name="grey_stripe">@color/light_gray</color>
     <color name="fragment_background">@color/gray</color>
     <color name="card_topic_background">@color/light_gray</color>
+    <color name="pressed_light">#AA676767</color>
+    <color name="focused_light">#AA676767</color>
+    <color name="normal_light">@color/transparent</color>
 </resources>

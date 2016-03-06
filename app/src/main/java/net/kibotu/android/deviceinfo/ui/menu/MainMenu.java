@@ -2,7 +2,6 @@ package net.kibotu.android.deviceinfo.ui.menu;
 
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -20,12 +19,8 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
-import com.bumptech.glide.request.target.Target;
-import com.common.android.utils.extensions.ResourceExtensions;
 import com.common.android.utils.ui.recyclerView.DataBindAdapter;
 import net.kibotu.android.deviceinfo.R;
 
@@ -33,8 +28,8 @@ import java.util.List;
 
 import static com.common.android.utils.ContextHelper.getContext;
 import static com.common.android.utils.extensions.ResourceExtensions.color;
-import static com.common.android.utils.extensions.ResourceExtensions.drawable;
 import static com.common.android.utils.extensions.ViewExtensions.getContentRoot;
+import static net.kibotu.android.deviceinfo.utils.Extensions.inflate;
 
 /**
  * Created by Nyaruhodo on 20.02.2016.
@@ -88,21 +83,19 @@ public class MainMenu implements IMainMenu {
         actionBar.setIcon(R.color.transparent);
         actionBar.setHomeButtonEnabled(false);
 
-        final View viewActionBar = getContext().getLayoutInflater().inflate(R.layout.custom_toolbar, null);
-        ActionBar.LayoutParams params = new ActionBar.LayoutParams(
-                ActionBar.LayoutParams.WRAP_CONTENT,
-                ActionBar.LayoutParams.MATCH_PARENT,
-                Gravity.CENTER);
-        actionBar.setCustomView(viewActionBar, params);
-
-        actionbarViewHolder = new ActionbarViewHolder(viewActionBar);
-
-        actionbarViewHolder.homeIcon.setOnClickListener(new View.OnClickListener() {
+        actionbarViewHolder = new ActionbarViewHolder(inflate(R.layout.custom_toolbar));
+        actionbarViewHolder.iconHitBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openLeftDrawer();
             }
         });
+
+        ActionBar.LayoutParams params = new ActionBar.LayoutParams(
+                ActionBar.LayoutParams.WRAP_CONTENT,
+                ActionBar.LayoutParams.MATCH_PARENT,
+                Gravity.CENTER);
+        actionBar.setCustomView(actionbarViewHolder.itemView, params);
     }
 
     @Override

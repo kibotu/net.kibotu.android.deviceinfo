@@ -14,7 +14,7 @@ android {
         versionCode commitCount()
         versionName "1.0"
         multiDexEnabled = true
-        renderscriptTargetApi 20
+        renderscriptTargetApi 23
         renderscriptSupportModeEnabled true
     }
 
