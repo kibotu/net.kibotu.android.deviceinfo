@@ -13,20 +13,19 @@ import com.canelmas.let.DeniedPermission;
 import com.canelmas.let.Let;
 import com.canelmas.let.RuntimePermissionListener;
 import com.canelmas.let.RuntimePermissionRequest;
-import com.common.android.utils.interfaces.ILogTag;
+import com.common.android.utils.extensions.FragmentExtensions;
+import com.common.android.utils.interfaces.LogTag;
 import com.common.android.utils.logging.Logger;
-import net.kibotu.android.deviceinfo.ui.menu.*;
-import org.jetbrains.annotations.NotNull;
+import com.common.android.utils.ui.menu.*;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import java.util.List;
 
 import static com.common.android.utils.extensions.DeviceExtensions.hideKeyboard;
 import static com.common.android.utils.extensions.FragmentExtensions.currentFragment;
-import static com.common.android.utils.extensions.FragmentExtensions.popBackStackImmediate;
 import static net.kibotu.android.deviceinfo.ui.FragmentProvider.showBuildConfigFragment;
 
-public class MainActivity extends AppCompatActivity implements ILogTag, IMenuProvider, FragmentManager.OnBackStackChangedListener, RuntimePermissionListener {
+public class MainActivity extends AppCompatActivity implements LogTag, IMenuProvider, FragmentManager.OnBackStackChangedListener, RuntimePermissionListener {
 
     IMainMenu mainMenu;
 
@@ -71,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements ILogTag, IMenuPro
         if (MainMenuProvider.provide().isDrawerOpen() && currentFragment(R.id.overlay_container) == null)
             MainMenuProvider.provide().closeDrawers();
         else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            popBackStackImmediate(getSupportFragmentManager());
+            FragmentExtensions.popBackStack();
         } else
             super.onBackPressed();
     }
@@ -102,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements ILogTag, IMenuPro
         Logger.v(tag(), "onPermissionDenied " + list);
     }
 
-    @NotNull
+    @NonNull
     @Override
     final public String tag() {
         return getClass().getSimpleName();

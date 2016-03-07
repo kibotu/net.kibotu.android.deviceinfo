@@ -7,16 +7,14 @@ import android.graphics.ImageFormat;
 import android.graphics.PixelFormat;
 import android.hardware.Sensor;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.Surface;
 import net.kibotu.android.deviceinfo.library.misc.ReflectionHelper;
-import net.kibotu.android.deviceinfo.library.storage.StorageSpace;
 import net.kibotu.android.deviceinfo.library.version.Version;
-import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;

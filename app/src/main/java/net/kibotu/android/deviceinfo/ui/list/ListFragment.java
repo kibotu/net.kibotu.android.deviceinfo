@@ -16,7 +16,6 @@ import net.kibotu.android.deviceinfo.ui.BaseFragment;
 import net.kibotu.android.deviceinfo.ui.list.binder.CardViewHorizontalListItemBinder;
 import net.kibotu.android.deviceinfo.ui.list.binder.CardViewSubListItemBinder;
 import net.kibotu.android.deviceinfo.ui.list.binder.VerticalListItemBinderCardView;
-import org.jetbrains.annotations.NotNull;
 
 import static android.text.TextUtils.isEmpty;
 
@@ -46,7 +45,6 @@ public abstract class ListFragment extends BaseFragment {
         list.setAdapter(injectAdapterAnimation(adapter));
     }
 
-    @NotNull
     protected RecyclerView.Adapter injectAdapterAnimation(RecyclerView.Adapter adapter) {
         final ScaleInAnimationAdapter animationAdapter = new ScaleInAnimationAdapter(adapter, 0.90f);
         animationAdapter.setDuration(200);

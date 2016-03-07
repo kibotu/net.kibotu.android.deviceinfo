@@ -23,6 +23,7 @@ public class MemoryFragment extends ListFragment {
 
         addAllStorageSpace();
 
+        // https://www.centos.org/docs/5/html/5.1/Deployment_Guide/s2-proc-meminfo.html
 //
 //        final LinearLayout l = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.ram, null);
 //

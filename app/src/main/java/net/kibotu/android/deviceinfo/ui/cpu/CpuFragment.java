@@ -8,7 +8,6 @@ import net.kibotu.android.deviceinfo.library.cpu.CpuUpdateListener;
 import net.kibotu.android.deviceinfo.library.cpu.CpuUsageReceiver;
 import net.kibotu.android.deviceinfo.model.ListItem;
 import net.kibotu.android.deviceinfo.ui.list.ListFragment;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -33,7 +32,6 @@ public class CpuFragment extends ListFragment {
         super.onDestroyView();
     }
 
-    @NotNull
     @Override
     protected RecyclerView.Adapter injectAdapterAnimation(RecyclerView.Adapter adapter) {
         // overriding default behaviour, so we don't inject an animation adapter

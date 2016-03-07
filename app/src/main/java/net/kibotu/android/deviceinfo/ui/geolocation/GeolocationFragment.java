@@ -1,14 +1,14 @@
 package net.kibotu.android.deviceinfo.ui.geolocation;
 
+import com.common.android.utils.network.RequestProvider;
+import com.common.android.utils.network.model.FreeGeoIpResponseModel;
+import com.common.android.utils.network.model.IpApiComResponseModel;
+import com.common.android.utils.network.model.IpInfoResponseModel;
 import com.orhanobut.wasp.Callback;
 import com.orhanobut.wasp.Response;
 import com.orhanobut.wasp.WaspError;
 import net.kibotu.android.deviceinfo.R;
-import net.kibotu.android.deviceinfo.model.FreeGeoIpResponseModel;
-import net.kibotu.android.deviceinfo.model.IpApiComResponseModel;
-import net.kibotu.android.deviceinfo.model.IpInfoResponseModel;
 import net.kibotu.android.deviceinfo.model.ListItem;
-import net.kibotu.android.deviceinfo.network.RequestProvider;
 import net.kibotu.android.deviceinfo.ui.list.ListFragment;
 
 /**

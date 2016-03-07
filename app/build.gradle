@@ -64,17 +64,14 @@ android {
 }
 
 dependencies {
-    compile project(':lib')
+    // compile project(':lib')
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:multidex:1.0.1'
-    compile 'com.android.support:design:23.2.0'
     compile 'com.android.support:cardview-v7:23.2.0'
 
     // frequently used convenient methods
-    compile('com.github.kibotu:common.android.utils:0.3.6') {
-        exclude module: 'support-v4'
+    compile('com.github.kibotu:common.android.utils:0.4.0') {
         exclude group: 'com.mcxiaoke.volley'
-        exclude group: 'com.intellij.annotations'
     }
 
     // recyclerview animations
@@ -91,14 +88,6 @@ dependencies {
         exclude group: 'com.google.android', module: 'support-v4'
     }
 
-    // network layer
-    compile ('com.github.orhanobut:wasp:1.15') {
-        exclude module: 'hawk'
-    }
-
-    // local storage
-    compile 'com.github.orhanobut:hawk:1.21'
-
     // fabric
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true;
@@ -110,8 +99,6 @@ dependencies {
     // fancy time calculations
     compile 'joda-time:joda-time:2.9.2'
 
-    // network layer
-    compile('com.github.orhanobut:wasp:1.15')
 }
 
 def commitCount() {

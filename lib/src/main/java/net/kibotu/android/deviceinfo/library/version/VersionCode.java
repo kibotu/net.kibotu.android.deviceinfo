@@ -9,6 +9,8 @@ import static android.os.Build.VERSION_CODES.*;
 
 /**
  * Created by Nyaruhodo on 21.02.2016.
+ *
+ * @see <a href="http://developer.android.com/guide/topics/manifest/uses-sdk-element.html#ApiLevels">What is API Level?</a>
  */
 
 @IntDef({BASE,

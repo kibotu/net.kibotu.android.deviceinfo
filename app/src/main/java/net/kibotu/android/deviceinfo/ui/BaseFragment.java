@@ -9,17 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
-import com.common.android.utils.interfaces.ILayout;
-import com.common.android.utils.interfaces.ILogTag;
-import net.kibotu.android.deviceinfo.R;
-import net.kibotu.android.deviceinfo.ui.menu.ISupportMenu;
-import net.kibotu.android.deviceinfo.ui.menu.MainMenuProvider;
-import org.jetbrains.annotations.NotNull;
+import com.common.android.utils.interfaces.LayoutProvider;
+import com.common.android.utils.interfaces.LogTag;
+import com.common.android.utils.ui.menu.ISupportMenu;
+import com.common.android.utils.ui.menu.MainMenuProvider;
 
 /**
  * Created by Nyaruhodo on 20.02.2016.
  */
-public abstract class BaseFragment extends Fragment implements ILogTag, ILayout, ISupportMenu {
+public abstract class BaseFragment extends Fragment implements LogTag, LayoutProvider, ISupportMenu {
 
     protected View rootView;
 
@@ -27,7 +25,6 @@ public abstract class BaseFragment extends Fragment implements ILogTag, ILayout,
         // mandatory for fragment transactions
     }
 
-    @NotNull
     @Override
     final public String tag() {
         return getClass().getSimpleName();

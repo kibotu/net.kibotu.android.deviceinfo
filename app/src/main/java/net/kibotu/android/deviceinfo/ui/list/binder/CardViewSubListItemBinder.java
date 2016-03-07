@@ -1,6 +1,8 @@
 package net.kibotu.android.deviceinfo.ui.list.binder;
 
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,11 +12,11 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.common.android.utils.logging.Logger;
+import com.common.android.utils.ui.BaseViewHolder;
 import com.common.android.utils.ui.recyclerView.DataBindAdapter;
 import com.common.android.utils.ui.recyclerView.DataBinder;
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.model.ListItem;
-import org.jetbrains.annotations.NotNull;
 
 import static com.common.android.utils.ContextHelper.getContext;
 
@@ -23,8 +25,14 @@ import static com.common.android.utils.ContextHelper.getContext;
  */
 public class CardViewSubListItemBinder extends DataBinder<ListItem, CardViewSubListItemBinder.ViewHolder> {
 
-    public CardViewSubListItemBinder(@NotNull DataBindAdapter<ListItem> dataBindAdapter) {
+    public CardViewSubListItemBinder(@NonNull DataBindAdapter<ListItem> dataBindAdapter) {
         super(dataBindAdapter);
+    }
+
+    @NonNull
+    @Override
+    protected ViewHolder createViewHolder(int i, ViewGroup viewGroup) {
+        return new ViewHolder(i, viewGroup);
     }
 
     @Override
@@ -32,13 +40,9 @@ public class CardViewSubListItemBinder extends DataBinder<ListItem, CardViewSubL
         return R.layout.sub_list_item;
     }
 
-    @NotNull
-    protected ViewHolder newViewHolder(@NotNull ViewGroup parent) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(getLayout(), parent, false));
-    }
 
     @Override
-    public void bindViewHolder(@NotNull final ViewHolder viewHolder, int position) {
+    public void bindViewHolder(@NonNull final ViewHolder viewHolder, int position) {
         final ListItem item = get(position);
 
         viewHolder.label.setText(item.getLabel());
@@ -59,7 +63,7 @@ public class CardViewSubListItemBinder extends DataBinder<ListItem, CardViewSubL
         });
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends BaseViewHolder {
 
         @NonNull
         @Bind(R.id.label)
@@ -71,9 +75,8 @@ public class CardViewSubListItemBinder extends DataBinder<ListItem, CardViewSubL
 
         final DataBindAdapter<Object> adapter;
 
-        public ViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
+        public ViewHolder(@LayoutRes int layout, @Nullable ViewGroup parent) {
+            super(layout, parent);
 
             adapter = new DataBindAdapter<>();
             list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
