@@ -16,6 +16,7 @@ import javax.microedition.khronos.egl.EGLDisplay;
 import java.nio.IntBuffer;
 
 import static net.kibotu.android.deviceinfo.library.Device.getContext;
+import static net.kibotu.android.deviceinfo.library.services.SystemService.getActivityManager;
 
 /**
  * Created by Nyaruhodo on 05.03.2016.
@@ -39,7 +40,7 @@ public class OpenGLExtensions {
     }
 
     public synchronized static int[] glGetShaderPrecisionFormat(int shaderType, int precisionType) {
-        if (!Device.supportsOpenGLES2()) return new int[]{0, 0, 0};
+        if (!supportsOpenGLES2()) return new int[]{0, 0, 0};
         buffer2.clear();
         GLES20.glGetShaderPrecisionFormat(shaderType, precisionType, buffer2, buffer);
         return new int[]{buffer2.get(0), buffer2.get(1), buffer.get(0)};
@@ -55,16 +56,6 @@ public class OpenGLExtensions {
         return arrayBuffer[0] != 0;
     }
 
-    static int getOpenGLVersion() {
-        final ActivityManager activityManager = (ActivityManager) getContext().getSystemService(Context.ACTIVITY_SERVICE);
-        final ConfigurationInfo configurationInfo = activityManager.getDeviceConfigurationInfo();
-        return configurationInfo.reqGlEsVersion;
-    }
-
-    static boolean supportsOpenGLES2() {
-        return getOpenGLVersion() >= 0x20000;
-    }
-
     public static String glGetString(int value) {
         return GLES10.glGetString(value);
     }
@@ -74,5 +65,17 @@ public class OpenGLExtensions {
         return GLES30.glGetStringi(value, index);
     }
 
+    public static boolean supportsOpenGLES2() {
+        return getOpenGLVersion() >= 0x20000;
+    }
 
+    public static boolean supportsOpenGLES3() {
+        return getOpenGLVersion() >= 0x30000;
+    }
+
+    public static int getOpenGLVersion() {
+        return getActivityManager()
+                .getDeviceConfigurationInfo()
+                .reqGlEsVersion;
+    }
 }

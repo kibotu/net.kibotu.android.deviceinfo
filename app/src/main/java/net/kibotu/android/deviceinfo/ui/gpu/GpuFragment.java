@@ -32,13 +32,6 @@ public class GpuFragment extends ListFragment {
                 addOpenGLGles20Info(openGLGles20Info);
             }
         });
-
-        Device.loadOpenGLGles10Info(new Callback<OpenGLGles10Info>() {
-            @Override
-            public void onComplete(final OpenGLGles10Info openGLGles10Info) {
-                addGLES10Constraints(openGLGles10Info);
-            }
-        });
     }
 
     private void addGLES10Constraints(OpenGLGles10Info info) {
@@ -74,6 +67,13 @@ public class GpuFragment extends ListFragment {
         addEglConfigs(info);
 
         addExtensions(info);
+
+        Device.loadOpenGLGles10Info(new Callback<OpenGLGles10Info>() {
+            @Override
+            public void onComplete(final OpenGLGles10Info openGLGles10Info) {
+                addGLES10Constraints(openGLGles10Info);
+            }
+        });
 
         notifyDataSetChanged();
     }

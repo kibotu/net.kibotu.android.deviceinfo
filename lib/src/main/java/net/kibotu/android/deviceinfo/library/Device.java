@@ -11,25 +11,19 @@ import android.hardware.Sensor;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Display;
 import android.view.View;
 import net.kibotu.android.deviceinfo.library.battery.BatteryReceiver;
 import net.kibotu.android.deviceinfo.library.bluetooth.Bluetooth;
-import net.kibotu.android.deviceinfo.library.display.DisplayHelper;
 import net.kibotu.android.deviceinfo.library.gpu.InfoLoader;
 import net.kibotu.android.deviceinfo.library.gpu.OpenGLGles10Info;
 import net.kibotu.android.deviceinfo.library.gpu.OpenGLGles20Info;
 import net.kibotu.android.deviceinfo.library.misc.Callback;
-import net.kibotu.android.deviceinfo.library.misc.ShellExtensions;
 import net.kibotu.android.deviceinfo.library.version.Version;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 
-import static android.os.Build.TAGS;
 import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR2;
 import static net.kibotu.android.deviceinfo.library.services.SystemService.*;
 
@@ -40,7 +34,6 @@ final public class Device {
 
     private static final String TAG = Device.class.getSimpleName();
     private static Context context;
-    private static DisplayHelper displayHelper;
 
     private Device() throws IllegalAccessException {
         throw new IllegalAccessException();
@@ -48,57 +41,12 @@ final public class Device {
 
     public static void setContext(Activity context) {
         Device.context = context;
-        displayHelper = new DisplayHelper(context);
     }
 
     public static Context getContext() {
         if (context == null)
             throw new IllegalStateException("'context' must not be null. Please invoke Device.setContext().");
         return context;
-    }
-
-    public static boolean supportsOpenGLES2() {
-        return getOpenGLVersion() >= 0x20000;
-    }
-
-    public static int getOpenGLVersion() {
-        return getActivityManager()
-                .getDeviceConfigurationInfo()
-                .reqGlEsVersion;
-    }
-
-    @Deprecated
-    public static String getUsableResolution() {
-        return String.format("%dx%d", Math.max(DisplayHelper.mScreenWidth, DisplayHelper.mScreenHeight), Math.min(DisplayHelper.mScreenWidth, DisplayHelper.mScreenHeight));
-    }
-
-    @Deprecated
-    public static String getUsableResolutionDp() {
-        return String.format("%.0fx%.0f", Math.max(DisplayHelper.mScreenWidth, DisplayHelper.mScreenHeight) / DisplayHelper.mDensity, Math.min(DisplayHelper.mScreenWidth, DisplayHelper.mScreenHeight) / DisplayHelper.mDensity);
-    }
-
-    @Deprecated
-    public static String getResolution() {
-        return String.format("%dx%d", Math.max(DisplayHelper.absScreenWidth, DisplayHelper.absScreenHeight), Math.min(DisplayHelper.absScreenWidth, DisplayHelper.absScreenHeight));
-    }
-
-    @Deprecated
-    public static String getResolutionDp() {
-        return String.format("%.0fx%.0f", Math.max(DisplayHelper.absScreenWidth, DisplayHelper.absScreenHeight) / DisplayHelper.mDensity, Math.min(DisplayHelper.absScreenWidth, DisplayHelper.absScreenHeight) / DisplayHelper.mDensity);
-    }
-
-    public static Display getDefaultDisplay() {
-        return getWindowManager().getDefaultDisplay();
-    }
-
-    public static float getRefreshRate() {
-        return getDefaultDisplay().getRefreshRate();
-    }
-
-    public static DisplayMetrics getDisplayMetrics() {
-        DisplayMetrics metrics = new DisplayMetrics();
-        getDefaultDisplay().getMetrics(metrics);
-        return metrics;
     }
 
     /**
@@ -284,37 +232,6 @@ final public class Device {
             }
         }
         return size;
-    }
-
-    /**
-     * Checks if the phone is rooted.
-     *
-     * @return <code>true</code> if the phone is rooted, <code>false</code>
-     * otherwise.
-     * @credits: http://stackoverflow.com/a/6425854
-     */
-    public static boolean isPhoneRooted() {
-
-        // get from build info
-        String buildTags = TAGS;
-        if (buildTags != null && buildTags.contains("test-keys")) {
-            Log.v(TAG, "is rooted by build tag");
-            return true;
-        }
-
-        // check if /system/app/Superuser.apk is present
-        try {
-            File file = new File("/system/app/Superuser.apk");
-            if (file.exists()) {
-                Log.v(TAG, "is rooted by /system/app/Superuser.apk");
-                return true;
-            }
-        } catch (Throwable e1) {
-            // ignore
-        }
-
-        // from excecuting shell command
-        return ShellExtensions.executeShellCommand("which su");
     }
 
     public static List<ResolveInfo> installedApps() {

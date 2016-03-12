@@ -3,10 +3,13 @@ package net.kibotu.android.deviceinfo.library.gpu;
 import android.opengl.GLES10;
 import android.opengl.GLES20;
 import android.opengl.GLES30;
-import android.os.Build;
-import net.kibotu.android.deviceinfo.library.version.Version;
 
 import java.util.Arrays;
+
+import static android.opengl.GLES20.*;
+import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR2;
+import static net.kibotu.android.deviceinfo.library.gpu.OpenGLExtensions.*;
+import static net.kibotu.android.deviceinfo.library.version.Version.isAtLeastVersion;
 
 public class OpenGLGles20Info extends OpenGLInfo {
 
@@ -52,7 +55,7 @@ public class OpenGLGles20Info extends OpenGLInfo {
     public int[] GL_FRAGMENT_SHADER_GL_HIGH_FLOAT;
 
     public OpenGLGles20Info() {
-        super(OpenGLExtensions.supportsOpenGLES2()
+        super(supportsOpenGLES2()
                 ? 2
                 : 1);
     }
@@ -65,44 +68,44 @@ public class OpenGLGles20Info extends OpenGLInfo {
         GL_VENDOR = OpenGLExtensions.glGetString(GLES10.GL_VENDOR);
         GL_SHADING_LANGUAGE_VERSION = OpenGLExtensions.glGetString(GLES20.GL_SHADING_LANGUAGE_VERSION);
 
-        GL_MAX_TEXTURE_SIZE = OpenGLExtensions.glGetIntegerv(GLES10.GL_MAX_TEXTURE_SIZE);
-        GL_MAX_TEXTURE_UNITS = OpenGLExtensions.glGetIntegerv(GLES10.GL_MAX_TEXTURE_UNITS);
-        GL_MAX_VERTEX_ATTRIBS = OpenGLExtensions.glGetIntegerv(GLES20.GL_MAX_VERTEX_ATTRIBS);
-        GL_MAX_VERTEX_UNIFORM_VECTORS = OpenGLExtensions.glGetIntegerv(GLES20.GL_MAX_VERTEX_UNIFORM_VECTORS);
-        GL_MAX_FRAGMENT_UNIFORM_VECTORS = OpenGLExtensions.glGetIntegerv(GLES20.GL_MAX_FRAGMENT_UNIFORM_VECTORS);
-        GL_MAX_VARYING_VECTORS = OpenGLExtensions.glGetIntegerv(GLES20.GL_MAX_VARYING_VECTORS);
-        Vertex_Texture_Fetch = OpenGLExtensions.isVTFSupported();
-        GL_MAX_TEXTURE_IMAGE_UNITS = OpenGLExtensions.glGetIntegerv(GLES20.GL_MAX_TEXTURE_IMAGE_UNITS);
-        GL_MAX_VIEWPORT_DIMS = OpenGLExtensions.glGetIntegerv(GLES10.GL_MAX_VIEWPORT_DIMS, 2);
+        GL_MAX_TEXTURE_SIZE = glGetIntegerv(GLES10.GL_MAX_TEXTURE_SIZE);
+        GL_MAX_TEXTURE_UNITS = glGetIntegerv(GLES10.GL_MAX_TEXTURE_UNITS);
+        GL_MAX_VERTEX_ATTRIBS = glGetIntegerv(GLES20.GL_MAX_VERTEX_ATTRIBS);
+        GL_MAX_VERTEX_UNIFORM_VECTORS = glGetIntegerv(GLES20.GL_MAX_VERTEX_UNIFORM_VECTORS);
+        GL_MAX_FRAGMENT_UNIFORM_VECTORS = glGetIntegerv(GLES20.GL_MAX_FRAGMENT_UNIFORM_VECTORS);
+        GL_MAX_VARYING_VECTORS = glGetIntegerv(GLES20.GL_MAX_VARYING_VECTORS);
+        Vertex_Texture_Fetch = isVTFSupported();
+        GL_MAX_TEXTURE_IMAGE_UNITS = glGetIntegerv(GLES20.GL_MAX_TEXTURE_IMAGE_UNITS);
+        GL_MAX_VIEWPORT_DIMS = glGetIntegerv(GLES10.GL_MAX_VIEWPORT_DIMS, 2);
 
-        if (Version.isAtLeastVersion(Build.VERSION_CODES.JELLY_BEAN_MR2)) {
-            int n = OpenGLExtensions.glGetIntegerv(GLES30.GL_NUM_EXTENSIONS);
+        if (isAtLeastVersion(JELLY_BEAN_MR2) && supportsOpenGLES3()) {
+            int n = glGetIntegerv(GLES30.GL_NUM_EXTENSIONS);
             for (int i = 0; i < n; i++) {
-                GL_EXTENSIONS += OpenGLExtensions.glGetStringi(GLES30.GL_EXTENSIONS, i);
+                GL_EXTENSIONS += glGetStringi(GLES30.GL_EXTENSIONS, i);
             }
         } else
             GL_EXTENSIONS = OpenGLExtensions.glGetString(GLES10.GL_EXTENSIONS);
 
-        GL_MAX_RENDERBUFFER_SIZE = OpenGLExtensions.glGetIntegerv(GLES20.GL_MAX_RENDERBUFFER_SIZE);
-        GL_MAX_CUBE_MAP_TEXTURE_SIZE = OpenGLExtensions.glGetIntegerv(GLES20.GL_MAX_CUBE_MAP_TEXTURE_SIZE);
-        GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS = OpenGLExtensions.glGetIntegerv(GLES20.GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS);
-        GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS = OpenGLExtensions.glGetIntegerv(GLES20.GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS);
+        GL_MAX_RENDERBUFFER_SIZE = glGetIntegerv(GLES20.GL_MAX_RENDERBUFFER_SIZE);
+        GL_MAX_CUBE_MAP_TEXTURE_SIZE = glGetIntegerv(GLES20.GL_MAX_CUBE_MAP_TEXTURE_SIZE);
+        GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS = glGetIntegerv(GLES20.GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS);
+        GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS = glGetIntegerv(GLES20.GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS);
 
-        GL_VERTEX_SHADER_GL_LOW_INT = OpenGLExtensions.glGetShaderPrecisionFormat(GLES20.GL_VERTEX_SHADER, GLES20.GL_LOW_INT);
-        GL_VERTEX_SHADER_GL_MEDIUM_INT = OpenGLExtensions.glGetShaderPrecisionFormat(GLES20.GL_VERTEX_SHADER, GLES20.GL_MEDIUM_INT);
-        GL_VERTEX_SHADER_GL_HIGH_INT = OpenGLExtensions.glGetShaderPrecisionFormat(GLES20.GL_VERTEX_SHADER, GLES20.GL_HIGH_INT);
+        GL_VERTEX_SHADER_GL_LOW_INT = glGetShaderPrecisionFormat(GL_VERTEX_SHADER, GL_LOW_INT);
+        GL_VERTEX_SHADER_GL_MEDIUM_INT = glGetShaderPrecisionFormat(GL_VERTEX_SHADER, GL_MEDIUM_INT);
+        GL_VERTEX_SHADER_GL_HIGH_INT = glGetShaderPrecisionFormat(GL_VERTEX_SHADER, GL_HIGH_INT);
 
-        GL_VERTEX_SHADER_GL_LOW_FLOAT = OpenGLExtensions.glGetShaderPrecisionFormat(GLES20.GL_VERTEX_SHADER, GLES20.GL_LOW_FLOAT);
-        GL_VERTEX_SHADER_GL_MEDIUM_FLOAT = OpenGLExtensions.glGetShaderPrecisionFormat(GLES20.GL_VERTEX_SHADER, GLES20.GL_MEDIUM_FLOAT);
-        GL_VERTEX_SHADER_GL_HIGH_FLOAT = OpenGLExtensions.glGetShaderPrecisionFormat(GLES20.GL_VERTEX_SHADER, GLES20.GL_HIGH_FLOAT);
+        GL_VERTEX_SHADER_GL_LOW_FLOAT = glGetShaderPrecisionFormat(GL_VERTEX_SHADER, GL_LOW_FLOAT);
+        GL_VERTEX_SHADER_GL_MEDIUM_FLOAT = glGetShaderPrecisionFormat(GL_VERTEX_SHADER, GL_MEDIUM_FLOAT);
+        GL_VERTEX_SHADER_GL_HIGH_FLOAT = glGetShaderPrecisionFormat(GL_VERTEX_SHADER, GL_HIGH_FLOAT);
 
-        GL_FRAGMENT_SHADER_GL_LOW_INT = OpenGLExtensions.glGetShaderPrecisionFormat(GLES20.GL_FRAGMENT_SHADER, GLES20.GL_LOW_INT);
-        GL_FRAGMENT_SHADER_GL_MEDIUM_INT = OpenGLExtensions.glGetShaderPrecisionFormat(GLES20.GL_FRAGMENT_SHADER, GLES20.GL_MEDIUM_INT);
-        GL_FRAGMENT_SHADER_GL_HIGH_INT = OpenGLExtensions.glGetShaderPrecisionFormat(GLES20.GL_FRAGMENT_SHADER, GLES20.GL_HIGH_INT);
+        GL_FRAGMENT_SHADER_GL_LOW_INT = glGetShaderPrecisionFormat(GL_FRAGMENT_SHADER, GL_LOW_INT);
+        GL_FRAGMENT_SHADER_GL_MEDIUM_INT = glGetShaderPrecisionFormat(GL_FRAGMENT_SHADER, GL_MEDIUM_INT);
+        GL_FRAGMENT_SHADER_GL_HIGH_INT = glGetShaderPrecisionFormat(GL_FRAGMENT_SHADER, GL_HIGH_INT);
 
-        GL_FRAGMENT_SHADER_GL_LOW_FLOAT = OpenGLExtensions.glGetShaderPrecisionFormat(GLES20.GL_FRAGMENT_SHADER, GLES20.GL_LOW_FLOAT);
-        GL_FRAGMENT_SHADER_GL_MEDIUM_FLOAT = OpenGLExtensions.glGetShaderPrecisionFormat(GLES20.GL_FRAGMENT_SHADER, GLES20.GL_MEDIUM_FLOAT);
-        GL_FRAGMENT_SHADER_GL_HIGH_FLOAT = OpenGLExtensions.glGetShaderPrecisionFormat(GLES20.GL_FRAGMENT_SHADER, GLES20.GL_HIGH_FLOAT);
+        GL_FRAGMENT_SHADER_GL_LOW_FLOAT = glGetShaderPrecisionFormat(GL_FRAGMENT_SHADER, GL_LOW_FLOAT);
+        GL_FRAGMENT_SHADER_GL_MEDIUM_FLOAT = glGetShaderPrecisionFormat(GL_FRAGMENT_SHADER, GL_MEDIUM_FLOAT);
+        GL_FRAGMENT_SHADER_GL_HIGH_FLOAT = glGetShaderPrecisionFormat(GL_FRAGMENT_SHADER, GL_HIGH_FLOAT);
     }
 
     @Override

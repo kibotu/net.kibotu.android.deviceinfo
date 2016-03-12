@@ -2,6 +2,7 @@ package net.kibotu.android.deviceinfo;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
@@ -9,11 +10,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
+import android.widget.TextView;
 import com.canelmas.let.DeniedPermission;
 import com.canelmas.let.Let;
 import com.canelmas.let.RuntimePermissionListener;
 import com.canelmas.let.RuntimePermissionRequest;
 import com.common.android.utils.extensions.FragmentExtensions;
+import com.common.android.utils.extensions.ViewExtensions;
 import com.common.android.utils.interfaces.LogTag;
 import com.common.android.utils.logging.Logger;
 import com.common.android.utils.ui.menu.*;
@@ -23,6 +26,7 @@ import java.util.List;
 
 import static com.common.android.utils.extensions.DeviceExtensions.hideKeyboard;
 import static com.common.android.utils.extensions.FragmentExtensions.currentFragment;
+import static com.common.android.utils.extensions.ResourceExtensions.color;
 import static net.kibotu.android.deviceinfo.ui.FragmentProvider.showBuildConfigFragment;
 
 public class MainActivity extends AppCompatActivity implements LogTag, IMenuProvider, FragmentManager.OnBackStackChangedListener, RuntimePermissionListener {
@@ -47,6 +51,15 @@ public class MainActivity extends AppCompatActivity implements LogTag, IMenuProv
     protected void onResume() {
         super.onResume();
         getMainMenu().prepareDrawers();
+
+        final TextView title = (TextView) ViewExtensions.getContentRoot().findViewById(R.id.actionbar_title);
+        title.setTextColor(color(R.color.white));
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        Logger.v(tag(), "[onConfigurationChanged] " + newConfig);
     }
 
     @Override

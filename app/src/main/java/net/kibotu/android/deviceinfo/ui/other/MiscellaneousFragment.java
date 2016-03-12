@@ -4,7 +4,7 @@ import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.ui.list.ListFragment;
 
 import static net.kibotu.android.deviceinfo.library.Device.installedApps;
-import static net.kibotu.android.deviceinfo.library.Device.isPhoneRooted;
+import static net.kibotu.android.deviceinfo.library.misc.ShellExtensions.isPhoneRooted;
 
 /**
  * Created by Nyaruhodo on 21.02.2016.

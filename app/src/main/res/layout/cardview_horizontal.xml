@@ -2,6 +2,7 @@
 <android.support.v7.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:autofit="http://schemas.android.com/tools"
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="80dp"
@@ -15,8 +16,6 @@
         app:contentPadding="0dp">
 
     <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:autofit="http://schemas.android.com/apk/res-auto"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:layout_width="match_parent"

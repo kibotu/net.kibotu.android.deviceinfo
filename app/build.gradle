@@ -70,7 +70,7 @@ dependencies {
     // frequently used convenient methods
     compile('com.github.kibotu:common.android.utils:0.4.1') {
         exclude group: 'com.mcxiaoke.volley'
-         exclude module: 'net.kibotu.android.deviceinfo'
+        exclude module: 'net.kibotu.android.deviceinfo'
     }
 
     compile 'com.android.support:multidex:1.0.1'
@@ -101,6 +101,8 @@ dependencies {
     // fancy time calculations
     compile 'joda-time:joda-time:2.9.2'
 
+    // recyclerview fast scrolling
+    compile 'com.github.kibotu:RecyclerView-FastScroll:1.0.8'
 }
 
 def commitCount() {

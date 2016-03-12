@@ -8,6 +8,8 @@ import android.util.Log;
 import java.io.*;
 import java.util.StringTokenizer;
 
+import static android.os.Build.TAGS;
+
 public class ShellExtensions {
 
     private static final String TAG = ShellExtensions.class.getSimpleName();
@@ -254,6 +256,37 @@ public class ShellExtensions {
         }
 
         return buffer.toString();
+    }
+
+    /**
+     * Checks if the phone is rooted.
+     *
+     * @return <code>true</code> if the phone is rooted, <code>false</code>
+     * otherwise.
+     * @credits: http://stackoverflow.com/a/6425854
+     */
+    public static boolean isPhoneRooted() {
+
+        // get from build info
+        String buildTags = TAGS;
+        if (buildTags != null && buildTags.contains("test-keys")) {
+            Log.v(TAG, "is rooted by build tag");
+            return true;
+        }
+
+        // check if /system/app/Superuser.apk is present
+        try {
+            File file = new File("/system/app/Superuser.apk");
+            if (file.exists()) {
+                Log.v(TAG, "is rooted by /system/app/Superuser.apk");
+                return true;
+            }
+        } catch (Throwable e1) {
+            // ignore
+        }
+
+        // from excecuting shell command
+        return executeShellCommand("which su");
     }
 
     public interface ShellCallback {
