@@ -4,8 +4,8 @@ import android.support.v7.widget.RecyclerView;
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.library.cpu.Core;
 import net.kibotu.android.deviceinfo.library.cpu.Cpu;
-import net.kibotu.android.deviceinfo.library.cpu.CpuUpdateListener;
-import net.kibotu.android.deviceinfo.library.cpu.CpuUsageReceiver;
+import net.kibotu.android.deviceinfo.library.cpu.CpuUsage;
+import net.kibotu.android.deviceinfo.library.misc.UpdateTimer;
 import net.kibotu.android.deviceinfo.model.ListItem;
 import net.kibotu.android.deviceinfo.ui.list.ListFragment;
 
@@ -19,7 +19,7 @@ import static net.kibotu.android.deviceinfo.ui.ViewHelper.*;
  */
 public class CpuFragment extends ListFragment {
 
-    private CpuUsageReceiver cpuUsageReceiver;
+    private CpuUsage cpuUsage;
 
     @Override
     protected String getTitle() {
@@ -28,7 +28,7 @@ public class CpuFragment extends ListFragment {
 
     @Override
     public void onDestroyView() {
-        cpuUsageReceiver.unregisterReceiver();
+        cpuUsage.stop();
         super.onDestroyView();
     }
 
@@ -42,7 +42,7 @@ public class CpuFragment extends ListFragment {
     protected void onViewCreated() {
         super.onViewCreated();
 
-        cpuUsageReceiver = new CpuUsageReceiver();
+        cpuUsage = new CpuUsage();
 
         addFrequency();
 
@@ -53,32 +53,32 @@ public class CpuFragment extends ListFragment {
         addCpuInfo();
 
         // updating adapter
-        cpuUsageReceiver.addCpuUpdateListener(new CpuUpdateListener() {
+        cpuUsage.addObserver(new UpdateTimer.UpdateListener<Cpu>() {
             @Override
             protected void update(Cpu cpu) {
                 notifyDataSetChanged();
             }
-        }).registerReceiver();
+        }).start();
     }
 
     private void addCpuInfo() {
         final ListItem item = new ListItem().setLabel("CPU Details").setDescription("Output /proc/cpuinfo.");
 
-        for (Map.Entry<String, String> entry : CpuUsageReceiver.getCpuInfo().entrySet())
+        for (Map.Entry<String, String> entry : CpuUsage.getCpuInfo().entrySet())
             item.addChild(new ListItem().setLabel(entry.getKey()).setValue(entry.getValue()));
 
         addSubListItem(item);
     }
 
     private void addFrequency() {
-        final ListItem item = new ListItem().setLabel("Frequency").setDescription("Output cpuinfo_max_freq, cpuinfo_min_freq and scaling_cur_freq from /sys/devices/system/cpuUsageReceiver/cpu0/cpufreq/.");
-        cpuUsageReceiver.addCpuUpdateListener(new CpuUpdateListener() {
+        final ListItem item = new ListItem().setLabel("Frequency").setDescription("Output cpuinfo_max_freq, cpuinfo_min_freq and scaling_cur_freq from /sys/devices/system/cpuUsage/cpu0/cpufreq/.");
+        cpuUsage.addObserver(new UpdateTimer.UpdateListener<Cpu>() {
             @Override
             protected void update(Cpu cpu) {
                 item.clear()
-                        .addChild(new ListItem().setLabel("Max").setValue(formatFrequency(CpuUsageReceiver.getMaxCpuFreq())))
-                        .addChild(new ListItem().setLabel("Min").setValue(formatFrequency(CpuUsageReceiver.getMinCpuFreq())))
-                        .addChild(new ListItem().setLabel("Current").setValue(formatFrequency(CpuUsageReceiver.getCurrentCpuFreq())));
+                        .addChild(new ListItem().setLabel("Max").setValue(formatFrequency(CpuUsage.getMaxCpuFreq())))
+                        .addChild(new ListItem().setLabel("Min").setValue(formatFrequency(CpuUsage.getMinCpuFreq())))
+                        .addChild(new ListItem().setLabel("Current").setValue(formatFrequency(CpuUsage.getCurrentCpuFreq())));
             }
         });
         addSubListItem(item);
@@ -90,7 +90,7 @@ public class CpuFragment extends ListFragment {
         addSubListItem(item);
 
         // register for cpu update events
-        cpuUsageReceiver.addCpuUpdateListener(new CpuUpdateListener() {
+        cpuUsage.addObserver(new UpdateTimer.UpdateListener<Cpu>() {
             @Override
             protected void update(Cpu cpu) {
 
@@ -110,12 +110,12 @@ public class CpuFragment extends ListFragment {
     }
 
     private void addMisc() {
-        // create new cpu utiliyation card
+        // create new cpu utilization card
         final ListItem item = new ListItem().setLabel("Misc").setDescription("Output from /proc/stat.");
         addSubListItem(item);
 
         // register for cpu update events
-        cpuUsageReceiver.addCpuUpdateListener(new CpuUpdateListener() {
+        cpuUsage.addObserver(new UpdateTimer.UpdateListener<Cpu>() {
             @Override
             protected void update(Cpu cpu) {
 

@@ -1,69 +1,23 @@
 package net.kibotu.android.deviceinfo.library.cpu;
 
-import android.app.Activity;
-import net.kibotu.android.deviceinfo.library.Device;
+import net.kibotu.android.deviceinfo.library.misc.Proc;
+import net.kibotu.android.deviceinfo.library.misc.UpdateTimer;
 
-import java.util.*;
-import java.util.concurrent.TimeUnit;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
 import static net.kibotu.android.deviceinfo.library.misc.ShellExtensions.readLineFrom;
 import static net.kibotu.android.deviceinfo.library.misc.ShellExtensions.readRandomAcccessFileFrom;
 
-public class CpuUsageReceiver {
+public class CpuUsage extends UpdateTimer<Cpu> {
 
-    private static final String TAG = CpuUsageReceiver.class.getSimpleName();
     private Cpu previousCpu;
 
-    private final CpuObservable cpuObservable;
-    private Timer timer;
-    private long updateInterval;
-
-    public CpuUsageReceiver() {
-        cpuObservable = new CpuObservable();
-        updateInterval = TimeUnit.SECONDS.toMillis(1);
-    }
-
-    public CpuUsageReceiver addCpuUpdateListener(CpuUpdateListener listener) {
-        cpuObservable.addObserver(listener);
-        return this;
-    }
-
-    public CpuUsageReceiver deleteObserver(CpuUpdateListener listener) {
-        cpuObservable.deleteObserver(listener);
-        return this;
-    }
-
-    public CpuUsageReceiver registerReceiver() {
-        if (timer != null)
-            return this;
-
-        timer = new Timer();
-
-        // scheduling cpu usage updates
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-
-                // doing ui updates on main thread
-                ((Activity) Device.getContext()).runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        cpuObservable.notifyObservers(getCpuUsage());
-                    }
-                });
-            }
-        }, 0, updateInterval);
-
-        return this;
-    }
-
-    public CpuUsageReceiver unregisterReceiver() {
-        if (timer != null) {
-            timer.cancel();
-            timer = null;
-        }
-        return this;
+    @Override
+    protected Cpu getData() {
+        return getCpuUsage();
     }
 
     /**
@@ -71,11 +25,11 @@ public class CpuUsageReceiver {
      */
     public Cpu getCpuUsage() {
         if (previousCpu == null) {
-            previousCpu = ProcStat.load();
+            previousCpu = Proc.getCpu();
             return previousCpu;
         }
 
-        final Cpu cpu = ProcStat.load();
+        final Cpu cpu = Proc.getCpu();
 
         // the amount of cores can be different since don't receive infos about idling cores
         final int usedCores = Math.min(cpu.cores.size(), previousCpu.cores.size());
@@ -122,11 +76,6 @@ public class CpuUsageReceiver {
 
     // endregion
 
-    public CpuUsageReceiver setUpdateInterval(long timeInMillis) {
-        updateInterval = timeInMillis;
-        return this;
-    }
-
     public static Map<String, String> getCpuInfo() {
         HashMap<String, String> map = new HashMap<>();
 
@@ -137,7 +86,7 @@ public class CpuUsageReceiver {
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
             String[] split = line.split(":");
-            if(split.length > 1)
+            if (split.length > 1)
                 map.put(split[0].trim(), split[1].trim());
             else
                 map.put(line, "");

@@ -8,34 +8,45 @@ import java.util.ArrayList;
  */
 public class Cpu {
 
-    Core allCores;
+    /**
+     * Measures the number of jiffies (1/100 of a second for x86 systems) that the system has been in user mode,
+     * user mode with low priority (nice), system mode, idle task, I/O wait, IRQ (hardirq), and softirq respectively.
+     * The IRQ (hardirq) is the direct response to a hardware event. The IRQ takes minimal work for queuing the "heavy" work up for the softirq to execute.
+     * The softirq runs at a lower priority than the IRQ and therefore may be interrupted more frequently.
+     * The total for all CPUs is given at the top, while each individual CPU is listed below with its own statistics.
+     * The following example is a 4-way Intel Pentium Xeon configuration with multi-threading enabled,
+     * therefore showing four physical processors and four virtual processors totaling eight processors.
+     */
+    public Core allCores;
 
-    ArrayList<Core> cores;
+    private static int amountCoresCache = -1;
+
+    public ArrayList<Core> cores;
 
     /**
      * context switches across all CPUs.
      */
-    int ctxt;
+    public int ctxt;
 
     /**
      * time at which the system booted in epoch unix time in seconds
      */
-    int btime;
+    public int btime;
 
     /**
      * number of processes and threads created
      */
-    int processes;
+    public int processes;
 
     /**
      * number of processes currently running on CPUs
      */
-    int procs_running;
+    public int procs_running;
 
     /**
      * processes currently blocked
      */
-    int procs_blocked;
+    public int procs_blocked;
 
     public Cpu() {
         cores = new ArrayList<>();
@@ -73,7 +84,29 @@ public class Cpu {
         this.allCores = allCores;
     }
 
-    private static int amountCoresCache = -1;
+    public void setCores(ArrayList<Core> cores) {
+        this.cores = cores;
+    }
+
+    public void setCtxt(int ctxt) {
+        this.ctxt = ctxt;
+    }
+
+    public void setBtime(int btime) {
+        this.btime = btime;
+    }
+
+    public void setProcesses(int processes) {
+        this.processes = processes;
+    }
+
+    public void setProcs_running(int procs_running) {
+        this.procs_running = procs_running;
+    }
+
+    public void setProcs_blocked(int procs_blocked) {
+        this.procs_blocked = procs_blocked;
+    }
 
     /**
      * Gets the number of cores available in this device, across all processors.

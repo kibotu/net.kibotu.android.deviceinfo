@@ -1,10 +1,15 @@
 package net.kibotu.android.deviceinfo.ui.memory;
 
+import android.support.v7.widget.RecyclerView;
 import net.kibotu.android.deviceinfo.R;
+import net.kibotu.android.deviceinfo.library.memory.Ram;
+import net.kibotu.android.deviceinfo.library.memory.RamUsage;
+import net.kibotu.android.deviceinfo.library.misc.UpdateTimer;
 import net.kibotu.android.deviceinfo.library.storage.StorageSpace;
 import net.kibotu.android.deviceinfo.model.ListItem;
 import net.kibotu.android.deviceinfo.ui.list.ListFragment;
 
+import static net.kibotu.android.deviceinfo.ui.ViewHelper.BYTES_TO_KB;
 import static net.kibotu.android.deviceinfo.ui.ViewHelper.formatBytes;
 
 /**
@@ -12,30 +17,37 @@ import static net.kibotu.android.deviceinfo.ui.ViewHelper.formatBytes;
  */
 public class MemoryFragment extends ListFragment {
 
+    private RamUsage ramUsage;
+
     @Override
     protected String getTitle() {
         return getContext().getString(R.string.menu_item_memory);
     }
 
     @Override
+    public void onDestroyView() {
+        ramUsage.stop();
+        super.onDestroyView();
+    }
+
+    @Override
+    protected RecyclerView.Adapter injectAdapterAnimation(RecyclerView.Adapter adapter) {
+        // overriding default behaviour, so we don't inject an animation adapter
+        return adapter;
+    }
+
+    @Override
     protected void onViewCreated() {
         super.onViewCreated();
 
+        ramUsage = new RamUsage();
+
+        addRam();
+
         addAllStorageSpace();
 
-        // https://www.centos.org/docs/5/html/5.1/Deployment_Guide/s2-proc-meminfo.html
-//
-//        final LinearLayout l = (LinearLayout) LayoutInflater.from(context()).inflate(R.layout.ram, null);
-//
-//        Memory.threads.add(cachedList.addItem("RAM", "Output /proc/meminfo.", 1f, true, new DeviceInfoItemAsync(5) {
-//
-//            @Override
-//            protected void async() {
-//                customView = l;
-//                setMap(parseRam(DeviceOld.getContentRandomAccessFile("/proc/meminfo")));
-////                    setMap(parseRamSmall(Device.getContentRandomAccessFile("/proc/meminfo")));
-//            }
-//        }));
+        addSwap();
+
 //
 //        cachedList.addItem("External StorageSpace State", "Returns the current state of the primary \"external\" storage device.", firstLetterToUpperCase(Environment.getExternalStorageState()), 6);
 //
@@ -159,7 +171,16 @@ public class MemoryFragment extends ListFragment {
 //                value = DeviceOld.getFileSize(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_RINGTONES));
 //            }
 //        });
+
+        // updating adapter
+        ramUsage.addObserver(new UpdateTimer.UpdateListener<Ram>() {
+            @Override
+            protected void update(Ram cpu) {
+                notifyDataSetChanged();
+            }
+        }).start();
     }
+
     //
     private void addAllStorageSpace() {
         addStorageSpace(StorageSpace.EXTERNAL, "External StorageSpace", "Environment.getExternalStorageDirectory() Every Android-compatible device supports a shared \"external storage\" that you can use to save files. This can be a removable storage media (such as an SD card) or an internal (non-removable) storage. Files saved to the external storage are world-readable and can be modified by the user when they enable USB mass storage to transfer files on a computer.");
@@ -178,6 +199,43 @@ public class MemoryFragment extends ListFragment {
             item.addChild(new ListItem().setLabel("Busy").setValue(formatBytes(storageSpace.getFree() - storageSpace.getAvailable())));
 
         addSubListItem(item);
+    }
+
+    private void addRam() {
+
+        final ListItem item = new ListItem().setLabel("Ram").setDescription("Output from /proc/meminfo.");
+        addSubListItem(item);
+
+        ramUsage.addObserver(new UpdateTimer.UpdateListener<Ram>() {
+
+            @Override
+            protected void update(Ram ram) {
+                item.clear()
+                        .addChild(new ListItem().setLabel("Path").setValue("/proc/meminfo"))
+                        .addChild(new ListItem().setLabel("Available").setValue(formatBytes((ram.getAvailableInBytes()))))
+                        .addChild(new ListItem().setLabel("Free").setValue(formatBytes(ram.getFreeInBytes())))
+                        .addChild(new ListItem().setLabel("Total").setValue(formatBytes(ram.getTotalInBytes())))
+                        .addChild(new ListItem().setLabel("Used").setValue(formatBytes(ram.getUsedInBytes())));
+            }
+        });
+    }
+
+    private void addSwap() {
+
+        final ListItem item = new ListItem().setLabel("Swap").setDescription("Output from /proc/meminfo.");
+        addSubListItem(item);
+
+        ramUsage.addObserver(new UpdateTimer.UpdateListener<Ram>() {
+
+            @Override
+            protected void update(Ram ram) {
+                item.clear()
+                        .addChild(new ListItem().setLabel("Path").setValue("/proc/meminfo"))
+                        .addChild(new ListItem().setLabel("Free").setValue(formatBytes(ram.SwapFree * BYTES_TO_KB)))
+                        .addChild(new ListItem().setLabel("Total").setValue(formatBytes(ram.SwapTotal * BYTES_TO_KB)))
+                        .addChild(new ListItem().setLabel("Used").setValue(formatBytes((ram.getUsedSwapInBytes()))));
+            }
+        });
     }
 
     @Override
