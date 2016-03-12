@@ -41,29 +41,16 @@ public class Display {
         return metrics;
     }
 
-//    @Deprecated
-//    public static String getUsableResolution() {
-//        return String.format("%dx%d", Math.max(Display.mScreenWidth, Display.mScreenHeight), Math.min(Display.mScreenWidth, Display.mScreenHeight));
-//    }
-//
-//    @Deprecated
-//    public static String getUsableResolutionDp() {
-//        return String.format("%.0fx%.0f", Math.max(Display.mScreenWidth, Display.mScreenHeight) / Display.mDensity, Math.min(Display.mScreenWidth, Display.mScreenHeight) / Display.mDensity);
-//    }
-//
-//    @Deprecated
-//    public static String getResolution() {
-//        return String.format("%dx%d", Math.max(Display.absScreenWidth, Display.absScreenHeight), Math.min(Display.absScreenWidth, Display.absScreenHeight));
-//    }
-//
-//    @Deprecated
-//    public static String getResolutionDp() {
-//        return String.format("%.0fx%.0f", Math.max(Display.absScreenWidth, Display.absScreenHeight) / Display.mDensity, Math.min(Display.absScreenWidth, Display.absScreenHeight) / Display.mDensity);
-//    }
-
-    public static double getScreenDiagonalPixel() {
+    public static double getScreenDiagonalAsPixel() {
         final Dimension screen = getScreenDimensions();
         return sqrt(screen.width * screen.width + screen.height * screen.height);
+    }
+
+    public static double getScreenDiagonalAsInch() {
+        final Dimension screen = getScreenDimensions();
+        final DisplayMetrics displayMetrics = getDisplayMetrics();
+        return sqrt(screen.width / displayMetrics.xdpi * screen.width / displayMetrics.xdpi
+                + screen.height / displayMetrics.ydpi * screen.height / displayMetrics.ydpi);
     }
 
     public static boolean hasSoftKeys() {

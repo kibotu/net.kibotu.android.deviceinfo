@@ -1,5 +1,6 @@
 package net.kibotu.android.deviceinfo.ui;
 
+import android.annotation.TargetApi;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -7,15 +8,18 @@ import android.graphics.ImageFormat;
 import android.graphics.PixelFormat;
 import android.hardware.Sensor;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
+import android.util.SparseArray;
+import android.view.Display;
 import android.view.Surface;
 import net.kibotu.android.deviceinfo.library.misc.ReflectionHelper;
-import net.kibotu.android.deviceinfo.library.version.Version;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.lang.reflect.Field;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.*;
@@ -24,6 +28,9 @@ import java.util.regex.Pattern;
 
 import static android.hardware.Sensor.*;
 import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR1;
+import static android.os.Build.VERSION_CODES.M;
+import static java.text.MessageFormat.format;
+import static net.kibotu.android.deviceinfo.library.version.Version.isAtLeastVersion;
 
 /**
  * Created by Nyaruhodo on 22.02.2016.
@@ -91,7 +98,7 @@ final public class ViewHelper {
 
     public static String getSensorName(final Sensor sensor) {
 
-        if (Version.isAtLeastVersion(Build.VERSION_CODES.KITKAT_WATCH))
+        if (isAtLeastVersion(Build.VERSION_CODES.KITKAT_WATCH))
             return sensor.getStringType();
 
         String name;
@@ -373,6 +380,41 @@ final public class ViewHelper {
         }
     }
 
+    public static String collectFlags(@NonNull Display display) {
+        SparseArray<String> mFlagsNames = new SparseArray<>();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            int flags = display.getFlags();
+            for (Field field : display.getClass().getFields()) {
+                if (field.getName().startsWith("FLAG_")) {
+                    try {
+                        mFlagsNames.put(field.getInt(null), field.getName());
+                    } catch (IllegalAccessException ignored) {
+                    }
+                }
+            }
+            return display.getDisplayId() + ".flags=" + activeFlags(mFlagsNames, flags) + '\n';
+        }
+        return "";
+    }
+
+    private static String activeFlags(@NonNull SparseArray<String> valueNames, int bitfield) {
+        final StringBuilder result = new StringBuilder();
+
+        // Look for masks, apply it an retrieve the masked value
+        for (int i = 0; i < valueNames.size(); i++) {
+            final int maskValue = valueNames.keyAt(i);
+            final int value = bitfield & maskValue;
+            if (value > 0) {
+                if (result.length() > 0) {
+                    result.append('+');
+                }
+                result.append(valueNames.get(value));
+            }
+        }
+        return result.toString();
+    }
+
+
     public static String formatScreenLayout(final int screenLayout) {
 
         String result;
@@ -412,7 +454,7 @@ final public class ViewHelper {
                 result = "SIZE_UNDEFINED";
         }
 
-        if (!Version.isAtLeastVersion(JELLY_BEAN_MR1)) {
+        if (!isAtLeastVersion(JELLY_BEAN_MR1)) {
             result += "\n(LAYOUTDIR_MASK Added in Api 17)";
         } else {
             result += "\n";
@@ -477,10 +519,10 @@ final public class ViewHelper {
         return result;
     }
 
-    public static String formatOrientation(final int orientation) {
+    public static String formatOrientation(Configuration cfg) {
         String result;
 
-        switch (orientation) {
+        switch (cfg.orientation) {
             case Configuration.ORIENTATION_PORTRAIT:
                 result = "Portrait";
                 break;
@@ -493,6 +535,28 @@ final public class ViewHelper {
             case Configuration.ORIENTATION_UNDEFINED:
             default:
                 result = "Undefined";
+        }
+
+        return result;
+    }
+
+
+    public static String formatOrientation(Display cfg) {
+        String result;
+
+        switch (cfg.getRotation()) {
+            case Surface.ROTATION_90:
+                result = "90";
+                break;
+            case Surface.ROTATION_180:
+                result = "180";
+                break;
+            case Surface.ROTATION_270:
+                result = "270";
+                break;
+            case Surface.ROTATION_0:
+            default:
+                result = "0";
         }
 
         return result;
@@ -640,4 +704,15 @@ final public class ViewHelper {
         return DateUtils.getRelativeTimeSpanString(c.getTimeInMillis(), Calendar.getInstance().getTimeInMillis(), DateUtils.MINUTE_IN_MILLIS);
     }
 
+    @TargetApi(M)
+    public static String formatSupportedModes(@NonNull final Display.Mode[] supportedModes) {
+        if (!isAtLeastVersion(M))
+            return "";
+
+        String refreshRates = "";
+        for (final Display.Mode mode : supportedModes) {
+            refreshRates += format("[{0}x{1}] {2}", mode.getPhysicalWidth(), mode.getPhysicalWidth(), mode.getRefreshRate());
+        }
+        return refreshRates;
+    }
 }

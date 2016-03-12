@@ -9,6 +9,8 @@ import net.kibotu.android.deviceinfo.ui.list.ListFragment;
 
 import static android.os.Build.VERSION_CODES.*;
 import static com.common.android.utils.extensions.ResourceExtensions.configuration;
+import static net.kibotu.android.deviceinfo.library.display.Display.hasSoftKeys;
+import static net.kibotu.android.deviceinfo.library.display.Display.isTablet;
 import static net.kibotu.android.deviceinfo.library.version.Version.isAtLeastVersion;
 import static net.kibotu.android.deviceinfo.ui.ViewHelper.*;
 
@@ -38,8 +40,10 @@ public class ConfigurationFragment extends ListFragment {
         final Configuration cfg = configuration();
 
         if (isAtLeastVersion(JELLY_BEAN_MR1))
-            addHorizontallyCard("densityDpi", formatOrientation(cfg.densityDpi), "The target screen density being rendered to, corresponding to density resource qualifier.");
+            addHorizontallyCard("densityDpi", formatOrientation(cfg), "The target screen density being rendered to, corresponding to density resource qualifier.");
 
+        addHorizontallyCard("Is Tablet", formatBool(isTablet()), "");
+        addHorizontallyCard("Has Softkeys", formatBool(hasSoftKeys()), "");
         addHorizontallyCard("Font Scale", cfg.fontScale, "Current user preference for the scaling factor for fonts, relative to the base density scaling.");
         addHorizontallyCard("Hard Keyboard Hidden", formatKeyBoardHidden(cfg.hardKeyboardHidden), "A flag indicating whether the hard keyboard has been hidden. This will be set on a device with a mechanism to hide the keyboard from the user, when that mechanism is closed. One of: HARDKEYBOARDHIDDEN_NO, HARDKEYBOARDHIDDEN_YES.");
         addHorizontallyCard("Keyboard", formatKeyboard(cfg.keyboard), "The kind of keyboard attached to the device. One of: KEYBOARD_NOKEYS, KEYBOARD_QWERTY, KEYBOARD_12KEY.");
@@ -49,10 +53,10 @@ public class ConfigurationFragment extends ListFragment {
         addHorizontallyCard("IMSI MNC", cfg.mnc, "IMSI MNC (Mobile Network Code), corresponding to mnc resource qualifier.");
         addHorizontallyCard("Navigation", formatNavigation(cfg.navigation), "The kind of navigation method available on the device. One of: NAVIGATION_NONAV, NAVIGATION_DPAD, NAVIGATION_TRACKBALL, NAVIGATION_WHEEL.");
         addHorizontallyCard("Navigation Hidden", formatNavigationHidden(cfg.navigationHidden), "A flag indicating whether any 5-way or DPAD navigation available.");
-        addHorizontallyCard("Orientation", formatOrientation(cfg.orientation), "Overall orientation of the screen.");
+        addHorizontallyCard("Orientation", formatOrientation(cfg), "Overall orientation of the screen.");
 
         if (isAtLeastVersion(HONEYCOMB_MR2))
-            addHorizontallyCard("ScreenHeightDp", formatOrientation(cfg.screenHeightDp), "The current height of the available screen space, in dp units, corresponding to screen height resource qualifier.");
+            addHorizontallyCard("ScreenHeightDp", formatOrientation(cfg), "The current height of the available screen space, in dp units, corresponding to screen height resource qualifier.");
 
         addHorizontallyCard("Screen Layout", formatScreenLayout(cfg.screenLayout), "Bit mask of overall layout of the screen. Currently there are two fields:\n" +
                 "The SCREENLAYOUT_SIZE_MASK bits define the overall size of the screen. They may be one of SCREENLAYOUT_SIZE_SMALL, SCREENLAYOUT_SIZE_NORMAL, SCREENLAYOUT_SIZE_LARGE, or SCREENLAYOUT_SIZE_XLARGE.\n" +
@@ -61,10 +65,10 @@ public class ConfigurationFragment extends ListFragment {
                 "See Supporting Multiple Screens for more information.");
 
         if (isAtLeastVersion(HONEYCOMB_MR2))
-            addHorizontallyCard("screenWidthDp", formatOrientation(cfg.screenWidthDp), "The current width of the available screen space, in dp units, corresponding to screen width resource qualifier.");
+            addHorizontallyCard("screenWidthDp", formatOrientation(cfg), "The current width of the available screen space, in dp units, corresponding to screen width resource qualifier.");
 
         if (isAtLeastVersion(HONEYCOMB_MR2))
-            addHorizontallyCard("smallestScreenWidthDp", formatOrientation(cfg.smallestScreenWidthDp), "The smallest screen size an application will see in normal operation, corresponding to smallest screen width resource qualifier.");
+            addHorizontallyCard("smallestScreenWidthDp", formatOrientation(cfg), "The smallest screen size an application will see in normal operation, corresponding to smallest screen width resource qualifier.");
 
         addHorizontallyCard("Touchscreen", formatTouchscreen(cfg.touchscreen), "The kind of touch screen attached to the device. One of: TOUCHSCREEN_NOTOUCH, TOUCHSCREEN_FINGER.");
         addHorizontallyCard("UIMode", formatUIMode(cfg.uiMode), "Bit mask of the ui mode. Currently there are two fields:\n" +
