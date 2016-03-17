@@ -65,7 +65,7 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-     compile project(':lib')
+    compile project(':lib')
 
     // frequently used convenient methods
     compile('com.github.kibotu:common.android.utils:0.4.1') {
@@ -101,8 +101,6 @@ dependencies {
     // fancy time calculations
     compile 'joda-time:joda-time:2.9.2'
 
-    // recyclerview fast scrolling
-    compile 'com.github.kibotu:RecyclerView-FastScroll:1.0.8'
 }
 
 def commitCount() {
