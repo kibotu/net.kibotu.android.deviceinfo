@@ -25,7 +25,10 @@ Add it in your root build.gradle at the end of repositories:
 Step 2. Add the dependency
 
 	dependencies {
-	        compile 'com.github.kibotu:net.kibotu.android.deviceinfo:-SNAPSHOT'
+	        compile 'com.github.kibotu:net.kibotu.android.deviceinfo:-SNAPSHOT'{
+        		exclude group: 'com.android.support' // regarding appcompat
+        		exclude module: 'app' // only add lib to your project
+    		} 
 	}
 
 ### How to build the lib:
