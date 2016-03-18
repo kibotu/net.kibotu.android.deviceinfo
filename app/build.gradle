@@ -103,6 +103,8 @@ dependencies {
     // fancy time calculations
     compile 'joda-time:joda-time:2.9.2'
 
+    // recyclerview fast scrolling
+    compile 'com.github.kibotu:RecyclerView-FastScroll:1.0.8'
 }
 
 def commitCount() {
