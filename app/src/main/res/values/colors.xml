@@ -19,4 +19,7 @@
     <color name="fastScrollTrackColor">#303030</color>
     <color name="fastScrollPopupTextColor">@color/light_gray</color>
     <color name="fastScrollThumbColor">@color/light_gray</color>
+    <color name="green">#00FF00</color>
+    <color name="blue">#0000FF</color>
+    <color name="red">#FF0000</color>
 </resources>

@@ -27,6 +27,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static android.hardware.Sensor.*;
+import static android.hardware.SensorManager.*;
 import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR1;
 import static android.os.Build.VERSION_CODES.M;
 import static java.text.MessageFormat.format;
@@ -714,5 +715,19 @@ final public class ViewHelper {
             refreshRates += format("[{0}x{1}] {2}", mode.getPhysicalWidth(), mode.getPhysicalWidth(), mode.getRefreshRate());
         }
         return refreshRates;
+    }
+
+    public static String getAccuracyName(final int accuracy) {
+        switch (accuracy) {
+            case SENSOR_DELAY_FASTEST:
+                return "SENSOR_DELAY_FASTEST";
+            case SENSOR_DELAY_GAME:
+                return "SENSOR_DELAY_GAME";
+            case SENSOR_DELAY_UI:
+                return "SENSOR_DELAY_UI";
+            case SENSOR_DELAY_NORMAL:
+            default:
+                return "SENSOR_DELAY_NORMAL";
+        }
     }
 }

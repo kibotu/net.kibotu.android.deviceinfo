@@ -27,7 +27,7 @@ public abstract class ListFragment extends BaseFragment {
     @NonNull
     @Bind(R.id.list)
     RecyclerView list;
-    private DataBindAdapter<ListItem> adapter;
+    protected DataBindAdapter<ListItem> adapter;
 
     @Override
     public int getLayout() {
@@ -53,7 +53,7 @@ public abstract class ListFragment extends BaseFragment {
         return animationAdapter;
     }
 
-    protected void setListItemAnimator() {
+    private void setListItemAnimator() {
         OverScrollDecoratorHelper.setUpOverScroll(list, OverScrollDecoratorHelper.ORIENTATION_VERTICAL);
         list.setItemAnimator(new LandingAnimator(new OvershootInterpolator(1f)));
         list.getItemAnimator().setAddDuration(125);

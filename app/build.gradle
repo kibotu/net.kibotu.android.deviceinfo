@@ -69,12 +69,11 @@ dependencies {
 
     // frequently used convenient methods
     compile('com.github.kibotu:common.android.utils:0.4.1') {
-        exclude group: 'com.mcxiaoke.volley'
         exclude module: 'net.kibotu.android.deviceinfo'
     }
 
     compile 'com.android.support:multidex:1.0.1'
-    compile 'com.android.support:cardview-v7:24.0.0-alpha1'
+    compile 'com.android.support:cardview-v7:23.2.0'
 
     // recyclerview animations
     compile 'jp.wasabeef:recyclerview-animators:2.2.0'
@@ -89,6 +88,9 @@ dependencies {
     compile('de.keyboardsurfer.android.widget:crouton:1.8.5@aar') {
         exclude group: 'com.google.android', module: 'support-v4'
     }
+
+    // chart
+    compile 'com.github.jjoe64:GraphView:v4.0.1'
 
     // fabric
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
