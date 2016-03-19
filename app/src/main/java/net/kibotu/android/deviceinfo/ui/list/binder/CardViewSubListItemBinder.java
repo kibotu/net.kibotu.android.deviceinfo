@@ -42,7 +42,7 @@ public class CardViewSubListItemBinder extends DataBinder<ListItem, CardViewSubL
 
 
     @Override
-    public void bindViewHolder(@NonNull final ViewHolder viewHolder, int position) {
+    public void bindViewHolder(@NonNull final ViewHolder viewHolder, final int position) {
         final ListItem item = get(position);
 
         viewHolder.label.setText(item.getLabel());
@@ -59,6 +59,9 @@ public class CardViewSubListItemBinder extends DataBinder<ListItem, CardViewSubL
             @Override
             public void onClick(View v) {
                 Logger.toast(item.getDescription());
+
+                if(dataBindAdapter.getOnItemClickListener() != null)
+                    dataBindAdapter.getOnItemClickListener().onItemClick(item, viewHolder.itemView, position);
             }
         });
     }

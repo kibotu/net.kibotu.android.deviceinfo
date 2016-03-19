@@ -51,6 +51,7 @@ public class AccelerationSensorFragment extends BaseFragment {
     private LineGraphSeries<DataPoint> xSeries;
     private LineGraphSeries<DataPoint> ySeries;
     private LineGraphSeries<DataPoint> zSeries;
+    double graph2LastXValue;
 
     @Override
     public int getLayout() {
@@ -110,7 +111,6 @@ public class AccelerationSensorFragment extends BaseFragment {
         return values;
     }
 
-    double graph2LastXValue;
 
     private SensorEventListener createSensorEventListener() {
         return new SensorEventListener() {
@@ -132,7 +132,7 @@ public class AccelerationSensorFragment extends BaseFragment {
     private float[] gravity = new float[3];
     private float[] linear_acceleration = new float[3];
 
-    public void set(final float x, final float y, final float z) {
+    private void set(final float x, final float y, final float z) {
 
         // In this example, alpha is calculated as t / (t + dT),
         // where t is the low-pass filter's time-constant and
@@ -150,10 +150,6 @@ public class AccelerationSensorFragment extends BaseFragment {
         linear_acceleration[1] = y - gravity[1];
         linear_acceleration[2] = z - gravity[2];
 
-//        xLabel.setText(String.valueOf(x));
-//        yLabel.setText(String.valueOf(y));
-//        zLabel.setText(String.valueOf(z));
-
         xLabel.setText(String.valueOf(linear_acceleration[0]));
         yLabel.setText(String.valueOf(linear_acceleration[1]));
         zLabel.setText(String.valueOf(linear_acceleration[2]));
@@ -162,7 +158,6 @@ public class AccelerationSensorFragment extends BaseFragment {
         xSeries.appendData(new DataPoint(graph2LastXValue, linear_acceleration[0]), true, 40);
         ySeries.appendData(new DataPoint(graph2LastXValue, linear_acceleration[1]), true, 40);
         zSeries.appendData(new DataPoint(graph2LastXValue, linear_acceleration[2]), true, 40);
-
     }
 
     @Override

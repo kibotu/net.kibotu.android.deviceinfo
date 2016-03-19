@@ -70,10 +70,14 @@ dependencies {
     // frequently used convenient methods
     compile('com.github.kibotu:common.android.utils:0.4.1') {
         exclude module: 'net.kibotu.android.deviceinfo'
+        exclude group: 'com.android.support'
     }
 
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:cardview-v7:23.2.0'
+    compile 'com.android.support:design:23.2.0'
+    compile 'com.android.support:recyclerview-v7:23.2.0'
+
 
     // recyclerview animations
     compile 'jp.wasabeef:recyclerview-animators:2.2.0'
