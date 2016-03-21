@@ -8,20 +8,18 @@ import android.support.annotation.NonNull;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.Bind;
-import com.common.android.utils.extensions.ResourceExtensions;
 import com.common.android.utils.logging.Logger;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
-import com.jjoe64.graphview.series.Series;
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.ui.BaseFragment;
 
 import java.util.Random;
 
-import static android.hardware.SensorManager.SENSOR_DELAY_FASTEST;
 import static android.hardware.SensorManager.SENSOR_DELAY_UI;
 import static com.common.android.utils.extensions.ResourceExtensions.color;
+import static java.lang.Math.*;
 import static net.kibotu.android.deviceinfo.R.layout.sensor;
 import static net.kibotu.android.deviceinfo.library.services.SystemService.getSensorManager;
 import static net.kibotu.android.deviceinfo.ui.ViewHelper.getAccuracyName;
@@ -90,7 +88,8 @@ public class AccelerationSensorFragment extends BaseFragment {
     private void registerSensor() {
         sensorManager = getSensorManager();
         // SENSOR_DELAY_NORMAL, SENSOR_DELAY_UI, SENSOR_DELAY_GAME, or SENSOR_DELAY_FASTEST
-        sensorManager.registerListener(sensorEventListener, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SENSOR_DELAY_UI);
+//        sensorManager.registerListener(sensorEventListener, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SENSOR_DELAY_UI);
+        sensorManager.registerListener(sensorEventListener, sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE), SENSOR_DELAY_UI);
     }
 
     private void unregisterSensor() {
@@ -104,7 +103,7 @@ public class AccelerationSensorFragment extends BaseFragment {
         for (int i = 0; i < count; i++) {
             double x = i;
             double f = rand.nextDouble() * 0.15 + 0.3;
-            double y = Math.sin(i * f + 2) + rand.nextDouble() * 0.3;
+            double y = sin(i * f + 2) + rand.nextDouble() * 0.3;
             DataPoint v = new DataPoint(x, y);
             values[i] = v;
         }
@@ -119,6 +118,7 @@ public class AccelerationSensorFragment extends BaseFragment {
 //                Logger.v(tag(), format("[{0} | {1} | {2} | {3}]", event.timestamp, event.sensor, event.accuracy, event.values));
 
                 set(event.values[0], event.values[1], event.values[2]);
+                set2(event);
             }
 
             @Override
@@ -160,6 +160,53 @@ public class AccelerationSensorFragment extends BaseFragment {
         zSeries.appendData(new DataPoint(graph2LastXValue, linear_acceleration[2]), true, 40);
     }
 
+    private void set2(SensorEvent event) {
+        // This timestep's delta rotation to be multiplied by the current rotation
+        // after computing it from the gyro sample data.
+        if (timestamp != 0) {
+            final float dT = (event.timestamp - timestamp) * NS2S;
+            // Axis of the rotation sample, not normalized yet.
+            float axisX = event.values[0];
+            float axisY = event.values[1];
+            float axisZ = event.values[2];
+
+            // Calculate the angular speed of the sample
+            float omegaMagnitude = (float) sqrt(axisX * axisX + axisY * axisY + axisZ * axisZ);
+
+            // Normalize the rotation vector if it's big enough to get the axis
+            // (that is, EPSILON should represent your maximum allowable margin of error)
+            if (omegaMagnitude > EPSILON) {
+                axisX /= omegaMagnitude;
+                axisY /= omegaMagnitude;
+                axisZ /= omegaMagnitude;
+            }
+
+            // Integrate around this axis with the angular speed by the timestep
+            // in order to get a delta rotation from this sample over the timestep
+            // We will convert this axis-angle representation of the delta rotation
+            // into a quaternion before turning it into the rotation matrix.
+            float thetaOverTwo = omegaMagnitude * dT / 2.0f;
+            float sinThetaOverTwo = (float) sin(thetaOverTwo);
+            float cosThetaOverTwo = (float) cos(thetaOverTwo);
+            deltaRotationVector[0] = sinThetaOverTwo * axisX;
+            deltaRotationVector[1] = sinThetaOverTwo * axisY;
+            deltaRotationVector[2] = sinThetaOverTwo * axisZ;
+            deltaRotationVector[3] = cosThetaOverTwo;
+        }
+        timestamp = event.timestamp;
+        float[] deltaRotationMatrix = new float[9];
+        SensorManager.getRotationMatrixFromVector(deltaRotationMatrix, deltaRotationVector);
+        // User code should concatenate the delta rotation we computed with the current rotation
+        // in order to get the updated rotation.
+        // rotationCurrent = rotationCurrent * deltaRotationMatrix;
+
+
+        graph2LastXValue += 1d;
+        xSeries.appendData(new DataPoint(graph2LastXValue, deltaRotationVector[0]), true, 40);
+        ySeries.appendData(new DataPoint(graph2LastXValue, deltaRotationVector[1]), true, 40);
+        zSeries.appendData(new DataPoint(graph2LastXValue, deltaRotationVector[2]), true, 40);
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -171,4 +218,11 @@ public class AccelerationSensorFragment extends BaseFragment {
         unregisterSensor();
         super.onPause();
     }
+
+    // Create a constant to convert nanoseconds to seconds.
+    private static final float NS2S = 1.0f / 1000000000.0f;
+    private final float[] deltaRotationVector = new float[4];
+    private float timestamp;
+    public static final float EPSILON = 0.000000001f;
+
 }
