@@ -9,6 +9,7 @@
 
     <me.grantland.widget.AutofitTextView
             android:id="@+id/label"
+            android:background="@color/white"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.50"
@@ -24,6 +25,7 @@
 
     <me.grantland.widget.AutofitTextView
             android:id="@+id/value"
+            android:background="@color/white"
             android:layout_width="0dp"
             android:singleLine="true"
             android:layout_height="wrap_content"

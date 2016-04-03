@@ -5,9 +5,12 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.Bind;
+import com.common.android.utils.ContextHelper;
 import com.common.android.utils.logging.Logger;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
@@ -88,6 +91,22 @@ public class AccelerationSensorFragment extends BaseFragment {
         graphView.addSeries(xSeries);
         graphView.addSeries(ySeries);
         graphView.addSeries(zSeries);
+    }
+
+    @Override
+    public boolean lockLeftMenu() {
+        return true;
+    }
+
+    @Nullable
+    @Override
+    protected View.OnClickListener getHomeIconClickListener() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ContextHelper.getContext().onBackPressed();
+            }
+        };
     }
 
     private void registerSensor() {

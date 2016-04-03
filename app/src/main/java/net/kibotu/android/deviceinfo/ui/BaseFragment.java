@@ -79,7 +79,7 @@ public abstract class BaseFragment extends Fragment implements LogTag, LayoutPro
 
     @DrawableRes
     protected int getHomeIcon() {
-        return android.support.design.R.drawable.abc_ic_menu_share_material;
+        return R.drawable.ic_keyboard_backspace;
     }
 
     @Override
