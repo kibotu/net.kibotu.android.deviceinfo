@@ -4,29 +4,15 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.support.annotation.CallSuper;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import butterknife.Bind;
-import com.common.android.utils.ContextHelper;
 import com.common.android.utils.logging.Logger;
-import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import net.kibotu.android.deviceinfo.R;
-import net.kibotu.android.deviceinfo.ui.BaseFragment;
 
 import java.util.Random;
 
-import static android.hardware.SensorManager.SENSOR_DELAY_UI;
 import static com.common.android.utils.extensions.ResourceExtensions.color;
 import static java.lang.Math.*;
-import static net.kibotu.android.deviceinfo.R.layout.sensor;
-import static net.kibotu.android.deviceinfo.R.layout.sub_list_item;
-import static net.kibotu.android.deviceinfo.library.services.SystemService.getSensorManager;
 import static net.kibotu.android.deviceinfo.ui.ViewHelper.getAccuracyName;
 import static net.kibotu.android.deviceinfo.ui.ViewHelper.getSensorName;
 
@@ -74,18 +60,9 @@ public class AccelerationSensorFragment extends SensorValuesFragment {
         graphView.addSeries(zSeries);
     }
 
-
     @Override
-    protected void registerSensor() {
-        sensorManager = getSensorManager();
-        // SENSOR_DELAY_NORMAL, SENSOR_DELAY_UI, SENSOR_DELAY_GAME, or SENSOR_DELAY_FASTEST
-//        sensorManager.registerListener(sensorEventListener, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SENSOR_DELAY_UI);
-        sensorManager.registerListener(sensorEventListener, sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE), SENSOR_DELAY_UI);
-    }
-
-    @Override
-    protected void unregisterSensor() {
-        sensorManager.unregisterListener(sensorEventListener);
+    protected int sensorType() {
+        return Sensor.TYPE_ACCELEROMETER;
     }
 
     private DataPoint[] generateData() {
@@ -118,7 +95,6 @@ public class AccelerationSensorFragment extends SensorValuesFragment {
             }
         };
     }
-
 
     private float[] gravity = new float[3];
     private float[] linear_acceleration = new float[3];

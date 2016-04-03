@@ -1,5 +1,6 @@
 package net.kibotu.android.deviceinfo.ui.sensor;
 
+import android.hardware.Sensor;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.support.annotation.CallSuper;
@@ -13,7 +14,9 @@ import com.jjoe64.graphview.GraphView;
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.ui.BaseFragment;
 
+import static android.hardware.SensorManager.SENSOR_DELAY_UI;
 import static net.kibotu.android.deviceinfo.R.layout.sensor;
+import static net.kibotu.android.deviceinfo.library.services.SystemService.getSensorManager;
 
 /**
  * Created by Nyaruhodo on 03.04.2016.
@@ -76,9 +79,17 @@ public abstract class SensorValuesFragment extends BaseFragment {
         super.onPause();
     }
 
-    protected abstract void registerSensor();
+    protected void registerSensor() {
+        sensorManager = getSensorManager();
+        // SENSOR_DELAY_NORMAL, SENSOR_DELAY_UI, SENSOR_DELAY_GAME, or SENSOR_DELAY_FASTEST
+        sensorManager.registerListener(sensorEventListener, sensorManager.getDefaultSensor(sensorType()), SENSOR_DELAY_UI);
+    }
 
-    protected abstract void unregisterSensor();
+    protected void unregisterSensor() {
+        sensorManager.unregisterListener(sensorEventListener);
+    }
 
     protected abstract SensorEventListener createSensorEventListener();
+
+    protected  abstract int sensorType() ;
 }
