@@ -42,14 +42,23 @@ public class AccelerationSensorFragment extends BaseFragment {
     @Bind(R.id.z)
     TextView zLabel;
 
+    @NonNull
+    @Bind(R.id.graph)
+    GraphView graphView;
+
     private SensorManager sensorManager;
     private SensorEventListener sensorEventListener;
 
-    private GraphView graph;
     private LineGraphSeries<DataPoint> xSeries;
     private LineGraphSeries<DataPoint> ySeries;
     private LineGraphSeries<DataPoint> zSeries;
     double graph2LastXValue;
+
+    // Create a constant to convert nanoseconds to seconds.
+    private static final float NS2S = 1.0f / 1000000000.0f;
+    private final float[] deltaRotationVector = new float[4];
+    private float timestamp;
+    public static final float EPSILON = 0.000000001f;
 
     @Override
     public int getLayout() {
@@ -58,7 +67,7 @@ public class AccelerationSensorFragment extends BaseFragment {
 
     @Override
     protected String getTitle() {
-        return tag();
+        return "Acceleration Sensor";
     }
 
     @Override
@@ -67,22 +76,18 @@ public class AccelerationSensorFragment extends BaseFragment {
 
         // init example series data
 
-        graph = new GraphView(getContext());
-
         xSeries = new LineGraphSeries<>();
         xSeries.setColor(color(R.color.red));
         ySeries = new LineGraphSeries<>();
         ySeries.setColor(color(R.color.green));
         zSeries = new LineGraphSeries<>();
         zSeries.setColor(color(R.color.blue));
-        graph.getViewport().setXAxisBoundsManual(true);
-        graph.getViewport().setMinX(0);
-        graph.getViewport().setMaxX(40);
-        graph.addSeries(xSeries);
-        graph.addSeries(ySeries);
-        graph.addSeries(zSeries);
-
-        ((ViewGroup) rootView).addView(graph);
+        graphView.getViewport().setXAxisBoundsManual(true);
+        graphView.getViewport().setMinX(0);
+        graphView.getViewport().setMaxX(40);
+        graphView.addSeries(xSeries);
+        graphView.addSeries(ySeries);
+        graphView.addSeries(zSeries);
     }
 
     private void registerSensor() {
@@ -118,7 +123,7 @@ public class AccelerationSensorFragment extends BaseFragment {
 //                Logger.v(tag(), format("[{0} | {1} | {2} | {3}]", event.timestamp, event.sensor, event.accuracy, event.values));
 
                 set(event.values[0], event.values[1], event.values[2]);
-                set2(event);
+                //set2(event);
             }
 
             @Override
@@ -218,11 +223,4 @@ public class AccelerationSensorFragment extends BaseFragment {
         unregisterSensor();
         super.onPause();
     }
-
-    // Create a constant to convert nanoseconds to seconds.
-    private static final float NS2S = 1.0f / 1000000000.0f;
-    private final float[] deltaRotationVector = new float[4];
-    private float timestamp;
-    public static final float EPSILON = 0.000000001f;
-
 }

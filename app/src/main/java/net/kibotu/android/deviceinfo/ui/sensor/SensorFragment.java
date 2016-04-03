@@ -3,6 +3,7 @@ package net.kibotu.android.deviceinfo.ui.sensor;
 import android.hardware.Sensor;
 import android.support.annotation.NonNull;
 import android.view.View;
+import com.common.android.utils.extensions.FragmentExtensions;
 import com.common.android.utils.ui.recyclerView.OnItemClickListener;
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.library.Device;
@@ -77,7 +78,7 @@ public class SensorFragment extends ListFragment {
 
         switch (sensor.getType()) {
             case TYPE_ACCELEROMETER:
-                replaceBySlidingHorizontally(new AccelerationSensorFragment());
+                FragmentExtensions.replaceToBackStackBySlidingHorizontally(new AccelerationSensorFragment());
                 break;
             case TYPE_AMBIENT_TEMPERATURE:
             case TYPE_GAME_ROTATION_VECTOR:

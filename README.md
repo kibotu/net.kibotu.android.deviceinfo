@@ -54,11 +54,18 @@ Step 2. Add the dependency
 ##### App
 ##### Misc
 
-
-    
-    
-    
-
 ###  Contributers
 
 * [Jan Rabe](mailto:janrabe@kibotu.net)
+
+
+### Todo
+
+* documentation how to access the data, currently it can be found at the demo app
+* memory: add environment info
+* display: finish display class info
+* display: fix configuration info
+* geolocation: add fusion, also gmaps
+* option menu: re-add endpoints for github, twitter, fbook, find parse alternative server endpoint to store shared device data
+* release new build to gplay
+
