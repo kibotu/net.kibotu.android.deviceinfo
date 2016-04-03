@@ -16,6 +16,7 @@ import java.util.List;
 import static android.hardware.Sensor.*;
 import static android.os.Build.VERSION_CODES.KITKAT;
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
+import static com.common.android.utils.extensions.FragmentExtensions.replaceToBackStackBySlidingHorizontally;
 import static net.kibotu.android.deviceinfo.library.version.Version.isAtLeastVersion;
 
 /**
@@ -79,7 +80,7 @@ public class SensorFragment extends ListFragment {
 
         switch (sensor.getType()) {
             case TYPE_ACCELEROMETER:
-                FragmentExtensions.replaceToBackStackBySlidingHorizontally(new AccelerationSensorFragment());
+                replaceToBackStackBySlidingHorizontally(new AccelerationSensorFragment());
                 break;
             case TYPE_AMBIENT_TEMPERATURE:
             case TYPE_GAME_ROTATION_VECTOR:
@@ -98,6 +99,8 @@ public class SensorFragment extends ListFragment {
                 name = "android.sensor.pick_up_gesture";
             case TYPE_PRESSURE:
             case TYPE_PROXIMITY:
+                replaceToBackStackBySlidingHorizontally(new ProximitySensorFragment());
+                break;
             case TYPE_RELATIVE_HUMIDITY:
             case TYPE_ROTATION_VECTOR:
             case TYPE_SIGNIFICANT_MOTION:

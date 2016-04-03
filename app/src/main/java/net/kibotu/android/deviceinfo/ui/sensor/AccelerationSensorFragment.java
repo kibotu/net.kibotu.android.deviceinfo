@@ -4,6 +4,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -24,6 +25,7 @@ import static android.hardware.SensorManager.SENSOR_DELAY_UI;
 import static com.common.android.utils.extensions.ResourceExtensions.color;
 import static java.lang.Math.*;
 import static net.kibotu.android.deviceinfo.R.layout.sensor;
+import static net.kibotu.android.deviceinfo.R.layout.sub_list_item;
 import static net.kibotu.android.deviceinfo.library.services.SystemService.getSensorManager;
 import static net.kibotu.android.deviceinfo.ui.ViewHelper.getAccuracyName;
 import static net.kibotu.android.deviceinfo.ui.ViewHelper.getSensorName;
@@ -33,24 +35,8 @@ import static net.kibotu.android.deviceinfo.ui.ViewHelper.getSensorName;
  * <p>
  * <a href="http://developer.android.com/guide/topics/sensors/sensors_motion.html#sensors-motion-accel">Using the Accelerometer</a>
  */
-public class AccelerationSensorFragment extends BaseFragment {
+public class AccelerationSensorFragment extends SensorValuesFragment {
 
-    @NonNull
-    @Bind(R.id.x)
-    TextView xLabel;
-    @NonNull
-    @Bind(R.id.y)
-    TextView yLabel;
-    @NonNull
-    @Bind(R.id.z)
-    TextView zLabel;
-
-    @NonNull
-    @Bind(R.id.graph)
-    GraphView graphView;
-
-    private SensorManager sensorManager;
-    private SensorEventListener sensorEventListener;
 
     private LineGraphSeries<DataPoint> xSeries;
     private LineGraphSeries<DataPoint> ySeries;
@@ -64,18 +50,13 @@ public class AccelerationSensorFragment extends BaseFragment {
     public static final float EPSILON = 0.000000001f;
 
     @Override
-    public int getLayout() {
-        return sensor;
-    }
-
-    @Override
     protected String getTitle() {
         return "Acceleration Sensor";
     }
 
     @Override
     protected void onViewCreated() {
-        sensorEventListener = createSensorEventListener();
+        super.onViewCreated();
 
         // init example series data
 
@@ -93,30 +74,17 @@ public class AccelerationSensorFragment extends BaseFragment {
         graphView.addSeries(zSeries);
     }
 
-    @Override
-    public boolean lockLeftMenu() {
-        return true;
-    }
 
-    @Nullable
     @Override
-    protected View.OnClickListener getHomeIconClickListener() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ContextHelper.getContext().onBackPressed();
-            }
-        };
-    }
-
-    private void registerSensor() {
+    protected void registerSensor() {
         sensorManager = getSensorManager();
         // SENSOR_DELAY_NORMAL, SENSOR_DELAY_UI, SENSOR_DELAY_GAME, or SENSOR_DELAY_FASTEST
 //        sensorManager.registerListener(sensorEventListener, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SENSOR_DELAY_UI);
         sensorManager.registerListener(sensorEventListener, sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE), SENSOR_DELAY_UI);
     }
 
-    private void unregisterSensor() {
+    @Override
+    protected void unregisterSensor() {
         sensorManager.unregisterListener(sensorEventListener);
     }
 
@@ -134,8 +102,7 @@ public class AccelerationSensorFragment extends BaseFragment {
         return values;
     }
 
-
-    private SensorEventListener createSensorEventListener() {
+    protected SensorEventListener createSensorEventListener() {
         return new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent event) {
@@ -229,17 +196,5 @@ public class AccelerationSensorFragment extends BaseFragment {
         xSeries.appendData(new DataPoint(graph2LastXValue, deltaRotationVector[0]), true, 40);
         ySeries.appendData(new DataPoint(graph2LastXValue, deltaRotationVector[1]), true, 40);
         zSeries.appendData(new DataPoint(graph2LastXValue, deltaRotationVector[2]), true, 40);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        registerSensor();
-    }
-
-    @Override
-    public void onPause() {
-        unregisterSensor();
-        super.onPause();
     }
 }
