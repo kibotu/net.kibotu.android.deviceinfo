@@ -16,7 +16,6 @@ import java.util.List;
 import static android.hardware.Sensor.*;
 import static android.os.Build.VERSION_CODES.KITKAT;
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
-import static com.common.android.utils.extensions.FragmentExtensions.replaceBySlidingHorizontally;
 import static net.kibotu.android.deviceinfo.library.version.Version.isAtLeastVersion;
 
 /**
@@ -37,33 +36,35 @@ public class SensorFragment extends ListFragment {
 
         sensorList = Device.getSensorList();
         for (final Sensor s : sensorList) {
-            ListItem listItem = new ListItem().setLabel(s.getName());
-
-            if (isAtLeastVersion(LOLLIPOP)) {
-                listItem.addChild(new ListItem().setLabel("Reporting Mode").setValue(s.getReportingMode()));
-            }
-            if (isAtLeastVersion(KITKAT)) {
-                listItem.addChild(new ListItem().setLabel("Fifo Reserved Event Count").setValue(s.getFifoReservedEventCount()));
-            }
-            if (isAtLeastVersion(KITKAT)) {
-                listItem.addChild(new ListItem().setLabel("Fifo Max Event Count").setValue(s.getFifoMaxEventCount()));
-            }
-
-            if (isAtLeastVersion(LOLLIPOP)) {
-                listItem.addChild(new ListItem().setLabel("Max Delay").setValue(s.getMaxDelay()));
-            }
-            if (isAtLeastVersion(LOLLIPOP)) {
-                listItem.addChild(new ListItem().setLabel("Wake Up Sensor").setValue(s.isWakeUpSensor()));
-            }
-
-            addSubListItem(listItem
+            final ListItem listItem = new ListItem().setLabel(s.getName())
                     .addChild(new ListItem().setLabel("Type").setValue(ViewHelper.getSensorName(s)))
                     .addChild(new ListItem().setLabel("Vendor").setValue(s.getVendor()))
                     .addChild(new ListItem().setLabel("Version").setValue(s.getVersion()))
                     .addChild(new ListItem().setLabel("Resolution").setValue(s.getResolution()))
-                    .addChild(new ListItem().setLabel("Min Delay").setValue(s.getMinDelay()))
                     .addChild(new ListItem().setLabel("Max Range").setValue(s.getMaximumRange()))
-            );
+                    .addChild(new ListItem().setLabel("Min Delay").setValue(s.getMinDelay()));
+
+            if (isAtLeastVersion(LOLLIPOP)) {
+                listItem.addChild(new ListItem().setLabel("Max Delay").setValue(s.getMaxDelay()));
+            }
+
+            if (isAtLeastVersion(LOLLIPOP)) {
+                listItem.addChild(new ListItem().setLabel("Wake Up Sensor").setValue(s.isWakeUpSensor()));
+            }
+
+            if (isAtLeastVersion(LOLLIPOP)) {
+                listItem.addChild(new ListItem().setLabel("Reporting Mode").setValue(s.getReportingMode()));
+            }
+
+            if (isAtLeastVersion(KITKAT)) {
+                listItem.addChild(new ListItem().setLabel("Fifo Reserved Event Count").setValue(s.getFifoReservedEventCount()));
+            }
+
+            if (isAtLeastVersion(KITKAT)) {
+                listItem.addChild(new ListItem().setLabel("Fifo Max Event Count").setValue(s.getFifoMaxEventCount()));
+            }
+
+            addSubListItem(listItem);
         }
 
         adapter.setOnItemClickListener(new OnItemClickListener<ListItem>() {

@@ -9,10 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
+import com.common.android.utils.ContextHelper;
+import com.common.android.utils.extensions.ViewExtensions;
 import com.common.android.utils.interfaces.LayoutProvider;
 import com.common.android.utils.interfaces.LogTag;
 import com.common.android.utils.ui.menu.ISupportMenu;
 import com.common.android.utils.ui.menu.MainMenuProvider;
+import net.kibotu.android.deviceinfo.R;
+
+import static com.common.android.utils.extensions.ViewExtensions.*;
 
 /**
  * Created by Nyaruhodo on 20.02.2016.
@@ -57,6 +62,19 @@ public abstract class BaseFragment extends Fragment implements LogTag, LayoutPro
                 .setLeftDrawerLockMode(lockLeftMenu()
                         ? DrawerLayout.LOCK_MODE_LOCKED_CLOSED
                         : DrawerLayout.LOCK_MODE_UNLOCKED);
+
+        getContentRoot().findViewById(R.id.home_icon).setOnClickListener(getHomeIconClickListener());
+    }
+
+    @Nullable
+    protected View.OnClickListener getHomeIconClickListener() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainMenuProvider.provide().setLeftDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
+                MainMenuProvider.provide().setLeftDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            }
+        };
     }
 
     @DrawableRes
