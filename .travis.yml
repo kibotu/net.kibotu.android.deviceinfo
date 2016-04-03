@@ -10,7 +10,7 @@ env:
 
     - SLAVE_AAPT_TIMEOUT=30
     - TERM=dumb
-    - GRADLE_OPTS="-Xmx1024m -Xms256m -XX:MaxPermSize=256m -XX:+CMSClassUnloadingEnabled"
+    #- GRADLE_OPTS="-Xmx1024m -Xms256m -XX:MaxPermSize=256m -XX:+CMSClassUnloadingEnabled"
 
 matrix:
   fast_finish: true
