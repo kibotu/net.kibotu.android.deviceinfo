@@ -1,6 +1,5 @@
 package net.kibotu.android.deviceinfo.ui.network;
 
-import com.canelmas.let.AskPermission;
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.library.Device;
 import net.kibotu.android.deviceinfo.library.bluetooth.Bluetooth;
@@ -11,8 +10,8 @@ import net.kibotu.android.deviceinfo.library.network.SIM;
 import net.kibotu.android.deviceinfo.model.ListItem;
 import net.kibotu.android.deviceinfo.ui.list.ListFragment;
 
-import static android.Manifest.permission.READ_PHONE_STATE;
-import static net.kibotu.android.deviceinfo.library.Device.*;
+import static net.kibotu.android.deviceinfo.library.Device.getDeviceIdFromTelephonyManager;
+import static net.kibotu.android.deviceinfo.library.Device.getSubscriberIdFromTelephonyManager;
 
 /**
  * Created by Nyaruhodo on 21.02.2016.
@@ -170,12 +169,12 @@ public class NetworkFragment extends ListFragment {
 */
     }
 
-    @AskPermission(READ_PHONE_STATE)
+    //    @AskPermission(READ_PHONE_STATE)
     private void addImeiNumber() {
         addHorizontallyCard("IMEI No", getDeviceIdFromTelephonyManager(), "");
     }
 
-    @AskPermission(READ_PHONE_STATE)
+    //    @AskPermission(READ_PHONE_STATE)
     private void addSimInfos() {
         final SIM sim = new SIM();
 

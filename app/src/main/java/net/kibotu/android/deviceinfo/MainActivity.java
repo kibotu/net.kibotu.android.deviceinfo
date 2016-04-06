@@ -11,10 +11,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 import android.widget.TextView;
-import com.canelmas.let.DeniedPermission;
-import com.canelmas.let.Let;
-import com.canelmas.let.RuntimePermissionListener;
-import com.canelmas.let.RuntimePermissionRequest;
 import com.common.android.utils.extensions.FragmentExtensions;
 import com.common.android.utils.extensions.ViewExtensions;
 import com.common.android.utils.interfaces.LogTag;
@@ -29,7 +25,7 @@ import static com.common.android.utils.extensions.FragmentExtensions.currentFrag
 import static com.common.android.utils.extensions.ResourceExtensions.color;
 import static net.kibotu.android.deviceinfo.ui.FragmentProvider.showBuildConfigFragment;
 
-public class MainActivity extends AppCompatActivity implements LogTag, IMenuProvider, FragmentManager.OnBackStackChangedListener, RuntimePermissionListener {
+public class MainActivity extends AppCompatActivity implements LogTag, IMenuProvider, FragmentManager.OnBackStackChangedListener {
 
     IMainMenu mainMenu;
 
@@ -99,20 +95,9 @@ public class MainActivity extends AppCompatActivity implements LogTag, IMenuProv
     @CallSuper
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        Let.handle(this, requestCode, permissions, grantResults);
+      super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    @CallSuper
-    @Override
-    public void onShowPermissionRationale(List<String> list, RuntimePermissionRequest runtimePermissionRequest) {
-        Logger.v(tag(), "onShowPermissionRationale " + list + " " + runtimePermissionRequest);
-    }
-
-    @CallSuper
-    @Override
-    public void onPermissionDenied(List<DeniedPermission> list) {
-        Logger.v(tag(), "onPermissionDenied " + list);
-    }
 
     @NonNull
     @Override

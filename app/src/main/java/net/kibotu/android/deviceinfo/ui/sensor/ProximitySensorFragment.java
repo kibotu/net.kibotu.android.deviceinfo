@@ -32,7 +32,7 @@ public class ProximitySensorFragment extends SensorValuesFragment {
             @Override
             public void onSensorChanged(SensorEvent event) {
                 float distance = event.values[0];
-                xLabel.setText(""+ Arrays.toString(event.values));
+                xLabel.setText(Arrays.toString(event.values));
             }
 
             @Override
