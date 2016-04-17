@@ -68,12 +68,9 @@ public abstract class BaseFragment extends Fragment implements LogTag, LayoutPro
 
     @Nullable
     protected View.OnClickListener getHomeIconClickListener() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainMenuProvider.provide().setLeftDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
-                MainMenuProvider.provide().setLeftDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-            }
+        return v -> {
+            MainMenuProvider.provide().setLeftDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
+            MainMenuProvider.provide().setLeftDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         };
     }
 

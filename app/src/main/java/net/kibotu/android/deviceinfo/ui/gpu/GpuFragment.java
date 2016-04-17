@@ -26,12 +26,7 @@ public class GpuFragment extends ListFragment {
     protected void onViewCreated() {
         super.onViewCreated();
 
-        Device.loadOpenGLGles20Info(new Callback<OpenGLGles20Info>() {
-            @Override
-            public void onComplete(final OpenGLGles20Info openGLGles20Info) {
-                addOpenGLGles20Info(openGLGles20Info);
-            }
-        });
+        Device.loadOpenGLGles20Info(openGLGles20Info -> addOpenGLGles20Info(openGLGles20Info));
     }
 
     private void addGLES10Constraints(OpenGLGles10Info info) {
@@ -68,12 +63,7 @@ public class GpuFragment extends ListFragment {
 
         addExtensions(info);
 
-        Device.loadOpenGLGles10Info(new Callback<OpenGLGles10Info>() {
-            @Override
-            public void onComplete(final OpenGLGles10Info openGLGles10Info) {
-                addGLES10Constraints(openGLGles10Info);
-            }
-        });
+        Device.loadOpenGLGles10Info(openGLGles10Info -> addGLES10Constraints(openGLGles10Info));
 
         notifyDataSetChanged();
     }
