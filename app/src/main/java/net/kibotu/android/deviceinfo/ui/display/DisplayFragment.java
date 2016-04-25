@@ -32,8 +32,6 @@ public class DisplayFragment extends ListFragment {
 
         addScreen();
 
-        addDisplay();
-
         addMisc();
 
         addDisplayMetrics();
@@ -41,27 +39,17 @@ public class DisplayFragment extends ListFragment {
         addRealDisplayMetrics();
     }
 
-    private void addDisplay() {
+    private void addMisc() {
 
         final android.view.Display display = getDefaultDisplay();
 
-        ListItem item = new ListItem().setLabel("Display")
+        ListItem item = new ListItem().setLabel("Misc")
                 .addChild(new ListItem().setLabel("Refresh Rate").setValue(Display.getRefreshRate() + " FPS").setDescription("Gets the refresh rate of this display in frames per second."))
-
-
-                .addChild(new ListItem().setLabel("Display Id").setValue(display.getDisplayId()).setDescription("Gets the display id.\n" +
-                        "\n" +
-                        "Each logical display has a unique id. The default display has id DEFAULT_DISPLAY. "))
-//                .addChild(new ListItem().setLabel("getSize(Point)()").setValue(display.getAppVsyncOffsetNanos()).setDescription(""))
-//                .addChild(new ListItem().setLabel(" \tgetMetrics(DisplayMetrics outMetrics)()").setValue(display.getAppVsyncOffsetNanos()).setDescription(""))
-//                .addChild(new ListItem().setLabel("getMode()()").setValue(display.getAppVsyncOffsetNanos()).setDescription(""))
-                .addChild(new ListItem().setLabel("getRotation").setValue(formatOrientation(display)).setDescription("Returns the rotation of the screen from its \"natural\" orientation. The returned value may be Surface.ROTATION_0 (no rotation), Surface.ROTATION_90, Surface.ROTATION_180, or Surface.ROTATION_270. For example, if a device has a naturally tall screen, and the user has turned it on its side to go into a landscape orientation, the value returned here may be either Surface.ROTATION_90 or Surface.ROTATION_270 depending on the direction it was turned. The angle is the rotation of the drawn graphics on the screen, which is the opposite direction of the physical rotation of the device. For example, if the device is rotated 90 degrees counter-clockwise, to compensate rendering will be rotated by 90 degrees clockwise and thus the returned value here will be Surface.ROTATION_90."))
-//                .addChild(new ListItem().setLabel("getPresentationDeadlineNanos()").setValue(display.getAppVsyncOffsetNanos()).setDescription(""))
-//                .addChild(new ListItem().setLabel("getRealSize(Point outSize)").setValue(display.getAppVsyncOffsetNanos()).setDescription(""))
-//                .addChild(new ListItem().setLabel("getState()").setValue(display.getAppVsyncOffsetNanos()).setDescription(""))
-//                .addChild(new ListItem().setLabel("getSupportedModes()").setValue(display.getAppVsyncOffsetNanos()).setDescription(""))
-                ;
-
+                .addChild(new ListItem().setLabel("Display ID").setValue(getDefaultDisplay().getDisplayId()).setDescription("Each logical display has a unique id. The default display has id DEFAULT_DISPLAY. (" + android.view.Display.DEFAULT_DISPLAY + ")"))
+                .addChild(new ListItem().setLabel("Orientation").setValue(getString(R.string.orientation)))
+                .addChild(new ListItem().setLabel("Rotation").setValue(nameForRotation(getDefaultDisplay().getRotation())))
+                .addChild(new ListItem().setLabel("PixelFormat").setValue(nameForPixelFormat(getDefaultDisplay().getPixelFormat())))
+                .addChild(new ListItem().setLabel("Display Country").setValue(getDisplayCountry()));
 
         if (isAtLeastVersion(JELLY_BEAN_MR1))
             item.addChild(new ListItem().setLabel("Name").setValue(display.getName()).setDescription("Gets the name of the display. Note that some displays may be renamed by the user. "));
@@ -90,25 +78,6 @@ public class DisplayFragment extends ListFragment {
         addSubListItem(item);
     }
 
-    // region misc
-
-    private void addMisc() {
-        addSubListItem(new ListItem().setLabel("Misc")
-                .addChild(new ListItem().setLabel("Refresh Rate").setValue(Display.getRefreshRate() + " FPS").setDescription("Gets the refresh rate of this display in frames per second."))
-        );
-
-        addHorizontallyCard("Screen Class", getString(R.string.screen_size), "");
-        addHorizontallyCard("Density", getString(R.string.density) + " | " + getDisplayMetrics().densityDpi + " | " + getDisplayMetrics().density, "");
-//        addHorizontallyCard("xyDPI", xDpi + " x " + yDpi, "");
-        addHorizontallyCard("Orientation", getString(R.string.orientation), "");
-        addHorizontallyCard("Rotation", nameForRotation(getDefaultDisplay().getRotation()), "");
-        addHorizontallyCard("Display ID", getDefaultDisplay().getDisplayId(), "Each logical display has a unique id. The default display has id DEFAULT_DISPLAY. (" + android.view.Display.DEFAULT_DISPLAY + ")");
-        addHorizontallyCard("PixelFormat", nameForPixelFormat(getDefaultDisplay().getPixelFormat()), "");
-        addHorizontallyCard("Display Country", getDisplayCountry(), "");
-    }
-
-    // endregion
-
     // region screen
 
     private void addScreen() {
@@ -121,6 +90,9 @@ public class DisplayFragment extends ListFragment {
                 .addChild(new ListItem().setLabel("Usable").setValue(screenDimensions.width + "x" + getUsableScreenHeight() + " px"))
                 .addChild(new ListItem().setLabel("Status Bar Height").setValue(getStatusBarHeight() + " px"))
                 .addChild(new ListItem().setLabel("Soft Key Bar Height").setValue(getSoftKeyHeight() + " px"))
+                .addChild(new ListItem().setLabel("Density: Size | Dpi | Scale").setValue(getString(R.string.density) + " | " + getDisplayMetrics().densityDpi + " | " + getDisplayMetrics().density))
+                .addChild(new ListItem().setLabel("Density: Width x Height").setValue(getDisplayMetrics().xdpi + " x " + getDisplayMetrics().ydpi + " px"))
+
         );
     }
 
@@ -142,7 +114,7 @@ public class DisplayFragment extends ListFragment {
 
         final DisplayMetrics metrics = getRealDisplayMetrics();
 
-        addMetricSubList(metrics, "Real Display Metrics");
+        addMetricSubList(metrics, "Real Display Metrics (SDK > 17)");
     }
 
     private void addMetricSubList(DisplayMetrics metrics, String label) {
