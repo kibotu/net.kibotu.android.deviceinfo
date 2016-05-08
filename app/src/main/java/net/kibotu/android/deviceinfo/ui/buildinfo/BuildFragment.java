@@ -1,11 +1,13 @@
 package net.kibotu.android.deviceinfo.ui.buildinfo;
 
 import android.content.pm.FeatureInfo;
+
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.library.buildinfo.BuildInfo;
 import net.kibotu.android.deviceinfo.library.version.Version;
 import net.kibotu.android.deviceinfo.model.ListItem;
 import net.kibotu.android.deviceinfo.ui.list.ListFragment;
+
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.joda.time.format.PeriodFormat;
@@ -14,8 +16,30 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
 
-import static android.os.Build.*;
-import static net.kibotu.android.deviceinfo.ui.ViewHelper.formatSdkString;
+import static android.os.Build.BOARD;
+import static android.os.Build.BOOTLOADER;
+import static android.os.Build.BRAND;
+import static android.os.Build.CPU_ABI;
+import static android.os.Build.CPU_ABI2;
+import static android.os.Build.DEVICE;
+import static android.os.Build.DISPLAY;
+import static android.os.Build.FINGERPRINT;
+import static android.os.Build.HARDWARE;
+import static android.os.Build.HOST;
+import static android.os.Build.ID;
+import static android.os.Build.MANUFACTURER;
+import static android.os.Build.MODEL;
+import static android.os.Build.PRODUCT;
+import static android.os.Build.SERIAL;
+import static android.os.Build.SUPPORTED_ABIS;
+import static android.os.Build.TAGS;
+import static android.os.Build.TIME;
+import static android.os.Build.TYPE;
+import static android.os.Build.UNKNOWN;
+import static android.os.Build.USER;
+import static android.os.Build.VERSION;
+import static android.os.Build.VERSION_CODES;
+import static net.kibotu.android.deviceinfo.library.ViewHelper.formatSdkString;
 
 /**
  * Created by Nyaruhodo on 21.02.2016.

@@ -5,18 +5,19 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.Bind;
-import butterknife.ButterKnife;
+
 import com.common.android.utils.logging.Logger;
 import com.common.android.utils.ui.BaseViewHolder;
 import com.common.android.utils.ui.recyclerView.DataBindAdapter;
 import com.common.android.utils.ui.recyclerView.DataBinder;
+
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.model.ListItem;
+
+import butterknife.Bind;
 
 import static com.common.android.utils.ContextHelper.getContext;
 
@@ -60,7 +61,7 @@ public class CardViewSubListItemBinder extends DataBinder<ListItem, CardViewSubL
             public void onClick(View v) {
                 Logger.toast(item.getDescription());
 
-                if(dataBindAdapter.getOnItemClickListener() != null)
+                if (dataBindAdapter.getOnItemClickListener() != null)
                     dataBindAdapter.getOnItemClickListener().onItemClick(item, viewHolder.itemView, position);
             }
         });

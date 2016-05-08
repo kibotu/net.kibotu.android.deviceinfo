@@ -1,6 +1,7 @@
 package net.kibotu.android.deviceinfo.ui;
 
 import android.support.v4.app.FragmentManager;
+
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.ui.sensor.SensorFragment;
 

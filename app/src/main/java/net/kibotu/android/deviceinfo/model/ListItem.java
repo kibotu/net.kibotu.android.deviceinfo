@@ -4,8 +4,6 @@ import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 /**
  * Created by Nyaruhodo on 21.02.2016.

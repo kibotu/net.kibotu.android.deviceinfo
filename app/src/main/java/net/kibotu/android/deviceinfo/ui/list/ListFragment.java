@@ -5,17 +5,20 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.animation.OvershootInterpolator;
-import butterknife.Bind;
+
 import com.common.android.utils.ui.recyclerView.DataBindAdapter;
-import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
-import jp.wasabeef.recyclerview.animators.LandingAnimator;
-import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
+
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.model.ListItem;
 import net.kibotu.android.deviceinfo.ui.BaseFragment;
 import net.kibotu.android.deviceinfo.ui.list.binder.CardViewHorizontalListItemBinder;
 import net.kibotu.android.deviceinfo.ui.list.binder.CardViewSubListItemBinder;
 import net.kibotu.android.deviceinfo.ui.list.binder.VerticalListItemBinderCardView;
+
+import butterknife.Bind;
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.LandingAnimator;
+import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 import static android.text.TextUtils.isEmpty;
 

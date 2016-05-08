@@ -3,20 +3,41 @@ package net.kibotu.android.deviceinfo.ui.sensor;
 import android.hardware.Sensor;
 import android.support.annotation.NonNull;
 import android.view.View;
-import com.common.android.utils.extensions.FragmentExtensions;
+
 import com.common.android.utils.ui.recyclerView.OnItemClickListener;
+
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.library.Device;
 import net.kibotu.android.deviceinfo.model.ListItem;
-import net.kibotu.android.deviceinfo.ui.ViewHelper;
 import net.kibotu.android.deviceinfo.ui.list.ListFragment;
 
 import java.util.List;
 
-import static android.hardware.Sensor.*;
+import static android.hardware.Sensor.TYPE_ACCELEROMETER;
+import static android.hardware.Sensor.TYPE_AMBIENT_TEMPERATURE;
+import static android.hardware.Sensor.TYPE_GAME_ROTATION_VECTOR;
+import static android.hardware.Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR;
+import static android.hardware.Sensor.TYPE_GRAVITY;
+import static android.hardware.Sensor.TYPE_GYROSCOPE;
+import static android.hardware.Sensor.TYPE_GYROSCOPE_UNCALIBRATED;
+import static android.hardware.Sensor.TYPE_HEART_RATE;
+import static android.hardware.Sensor.TYPE_LIGHT;
+import static android.hardware.Sensor.TYPE_LINEAR_ACCELERATION;
+import static android.hardware.Sensor.TYPE_MAGNETIC_FIELD;
+import static android.hardware.Sensor.TYPE_MAGNETIC_FIELD_UNCALIBRATED;
+import static android.hardware.Sensor.TYPE_ORIENTATION;
+import static android.hardware.Sensor.TYPE_PRESSURE;
+import static android.hardware.Sensor.TYPE_PROXIMITY;
+import static android.hardware.Sensor.TYPE_RELATIVE_HUMIDITY;
+import static android.hardware.Sensor.TYPE_ROTATION_VECTOR;
+import static android.hardware.Sensor.TYPE_SIGNIFICANT_MOTION;
+import static android.hardware.Sensor.TYPE_STEP_COUNTER;
+import static android.hardware.Sensor.TYPE_STEP_DETECTOR;
+import static android.hardware.Sensor.TYPE_TEMPERATURE;
 import static android.os.Build.VERSION_CODES.KITKAT;
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
 import static com.common.android.utils.extensions.FragmentExtensions.replaceToBackStackBySlidingHorizontally;
+import static net.kibotu.android.deviceinfo.library.ViewHelper.getSensorName;
 import static net.kibotu.android.deviceinfo.library.version.Version.isAtLeastVersion;
 
 /**
@@ -38,7 +59,7 @@ public class SensorFragment extends ListFragment {
         sensorList = Device.getSensorList();
         for (final Sensor s : sensorList) {
             final ListItem listItem = new ListItem().setLabel(s.getName())
-                    .addChild(new ListItem().setLabel("Type").setValue(ViewHelper.getSensorName(s)))
+                    .addChild(new ListItem().setLabel("Type").setValue(getSensorName(s)))
                     .addChild(new ListItem().setLabel("Vendor").setValue(s.getVendor()))
                     .addChild(new ListItem().setLabel("Version").setValue(s.getVersion()))
                     .addChild(new ListItem().setLabel("Resolution").setValue(s.getResolution()))

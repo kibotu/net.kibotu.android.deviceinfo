@@ -6,13 +6,16 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.Bind;
+
 import com.common.android.utils.logging.Logger;
 import com.common.android.utils.ui.BaseViewHolder;
 import com.common.android.utils.ui.recyclerView.DataBindAdapter;
 import com.common.android.utils.ui.recyclerView.DataBinder;
+
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.model.ListItem;
+
+import butterknife.Bind;
 
 import static android.text.Html.fromHtml;
 import static android.text.TextUtils.isEmpty;

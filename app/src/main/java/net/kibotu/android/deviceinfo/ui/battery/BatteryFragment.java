@@ -1,7 +1,9 @@
 package net.kibotu.android.deviceinfo.ui.battery;
 
 import android.os.BatteryManager;
+
 import com.orhanobut.hawk.Hawk;
+
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.library.battery.Battery;
 import net.kibotu.android.deviceinfo.library.battery.BatteryReceiver;
@@ -9,7 +11,7 @@ import net.kibotu.android.deviceinfo.library.battery.BatteryUpdateListener;
 import net.kibotu.android.deviceinfo.ui.list.ListFragment;
 
 import static net.kibotu.android.deviceinfo.library.Device.getBatteryReceiver;
-import static net.kibotu.android.deviceinfo.ui.ViewHelper.formatBool;
+import static net.kibotu.android.deviceinfo.library.ViewHelper.formatBool;
 
 /**
  * Created by Nyaruhodo on 21.02.2016.

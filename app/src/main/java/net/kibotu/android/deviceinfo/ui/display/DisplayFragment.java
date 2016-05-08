@@ -2,6 +2,7 @@ package net.kibotu.android.deviceinfo.ui.display;
 
 import android.graphics.Point;
 import android.util.DisplayMetrics;
+
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.library.display.Dimension;
 import net.kibotu.android.deviceinfo.library.display.Display;
@@ -10,11 +11,27 @@ import net.kibotu.android.deviceinfo.ui.list.ListFragment;
 
 import java.util.Arrays;
 
-import static android.os.Build.VERSION_CODES.*;
+import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR1;
+import static android.os.Build.VERSION_CODES.LOLLIPOP;
+import static android.os.Build.VERSION_CODES.M;
 import static java.text.MessageFormat.format;
-import static net.kibotu.android.deviceinfo.library.display.Display.*;
+import static net.kibotu.android.deviceinfo.library.ViewHelper.formatBool;
+import static net.kibotu.android.deviceinfo.library.ViewHelper.formatInches;
+import static net.kibotu.android.deviceinfo.library.ViewHelper.formatPixel;
+import static net.kibotu.android.deviceinfo.library.ViewHelper.formatSupportedModes;
+import static net.kibotu.android.deviceinfo.library.ViewHelper.nameForPixelFormat;
+import static net.kibotu.android.deviceinfo.library.ViewHelper.nameForRotation;
+import static net.kibotu.android.deviceinfo.library.display.Display.getDefaultDisplay;
+import static net.kibotu.android.deviceinfo.library.display.Display.getDisplayCountry;
+import static net.kibotu.android.deviceinfo.library.display.Display.getDisplayMetrics;
+import static net.kibotu.android.deviceinfo.library.display.Display.getRealDisplayMetrics;
+import static net.kibotu.android.deviceinfo.library.display.Display.getScreenDiagonalAsInch;
+import static net.kibotu.android.deviceinfo.library.display.Display.getScreenDiagonalAsPixel;
+import static net.kibotu.android.deviceinfo.library.display.Display.getScreenDimensions;
+import static net.kibotu.android.deviceinfo.library.display.Display.getSoftKeyHeight;
+import static net.kibotu.android.deviceinfo.library.display.Display.getStatusBarHeight;
+import static net.kibotu.android.deviceinfo.library.display.Display.getUsableScreenHeight;
 import static net.kibotu.android.deviceinfo.library.version.Version.isAtLeastVersion;
-import static net.kibotu.android.deviceinfo.ui.ViewHelper.*;
 
 /**
  * Created by Nyaruhodo on 21.02.2016.

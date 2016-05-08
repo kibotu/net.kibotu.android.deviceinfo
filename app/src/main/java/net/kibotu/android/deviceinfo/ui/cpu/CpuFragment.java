@@ -1,6 +1,7 @@
 package net.kibotu.android.deviceinfo.ui.cpu;
 
 import android.support.v7.widget.RecyclerView;
+
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.library.cpu.Core;
 import net.kibotu.android.deviceinfo.library.cpu.Cpu;
@@ -12,7 +13,9 @@ import net.kibotu.android.deviceinfo.ui.list.ListFragment;
 import java.util.ArrayList;
 import java.util.Map;
 
-import static net.kibotu.android.deviceinfo.ui.ViewHelper.*;
+import static net.kibotu.android.deviceinfo.library.ViewHelper.formatFrequency;
+import static net.kibotu.android.deviceinfo.library.ViewHelper.formatPercent;
+import static net.kibotu.android.deviceinfo.library.ViewHelper.getFormattedTimeDifference;
 
 /**
  * Created by Nyaruhodo on 21.02.2016.

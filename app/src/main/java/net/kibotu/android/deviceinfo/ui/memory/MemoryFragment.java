@@ -1,6 +1,7 @@
 package net.kibotu.android.deviceinfo.ui.memory;
 
 import android.support.v7.widget.RecyclerView;
+
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.library.memory.Ram;
 import net.kibotu.android.deviceinfo.library.memory.RamUsage;
@@ -9,8 +10,8 @@ import net.kibotu.android.deviceinfo.library.storage.StorageSpace;
 import net.kibotu.android.deviceinfo.model.ListItem;
 import net.kibotu.android.deviceinfo.ui.list.ListFragment;
 
-import static net.kibotu.android.deviceinfo.ui.ViewHelper.BYTES_TO_KB;
-import static net.kibotu.android.deviceinfo.ui.ViewHelper.formatBytes;
+import static net.kibotu.android.deviceinfo.library.ViewHelper.BYTES_TO_KB;
+import static net.kibotu.android.deviceinfo.library.ViewHelper.formatBytes;
 
 /**
  * Created by Nyaruhodo on 21.02.2016.

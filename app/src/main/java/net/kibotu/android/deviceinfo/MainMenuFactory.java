@@ -1,6 +1,7 @@
 package net.kibotu.android.deviceinfo;
 
 import com.common.android.utils.ui.menu.MenuItem;
+
 import net.kibotu.android.deviceinfo.ui.app.AppFragment;
 import net.kibotu.android.deviceinfo.ui.battery.BatteryFragment;
 import net.kibotu.android.deviceinfo.ui.buildinfo.BuildFragment;

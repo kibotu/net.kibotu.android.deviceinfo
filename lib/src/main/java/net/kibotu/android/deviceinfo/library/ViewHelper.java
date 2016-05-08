@@ -1,4 +1,4 @@
-package net.kibotu.android.deviceinfo.ui;
+package net.kibotu.android.deviceinfo.library;
 
 import android.annotation.TargetApi;
 import android.content.res.Configuration;
@@ -15,19 +15,71 @@ import android.text.format.DateUtils;
 import android.util.SparseArray;
 import android.view.Display;
 import android.view.Surface;
+
 import net.kibotu.android.deviceinfo.library.misc.ReflectionHelper;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.lang.reflect.Field;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static android.hardware.Sensor.*;
-import static android.hardware.SensorManager.*;
+import static android.hardware.Sensor.STRING_TYPE_ACCELEROMETER;
+import static android.hardware.Sensor.STRING_TYPE_AMBIENT_TEMPERATURE;
+import static android.hardware.Sensor.STRING_TYPE_GAME_ROTATION_VECTOR;
+import static android.hardware.Sensor.STRING_TYPE_GEOMAGNETIC_ROTATION_VECTOR;
+import static android.hardware.Sensor.STRING_TYPE_GRAVITY;
+import static android.hardware.Sensor.STRING_TYPE_GYROSCOPE;
+import static android.hardware.Sensor.STRING_TYPE_GYROSCOPE_UNCALIBRATED;
+import static android.hardware.Sensor.STRING_TYPE_HEART_RATE;
+import static android.hardware.Sensor.STRING_TYPE_LIGHT;
+import static android.hardware.Sensor.STRING_TYPE_LINEAR_ACCELERATION;
+import static android.hardware.Sensor.STRING_TYPE_MAGNETIC_FIELD;
+import static android.hardware.Sensor.STRING_TYPE_MAGNETIC_FIELD_UNCALIBRATED;
+import static android.hardware.Sensor.STRING_TYPE_ORIENTATION;
+import static android.hardware.Sensor.STRING_TYPE_PRESSURE;
+import static android.hardware.Sensor.STRING_TYPE_PROXIMITY;
+import static android.hardware.Sensor.STRING_TYPE_RELATIVE_HUMIDITY;
+import static android.hardware.Sensor.STRING_TYPE_ROTATION_VECTOR;
+import static android.hardware.Sensor.STRING_TYPE_SIGNIFICANT_MOTION;
+import static android.hardware.Sensor.STRING_TYPE_STEP_COUNTER;
+import static android.hardware.Sensor.STRING_TYPE_STEP_DETECTOR;
+import static android.hardware.Sensor.STRING_TYPE_TEMPERATURE;
+import static android.hardware.Sensor.TYPE_ACCELEROMETER;
+import static android.hardware.Sensor.TYPE_AMBIENT_TEMPERATURE;
+import static android.hardware.Sensor.TYPE_GAME_ROTATION_VECTOR;
+import static android.hardware.Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR;
+import static android.hardware.Sensor.TYPE_GRAVITY;
+import static android.hardware.Sensor.TYPE_GYROSCOPE;
+import static android.hardware.Sensor.TYPE_GYROSCOPE_UNCALIBRATED;
+import static android.hardware.Sensor.TYPE_HEART_RATE;
+import static android.hardware.Sensor.TYPE_LIGHT;
+import static android.hardware.Sensor.TYPE_LINEAR_ACCELERATION;
+import static android.hardware.Sensor.TYPE_MAGNETIC_FIELD;
+import static android.hardware.Sensor.TYPE_MAGNETIC_FIELD_UNCALIBRATED;
+import static android.hardware.Sensor.TYPE_ORIENTATION;
+import static android.hardware.Sensor.TYPE_PRESSURE;
+import static android.hardware.Sensor.TYPE_PROXIMITY;
+import static android.hardware.Sensor.TYPE_RELATIVE_HUMIDITY;
+import static android.hardware.Sensor.TYPE_ROTATION_VECTOR;
+import static android.hardware.Sensor.TYPE_SIGNIFICANT_MOTION;
+import static android.hardware.Sensor.TYPE_STEP_COUNTER;
+import static android.hardware.Sensor.TYPE_STEP_DETECTOR;
+import static android.hardware.Sensor.TYPE_TEMPERATURE;
+import static android.hardware.SensorManager.SENSOR_DELAY_FASTEST;
+import static android.hardware.SensorManager.SENSOR_DELAY_GAME;
+import static android.hardware.SensorManager.SENSOR_DELAY_NORMAL;
+import static android.hardware.SensorManager.SENSOR_DELAY_UI;
 import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR1;
 import static android.os.Build.VERSION_CODES.M;
 import static java.text.MessageFormat.format;
@@ -156,7 +208,7 @@ final public class ViewHelper {
             case TYPE_TEMPERATURE:
                 name = STRING_TYPE_TEMPERATURE;
             default:
-                name = android.os.Build.UNKNOWN;
+                name = Build.UNKNOWN;
         }
         return name;
     }

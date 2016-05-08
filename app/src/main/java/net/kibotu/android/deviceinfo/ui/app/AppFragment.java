@@ -1,6 +1,7 @@
 package net.kibotu.android.deviceinfo.ui.app;
 
 import android.content.pm.FeatureInfo;
+
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.library.buildinfo.BuildInfo;
 import net.kibotu.android.deviceinfo.model.ListItem;
@@ -8,8 +9,12 @@ import net.kibotu.android.deviceinfo.ui.list.ListFragment;
 
 import java.util.Map;
 
-import static net.kibotu.android.deviceinfo.library.Device.*;
-import static net.kibotu.android.deviceinfo.ui.ViewHelper.formatBytes;
+import static net.kibotu.android.deviceinfo.library.Device.getFileSize;
+import static net.kibotu.android.deviceinfo.library.Device.getRuntimeFreeMemory;
+import static net.kibotu.android.deviceinfo.library.Device.getRuntimeMaxMemory;
+import static net.kibotu.android.deviceinfo.library.Device.getRuntimeTotalMemory;
+import static net.kibotu.android.deviceinfo.library.Device.getUsedMemorySize;
+import static net.kibotu.android.deviceinfo.library.ViewHelper.formatBytes;
 
 /**
  * Created by Nyaruhodo on 21.02.2016.
@@ -46,7 +51,7 @@ public class AppFragment extends ListFragment {
     private void addPermissions() {
         final Map<String, FeatureInfo> systemAvailableFeatures = BuildInfo.getSystemAvailableFeatures();
         final ListItem item = new ListItem().setLabel("Permissions").setDescription("All enabled permissions for this app.");
-        for(String permission:  BuildInfo.getPermissions())
+        for (String permission : BuildInfo.getPermissions())
             item.addChild(new ListItem().setLabel(permission));
 
         addSubListItem(item);
@@ -54,8 +59,8 @@ public class AppFragment extends ListFragment {
 
     private void addSharedLibraries() {
         final Map<String, FeatureInfo> systemAvailableFeatures = BuildInfo.getSystemAvailableFeatures();
-        final ListItem item = new ListItem().setLabel("Shared Libraries").setDescription( "List of shared libraries that are available on the system.");
-        for(String lib:  BuildInfo.getSharedLibraries())
+        final ListItem item = new ListItem().setLabel("Shared Libraries").setDescription("List of shared libraries that are available on the system.");
+        for (String lib : BuildInfo.getSharedLibraries())
             item.addChild(new ListItem().setLabel(lib));
 
         addSubListItem(item);

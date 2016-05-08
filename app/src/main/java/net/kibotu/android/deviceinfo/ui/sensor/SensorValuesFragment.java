@@ -1,6 +1,5 @@
 package net.kibotu.android.deviceinfo.ui.sensor;
 
-import android.hardware.Sensor;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.support.annotation.CallSuper;
@@ -8,11 +7,14 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
-import butterknife.Bind;
+
 import com.common.android.utils.ContextHelper;
 import com.jjoe64.graphview.GraphView;
+
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.ui.BaseFragment;
+
+import butterknife.Bind;
 
 import static android.hardware.SensorManager.SENSOR_DELAY_UI;
 import static net.kibotu.android.deviceinfo.R.layout.sensor;
@@ -59,12 +61,7 @@ public abstract class SensorValuesFragment extends BaseFragment {
     @Nullable
     @Override
     protected View.OnClickListener getHomeIconClickListener() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ContextHelper.getContext().onBackPressed();
-            }
-        };
+        return v -> ContextHelper.getContext().onBackPressed();
     }
 
     @Override
@@ -91,5 +88,5 @@ public abstract class SensorValuesFragment extends BaseFragment {
 
     protected abstract SensorEventListener createSensorEventListener();
 
-    protected  abstract int sensorType() ;
+    protected abstract int sensorType();
 }

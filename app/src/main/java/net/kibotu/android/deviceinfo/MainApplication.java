@@ -1,22 +1,22 @@
 package net.kibotu.android.deviceinfo;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 import android.support.v4.app.FragmentActivity;
+
 import com.common.android.utils.ContextHelper;
 import com.common.android.utils.logging.Logger;
 import com.crashlytics.android.Crashlytics;
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.HawkBuilder;
 import com.orhanobut.hawk.LogLevel;
-import io.fabric.sdk.android.Fabric;
+
 import net.kibotu.android.deviceinfo.library.Device;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+import io.fabric.sdk.android.Fabric;
 
 /**
  * Created by Nyaruhodo on 20.02.2016.

@@ -7,6 +7,7 @@ import com.common.android.utils.network.model.IpInfoResponseModel;
 import com.orhanobut.wasp.Callback;
 import com.orhanobut.wasp.Response;
 import com.orhanobut.wasp.WaspError;
+
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.model.ListItem;
 import net.kibotu.android.deviceinfo.ui.list.ListFragment;

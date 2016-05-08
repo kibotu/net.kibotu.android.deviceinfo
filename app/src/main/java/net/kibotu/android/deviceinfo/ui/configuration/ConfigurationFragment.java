@@ -3,16 +3,29 @@ package net.kibotu.android.deviceinfo.ui.configuration;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.view.ViewConfiguration;
+
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.model.ListItem;
 import net.kibotu.android.deviceinfo.ui.list.ListFragment;
 
-import static android.os.Build.VERSION_CODES.*;
+import static android.os.Build.VERSION_CODES.HONEYCOMB_MR2;
+import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR1;
+import static android.os.Build.VERSION_CODES.M;
 import static com.common.android.utils.extensions.ResourceExtensions.configuration;
+import static net.kibotu.android.deviceinfo.library.ViewHelper.formatBool;
+import static net.kibotu.android.deviceinfo.library.ViewHelper.formatBytes;
+import static net.kibotu.android.deviceinfo.library.ViewHelper.formatKeyBoardHidden;
+import static net.kibotu.android.deviceinfo.library.ViewHelper.formatKeyboard;
+import static net.kibotu.android.deviceinfo.library.ViewHelper.formatKeyboardHidden;
+import static net.kibotu.android.deviceinfo.library.ViewHelper.formatNavigation;
+import static net.kibotu.android.deviceinfo.library.ViewHelper.formatNavigationHidden;
+import static net.kibotu.android.deviceinfo.library.ViewHelper.formatOrientation;
+import static net.kibotu.android.deviceinfo.library.ViewHelper.formatScreenLayout;
+import static net.kibotu.android.deviceinfo.library.ViewHelper.formatTouchscreen;
+import static net.kibotu.android.deviceinfo.library.ViewHelper.formatUIMode;
 import static net.kibotu.android.deviceinfo.library.display.Display.hasSoftKeys;
 import static net.kibotu.android.deviceinfo.library.display.Display.isTablet;
 import static net.kibotu.android.deviceinfo.library.version.Version.isAtLeastVersion;
-import static net.kibotu.android.deviceinfo.ui.ViewHelper.*;
 
 /**
  * Created by Nyaruhodo on 21.02.2016.

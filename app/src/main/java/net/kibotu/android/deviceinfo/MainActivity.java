@@ -11,14 +11,18 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 import android.widget.TextView;
+
 import com.common.android.utils.extensions.FragmentExtensions;
 import com.common.android.utils.extensions.ViewExtensions;
 import com.common.android.utils.interfaces.LogTag;
 import com.common.android.utils.logging.Logger;
-import com.common.android.utils.ui.menu.*;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import com.common.android.utils.ui.menu.IMainMenu;
+import com.common.android.utils.ui.menu.IMenuProvider;
+import com.common.android.utils.ui.menu.ISupportMenu;
+import com.common.android.utils.ui.menu.MainMenu;
+import com.common.android.utils.ui.menu.MainMenuProvider;
 
-import java.util.List;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.common.android.utils.extensions.DeviceExtensions.hideKeyboard;
 import static com.common.android.utils.extensions.FragmentExtensions.currentFragment;
@@ -95,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements LogTag, IMenuProv
     @CallSuper
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-      super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
 

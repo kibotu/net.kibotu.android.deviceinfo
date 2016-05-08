@@ -2,22 +2,24 @@ package net.kibotu.android.deviceinfo.ui;
 
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.ButterKnife;
-import com.common.android.utils.ContextHelper;
-import com.common.android.utils.extensions.ViewExtensions;
+
 import com.common.android.utils.interfaces.LayoutProvider;
 import com.common.android.utils.interfaces.LogTag;
 import com.common.android.utils.ui.menu.ISupportMenu;
 import com.common.android.utils.ui.menu.MainMenuProvider;
+
 import net.kibotu.android.deviceinfo.R;
 
-import static com.common.android.utils.extensions.ViewExtensions.*;
+import butterknife.ButterKnife;
+
+import static com.common.android.utils.extensions.ViewExtensions.getContentRoot;
 
 /**
  * Created by Nyaruhodo on 20.02.2016.
@@ -30,6 +32,7 @@ public abstract class BaseFragment extends Fragment implements LogTag, LayoutPro
         // mandatory for fragment transactions
     }
 
+    @NonNull
     @Override
     final public String tag() {
         return getClass().getSimpleName();

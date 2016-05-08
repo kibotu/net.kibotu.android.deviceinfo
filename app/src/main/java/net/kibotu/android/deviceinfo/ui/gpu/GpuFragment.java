@@ -1,7 +1,6 @@
 package net.kibotu.android.deviceinfo.ui.gpu;
 
 import net.kibotu.android.deviceinfo.R;
-import net.kibotu.android.deviceinfo.library.misc.Callback;
 import net.kibotu.android.deviceinfo.library.Device;
 import net.kibotu.android.deviceinfo.library.gpu.Egl;
 import net.kibotu.android.deviceinfo.library.gpu.OpenGLGles10Info;
@@ -9,8 +8,8 @@ import net.kibotu.android.deviceinfo.library.gpu.OpenGLGles20Info;
 import net.kibotu.android.deviceinfo.model.ListItem;
 import net.kibotu.android.deviceinfo.ui.list.ListFragment;
 
-import static net.kibotu.android.deviceinfo.ui.ViewHelper.appendGLInfoArray;
-import static net.kibotu.android.deviceinfo.ui.ViewHelper.firstLetterToUpperCase;
+import static net.kibotu.android.deviceinfo.library.ViewHelper.appendGLInfoArray;
+import static net.kibotu.android.deviceinfo.library.ViewHelper.firstLetterToUpperCase;
 
 /**
  * Created by Nyaruhodo on 21.02.2016.

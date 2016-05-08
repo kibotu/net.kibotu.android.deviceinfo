@@ -4,17 +4,21 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+
 import com.common.android.utils.logging.Logger;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+
 import net.kibotu.android.deviceinfo.R;
 
 import java.util.Random;
 
 import static com.common.android.utils.extensions.ResourceExtensions.color;
-import static java.lang.Math.*;
-import static net.kibotu.android.deviceinfo.ui.ViewHelper.getAccuracyName;
-import static net.kibotu.android.deviceinfo.ui.ViewHelper.getSensorName;
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
+import static java.lang.Math.sqrt;
+import static net.kibotu.android.deviceinfo.library.ViewHelper.getAccuracyName;
+import static net.kibotu.android.deviceinfo.library.ViewHelper.getSensorName;
 
 /**
  * Created by Nyaruhodo on 18.03.2016.
