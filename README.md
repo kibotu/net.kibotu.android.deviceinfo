@@ -1,5 +1,5 @@
-Android Device Info [![Build Status](https://travis-ci.org/kibotu/net.kibotu.android.deviceinfo.svg?branch=develop)](https://travis-ci.org/kibotu/net.kibotu.android.deviceinfo) [![API](https://img.shields.io/badge/API-15%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=15) [![](https://jitpack.io/v/kibotu/net.kibotu.android.deviceinfo.svg)](https://jitpack.io/#kibotu/net.kibotu.android.deviceinfo)
-=====================================================================================================================================================================================================================================================================================================================================================================================================================================
+Android Device Info [![Build Status](https://travis-ci.org/kibotu/net.kibotu.android.deviceinfo.svg?branch=develop)](https://travis-ci.org/kibotu/net.kibotu.android.deviceinfo) [![API](https://img.shields.io/badge/API-15%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=15) [![](https://jitpack.io/v/kibotu/net.kibotu.android.deviceinfo.svg)](https://jitpack.io/#kibotu/net.kibotu.android.deviceinfo) [![Licence](https://img.shields.io/badge/licence-Apache-blue.svg)](https://raw.githubusercontent.com/kibotu/net.kibotu.android.deviceinfo/develop/LICENSE)
+================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================
 
 ### Introduction
 
@@ -53,10 +53,6 @@ Step 2. Add the dependency
 ##### Geolocation
 ##### App
 ##### Misc
-
-###  Contributers
-
-* [Jan Rabe](mailto:janrabe@kibotu.net)
 
 
 ### Todo
