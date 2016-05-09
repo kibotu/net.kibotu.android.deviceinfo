@@ -3,33 +3,20 @@ Android Device Info [![Build Status](https://travis-ci.org/kibotu/net.kibotu.and
 
 ### Introduction
 
-Library and app for showing tons of device information for your android device.
+Library and app for showing tons of device information for your android device. 
 
 ### How to install
-
-How to
-
-To get a Git project into your build:
-
-Step 1. Add the JitPack repository to your build file
-
-Add it in your root build.gradle at the end of repositories:
-
-	allprojects {
-		repositories {
-			...
-			maven { url "https://jitpack.io" }
-		}
+	
+	repositories {
+	    maven {
+	        url "https://jitpack.io"
+	    }
 	}
-
-Step 2. Add the dependency
-
+		
 	dependencies {
-	        compile ('com.github.kibotu:net.kibotu.android.deviceinfo:-SNAPSHOT'){
-        		exclude group: 'com.android.support' // regarding appcompat
-        		exclude module: 'app' // only add lib to your project
-    		} 
-	}
+        compile 'com.github.kibotu:net.kibotu.android.deviceinfo:-SNAPSHOT'
+    }
+   
 
 ### How to build the lib:
 
