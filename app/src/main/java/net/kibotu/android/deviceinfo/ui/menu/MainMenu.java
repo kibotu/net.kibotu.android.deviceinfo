@@ -25,8 +25,6 @@ import net.kibotu.android.recyclerviewpresenter.PresenterAdapter;
 
 import java.util.List;
 
-import butterknife.ButterKnife;
-
 import static com.common.android.utils.ContextHelper.getActivity;
 import static com.common.android.utils.ContextHelper.getAppCompatActivity;
 import static com.common.android.utils.ContextHelper.getContext;
@@ -62,7 +60,6 @@ public class MainMenu implements IMainMenu {
     PresenterAdapter<MenuItem> adapter;
 
     public MainMenu() {
-        ButterKnife.bind(this, getContentRoot());
 
         leftDrawerTitle = (TextView) getContentRoot().findViewById(R.id.drawer_title);
         drawerLayout = (DrawerLayout) getContentRoot().findViewById(R.id.drawer_layout);

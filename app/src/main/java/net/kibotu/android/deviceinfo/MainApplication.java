@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
+import com.common.android.utils.ContextHelper;
 import com.common.android.utils.logging.Logger;
 import com.crashlytics.android.Crashlytics;
 import com.orhanobut.hawk.Hawk;
@@ -41,6 +42,7 @@ public class MainApplication extends MultiDexApplication {
         MultiDex.install(getApplicationContext());
         super.onCreate();
 
+        ContextHelper.with(this);
         Device.with(this);
 
         initFabric();
@@ -85,6 +87,7 @@ public class MainApplication extends MultiDexApplication {
     @Override
     public void onTerminate() {
         unregisterActivityLifecycleCallbacks(activityLifecycleCallbacks);
+        ContextHelper.onTerminate();
         Device.onTerminate();
         super.onTerminate();
     }
