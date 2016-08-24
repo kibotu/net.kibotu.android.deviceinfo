@@ -46,6 +46,10 @@ final public class Device {
         ContextHelper.with(context);
     }
 
+    public static void onTerminate() {
+        ContextHelper.onTerminate();
+    }
+
     public static Context getContext() {
         return ContextHelper.getContext();
     }
