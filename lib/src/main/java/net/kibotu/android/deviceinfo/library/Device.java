@@ -3,6 +3,7 @@ package net.kibotu.android.deviceinfo.library;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,6 +13,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
 import android.view.View;
+
 import net.kibotu.android.deviceinfo.library.battery.BatteryReceiver;
 import net.kibotu.android.deviceinfo.library.bluetooth.Bluetooth;
 import net.kibotu.android.deviceinfo.library.gpu.InfoLoader;
@@ -25,7 +27,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR2;
-import static net.kibotu.android.deviceinfo.library.services.SystemService.*;
+import static net.kibotu.android.deviceinfo.library.services.SystemService.getActivityManager;
+import static net.kibotu.android.deviceinfo.library.services.SystemService.getSensorManager;
+import static net.kibotu.android.deviceinfo.library.services.SystemService.getTelephonyManager;
 
 /**
  * Created by Nyaruhodo on 20.02.2016.
@@ -33,20 +37,17 @@ import static net.kibotu.android.deviceinfo.library.services.SystemService.*;
 final public class Device {
 
     private static final String TAG = Device.class.getSimpleName();
-    private static Context context;
 
     private Device() throws IllegalAccessException {
         throw new IllegalAccessException();
     }
 
-    public static void setContext(Activity context) {
-        Device.context = context;
+    public static void with(Application context) {
+        ContextHelper.with(context);
     }
 
     public static Context getContext() {
-        if (context == null)
-            throw new IllegalStateException("'context' must not be null. Please invoke Device.setContext().");
-        return context;
+        return ContextHelper.getContext();
     }
 
     /**
