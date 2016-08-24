@@ -1,7 +1,6 @@
 language: android
 jdk: oraclejdk8
 
-# BugFix for 'git rev-list --full-history --all' showing too low commit count
 git:
   depth: 10000
 
@@ -18,43 +17,31 @@ matrix:
 android:
   components:
 
-      - tools
-      - build-tools-24.0.1
-      - android-24
-      - platform-tools
-      - extra-android-support
-      - extra-android-m2repository
-      - extra-google-google_play_services
-      - extra-google-m2repository
+    - platform-tools
+    - tools
+    - build-tools-24.0.1
+    - android-24
+    - extra-google-google_play_services
+    - extra-google-m2repository
+    - extra-android-m2repository
+    - addon-google_apis-google-24
 
   licenses:
-
     - android-sdk-license-.+
 
 before_install:
-
-  # retrolambda
-  - export JAVA7_HOME=/usr/lib/jvm/java-7-oracle
-  - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
-  - export JAVA_HOME=$JAVA7_HOME
-
-  # updating submodules
   - git submodule update --init --recursive
-
-  # executable gradle wrapper
   - chmod u+x gradlew
-
-  # list installed android sdk
   - android list sdk --no-ui --all --extended
-
-  # list installed android targets
   - android list targets
 
-script:
+install: true
 
+script:
   - ./gradlew -v
-  - ./gradlew clean lib:build --stacktrace --info -Dpre-dex=false
-  - ./gradlew clean app:build --stacktrace --info -Dpre-dex=false
+  - ./gradlew clean build --stacktrace
+
+after_failure: true
 
 notifications:
   email: false
