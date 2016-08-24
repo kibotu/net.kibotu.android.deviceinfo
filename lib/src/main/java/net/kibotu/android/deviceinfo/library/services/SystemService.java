@@ -2,7 +2,13 @@ package net.kibotu.android.deviceinfo.library.services;
 
 import android.accounts.AccountManager;
 import android.annotation.TargetApi;
-import android.app.*;
+import android.app.ActivityManager;
+import android.app.AlarmManager;
+import android.app.DownloadManager;
+import android.app.KeyguardManager;
+import android.app.NotificationManager;
+import android.app.SearchManager;
+import android.app.UiModeManager;
 import android.app.admin.DevicePolicyManager;
 import android.app.job.JobScheduler;
 import android.app.usage.NetworkStatsManager;
@@ -32,7 +38,11 @@ import android.net.nsd.NsdManager;
 import android.net.wifi.WifiManager;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.nfc.NfcManager;
-import android.os.*;
+import android.os.BatteryManager;
+import android.os.DropBoxManager;
+import android.os.PowerManager;
+import android.os.UserManager;
+import android.os.Vibrator;
 import android.os.storage.StorageManager;
 import android.print.PrintManager;
 import android.service.wallpaper.WallpaperService;
@@ -47,7 +57,16 @@ import android.view.accessibility.CaptioningManager;
 import android.view.inputmethod.InputMethodManager;
 import android.view.textservice.TextServicesManager;
 
-import static android.os.Build.VERSION_CODES.*;
+import static android.os.Build.VERSION_CODES.DONUT;
+import static android.os.Build.VERSION_CODES.ECLAIR;
+import static android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH;
+import static android.os.Build.VERSION_CODES.JELLY_BEAN;
+import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR1;
+import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR2;
+import static android.os.Build.VERSION_CODES.KITKAT;
+import static android.os.Build.VERSION_CODES.LOLLIPOP;
+import static android.os.Build.VERSION_CODES.LOLLIPOP_MR1;
+import static android.os.Build.VERSION_CODES.M;
 import static net.kibotu.android.deviceinfo.library.Device.getContext;
 
 /**

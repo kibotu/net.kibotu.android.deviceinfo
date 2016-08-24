@@ -66,7 +66,7 @@ public class CardViewSubListItemBinder extends DataBinder<ListItem, CardViewSubL
             }
         });
 
-        Logger.v(tag(), "label: " +  viewHolder.label.getText());
+        Logger.v(tag(), "label: " + viewHolder.label.getText());
 
     }
 

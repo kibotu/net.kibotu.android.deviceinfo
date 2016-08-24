@@ -1,72 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:autofit="http://schemas.android.com/tools"
-        android:id="@+id/card_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="2dp"
-        app:cardElevation="2dp"
-        android:layout_marginBottom="@dimen/cardMarginVertical"
-        android:layout_marginLeft="@dimen/cardMarginHorizontal"
-        android:layout_marginRight="@dimen/cardMarginHorizontal"
-        android:layout_marginTop="@dimen/cardMarginVertical"
-        app:cardPreventCornerOverlap="false"
-        app:contentPadding="0dp">
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:autofit="http://schemas.android.com/tools"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="2dp"
+    app:cardElevation="2dp"
+    android:layout_marginBottom="@dimen/cardMarginVertical"
+    android:layout_marginLeft="@dimen/cardMarginHorizontal"
+    android:layout_marginRight="@dimen/cardMarginHorizontal"
+    android:layout_marginTop="@dimen/cardMarginVertical"
+    app:cardPreventCornerOverlap="false"
+    app:contentPadding="0dp">
 
-    <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:orientation="vertical"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+
+        <TextView
+            android:background="@color/fragment_background"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/label"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/space_15"
+            android:textColor="@color/black"
+            android:textAppearance="@android:style/TextAppearance.Medium" />
+
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_height="wrap_content"
             android:layout_width="match_parent">
 
-        <TextView
-                android:background="@color/fragment_background"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:id="@+id/label"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="@dimen/space_15"
-                android:textColor="@color/black"
-                android:textAppearance="@android:style/TextAppearance.Medium"/>
-
-        <LinearLayout
-                android:orientation="horizontal"
+            <me.grantland.widget.AutofitTextView
+                android:id="@+id/key"
+                android:background="@color/white"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_width="match_parent">
+                android:layout_weight="0.50"
+                android:layout_gravity="center"
+                android:maxLines="1"
+                android:gravity="center_vertical"
+                android:padding="@dimen/space_10"
+                android:textColor="@color/black"
+                android:textAppearance="@android:style/TextAppearance.Small"
+                android:textSize="14sp"
+                autofit:minTextSize="8sp"
+                android:visibility="visible" />
 
             <me.grantland.widget.AutofitTextView
-                    android:id="@+id/key"
-                    android:background="@color/white"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.50"
-                    android:layout_gravity="center"
-                    android:maxLines="1"
-                    android:gravity="center_vertical"
-                    android:padding="@dimen/space_10"
-                    android:textColor="@color/black"
-                    android:textAppearance="@android:style/TextAppearance.Small"
-                    android:textSize="14sp"
-                    autofit:minTextSize="8sp"
-                    android:visibility="visible"/>
-
-            <me.grantland.widget.AutofitTextView
-                    android:id="@+id/value"
-                    android:background="@color/white"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.50"
-                    android:layout_gravity="center"
-                    android:maxLines="1"
-                    android:gravity="center_vertical"
-                    android:padding="@dimen/space_10"
-                    android:textColor="@color/black"
-                    android:textAppearance="@android:style/TextAppearance.Small"
-                    android:textSize="14sp"
-                    autofit:minTextSize="8sp"
-                    android:visibility="visible"/>
+                android:id="@+id/value"
+                android:background="@color/white"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.50"
+                android:layout_gravity="center"
+                android:maxLines="1"
+                android:gravity="center_vertical"
+                android:padding="@dimen/space_10"
+                android:textColor="@color/black"
+                android:textAppearance="@android:style/TextAppearance.Small"
+                android:textSize="14sp"
+                autofit:minTextSize="8sp"
+                android:visibility="visible" />
 
 
         </LinearLayout>

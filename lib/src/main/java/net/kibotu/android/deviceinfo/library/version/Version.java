@@ -13,7 +13,7 @@ public class Version {
         return Build.VERSION.SDK_INT >= version;
     }
 
-        public static String getOsAsString(final int sdk) {
+    public static String getOsAsString(final int sdk) {
         Field[] fields = Build.VERSION_CODES.class.getFields();
         for (Field field : fields) {
             String fieldName = field.getName();

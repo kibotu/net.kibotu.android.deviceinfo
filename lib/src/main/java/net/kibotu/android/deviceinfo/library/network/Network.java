@@ -1,6 +1,7 @@
 package net.kibotu.android.deviceinfo.library.network;
 
 import android.webkit.WebView;
+
 import net.kibotu.android.deviceinfo.library.Device;
 
 import java.net.InetAddress;

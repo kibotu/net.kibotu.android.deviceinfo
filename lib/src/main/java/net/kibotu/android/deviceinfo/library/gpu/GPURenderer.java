@@ -3,6 +3,7 @@ package net.kibotu.android.deviceinfo.library.gpu;
 import android.app.Activity;
 import android.opengl.GLSurfaceView;
 import android.view.ViewGroup;
+
 import net.kibotu.android.deviceinfo.library.Device;
 import net.kibotu.android.deviceinfo.library.misc.Callback;
 

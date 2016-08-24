@@ -1,21 +1,17 @@
 package net.kibotu.android.deviceinfo.library.gpu;
 
 import android.annotation.TargetApi;
-import android.app.ActivityManager;
-import android.content.Context;
-import android.content.pm.ConfigurationInfo;
 import android.opengl.GLES10;
 import android.opengl.GLES20;
 import android.opengl.GLES30;
 import android.os.Build;
-import net.kibotu.android.deviceinfo.library.Device;
+
+import java.nio.IntBuffer;
 
 import javax.microedition.khronos.egl.EGL10;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.egl.EGLDisplay;
-import java.nio.IntBuffer;
 
-import static net.kibotu.android.deviceinfo.library.Device.getContext;
 import static net.kibotu.android.deviceinfo.library.services.SystemService.getActivityManager;
 
 /**

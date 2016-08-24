@@ -2,8 +2,6 @@ package net.kibotu.android.deviceinfo.library.gpu;
 
 import java.util.ArrayList;
 
-import static net.kibotu.android.deviceinfo.library.services.SystemService.getActivityManager;
-
 public abstract class OpenGLInfo {
 
     final int eGLContextClientVersion;

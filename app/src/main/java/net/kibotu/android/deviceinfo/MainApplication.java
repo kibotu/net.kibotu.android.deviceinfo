@@ -14,8 +14,20 @@ import com.orhanobut.hawk.LogLevel;
 
 import net.kibotu.android.deviceinfo.library.Device;
 
+import java.util.Calendar;
+
 import io.fabric.sdk.android.Fabric;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+
+import static net.kibotu.android.deviceinfo.BuildConfig.BRANCH;
+import static net.kibotu.android.deviceinfo.BuildConfig.BUILD_DATE;
+import static net.kibotu.android.deviceinfo.BuildConfig.CANONICAL_VERSION_NAME;
+import static net.kibotu.android.deviceinfo.BuildConfig.COMMIT_HASH;
+import static net.kibotu.android.deviceinfo.BuildConfig.DEBUG;
+import static net.kibotu.android.deviceinfo.BuildConfig.FLAVOR;
+import static net.kibotu.android.deviceinfo.BuildConfig.SIMPLE_VERSION_NAME;
+import static net.kibotu.android.deviceinfo.BuildConfig.VERSION_CODE;
+import static net.kibotu.android.deviceinfo.BuildConfig.VERSION_NAME;
 
 /**
  * Created by Nyaruhodo on 20.02.2016.
@@ -28,11 +40,12 @@ public class MainApplication extends MultiDexApplication {
     public void onCreate() {
         MultiDex.install(getApplicationContext());
         super.onCreate();
-        Fabric.with(this, new Crashlytics());
+
+        initFabric();
 
         Device.with(this);
 
-        Logger.setLogLevel(BuildConfig.DEBUG
+        Logger.setLogLevel(DEBUG
                 ? Logger.Level.VERBOSE
                 : Logger.Level.SILENT);
 
@@ -44,14 +57,29 @@ public class MainApplication extends MultiDexApplication {
 
         // Secure shared preferences
         Hawk.init(this)
-                .setEncryptionMethod(BuildConfig.DEBUG
+                .setEncryptionMethod(DEBUG
                         ? HawkBuilder.EncryptionMethod.NO_ENCRYPTION
                         : HawkBuilder.EncryptionMethod.MEDIUM)
                 .setStorage(HawkBuilder.newSharedPrefStorage(this))
-                .setLogLevel(BuildConfig.DEBUG
+                .setLogLevel(DEBUG
                         ? LogLevel.FULL
                         : LogLevel.NONE)
                 .build();
+    }
+
+    private void initFabric() {
+        Fabric.with(this, new Crashlytics());
+        Crashlytics.setString("COMMIT_URL", "https://github.com/kibotu/net.kibotu.android.deviceinfo/commit/" + COMMIT_HASH);
+        Crashlytics.setString("TREE_URL", "https://kibotu/net.kibotu.android.deviceinfo/tree/" + COMMIT_HASH);
+        Crashlytics.setString("CANONICAL_VERSION_NAME", CANONICAL_VERSION_NAME);
+        Crashlytics.setString("SIMPLE_VERSION_NAME", SIMPLE_VERSION_NAME);
+        Crashlytics.setString("COMMIT_HASH", COMMIT_HASH);
+        Crashlytics.setString("BRANCH", BRANCH);
+        Crashlytics.setString("FLAVOR", FLAVOR);
+        Crashlytics.setString("VERSION_CODE", "" + VERSION_CODE);
+        Crashlytics.setString("VERSION_NAME", "" + VERSION_NAME);
+        Calendar d = Calendar.getInstance();
+        d.setTimeInMillis(Long.parseLong(BUILD_DATE));
     }
 
     @Override

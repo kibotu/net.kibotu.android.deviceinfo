@@ -1,6 +1,7 @@
 package net.kibotu.android.deviceinfo.library.misc;
 
 import android.app.Activity;
+
 import net.kibotu.android.deviceinfo.library.Device;
 
 import java.util.Observable;

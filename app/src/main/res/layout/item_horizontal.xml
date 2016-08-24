@@ -1,41 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:autofit="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:autofit="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <me.grantland.widget.AutofitTextView
+        android:id="@+id/label"
+        android:background="@color/white"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.50"
+        android:layout_gravity="center"
+        android:maxLines="1"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:padding="@dimen/space_10"
+        android:textColor="@color/black"
+        android:textAppearance="@android:style/TextAppearance.Small"
+        android:textSize="14sp"
+        android:singleLine="true"
+        autofit:minTextSize="8sp" />
 
     <me.grantland.widget.AutofitTextView
-            android:id="@+id/label"
-            android:background="@color/white"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.50"
-            android:layout_gravity="center"
-            android:maxLines="1"
-            android:gravity="center_vertical"
-            android:padding="@dimen/space_10"
-            android:textColor="@color/black"
-            android:textAppearance="@android:style/TextAppearance.Small"
-            android:textSize="14sp"
-            android:singleLine="true"
-            autofit:minTextSize="8sp"/>
-
-    <me.grantland.widget.AutofitTextView
-            android:id="@+id/value"
-            android:background="@color/white"
-            android:layout_width="0dp"
-            android:singleLine="true"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.50"
-            android:layout_gravity="center"
-            android:maxLines="1"
-            android:gravity="center_vertical"
-            android:padding="@dimen/space_10"
-            android:textColor="@color/black"
-            android:textAppearance="@android:style/TextAppearance.Small"
-            android:textSize="14sp"
-            autofit:minTextSize="8sp"/>
+        android:id="@+id/value"
+        android:background="@color/white"
+        android:layout_width="0dp"
+        android:singleLine="true"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.50"
+        android:layout_gravity="center"
+        android:maxLines="1"
+        android:gravity="center_vertical"
+        android:padding="@dimen/space_10"
+        android:textColor="@color/black"
+        android:textAppearance="@android:style/TextAppearance.Small"
+        android:textSize="14sp"
+        autofit:minTextSize="8sp" />
 </LinearLayout>

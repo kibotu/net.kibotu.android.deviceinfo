@@ -6,9 +6,21 @@ import android.opengl.GLES30;
 
 import java.util.Arrays;
 
-import static android.opengl.GLES20.*;
+import static android.opengl.GLES20.GL_FRAGMENT_SHADER;
+import static android.opengl.GLES20.GL_HIGH_FLOAT;
+import static android.opengl.GLES20.GL_HIGH_INT;
+import static android.opengl.GLES20.GL_LOW_FLOAT;
+import static android.opengl.GLES20.GL_LOW_INT;
+import static android.opengl.GLES20.GL_MEDIUM_FLOAT;
+import static android.opengl.GLES20.GL_MEDIUM_INT;
+import static android.opengl.GLES20.GL_VERTEX_SHADER;
 import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR2;
-import static net.kibotu.android.deviceinfo.library.gpu.OpenGLExtensions.*;
+import static net.kibotu.android.deviceinfo.library.gpu.OpenGLExtensions.glGetIntegerv;
+import static net.kibotu.android.deviceinfo.library.gpu.OpenGLExtensions.glGetShaderPrecisionFormat;
+import static net.kibotu.android.deviceinfo.library.gpu.OpenGLExtensions.glGetStringi;
+import static net.kibotu.android.deviceinfo.library.gpu.OpenGLExtensions.isVTFSupported;
+import static net.kibotu.android.deviceinfo.library.gpu.OpenGLExtensions.supportsOpenGLES2;
+import static net.kibotu.android.deviceinfo.library.gpu.OpenGLExtensions.supportsOpenGLES3;
 import static net.kibotu.android.deviceinfo.library.version.Version.isAtLeastVersion;
 
 public class OpenGLGles20Info extends OpenGLInfo {

@@ -7,10 +7,13 @@ import android.graphics.Point;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
+
 import net.kibotu.android.deviceinfo.library.R;
 
 import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR1;
-import static java.lang.Math.*;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+import static java.lang.Math.sqrt;
 import static net.kibotu.android.deviceinfo.library.Device.getContext;
 import static net.kibotu.android.deviceinfo.library.services.SystemService.getWindowManager;
 import static net.kibotu.android.deviceinfo.library.version.Version.isAtLeastVersion;

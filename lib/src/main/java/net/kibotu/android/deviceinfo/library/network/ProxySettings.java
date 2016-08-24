@@ -2,6 +2,7 @@ package net.kibotu.android.deviceinfo.library.network;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
+
 import net.kibotu.android.deviceinfo.library.services.SystemService;
 
 import java.lang.reflect.Method;

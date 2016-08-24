@@ -66,7 +66,7 @@ public class HorizontalListItemBinder extends DataBinder<ListItem, HorizontalLis
             }
         });
 
-        Logger.v(tag(), "label: " +  viewHolder.label.getText() + " value: " +  viewHolder.value.getText());
+        Logger.v(tag(), "label: " + viewHolder.label.getText() + " value: " + viewHolder.value.getText());
 
     }
 

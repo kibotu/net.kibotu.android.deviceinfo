@@ -50,7 +50,7 @@ public class CardViewHorizontalListItemBinder extends DataBinder<ListItem, CardV
         if (!isEmpty(item.getValue()))
             viewHolder.value.setText(fromHtml(item.getValue()));
 
-        Logger.v(tag(), "label: " +  viewHolder.label.getText() + " value: " +  viewHolder.value.getText());
+        Logger.v(tag(), "label: " + viewHolder.label.getText() + " value: " + viewHolder.value.getText());
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

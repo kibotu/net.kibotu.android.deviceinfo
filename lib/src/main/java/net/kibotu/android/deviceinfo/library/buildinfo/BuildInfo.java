@@ -5,12 +5,17 @@ import android.content.pm.PackageManager;
 import android.content.pm.PermissionGroupInfo;
 import android.content.pm.PermissionInfo;
 import android.provider.Settings;
+
 import net.kibotu.android.deviceinfo.library.Device;
 import net.kibotu.android.deviceinfo.library.misc.ReflectionHelper;
 import net.kibotu.android.deviceinfo.library.version.Version;
 
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import static android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH;
 

@@ -1,6 +1,7 @@
 package net.kibotu.android.deviceinfo.library.misc;
 
 import android.support.annotation.NonNull;
+
 import net.kibotu.android.deviceinfo.library.cpu.Core;
 import net.kibotu.android.deviceinfo.library.cpu.Cpu;
 import net.kibotu.android.deviceinfo.library.memory.Ram;
@@ -11,7 +12,6 @@ import java.util.Scanner;
 
 /**
  * @see <a href="https://www.kernel.org/doc/Documentation/filesystems/proc.txt">proc stat</a>
- *
  */
 public class Proc {
 
