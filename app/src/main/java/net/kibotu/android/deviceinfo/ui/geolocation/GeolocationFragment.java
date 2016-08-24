@@ -1,12 +1,6 @@
 package net.kibotu.android.deviceinfo.ui.geolocation;
 
-import com.common.android.utils.network.RequestProvider;
-import com.common.android.utils.network.model.FreeGeoIpResponseModel;
-import com.common.android.utils.network.model.IpApiComResponseModel;
-import com.common.android.utils.network.model.IpInfoResponseModel;
-import com.orhanobut.wasp.Callback;
-import com.orhanobut.wasp.Response;
-import com.orhanobut.wasp.WaspError;
+import com.common.android.utils.network.GeoRequestProvider;
 
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.model.ListItem;
@@ -59,31 +53,23 @@ public class GeolocationFragment extends ListFragment {
 
         addSubListItem(item);
 
-        RequestProvider.freeGeoIpService().getGeoIp(new Callback<FreeGeoIpResponseModel>() {
-            @Override
-            public void onSuccess(Response response, FreeGeoIpResponseModel responseModel) {
+        GeoRequestProvider.freeGeoIpService().getGeoIp().subscribe(responseModel -> {
 
-                item
-                        .addChild(new ListItem().setLabel("Ip").setValue(responseModel.getIp()))
-                        .addChild(new ListItem().setLabel("Country Name").setValue(responseModel.getCountryName()))
-                        .addChild(new ListItem().setLabel("Country Code").setValue(responseModel.getCountryCode()))
-                        .addChild(new ListItem().setLabel("Region Name").setValue(responseModel.getRegionName()))
-                        .addChild(new ListItem().setLabel("Region Code").setValue(responseModel.getRegionCode()))
-                        .addChild(new ListItem().setLabel("City").setValue(responseModel.getCity()))
-                        .addChild(new ListItem().setLabel("Postal Code").setValue(responseModel.getZipCode()))
-                        .addChild(new ListItem().setLabel("Timezone").setValue(responseModel.getTimeZone()))
-                        .addChild(new ListItem().setLabel("Latitude").setValue(responseModel.getLatitude()))
-                        .addChild(new ListItem().setLabel("Longitude").setValue(responseModel.getLongitude()))
-                        .addChild(new ListItem().setLabel("Metro Code").setValue(responseModel.getMetroCode()));
+            item
+                    .addChild(new ListItem().setLabel("Ip").setValue(responseModel.getIp()))
+                    .addChild(new ListItem().setLabel("Country Name").setValue(responseModel.getCountryName()))
+                    .addChild(new ListItem().setLabel("Country Code").setValue(responseModel.getCountryCode()))
+                    .addChild(new ListItem().setLabel("Region Name").setValue(responseModel.getRegionName()))
+                    .addChild(new ListItem().setLabel("Region Code").setValue(responseModel.getRegionCode()))
+                    .addChild(new ListItem().setLabel("City").setValue(responseModel.getCity()))
+                    .addChild(new ListItem().setLabel("Postal Code").setValue(responseModel.getZipCode()))
+                    .addChild(new ListItem().setLabel("Timezone").setValue(responseModel.getTimeZone()))
+                    .addChild(new ListItem().setLabel("Latitude").setValue(responseModel.getLatitude()))
+                    .addChild(new ListItem().setLabel("Longitude").setValue(responseModel.getLongitude()))
+                    .addChild(new ListItem().setLabel("Metro Code").setValue(responseModel.getMetroCode()));
 
-                notifyDataSetChanged();
-            }
-
-            @Override
-            public void onError(WaspError waspError) {
-                waspError.printStackTrace();
-            }
-        });
+            notifyDataSetChanged();
+        }, Throwable::printStackTrace);
     }
 
     private void addIpInfo() {
@@ -91,28 +77,21 @@ public class GeolocationFragment extends ListFragment {
 
         addSubListItem(item);
 
-        RequestProvider.ipInfoIoService().getGeoIp(new Callback<IpInfoResponseModel>() {
-            @Override
-            public void onSuccess(Response response, IpInfoResponseModel responseModel) {
 
-                item
-                        .addChild(new ListItem().setLabel("Ip").setValue(responseModel.getIp()))
-                        .addChild(new ListItem().setLabel("Hostname").setValue(responseModel.getHostname()))
-                        .addChild(new ListItem().setLabel("City").setValue(responseModel.getCity()))
-                        .addChild(new ListItem().setLabel("Region").setValue(responseModel.getRegion()))
-                        .addChild(new ListItem().setLabel("Country").setValue(responseModel.getCountry()))
-                        .addChild(new ListItem().setLabel("Location").setValue(responseModel.getLoc()))
-                        .addChild(new ListItem().setLabel("Org").setValue(responseModel.getOrg()))
-                        .addChild(new ListItem().setLabel("Postal Code").setValue(responseModel.getPostal()));
+        GeoRequestProvider.ipApiComService().getGeoIp().subscribe(responseModel -> {
 
-                notifyDataSetChanged();
-            }
+            item
+                    .addChild(new ListItem().setLabel("Ip").setValue(responseModel.getIp()))
+                    .addChild(new ListItem().setLabel("Hostname").setValue(responseModel.getHostname()))
+                    .addChild(new ListItem().setLabel("City").setValue(responseModel.getCity()))
+                    .addChild(new ListItem().setLabel("Region").setValue(responseModel.getRegion()))
+                    .addChild(new ListItem().setLabel("Country").setValue(responseModel.getCountry()))
+                    .addChild(new ListItem().setLabel("Location").setValue(responseModel.getLoc()))
+                    .addChild(new ListItem().setLabel("Org").setValue(responseModel.getOrg()))
+                    .addChild(new ListItem().setLabel("Postal Code").setValue(responseModel.getPostal()));
 
-            @Override
-            public void onError(WaspError waspError) {
-                waspError.printStackTrace();
-            }
-        });
+            notifyDataSetChanged();
+        }, Throwable::printStackTrace);
     }
 
     private void addIpApiCom() {
@@ -120,33 +99,25 @@ public class GeolocationFragment extends ListFragment {
 
         addSubListItem(item);
 
-        RequestProvider.ipApiComService().getGeoIp(new Callback<IpApiComResponseModel>() {
-            @Override
-            public void onSuccess(Response response, IpApiComResponseModel responseModel) {
+        GeoRequestProvider.ipInfoIoService().getGeoIp().subscribe(responseModel -> {
 
-                item.
-                        addChild(new ListItem().setLabel("As").setValue(responseModel.getAs()))
-                        .addChild(new ListItem().setLabel("City").setValue(responseModel.getCity()))
-                        .addChild(new ListItem().setLabel("Country").setValue(responseModel.getCountry()))
-                        .addChild(new ListItem().setLabel("Country Code").setValue(responseModel.getCountryCode()))
-                        .addChild(new ListItem().setLabel("Isp").setValue(responseModel.getIsp()))
-                        .addChild(new ListItem().setLabel("Latitude").setValue(responseModel.getLatitude()))
-                        .addChild(new ListItem().setLabel("Longitude").setValue(responseModel.getLongitude()))
-                        .addChild(new ListItem().setLabel("Org").setValue(responseModel.getOrg()))
-                        .addChild(new ListItem().setLabel("Query").setValue(responseModel.getQuery()))
-                        .addChild(new ListItem().setLabel("Region").setValue(responseModel.getRegion()))
-                        .addChild(new ListItem().setLabel("RegionName").setValue(responseModel.getRegionName()))
-                        .addChild(new ListItem().setLabel("Status").setValue(responseModel.getStatus()))
-                        .addChild(new ListItem().setLabel("Timezone").setValue(responseModel.getTimezone()));
+            item
+//                     .addChild(new ListItem().setLabel("As").setValue(responseModel.getAs()))
+                    .addChild(new ListItem().setLabel("City").setValue(responseModel.getCity()))
+                    .addChild(new ListItem().setLabel("Country").setValue(responseModel.getCountry()))
+//                    .addChild(new ListItem().setLabel("Country Code").setValue(responseModel.getCountryCode()))
+//                    .addChild(new ListItem().setLabel("Isp").setValue(responseModel.getIsp()))
+//                    .addChild(new ListItem().setLabel("Latitude").setValue(responseModel.getLatitude()))
+//                    .addChild(new ListItem().setLabel("Longitude").setValue(responseModel.getLongitude()))
+                    .addChild(new ListItem().setLabel("Org").setValue(responseModel.getOrg()))
+//                    .addChild(new ListItem().setLabel("Query").setValue(responseModel.getQuery()))
+                    .addChild(new ListItem().setLabel("Region").setValue(responseModel.getRegion()));
+//                    .addChild(new ListItem().setLabel("RegionName").setValue(responseModel.getRegionName()))
+//                    .addChild(new ListItem().setLabel("Status").setValue(responseModel.getStatus()))
+//                    .addChild(new ListItem().setLabel("Timezone").setValue(responseModel.getTimezone()));
 
-                notifyDataSetChanged();
-            }
-
-            @Override
-            public void onError(WaspError waspError) {
-                waspError.printStackTrace();
-            }
-        });
+            notifyDataSetChanged();
+        }, Throwable::printStackTrace);
     }
 
     @Override

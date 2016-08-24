@@ -1,10 +1,6 @@
 package net.kibotu.android.deviceinfo.ui.sensor;
 
 import android.hardware.Sensor;
-import android.support.annotation.NonNull;
-import android.view.View;
-
-import com.common.android.utils.ui.recyclerView.OnItemClickListener;
 
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.library.Device;
@@ -89,12 +85,7 @@ public class SensorFragment extends ListFragment {
             addSubListItem(listItem);
         }
 
-        adapter.setOnItemClickListener(new OnItemClickListener<ListItem>() {
-            @Override
-            public void onItemClick(@NonNull ListItem listItem, @NonNull View view, int position) {
-                showSensorData(sensorList.get(position));
-            }
-        });
+        adapter.setOnItemClickListener((listItem, view, position) -> showSensorData(sensorList.get(position)));
     }
 
     private static void showSensorData(final Sensor sensor) {

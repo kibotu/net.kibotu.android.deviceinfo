@@ -3,19 +3,18 @@ package net.kibotu.android.deviceinfo.ui.list.binder;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.common.android.utils.logging.Logger;
-import com.common.android.utils.ui.BaseViewHolder;
-import com.common.android.utils.ui.recyclerView.DataBindAdapter;
-import com.common.android.utils.ui.recyclerView.DataBinder;
 
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.model.ListItem;
+import net.kibotu.android.recyclerviewpresenter.BaseViewHolder;
+import net.kibotu.android.recyclerviewpresenter.Presenter;
+import net.kibotu.android.recyclerviewpresenter.PresenterAdapter;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 import static android.text.Html.fromHtml;
 import static android.text.TextUtils.isEmpty;
@@ -23,9 +22,9 @@ import static android.text.TextUtils.isEmpty;
 /**
  * Created by Nyaruhodo on 21.02.2016.
  */
-public class CardViewHorizontalListItemBinder extends DataBinder<ListItem, CardViewHorizontalListItemBinder.ViewHolder> {
+public class CardViewHorizontalListItemBinder extends Presenter<ListItem, CardViewHorizontalListItemBinder.ViewHolder> {
 
-    public CardViewHorizontalListItemBinder(@NonNull DataBindAdapter<ListItem> dataBindAdapter) {
+    public CardViewHorizontalListItemBinder(@NonNull PresenterAdapter<ListItem> dataBindAdapter) {
         super(dataBindAdapter);
     }
 
@@ -36,13 +35,12 @@ public class CardViewHorizontalListItemBinder extends DataBinder<ListItem, CardV
 
     @NonNull
     @Override
-    protected ViewHolder createViewHolder(@LayoutRes final int layout, ViewGroup viewGroup) {
+    protected ViewHolder createViewHolder(@LayoutRes final int layout, @NonNull ViewGroup viewGroup) {
         return new ViewHolder(getLayout(), viewGroup);
     }
 
     @Override
-    public void bindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        final ListItem item = get(position);
+    public void bindViewHolder(@NonNull ViewHolder viewHolder, @NonNull ListItem item, int position) {
 
         if (!isEmpty(item.getLabel()))
             viewHolder.label.setText(item.getLabel());
@@ -52,22 +50,17 @@ public class CardViewHorizontalListItemBinder extends DataBinder<ListItem, CardV
 
         Logger.v(tag(), "label: " + viewHolder.label.getText() + " value: " + viewHolder.value.getText());
 
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Logger.toast(item.getDescription());
-            }
-        });
+        viewHolder.itemView.setOnClickListener(v -> Logger.toast(item.getDescription()));
     }
 
     public static class ViewHolder extends BaseViewHolder {
 
         @NonNull
-        @Bind(R.id.label)
+        @BindView(R.id.label)
         TextView label;
 
         @NonNull
-        @Bind(R.id.value)
+        @BindView(R.id.value)
         TextView value;
 
         public ViewHolder(@LayoutRes int layout, @Nullable ViewGroup parent) {

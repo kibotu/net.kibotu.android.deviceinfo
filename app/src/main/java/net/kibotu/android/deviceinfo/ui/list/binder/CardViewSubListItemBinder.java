@@ -2,38 +2,30 @@ package net.kibotu.android.deviceinfo.ui.list.binder;
 
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.common.android.utils.logging.Logger;
-import com.common.android.utils.ui.BaseViewHolder;
-import com.common.android.utils.ui.recyclerView.DataBindAdapter;
-import com.common.android.utils.ui.recyclerView.DataBinder;
 
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.model.ListItem;
+import net.kibotu.android.recyclerviewpresenter.BaseViewHolder;
+import net.kibotu.android.recyclerviewpresenter.Presenter;
+import net.kibotu.android.recyclerviewpresenter.PresenterAdapter;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 import static com.common.android.utils.ContextHelper.getContext;
 
 /**
  * Created by Nyaruhodo on 05.03.2016.
  */
-public class CardViewSubListItemBinder extends DataBinder<ListItem, CardViewSubListItemBinder.ViewHolder> {
+public class CardViewSubListItemBinder extends Presenter<ListItem, CardViewSubListItemBinder.ViewHolder> {
 
-    public CardViewSubListItemBinder(@NonNull DataBindAdapter<ListItem> dataBindAdapter) {
+    public CardViewSubListItemBinder(@NonNull PresenterAdapter<ListItem> dataBindAdapter) {
         super(dataBindAdapter);
-    }
-
-    @NonNull
-    @Override
-    protected ViewHolder createViewHolder(int i, ViewGroup viewGroup) {
-        return new ViewHolder(i, viewGroup);
     }
 
     @Override
@@ -41,10 +33,14 @@ public class CardViewSubListItemBinder extends DataBinder<ListItem, CardViewSubL
         return R.layout.sub_list_item;
     }
 
+    @NonNull
+    @Override
+    protected ViewHolder createViewHolder(int layout, @NonNull ViewGroup viewGroup) {
+        return new ViewHolder(layout, viewGroup);
+    }
 
     @Override
-    public void bindViewHolder(@NonNull final ViewHolder viewHolder, final int position) {
-        final ListItem item = get(position);
+    public void bindViewHolder(@NonNull ViewHolder viewHolder, @NonNull ListItem item, int position) {
 
         viewHolder.label.setText(item.getLabel());
 
@@ -56,36 +52,32 @@ public class CardViewSubListItemBinder extends DataBinder<ListItem, CardViewSubL
 
         viewHolder.adapter.notifyDataSetChanged();
 
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Logger.toast(item.getDescription());
+        viewHolder.itemView.setOnClickListener(v -> {
+            Logger.toast(item.getDescription());
 
-                if (dataBindAdapter.getOnItemClickListener() != null)
-                    dataBindAdapter.getOnItemClickListener().onItemClick(item, viewHolder.itemView, position);
-            }
+            if (presenterAdapter.getOnItemClickListener() != null)
+                presenterAdapter.getOnItemClickListener().onItemClick(item, viewHolder.itemView, position);
         });
 
         Logger.v(tag(), "label: " + viewHolder.label.getText());
-
     }
 
     public static class ViewHolder extends BaseViewHolder {
 
         @NonNull
-        @Bind(R.id.label)
+        @BindView(R.id.label)
         TextView label;
 
         @NonNull
-        @Bind(R.id.list)
+        @BindView(R.id.list)
         RecyclerView list;
 
-        final DataBindAdapter<Object> adapter;
+        final PresenterAdapter<Object> adapter;
 
-        public ViewHolder(@LayoutRes int layout, @Nullable ViewGroup parent) {
+        public ViewHolder(@LayoutRes int layout, ViewGroup parent) {
             super(layout, parent);
 
-            adapter = new DataBindAdapter<>();
+            adapter = new PresenterAdapter<>();
             list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
             list.setAdapter(adapter);
         }

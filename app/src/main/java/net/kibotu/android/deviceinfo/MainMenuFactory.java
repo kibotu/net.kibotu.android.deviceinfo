@@ -1,6 +1,5 @@
 package net.kibotu.android.deviceinfo;
 
-import com.common.android.utils.ui.menu.MenuItem;
 
 import net.kibotu.android.deviceinfo.ui.app.AppFragment;
 import net.kibotu.android.deviceinfo.ui.battery.BatteryFragment;
@@ -12,6 +11,7 @@ import net.kibotu.android.deviceinfo.ui.geolocation.GeolocationFragment;
 import net.kibotu.android.deviceinfo.ui.gpu.GpuFragment;
 import net.kibotu.android.deviceinfo.ui.java.JavaFragment;
 import net.kibotu.android.deviceinfo.ui.memory.MemoryFragment;
+import net.kibotu.android.deviceinfo.ui.menu.MenuItem;
 import net.kibotu.android.deviceinfo.ui.network.NetworkFragment;
 import net.kibotu.android.deviceinfo.ui.other.MiscellaneousFragment;
 import net.kibotu.android.deviceinfo.ui.sensor.SensorFragment;

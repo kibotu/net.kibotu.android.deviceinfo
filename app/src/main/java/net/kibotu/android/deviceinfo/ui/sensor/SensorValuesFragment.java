@@ -14,7 +14,7 @@ import com.jjoe64.graphview.GraphView;
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.ui.BaseFragment;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 import static android.hardware.SensorManager.SENSOR_DELAY_UI;
 import static net.kibotu.android.deviceinfo.R.layout.sensor;
@@ -26,17 +26,17 @@ import static net.kibotu.android.deviceinfo.library.services.SystemService.getSe
 public abstract class SensorValuesFragment extends BaseFragment {
 
     @NonNull
-    @Bind(R.id.x)
+    @BindView(R.id.x)
     TextView xLabel;
     @NonNull
-    @Bind(R.id.y)
+    @BindView(R.id.y)
     TextView yLabel;
     @NonNull
-    @Bind(R.id.z)
+    @BindView(R.id.z)
     TextView zLabel;
 
     @NonNull
-    @Bind(R.id.graph)
+    @BindView(R.id.graph)
     GraphView graphView;
 
     protected SensorManager sensorManager;
@@ -61,7 +61,7 @@ public abstract class SensorValuesFragment extends BaseFragment {
     @Nullable
     @Override
     protected View.OnClickListener getHomeIconClickListener() {
-        return v -> ContextHelper.getContext().onBackPressed();
+        return v -> ContextHelper.getActivity().onBackPressed();
     }
 
     @Override

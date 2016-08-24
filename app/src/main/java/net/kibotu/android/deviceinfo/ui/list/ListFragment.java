@@ -6,16 +6,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.animation.OvershootInterpolator;
 
-import com.common.android.utils.ui.recyclerView.DataBindAdapter;
-
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.model.ListItem;
 import net.kibotu.android.deviceinfo.ui.BaseFragment;
 import net.kibotu.android.deviceinfo.ui.list.binder.CardViewHorizontalListItemBinder;
 import net.kibotu.android.deviceinfo.ui.list.binder.CardViewSubListItemBinder;
 import net.kibotu.android.deviceinfo.ui.list.binder.VerticalListItemBinderCardView;
+import net.kibotu.android.recyclerviewpresenter.PresenterAdapter;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import jp.wasabeef.recyclerview.animators.LandingAnimator;
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
@@ -28,9 +27,9 @@ import static android.text.TextUtils.isEmpty;
 public abstract class ListFragment extends BaseFragment {
 
     @NonNull
-    @Bind(R.id.list)
+    @BindView(R.id.list)
     RecyclerView list;
-    protected DataBindAdapter<ListItem> adapter;
+    protected PresenterAdapter<ListItem> adapter;
 
     @Override
     public int getLayout() {
@@ -44,7 +43,7 @@ public abstract class ListFragment extends BaseFragment {
         list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         setListItemAnimator();
 
-        adapter = new DataBindAdapter<>();
+        adapter = new PresenterAdapter<>();
         list.setAdapter(injectAdapterAnimation(adapter));
     }
 

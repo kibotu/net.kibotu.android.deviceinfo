@@ -2,17 +2,16 @@ package net.kibotu.android.deviceinfo.ui.list.binder;
 
 import android.support.annotation.NonNull;
 
-import com.common.android.utils.ui.recyclerView.DataBindAdapter;
-
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.model.ListItem;
+import net.kibotu.android.recyclerviewpresenter.PresenterAdapter;
 
 /**
  * Created by Nyaruhodo on 21.02.2016.
  */
 public class VerticalListItemBinderCardView extends CardViewHorizontalListItemBinder {
 
-    public VerticalListItemBinderCardView(@NonNull DataBindAdapter<ListItem> dataBindAdapter) {
+    public VerticalListItemBinderCardView(@NonNull PresenterAdapter<ListItem> dataBindAdapter) {
         super(dataBindAdapter);
     }
 

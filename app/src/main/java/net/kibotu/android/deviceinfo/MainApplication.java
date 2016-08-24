@@ -41,9 +41,9 @@ public class MainApplication extends MultiDexApplication {
         MultiDex.install(getApplicationContext());
         super.onCreate();
 
-        initFabric();
-
         Device.with(this);
+
+        initFabric();
 
         Logger.setLogLevel(DEBUG
                 ? Logger.Level.VERBOSE
@@ -85,6 +85,7 @@ public class MainApplication extends MultiDexApplication {
     @Override
     public void onTerminate() {
         unregisterActivityLifecycleCallbacks(activityLifecycleCallbacks);
+        Device.onTerminate();
         super.onTerminate();
     }
 

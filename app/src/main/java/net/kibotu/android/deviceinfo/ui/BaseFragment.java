@@ -12,12 +12,13 @@ import android.view.ViewGroup;
 
 import com.common.android.utils.interfaces.LayoutProvider;
 import com.common.android.utils.interfaces.LogTag;
-import com.common.android.utils.ui.menu.ISupportMenu;
-import com.common.android.utils.ui.menu.MainMenuProvider;
 
 import net.kibotu.android.deviceinfo.R;
+import net.kibotu.android.deviceinfo.ui.menu.ISupportMenu;
+import net.kibotu.android.deviceinfo.ui.menu.MainMenuProvider;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 import static com.common.android.utils.extensions.ViewExtensions.getContentRoot;
 
@@ -27,6 +28,7 @@ import static com.common.android.utils.extensions.ViewExtensions.getContentRoot;
 public abstract class BaseFragment extends Fragment implements LogTag, LayoutProvider, ISupportMenu {
 
     protected View rootView;
+    private Unbinder unbinder;
 
     public BaseFragment() {
         // mandatory for fragment transactions
@@ -41,18 +43,14 @@ public abstract class BaseFragment extends Fragment implements LogTag, LayoutPro
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (rootView == null)
-            rootView = inflater.inflate(getLayout(), container, false);
-
         updateMainMenu();
-
-        return rootView;
+        return rootView = inflater.inflate(getLayout(), container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         onViewCreated();
     }
 
@@ -84,7 +82,7 @@ public abstract class BaseFragment extends Fragment implements LogTag, LayoutPro
 
     @Override
     public void onDestroyView() {
-        ButterKnife.unbind(this);
+        unbinder.unbind();
         super.onDestroyView();
     }
 

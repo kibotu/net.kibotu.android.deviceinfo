@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.ui.buildinfo.BuildFragment;
 
-import static com.common.android.utils.ContextHelper.getContext;
+import static com.common.android.utils.ContextHelper.getFragmentActivity;
 import static com.common.android.utils.extensions.FragmentExtensions.newInstance;
 
 /**
@@ -18,7 +18,7 @@ public class FragmentProvider {
     }
 
     public static void showBuildConfigFragment() {
-        final FragmentManager fm = getContext().getSupportFragmentManager();
+        final FragmentManager fm = getFragmentActivity().getSupportFragmentManager();
         final BaseFragment fragment = newInstance(BuildFragment.class, null);
         fm.beginTransaction()
                 .replace(R.id.fragment_container, fragment)

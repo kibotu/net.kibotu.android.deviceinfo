@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include
+                layout="@layout/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize" />
+
+            <FrameLayout
+                android:id="@+id/fragment_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/toolbar" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/toolbar"
+                android:foreground="@drawable/bottom_shadow"
+                android:foregroundGravity="top|fill_horizontal" />
+
+        </RelativeLayout>
+
+        <android.support.design.widget.NavigationView
+            android:id="@+id/left_drawer"
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@android:color/white"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dp">
+
+            <include
+                layout="@layout/left_drawer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </android.support.design.widget.NavigationView>
+
+    </android.support.v4.widget.DrawerLayout>
+</LinearLayout>

@@ -8,14 +8,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.common.android.utils.logging.Logger;
-import com.common.android.utils.ui.BaseViewHolder;
-import com.common.android.utils.ui.recyclerView.DataBindAdapter;
-import com.common.android.utils.ui.recyclerView.DataBinder;
 
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.model.ListItem;
+import net.kibotu.android.recyclerviewpresenter.BaseViewHolder;
+import net.kibotu.android.recyclerviewpresenter.Presenter;
+import net.kibotu.android.recyclerviewpresenter.PresenterAdapter;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 import static android.text.Html.fromHtml;
 import static android.text.TextUtils.isEmpty;
@@ -23,16 +23,10 @@ import static android.text.TextUtils.isEmpty;
 /**
  * Created by Nyaruhodo on 06.03.2016.
  */
-public class HorizontalListItemBinder extends DataBinder<ListItem, HorizontalListItemBinder.ViewHolder> {
+public class HorizontalListItemBinder extends Presenter<ListItem, HorizontalListItemBinder.ViewHolder> {
 
-    public HorizontalListItemBinder(@NonNull DataBindAdapter<ListItem> dataBindAdapter) {
+    public HorizontalListItemBinder(@NonNull PresenterAdapter<ListItem> dataBindAdapter) {
         super(dataBindAdapter);
-    }
-
-    @NonNull
-    @Override
-    protected ViewHolder createViewHolder(int i, ViewGroup viewGroup) {
-        return new ViewHolder(i, viewGroup);
     }
 
     @Override
@@ -40,10 +34,14 @@ public class HorizontalListItemBinder extends DataBinder<ListItem, HorizontalLis
         return R.layout.item_horizontal;
     }
 
+    @NonNull
+    @Override
+    protected ViewHolder createViewHolder(@LayoutRes int layout, @NonNull ViewGroup parent) {
+        return new ViewHolder(layout, parent);
+    }
 
     @Override
-    public void bindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        final ListItem item = get(position);
+    public void bindViewHolder(@NonNull ViewHolder viewHolder, @NonNull ListItem item, int position) {
 
         if (!isEmpty(item.getLabel())) {
             viewHolder.label.setVisibility(View.VISIBLE);
@@ -59,25 +57,19 @@ public class HorizontalListItemBinder extends DataBinder<ListItem, HorizontalLis
             viewHolder.value.setVisibility(View.GONE);
         }
 
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Logger.toast(item.getDescription());
-            }
-        });
+        viewHolder.itemView.setOnClickListener(v -> Logger.toast(item.getDescription()));
 
         Logger.v(tag(), "label: " + viewHolder.label.getText() + " value: " + viewHolder.value.getText());
-
     }
 
     public static class ViewHolder extends BaseViewHolder {
 
         @NonNull
-        @Bind(R.id.label)
+        @BindView(R.id.label)
         TextView label;
 
         @NonNull
-        @Bind(R.id.value)
+        @BindView(R.id.value)
         TextView value;
 
         public ViewHolder(@LayoutRes int layout, @Nullable ViewGroup parent) {

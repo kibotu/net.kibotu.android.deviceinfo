@@ -16,11 +16,12 @@ import com.common.android.utils.extensions.FragmentExtensions;
 import com.common.android.utils.extensions.ViewExtensions;
 import com.common.android.utils.interfaces.LogTag;
 import com.common.android.utils.logging.Logger;
-import com.common.android.utils.ui.menu.IMainMenu;
-import com.common.android.utils.ui.menu.IMenuProvider;
-import com.common.android.utils.ui.menu.ISupportMenu;
-import com.common.android.utils.ui.menu.MainMenu;
-import com.common.android.utils.ui.menu.MainMenuProvider;
+
+import net.kibotu.android.deviceinfo.ui.menu.IMainMenu;
+import net.kibotu.android.deviceinfo.ui.menu.IMenuProvider;
+import net.kibotu.android.deviceinfo.ui.menu.ISupportMenu;
+import net.kibotu.android.deviceinfo.ui.menu.MainMenu;
+import net.kibotu.android.deviceinfo.ui.menu.MainMenuProvider;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
