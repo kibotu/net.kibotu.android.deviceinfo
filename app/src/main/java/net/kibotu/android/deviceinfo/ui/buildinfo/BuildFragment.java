@@ -99,6 +99,7 @@ public class BuildFragment extends ListFragment {
         final ListItem item = new ListItem().setLabel("Features").setDescription("List of features that are available on the system. This device supports " + systemAvailableFeatures.size() + " Features.");
         for (final Map.Entry<String, FeatureInfo> entry : systemAvailableFeatures.entrySet()) {
             item.addChild(new ListItem().setLabel(entry.getKey()));
+
         }
 
         addSubListItem(item);

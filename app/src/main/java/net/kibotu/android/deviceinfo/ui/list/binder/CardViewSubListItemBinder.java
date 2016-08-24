@@ -65,6 +65,9 @@ public class CardViewSubListItemBinder extends DataBinder<ListItem, CardViewSubL
                     dataBindAdapter.getOnItemClickListener().onItemClick(item, viewHolder.itemView, position);
             }
         });
+
+        Logger.v(tag(), "label: " +  viewHolder.label.getText());
+
     }
 
     public static class ViewHolder extends BaseViewHolder {

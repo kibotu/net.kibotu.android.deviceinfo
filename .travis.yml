@@ -19,8 +19,8 @@ android:
   components:
 
       - tools
-      - build-tools-23.0.3
-      - android-23
+      - build-tools-24.0.1
+      - android-24
       - platform-tools
       - extra-android-support
       - extra-android-m2repository
@@ -50,18 +50,11 @@ before_install:
   # list installed android targets
   - android list targets
 
-install: true
-
 script:
 
   - ./gradlew -v
   - ./gradlew clean lib:build --stacktrace --info -Dpre-dex=false
   - ./gradlew clean app:build --stacktrace --info -Dpre-dex=false
-
-after_script: true
-  # - adb logcat &
-
-after_failure: true
 
 notifications:
   email: false

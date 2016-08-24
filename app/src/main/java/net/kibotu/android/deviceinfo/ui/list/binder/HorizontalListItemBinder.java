@@ -65,6 +65,9 @@ public class HorizontalListItemBinder extends DataBinder<ListItem, HorizontalLis
                 Logger.toast(item.getDescription());
             }
         });
+
+        Logger.v(tag(), "label: " +  viewHolder.label.getText() + " value: " +  viewHolder.value.getText());
+
     }
 
     public static class ViewHolder extends BaseViewHolder {
