@@ -1,7 +1,10 @@
 package net.kibotu.android.deviceinfo.ui.display;
 
 import android.graphics.Point;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
+import android.view.View;
 
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.library.display.Dimension;
@@ -39,13 +42,18 @@ import static net.kibotu.android.deviceinfo.library.version.Version.isAtLeastVer
 public class DisplayFragment extends ListFragment {
 
     @Override
-    protected String getTitle() {
+    public String getTitle() {
         return getString(R.string.menu_item_display);
     }
 
     @Override
-    protected void onViewCreated() {
-        super.onViewCreated();
+    protected int getHomeIcon() {
+        return R.drawable.display;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         addScreen();
 
@@ -148,9 +156,4 @@ public class DisplayFragment extends ListFragment {
     }
 
     // endregion
-
-    @Override
-    protected int getHomeIcon() {
-        return R.drawable.display;
-    }
 }

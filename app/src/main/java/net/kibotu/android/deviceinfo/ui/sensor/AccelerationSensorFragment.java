@@ -4,6 +4,9 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.View;
 
 import com.common.android.utils.logging.Logger;
 import com.jjoe64.graphview.series.DataPoint;
@@ -40,13 +43,13 @@ public class AccelerationSensorFragment extends SensorValuesFragment {
     public static final float EPSILON = 0.000000001f;
 
     @Override
-    protected String getTitle() {
+    public String getTitle() {
         return "Acceleration Sensor";
     }
 
     @Override
-    protected void onViewCreated() {
-        super.onViewCreated();
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         // init example series data
 

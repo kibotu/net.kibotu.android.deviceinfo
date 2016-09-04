@@ -1,6 +1,9 @@
 package net.kibotu.android.deviceinfo.ui.sensor;
 
 import android.hardware.Sensor;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.View;
 
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.library.Device;
@@ -44,13 +47,13 @@ public class SensorFragment extends ListFragment {
     private List<Sensor> sensorList;
 
     @Override
-    protected String getTitle() {
+    public String getTitle() {
         return getString(R.string.menu_item_sensor);
     }
 
     @Override
-    protected void onViewCreated() {
-        super.onViewCreated();
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         sensorList = Device.getSensorList();
         for (final Sensor s : sensorList) {
@@ -85,7 +88,7 @@ public class SensorFragment extends ListFragment {
             addSubListItem(listItem);
         }
 
-        adapter.setOnItemClickListener((listItem, view, position) -> showSensorData(sensorList.get(position)));
+        adapter.setOnItemClickListener((listItem, itemView, position) -> showSensorData(sensorList.get(position)));
     }
 
     private static void showSensorData(final Sensor sensor) {

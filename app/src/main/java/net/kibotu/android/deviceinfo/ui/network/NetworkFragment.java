@@ -1,5 +1,9 @@
 package net.kibotu.android.deviceinfo.ui.network;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.View;
+
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.library.Device;
 import net.kibotu.android.deviceinfo.library.bluetooth.Bluetooth;
@@ -19,13 +23,18 @@ import static net.kibotu.android.deviceinfo.library.Device.getSubscriberIdFromTe
 public class NetworkFragment extends ListFragment {
 
     @Override
-    protected String getTitle() {
+    public String getTitle() {
         return getString(R.string.menu_item_network);
     }
 
     @Override
-    protected void onViewCreated() {
-        super.onViewCreated();
+    protected int getHomeIcon() {
+        return R.drawable.network;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         addSimInfos();
 
@@ -203,10 +212,5 @@ public class NetworkFragment extends ListFragment {
         final Bluetooth bluetooth = Device.getBluetooth();
 
         addSubListItem(new ListItem().setLabel("Bluetooth"));
-    }
-
-    @Override
-    protected int getHomeIcon() {
-        return R.drawable.network;
     }
 }

@@ -1,6 +1,9 @@
 package net.kibotu.android.deviceinfo.ui.battery;
 
 import android.os.BatteryManager;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.View;
 
 import com.orhanobut.hawk.Hawk;
 
@@ -21,8 +24,13 @@ public class BatteryFragment extends ListFragment {
     private BatteryReceiver batteryReceiver;
 
     @Override
-    protected String getTitle() {
+    public String getTitle() {
         return getString(R.string.menu_item_battery);
+    }
+
+    @Override
+    protected int getHomeIcon() {
+        return R.drawable.battery;
     }
 
     @Override
@@ -32,8 +40,8 @@ public class BatteryFragment extends ListFragment {
     }
 
     @Override
-    protected void onViewCreated() {
-        super.onViewCreated();
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         batteryReceiver = getBatteryReceiver().addObserver(new BatteryUpdateListener() {
 
@@ -64,10 +72,5 @@ public class BatteryFragment extends ListFragment {
         final String value = Hawk.get(BatteryManager.EXTRA_PLUGGED, "Unknown");
         Hawk.put(BatteryManager.EXTRA_PLUGGED, battery.getPluggedAsString());
         return value;
-    }
-
-    @Override
-    protected int getHomeIcon() {
-        return R.drawable.battery;
     }
 }

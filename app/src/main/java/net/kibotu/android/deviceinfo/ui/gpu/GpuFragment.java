@@ -1,5 +1,9 @@
 package net.kibotu.android.deviceinfo.ui.gpu;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.View;
+
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.library.Device;
 import net.kibotu.android.deviceinfo.library.gpu.Egl;
@@ -17,15 +21,20 @@ import static net.kibotu.android.deviceinfo.library.ViewHelper.firstLetterToUppe
 public class GpuFragment extends ListFragment {
 
     @Override
-    protected String getTitle() {
+    public String getTitle() {
         return getString(R.string.menu_item_gpu);
     }
 
     @Override
-    protected void onViewCreated() {
-        super.onViewCreated();
+    protected int getHomeIcon() {
+        return R.drawable.gpu;
+    }
 
-        Device.loadOpenGLGles20Info(openGLGles20Info -> addOpenGLGles20Info(openGLGles20Info));
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Device.loadOpenGLGles20Info(this::addOpenGLGles20Info);
     }
 
     private void addGLES10Constraints(OpenGLGles10Info info) {
@@ -154,10 +163,5 @@ public class GpuFragment extends ListFragment {
         }
 
         addSubListItem(item);
-    }
-
-    @Override
-    protected int getHomeIcon() {
-        return R.drawable.gpu;
     }
 }

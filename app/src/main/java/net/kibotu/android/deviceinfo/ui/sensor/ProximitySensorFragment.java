@@ -12,13 +12,8 @@ import java.util.Arrays;
 public class ProximitySensorFragment extends SensorValuesFragment {
 
     @Override
-    protected String getTitle() {
+    public String getTitle() {
         return "Proximity Sensor";
-    }
-
-    @Override
-    protected void onViewCreated() {
-        super.onViewCreated();
     }
 
     @Override

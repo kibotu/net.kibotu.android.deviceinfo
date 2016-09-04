@@ -2,6 +2,9 @@ package net.kibotu.android.deviceinfo.ui.configuration;
 
 import android.content.res.Configuration;
 import android.os.Build;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.View;
 import android.view.ViewConfiguration;
 
 import net.kibotu.android.deviceinfo.R;
@@ -33,13 +36,18 @@ import static net.kibotu.android.deviceinfo.library.version.Version.isAtLeastVer
 public class ConfigurationFragment extends ListFragment {
 
     @Override
-    protected String getTitle() {
+    public String getTitle() {
         return getString(R.string.menu_item_configuration);
     }
 
     @Override
-    protected void onViewCreated() {
-        super.onViewCreated();
+    protected int getHomeIcon() {
+        return R.drawable.config;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         addConfiguration();
 
@@ -136,10 +144,5 @@ public class ConfigurationFragment extends ListFragment {
         addHorizontallyCard("Has Permanent Menu Key", formatBool(cfg.hasPermanentMenuKey()), "Report if the device has a permanent menu key available to the user.\n" +
                 "\n" +
                 "As of Android 3.0, devices may not have a permanent menu key available. Apps should use the action bar to present menu options to users. However, there are some apps where the action bar is inappropriate or undesirable. This method may be used to detect if a menu key is present. If not, applications should provide another on-screen affordance to access functionality.");
-    }
-
-    @Override
-    protected int getHomeIcon() {
-        return R.drawable.config;
     }
 }

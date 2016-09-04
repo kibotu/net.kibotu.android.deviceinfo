@@ -1,6 +1,9 @@
 package net.kibotu.android.deviceinfo.ui.memory;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.library.memory.Ram;
@@ -21,8 +24,13 @@ public class MemoryFragment extends ListFragment {
     private RamUsage ramUsage;
 
     @Override
-    protected String getTitle() {
+    public String getTitle() {
         return getContext().getString(R.string.menu_item_memory);
+    }
+
+    @Override
+    protected int getHomeIcon() {
+        return R.drawable.memory;
     }
 
     @Override
@@ -37,9 +45,10 @@ public class MemoryFragment extends ListFragment {
         return adapter;
     }
 
+
     @Override
-    protected void onViewCreated() {
-        super.onViewCreated();
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         ramUsage = new RamUsage();
 
@@ -237,10 +246,5 @@ public class MemoryFragment extends ListFragment {
                         .addChild(new ListItem().setLabel("Used").setValue(formatBytes((ram.getUsedSwapInBytes()))));
             }
         });
-    }
-
-    @Override
-    protected int getHomeIcon() {
-        return R.drawable.memory;
     }
 }

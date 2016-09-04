@@ -14,12 +14,16 @@ import android.os.Environment;
 import android.os.StatFs;
 import android.view.View;
 
+import com.zplesac.connectionbuddy.ConnectionBuddy;
+import com.zplesac.connectionbuddy.ConnectionBuddyConfiguration;
+
 import net.kibotu.android.deviceinfo.library.battery.BatteryReceiver;
 import net.kibotu.android.deviceinfo.library.bluetooth.Bluetooth;
 import net.kibotu.android.deviceinfo.library.gpu.InfoLoader;
 import net.kibotu.android.deviceinfo.library.gpu.OpenGLGles10Info;
 import net.kibotu.android.deviceinfo.library.gpu.OpenGLGles20Info;
 import net.kibotu.android.deviceinfo.library.misc.Callback;
+import net.kibotu.android.deviceinfo.library.network.ConnectivityChangeListenerRx;
 import net.kibotu.android.deviceinfo.library.version.Version;
 
 import java.io.File;
@@ -44,9 +48,14 @@ final public class Device {
 
     public static void with(Application context) {
         ContextHelper.with(context);
+
+        ConnectionBuddy.getInstance().init(new ConnectionBuddyConfiguration.Builder(context).build());
+        ConnectivityChangeListenerRx.with(context);
     }
 
     public static void onTerminate() {
+        ConnectivityChangeListenerRx.onTerminate(ContextHelper.getApplication());
+
         ContextHelper.onTerminate();
     }
 

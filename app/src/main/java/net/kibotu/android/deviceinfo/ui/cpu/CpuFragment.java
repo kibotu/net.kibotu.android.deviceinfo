@@ -1,6 +1,9 @@
 package net.kibotu.android.deviceinfo.ui.cpu;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.library.cpu.Core;
@@ -25,8 +28,13 @@ public class CpuFragment extends ListFragment {
     private CpuUsage cpuUsage;
 
     @Override
-    protected String getTitle() {
+    public String getTitle() {
         return getString(R.string.menu_item_cpu);
+    }
+
+    @Override
+    protected int getHomeIcon() {
+        return R.drawable.cpu;
     }
 
     @Override
@@ -42,8 +50,8 @@ public class CpuFragment extends ListFragment {
     }
 
     @Override
-    protected void onViewCreated() {
-        super.onViewCreated();
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         cpuUsage = new CpuUsage();
 
@@ -130,10 +138,5 @@ public class CpuFragment extends ListFragment {
                         .addChild(new ListItem().setLabel("Processes and threads created").setValue(cpu.getProcesses()));
             }
         });
-    }
-
-    @Override
-    protected int getHomeIcon() {
-        return R.drawable.cpu;
     }
 }

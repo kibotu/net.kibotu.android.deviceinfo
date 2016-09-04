@@ -1,5 +1,9 @@
 package net.kibotu.android.deviceinfo.ui.java;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.View;
+
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.ui.list.ListFragment;
 
@@ -13,13 +17,18 @@ import java.util.Properties;
 public class JavaFragment extends ListFragment {
 
     @Override
-    protected String getTitle() {
+    public String getTitle() {
         return getString(R.string.menu_item_java);
     }
 
     @Override
-    protected void onViewCreated() {
-        super.onViewCreated();
+    protected int getHomeIcon() {
+        return R.drawable.java;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         final StringWriter strOut = new StringWriter();
         final PrintWriter out = new PrintWriter(strOut);
@@ -35,10 +44,5 @@ public class JavaFragment extends ListFragment {
             final String value = split.length > 1 ? split[1] : "";
             addVerticallyCard(key, value, "");
         }
-    }
-
-    @Override
-    protected int getHomeIcon() {
-        return R.drawable.java;
     }
 }

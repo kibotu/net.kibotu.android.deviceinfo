@@ -1,10 +1,14 @@
 package net.kibotu.android.deviceinfo.ui.list;
 
-import android.support.annotation.CallSuper;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.animation.OvershootInterpolator;
+
+import com.common.android.utils.interfaces.TitleProvider;
 
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.model.ListItem;
@@ -12,6 +16,7 @@ import net.kibotu.android.deviceinfo.ui.BaseFragment;
 import net.kibotu.android.deviceinfo.ui.list.binder.CardViewHorizontalListItemBinder;
 import net.kibotu.android.deviceinfo.ui.list.binder.CardViewSubListItemBinder;
 import net.kibotu.android.deviceinfo.ui.list.binder.VerticalListItemBinderCardView;
+import net.kibotu.android.deviceinfo.ui.menu.Menu;
 import net.kibotu.android.recyclerviewpresenter.PresenterAdapter;
 
 import butterknife.BindView;
@@ -24,7 +29,7 @@ import static android.text.TextUtils.isEmpty;
 /**
  * Created by Nyaruhodo on 20.02.2016.
  */
-public abstract class ListFragment extends BaseFragment {
+public abstract class ListFragment extends BaseFragment implements TitleProvider {
 
     @NonNull
     @BindView(R.id.list)
@@ -36,9 +41,11 @@ public abstract class ListFragment extends BaseFragment {
         return R.layout.fragment_list;
     }
 
-    @CallSuper
     @Override
-    protected void onViewCreated() {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Menu.setActionBarIcon(getHomeIcon());
 
         list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         setListItemAnimator();
@@ -103,5 +110,15 @@ public abstract class ListFragment extends BaseFragment {
             return;
 
         adapter.add(item, CardViewSubListItemBinder.class);
+    }
+
+    protected abstract int getHomeIcon();
+
+    @Override
+    protected void onActiveAfterBackStackChanged() {
+        super.onActiveAfterBackStackChanged();
+
+        Menu.setActionBarIcon(getHomeIcon());
+        Menu.setActionBarTitle(getTitle());
     }
 }

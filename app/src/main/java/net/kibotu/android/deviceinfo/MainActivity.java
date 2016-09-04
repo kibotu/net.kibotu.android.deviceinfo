@@ -7,32 +7,30 @@ import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.common.android.utils.extensions.FragmentExtensions;
 import com.common.android.utils.extensions.ViewExtensions;
-import com.common.android.utils.interfaces.LogTag;
 import com.common.android.utils.logging.Logger;
+import com.robohorse.gpversionchecker.GPVersionChecker;
+import com.robohorse.gpversionchecker.base.CheckingStrategy;
 
-import net.kibotu.android.deviceinfo.ui.menu.IMainMenu;
-import net.kibotu.android.deviceinfo.ui.menu.IMenuProvider;
-import net.kibotu.android.deviceinfo.ui.menu.ISupportMenu;
-import net.kibotu.android.deviceinfo.ui.menu.MainMenu;
-import net.kibotu.android.deviceinfo.ui.menu.MainMenuProvider;
+import net.kibotu.android.deviceinfo.ui.BaseFragment;
+import net.kibotu.android.deviceinfo.ui.buildinfo.BuildFragment;
+import net.kibotu.android.deviceinfo.ui.menu.Menu;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+import static com.common.android.utils.ContextHelper.getActivity;
 import static com.common.android.utils.extensions.DeviceExtensions.hideKeyboard;
 import static com.common.android.utils.extensions.FragmentExtensions.currentFragment;
 import static com.common.android.utils.extensions.ResourceExtensions.color;
-import static net.kibotu.android.deviceinfo.ui.FragmentProvider.showBuildConfigFragment;
 
-public class MainActivity extends AppCompatActivity implements LogTag, IMenuProvider, FragmentManager.OnBackStackChangedListener {
+public class MainActivity extends AppCompatActivity {
 
-    IMainMenu mainMenu;
+    private static final java.lang.String TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,16 +41,24 @@ public class MainActivity extends AppCompatActivity implements LogTag, IMenuProv
         if (BuildConfig.DEBUG)
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        getMainMenu().setMenuItems(MainMenuFactory.createMenu());
+        Menu.with(this);
 
-        showBuildConfigFragment();
+        FragmentExtensions.replace(new BuildFragment());
+
+        new GPVersionChecker.Builder(getActivity())
+                .setCheckingStrategy(CheckingStrategy.ALWAYS)
+                .showDialog(true)
+                // .forceUpdate(BuildConfig.RELEASE)
+                // .setCustomPackageName("net.kibotu.android.deviceinfo")
+                .setVersionInfoListener(version -> {
+                    Logger.v(TAG, "version=" + version);
+                })
+                .create();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        getMainMenu().prepareDrawers();
-
         final TextView title = (TextView) ViewExtensions.getContentRoot().findViewById(R.id.actionbar_title);
         title.setTextColor(color(R.color.white));
     }
@@ -60,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements LogTag, IMenuProv
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        Logger.v(tag(), "[onConfigurationChanged] " + newConfig);
+        Logger.v(TAG, "[onConfigurationChanged] " + newConfig);
     }
 
     @Override
@@ -69,24 +75,29 @@ public class MainActivity extends AppCompatActivity implements LogTag, IMenuProv
     }
 
     @Override
-    public void onBackStackChanged() {
-        hideKeyboard();
-        final Fragment fragment = currentFragment(R.id.fragment_container);
-        if (fragment instanceof ISupportMenu)
-            ((ISupportMenu) fragment).updateMainMenu();
-    }
-
-    @Override
     public void onBackPressed() {
 
+        // hide keyboard
         hideKeyboard();
 
-        if (MainMenuProvider.provide().isDrawerOpen() && currentFragment(R.id.overlay_container) == null)
-            MainMenuProvider.provide().closeDrawers();
-        else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            FragmentExtensions.popBackStack();
-        } else
-            super.onBackPressed();
+        // close menu
+        if (Menu.isDrawerOpen()) {
+            Menu.closeDrawer();
+            return;
+        }
+
+        if (BaseFragment.onBackPressed())
+            return;
+
+        // pop back stack
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
+            FragmentExtensions.printBackStack();
+            return;
+        }
+
+        // quit app
+        finish();
     }
 
     @Override
@@ -101,20 +112,5 @@ public class MainActivity extends AppCompatActivity implements LogTag, IMenuProv
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-
-
-    @NonNull
-    @Override
-    final public String tag() {
-        return getClass().getSimpleName();
-    }
-
-    @NonNull
-    @Override
-    public IMainMenu getMainMenu() {
-        if (mainMenu == null)
-            mainMenu = new MainMenu();
-        return mainMenu;
     }
 }

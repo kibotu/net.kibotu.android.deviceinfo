@@ -1,6 +1,9 @@
 package net.kibotu.android.deviceinfo.ui.buildinfo;
 
 import android.content.pm.FeatureInfo;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.View;
 
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.library.buildinfo.BuildInfo;
@@ -47,13 +50,18 @@ import static net.kibotu.android.deviceinfo.library.ViewHelper.formatSdkString;
 public class BuildFragment extends ListFragment {
 
     @Override
-    protected String getTitle() {
+    public String getTitle() {
         return getString(R.string.title_build);
     }
 
     @Override
-    protected void onViewCreated() {
-        super.onViewCreated();
+    protected int getHomeIcon() {
+        return R.drawable.build;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         // http://developer.android.com/reference/android/os/Build.html
 
@@ -103,10 +111,5 @@ public class BuildFragment extends ListFragment {
         }
 
         addSubListItem(item);
-    }
-
-    @Override
-    protected int getHomeIcon() {
-        return R.drawable.build;
     }
 }

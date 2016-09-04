@@ -1,27 +1,36 @@
 package net.kibotu.android.deviceinfo;
 
-import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
-import android.os.Bundle;
+import android.content.res.Configuration;
+import android.support.annotation.NonNull;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
 import com.common.android.utils.ContextHelper;
+import com.common.android.utils.extensions.FragmentExtensions;
+import com.common.android.utils.logging.LogcatLogger;
 import com.common.android.utils.logging.Logger;
 import com.crashlytics.android.Crashlytics;
+import com.facebook.stetho.Stetho;
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.HawkBuilder;
 import com.orhanobut.hawk.LogLevel;
+import com.squareup.leakcanary.LeakCanary;
 
 import net.kibotu.android.deviceinfo.library.Device;
+import net.kibotu.android.deviceinfo.library.network.ConnectivityChangeListenerRx;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import io.fabric.sdk.android.Fabric;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 import static net.kibotu.android.deviceinfo.BuildConfig.BRANCH;
 import static net.kibotu.android.deviceinfo.BuildConfig.BUILD_DATE;
+import static net.kibotu.android.deviceinfo.BuildConfig.BUILD_TYPE;
 import static net.kibotu.android.deviceinfo.BuildConfig.CANONICAL_VERSION_NAME;
 import static net.kibotu.android.deviceinfo.BuildConfig.COMMIT_HASH;
 import static net.kibotu.android.deviceinfo.BuildConfig.DEBUG;
@@ -35,61 +44,105 @@ import static net.kibotu.android.deviceinfo.BuildConfig.VERSION_NAME;
  */
 public class MainApplication extends MultiDexApplication {
 
-    ActivityLifecycleCallbacks activityLifecycleCallbacks = createActivityLifecycleCallbacks();
+    private static final String TAG = MainApplication.class.getSimpleName();
 
     @Override
     public void onCreate() {
         MultiDex.install(getApplicationContext());
         super.onCreate();
 
+        initLeakCanary(this);
+
         ContextHelper.with(this);
         Device.with(this);
+        initHawk(this);
+        initLogger();
 
-        initFabric();
+        initFabric(this);
 
-        Logger.setLogLevel(DEBUG
-                ? Logger.Level.VERBOSE
-                : Logger.Level.SILENT);
+        initCalligraphy();
 
-        // Default font
-        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-//                .setDefaultFontPath(UiLight.getResourcePath(getApplicationContext()))
-                .setFontAttrId(R.attr.fontPath)
-                .build());
+        initConnectivityChangeListener();
 
-        // Secure shared preferences
-        Hawk.init(this)
-                .setEncryptionMethod(DEBUG
-                        ? HawkBuilder.EncryptionMethod.NO_ENCRYPTION
-                        : HawkBuilder.EncryptionMethod.MEDIUM)
-                .setStorage(HawkBuilder.newSharedPrefStorage(this))
+        if (DEBUG)
+            Stetho.initializeWithDefaults(this);
+    }
+
+    private static void initLeakCanary(Application context) {
+        // checking memory leaks
+        if (BuildConfig.DEBUG)
+            LeakCanary.install(context);
+    }
+
+    public static void initHawk(Context context) {
+        Hawk.init(context)
+                .setEncryptionMethod(HawkBuilder.EncryptionMethod.NO_ENCRYPTION)
+                .setStorage(HawkBuilder.newSharedPrefStorage(context))
                 .setLogLevel(DEBUG
                         ? LogLevel.FULL
                         : LogLevel.NONE)
                 .build();
     }
 
-    private void initFabric() {
-        Fabric.with(this, new Crashlytics());
-        Crashlytics.setString("COMMIT_URL", "https://github.com/kibotu/net.kibotu.android.deviceinfo/commit/" + COMMIT_HASH);
-        Crashlytics.setString("TREE_URL", "https://kibotu/net.kibotu.android.deviceinfo/tree/" + COMMIT_HASH);
-        Crashlytics.setString("CANONICAL_VERSION_NAME", CANONICAL_VERSION_NAME);
-        Crashlytics.setString("SIMPLE_VERSION_NAME", SIMPLE_VERSION_NAME);
-        Crashlytics.setString("COMMIT_HASH", COMMIT_HASH);
-        Crashlytics.setString("BRANCH", BRANCH);
-        Crashlytics.setString("FLAVOR", FLAVOR);
-        Crashlytics.setString("VERSION_CODE", "" + VERSION_CODE);
-        Crashlytics.setString("VERSION_NAME", "" + VERSION_NAME);
+    private static void initLogger() {
+        Logger.addLogger(new LogcatLogger());
+        Logger.setLogLevel(DEBUG
+                ? Logger.Level.VERBOSE
+                : Logger.Level.SILENT);
+        FragmentExtensions.setLoggingEnabled(DEBUG);
+        logBuildConfig();
+    }
+
+    private static void logBuildConfig() {
+        Map<String, String> buildInfo = createBuildInfo();
+        for (Map.Entry<String, String> entry : buildInfo.entrySet())
+            Logger.i(TAG, entry.getKey() + " : " + entry.getValue());
+    }
+
+    private static Map<String, String> createBuildInfo() {
+        Map<String, String> info = new HashMap<>();
+        info.put("CANONICAL_VERSION_NAME", CANONICAL_VERSION_NAME);
+        info.put("SIMPLE_VERSION_NAME", SIMPLE_VERSION_NAME);
+        info.put("VERSION_NAME", "" + VERSION_NAME);
+        info.put("VERSION_CODE", "" + VERSION_CODE);
+        info.put("BUILD_TYPE", BUILD_TYPE);
+        info.put("FLAVOR", FLAVOR);
         Calendar d = Calendar.getInstance();
         d.setTimeInMillis(Long.parseLong(BUILD_DATE));
+        info.put("BUILD_DATE", "" + d.getTime());
+        info.put("BRANCH", BRANCH);
+        info.put("COMMIT_HASH", COMMIT_HASH);
+        info.put("COMMIT_URL", "https://github.com/kibotu/net.kibotu.android.deviceinfo/commits/" + COMMIT_HASH);
+        info.put("TREE_URL", "https://kibotu/net.kibotu.android.deviceinfo/tree/" + COMMIT_HASH);
+        return info;
+    }
+
+    private static void initFabric(Context context) {
+        Fabric.with(context, new Crashlytics());
+        Map<String, String> buildInfo = createBuildInfo();
+        for (Map.Entry<String, String> entry : buildInfo.entrySet())
+            Crashlytics.setString(entry.getKey(), entry.getValue());
+    }
+
+    private static void initCalligraphy() {
+        // Default font
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                // .setDefaultFontPath(getString(R.string.font_FaktSoftPro_Blond))
+                .setFontAttrId(R.attr.fontPath)
+                .build());
+    }
+
+    private void initConnectivityChangeListener() {
+        ConnectivityChangeListenerRx.getObservable()
+                .subscribe(connectivityEvent -> {
+                    Logger.v(TAG, "[connectivityEvent] " + connectivityEvent);
+                }, Throwable::printStackTrace);
     }
 
     @Override
-    public void onTerminate() {
-        unregisterActivityLifecycleCallbacks(activityLifecycleCallbacks);
-        ContextHelper.onTerminate();
-        Device.onTerminate();
-        super.onTerminate();
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        Logger.v(TAG, "[onConfigurationChanged] " + newConfig);
     }
 
     @Override
@@ -98,42 +151,10 @@ public class MainApplication extends MultiDexApplication {
         MultiDex.install(this);
     }
 
-    private ActivityLifecycleCallbacks createActivityLifecycleCallbacks() {
-        return new ActivityLifecycleCallbacks() {
-            @Override
-            public void onActivityCreated(Activity activity, Bundle bundle) {
-
-            }
-
-            @Override
-            public void onActivityStarted(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivityResumed(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivityPaused(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivityStopped(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivitySaveInstanceState(Activity activity, Bundle bundle) {
-
-            }
-
-            @Override
-            public void onActivityDestroyed(Activity activity) {
-
-            }
-        };
+    @Override
+    public void onTerminate() {
+        ContextHelper.onTerminate();
+        Device.onTerminate();
+        super.onTerminate();
     }
 }

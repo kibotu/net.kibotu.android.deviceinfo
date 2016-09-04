@@ -1,6 +1,9 @@
 package net.kibotu.android.deviceinfo.ui.app;
 
 import android.content.pm.FeatureInfo;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.View;
 
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.library.buildinfo.BuildInfo;
@@ -22,13 +25,18 @@ import static net.kibotu.android.deviceinfo.library.ViewHelper.formatBytes;
 public class AppFragment extends ListFragment {
 
     @Override
-    protected String getTitle() {
+    public String getTitle() {
         return getString(R.string.menu_item_app);
     }
 
     @Override
-    protected void onViewCreated() {
-        super.onViewCreated();
+    protected int getHomeIcon() {
+        return R.drawable.info;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         addHorizontallyCard("App Version", BuildInfo.getVersionFromPackageManager(), "");
         addHorizontallyCard("Threads Count", Thread.getAllStackTraces().keySet().size(), "");
@@ -64,10 +72,5 @@ public class AppFragment extends ListFragment {
             item.addChild(new ListItem().setLabel(lib));
 
         addSubListItem(item);
-    }
-
-    @Override
-    protected int getHomeIcon() {
-        return R.drawable.info;
     }
 }

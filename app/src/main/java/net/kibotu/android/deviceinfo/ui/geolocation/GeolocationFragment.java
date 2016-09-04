@@ -1,5 +1,9 @@
 package net.kibotu.android.deviceinfo.ui.geolocation;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.View;
+
 import com.common.android.utils.network.GeoRequestProvider;
 
 import net.kibotu.android.deviceinfo.R;
@@ -12,13 +16,18 @@ import net.kibotu.android.deviceinfo.ui.list.ListFragment;
 public class GeolocationFragment extends ListFragment {
 
     @Override
-    protected String getTitle() {
+    public String getTitle() {
         return getString(R.string.menu_item_geolocation);
     }
 
     @Override
-    protected void onViewCreated() {
-        super.onViewCreated();
+    protected int getHomeIcon() {
+        return R.drawable.geo;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         addIpApiCom();
 
@@ -118,10 +127,5 @@ public class GeolocationFragment extends ListFragment {
 
             notifyDataSetChanged();
         }, Throwable::printStackTrace);
-    }
-
-    @Override
-    protected int getHomeIcon() {
-        return R.drawable.geo;
     }
 }

@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import net.kibotu.android.deviceinfo.library.network.ConnectivityChangeListenerRx;
+
 import java.lang.ref.WeakReference;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -128,5 +130,7 @@ class ContextHelper {
         application = null;
 
         isRunning.set(false);
+
+
     }
 }

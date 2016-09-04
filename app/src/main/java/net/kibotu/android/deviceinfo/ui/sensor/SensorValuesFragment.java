@@ -2,6 +2,7 @@ package net.kibotu.android.deviceinfo.ui.sensor;
 
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.common.android.utils.ContextHelper;
+import com.common.android.utils.interfaces.TitleProvider;
 import com.jjoe64.graphview.GraphView;
 
 import net.kibotu.android.deviceinfo.R;
@@ -23,7 +25,7 @@ import static net.kibotu.android.deviceinfo.library.services.SystemService.getSe
 /**
  * Created by Nyaruhodo on 03.04.2016.
  */
-public abstract class SensorValuesFragment extends BaseFragment {
+public abstract class SensorValuesFragment extends BaseFragment implements TitleProvider {
 
     @NonNull
     @BindView(R.id.x)
@@ -47,21 +49,10 @@ public abstract class SensorValuesFragment extends BaseFragment {
         return sensor;
     }
 
-    @CallSuper
     @Override
-    protected void onViewCreated() {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         sensorEventListener = createSensorEventListener();
-    }
-
-    @Override
-    public boolean lockLeftMenu() {
-        return true;
-    }
-
-    @Nullable
-    @Override
-    protected View.OnClickListener getHomeIconClickListener() {
-        return v -> ContextHelper.getActivity().onBackPressed();
     }
 
     @Override
