@@ -14,7 +14,7 @@ import rx.Observable;
 import rx.subjects.PublishSubject;
 
 /**
- * Created by jan.rabe on 19/08/16.
+ * Created by <a href="https://about.me/janrabe">Jan Rabe</a>.
  */
 
 public enum ConnectivityChangeListenerRx implements ConnectivityChangeListener {

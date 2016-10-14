@@ -110,7 +110,7 @@ dependencies {
     compile project(':lib')
 
     // frequently used convenient methods
-    compile 'com.github.kibotu:common.android.utils:0.6.7'
+    compile 'com.github.kibotu:common.android.utils:0.7.1'
 
     // presenter
     compile 'com.github.kibotu:RecyclerViewPresenter:1.4.1'
