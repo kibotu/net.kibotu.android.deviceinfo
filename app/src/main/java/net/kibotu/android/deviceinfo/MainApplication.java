@@ -19,7 +19,6 @@ import com.orhanobut.hawk.LogLevel;
 import com.squareup.leakcanary.LeakCanary;
 
 import net.kibotu.android.deviceinfo.library.Device;
-import net.kibotu.android.deviceinfo.library.network.ConnectivityChangeListenerRx;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -133,10 +132,10 @@ public class MainApplication extends MultiDexApplication {
     }
 
     private void initConnectivityChangeListener() {
-        ConnectivityChangeListenerRx.getObservable()
-                .subscribe(connectivityEvent -> {
-                    Logger.v(TAG, "[connectivityEvent] " + connectivityEvent);
-                }, Throwable::printStackTrace);
+//        ConnectivityChangeListenerRx.getObservable()
+//                .subscribe(connectivityEvent -> {
+//                    Logger.v(TAG, "[connectivityEvent] " + connectivityEvent);
+//                }, Throwable::printStackTrace);
     }
 
     @Override

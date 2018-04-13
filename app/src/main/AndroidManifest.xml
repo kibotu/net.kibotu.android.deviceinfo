@@ -38,12 +38,5 @@
             android:name="io.fabric.ApiKey"
             android:value="7e07697f19e943a6a093f90d42bd23720531cdc4" />
 
-        <supports-screens
-            android:anyDensity="true"
-            android:largeScreens="true"
-            android:normalScreens="true"
-            android:resizeable="true"
-            android:smallScreens="true"
-            android:xlargeScreens="true" />
     </application>
 </manifest>

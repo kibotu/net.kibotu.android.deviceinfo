@@ -1,5 +1,6 @@
 package net.kibotu.android.deviceinfo.library;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -17,13 +18,13 @@ import android.view.View;
 import com.zplesac.connectionbuddy.ConnectionBuddy;
 import com.zplesac.connectionbuddy.ConnectionBuddyConfiguration;
 
+import net.kibotu.ContextHelper;
 import net.kibotu.android.deviceinfo.library.battery.BatteryReceiver;
 import net.kibotu.android.deviceinfo.library.bluetooth.Bluetooth;
 import net.kibotu.android.deviceinfo.library.gpu.InfoLoader;
 import net.kibotu.android.deviceinfo.library.gpu.OpenGLGles10Info;
 import net.kibotu.android.deviceinfo.library.gpu.OpenGLGles20Info;
 import net.kibotu.android.deviceinfo.library.misc.Callback;
-import net.kibotu.android.deviceinfo.library.network.ConnectivityChangeListenerRx;
 import net.kibotu.android.deviceinfo.library.version.Version;
 
 import java.io.File;
@@ -50,11 +51,9 @@ final public class Device {
         ContextHelper.with(context);
 
         ConnectionBuddy.getInstance().init(new ConnectionBuddyConfiguration.Builder(context).build());
-        ConnectivityChangeListenerRx.with(context);
     }
 
     public static void onTerminate() {
-        ConnectivityChangeListenerRx.onTerminate(ContextHelper.getApplication());
 
         ContextHelper.onTerminate();
     }
@@ -74,6 +73,7 @@ final public class Device {
      * and thus you could end up making a nasty mistake when one of your customers wipes their device
      * and passes it on to another person.
      */
+    @SuppressLint("MissingPermission")
     public static String getSubscriberIdFromTelephonyManager() {
         return getTelephonyManager().getSubscriberId();
     }
@@ -91,6 +91,7 @@ final public class Device {
      * and thus you could end up making a nasty mistake when one of your customers wipes their device
      * and passes it on to another person.
      */
+    @SuppressLint("MissingPermission")
     public static String getDeviceIdFromTelephonyManager() {
         return getTelephonyManager().getDeviceId();
     }

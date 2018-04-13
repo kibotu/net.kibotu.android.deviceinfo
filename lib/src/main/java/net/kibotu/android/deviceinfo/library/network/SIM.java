@@ -1,8 +1,12 @@
 package net.kibotu.android.deviceinfo.library.network;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 
+import static net.kibotu.ContextHelper.getApplication;
 import static net.kibotu.android.deviceinfo.library.Device.getContext;
 
 public class SIM {
@@ -47,7 +51,8 @@ public class SIM {
                 // Get the name of the SIM operator
                 simOperatorName = telephonyManager.getSimOperatorName();
                 // Get the SIM’s serial number
-                simSerial = telephonyManager.getSimSerialNumber();
+                if (ContextCompat.checkSelfPermission(getApplication(), Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED)
+                    simSerial = telephonyManager.getSimSerialNumber();
                 break;
             case (TelephonyManager.SIM_STATE_UNKNOWN):
                 simState = "SIM_STATE_UNKNOWN";

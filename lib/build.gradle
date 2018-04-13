@@ -1,17 +1,16 @@
 apply plugin: 'com.android.library'
-apply plugin: "me.tatarka.retrolambda"
-apply plugin: 'android-apt'
+apply plugin: 'kotlin-android'
 apply plugin: 'com.github.dcendents.android-maven'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.3"
+    compileSdkVersion compileSdkVer
+    buildToolsVersion buildToolsVer
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 24
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion minSdkVer
+        targetSdkVersion targetSdkVer
+        versionCode version_code
+        versionName version_name
     }
 
     buildTypes {
@@ -44,12 +43,14 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-annotations:24.2.1'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlinVersion"
+
+    implementation "com.android.support:support-annotations:$supportVers"
 
     // network connection handling
-    compile 'com.zplesac:connectionbuddy:1.2.0@aar'
+    implementation 'com.zplesac:connectionbuddy:2.0.0-beta1'
 
-    provided 'com.github.kibotu:common.android.utils:0.7.1'
+    implementation 'com.github.kibotu:StreamingAndroidLogger:2.+'
 }
 
 // region javadoc
