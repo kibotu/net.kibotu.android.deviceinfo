@@ -16,6 +16,7 @@ import net.kibotu.android.deviceinfo.ui.list.ListFragment;
 
 import static net.kibotu.android.deviceinfo.library.Device.getDeviceIdFromTelephonyManager;
 import static net.kibotu.android.deviceinfo.library.Device.getSubscriberIdFromTelephonyManager;
+import static net.kibotu.android.deviceinfo.library.network.SIM.hasReadPhonePermission;
 
 /**
  * Created by Nyaruhodo on 21.02.2016.
@@ -44,7 +45,8 @@ public class NetworkFragment extends ListFragment {
         addVerticallyCard("IP6 Address", Network.getIPAddress(false), "");
         addVerticallyCard("UserAgent", Network.getUserAgent(), "");
 
-        addHorizontallyCard("IMSI No", getSubscriberIdFromTelephonyManager(), "");
+        if(hasReadPhonePermission())
+            addHorizontallyCard("IMSI No", getSubscriberIdFromTelephonyManager(), "");
         addHorizontallyCard("hwID", BuildInfo.getSerialNumber(), "");
 
         addImeiNumber();
@@ -180,7 +182,8 @@ public class NetworkFragment extends ListFragment {
 
     //    @AskPermission(READ_PHONE_STATE)
     private void addImeiNumber() {
-        addHorizontallyCard("IMEI No", getDeviceIdFromTelephonyManager(), "");
+        if(hasReadPhonePermission())
+            addHorizontallyCard("IMEI No", getDeviceIdFromTelephonyManager(), "");
     }
 
     //    @AskPermission(READ_PHONE_STATE)

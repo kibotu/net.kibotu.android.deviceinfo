@@ -51,12 +51,16 @@ public class SIM {
                 // Get the name of the SIM operator
                 simOperatorName = telephonyManager.getSimOperatorName();
                 // Get the SIM’s serial number
-                if (ContextCompat.checkSelfPermission(getApplication(), Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED)
+                if (hasReadPhonePermission())
                     simSerial = telephonyManager.getSimSerialNumber();
                 break;
             case (TelephonyManager.SIM_STATE_UNKNOWN):
                 simState = "SIM_STATE_UNKNOWN";
                 break;
         }
+    }
+
+    public static boolean hasReadPhonePermission() {
+        return ContextCompat.checkSelfPermission(getApplication(), Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED;
     }
 }
