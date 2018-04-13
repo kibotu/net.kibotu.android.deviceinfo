@@ -232,7 +232,7 @@ public final class ShellUtils {
      * </ul>
      *
      * @author <a href="http://www.trinea.cn" target="_blank">Trinea</a>
-     *         2013-5-16
+     * 2013-5-16
      */
     public static class CommandResult {
 

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,9 +13,6 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
 import android.view.View;
-
-import com.zplesac.connectionbuddy.ConnectionBuddy;
-import com.zplesac.connectionbuddy.ConnectionBuddyConfiguration;
 
 import net.kibotu.ContextHelper;
 import net.kibotu.android.deviceinfo.library.battery.BatteryReceiver;
@@ -45,17 +41,6 @@ final public class Device {
 
     private Device() throws IllegalAccessException {
         throw new IllegalAccessException();
-    }
-
-    public static void with(Application context) {
-        ContextHelper.with(context);
-
-        ConnectionBuddy.getInstance().init(new ConnectionBuddyConfiguration.Builder(context).build());
-    }
-
-    public static void onTerminate() {
-
-        ContextHelper.onTerminate();
     }
 
     public static Context getContext() {

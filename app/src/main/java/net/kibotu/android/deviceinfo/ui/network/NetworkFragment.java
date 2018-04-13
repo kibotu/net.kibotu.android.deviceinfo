@@ -45,7 +45,7 @@ public class NetworkFragment extends ListFragment {
         addVerticallyCard("IP6 Address", Network.getIPAddress(false), "");
         addVerticallyCard("UserAgent", Network.getUserAgent(), "");
 
-        if(hasReadPhonePermission())
+        if (hasReadPhonePermission())
             addHorizontallyCard("IMSI No", getSubscriberIdFromTelephonyManager(), "");
         addHorizontallyCard("hwID", BuildInfo.getSerialNumber(), "");
 
@@ -182,7 +182,7 @@ public class NetworkFragment extends ListFragment {
 
     //    @AskPermission(READ_PHONE_STATE)
     private void addImeiNumber() {
-        if(hasReadPhonePermission())
+        if (hasReadPhonePermission())
             addHorizontallyCard("IMEI No", getDeviceIdFromTelephonyManager(), "");
     }
 
