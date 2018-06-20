@@ -109,6 +109,9 @@ public class BuildInfo {
     }
 
     public static ArrayList<String> getPermissions() {
+        if(Device.getContext() == null) 
+            return new ArrayList<String>();
+        
         final PackageManager pm = Device.getContext().getPackageManager();
         final ArrayList<String> permissions = new ArrayList<String>();
         final List<PermissionGroupInfo> lstGroups = pm.getAllPermissionGroups(0);
