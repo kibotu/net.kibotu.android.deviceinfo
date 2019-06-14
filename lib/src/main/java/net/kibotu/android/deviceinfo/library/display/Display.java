@@ -5,9 +5,9 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Point;
 import android.os.Build;
-import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 
+import androidx.annotation.NonNull;
 import net.kibotu.android.deviceinfo.library.R;
 
 import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR1;

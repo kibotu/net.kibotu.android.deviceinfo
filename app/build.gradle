@@ -7,6 +7,7 @@ ext {
     BRANCH_NAME = branchName()
     COMMIT_HASH = commitHash()
     isLocal = project.rootProject.file('local.properties').exists()
+    isLocal = project.rootProject.file('local.properties').exists()
     isTesting = false
     BUILD_TIME = new Date().getTime()
 }
@@ -51,47 +52,58 @@ android {
         testInstrumentationRunnerArguments clearPackageData: 'true'
     }
 
-/// region signing configs
+    // region signing configs
 
-    signingConfigs {
-        try {
-            debug {
-                storeFile file(DEBUG_KEYSYORE_PATH)
-                storePassword DEBUG_STORE_PASSWORD
-                keyAlias DEBUG_KEYSTORE_ALLIAS
-                keyPassword DEBUG_KEY_PASSWORD
-            }
-        }
-        catch (final ignored) {
-            new InvalidKeySpecException('You should define DEBUG_KEYSTORE_ALLIAS, DEBUG_STORE_PASSWORD, DEBUG_KEY_PASSWORD in gradle.properties.').printStackTrace()
-        }
-        try {
-            release {
-                storeFile file(RELEASE_KEYSYORE_PATH)
-                storePassword RELEASE_STORE_PASSWORD
-                keyAlias RELEASE_KEYSTORE_ALIAS
-                keyPassword RELEASE_KEY_PASSWORD
-            }
-        } catch (final ignored) {
-            new InvalidKeySpecException('You should define RELEASE_KEYSTORE_ALIAS, RELEASE_STORE_PASSWORD, RELEASE_KEY_PASSWORD in gradle.properties.').printStackTrace()
-        }
-    }
+//    signingConfigs {
+//        try {
+//            debug {
+//                storeFile file(DEBUG_KEYSYORE_PATH)
+//                storePassword DEBUG_STORE_PASSWORD
+//                keyAlias DEBUG_KEYSTORE_ALLIAS
+//                keyPassword DEBUG_KEY_PASSWORD
+//            }
+//        }
+//        catch (final ignored) {
+//           // new InvalidKeySpecException('You should define DEBUG_KEYSTORE_ALLIAS, DEBUG_STORE_PASSWORD, DEBUG_KEY_PASSWORD in gradle.properties.')
+//        }
+//        try {
+//            release {
+//                storeFile file(RELEASE_KEYSYORE_PATH)
+//                storePassword RELEASE_STORE_PASSWORD
+//                keyAlias RELEASE_KEYSTORE_ALIAS
+//                keyPassword RELEASE_KEY_PASSWORD
+//            }
+//        } catch (final ignored) {
+//            // new InvalidKeySpecException('You should define RELEASE_KEYSTORE_ALIAS, RELEASE_STORE_PASSWORD, RELEASE_KEY_PASSWORD in gradle.properties.')
+//        }
+//    }
 
     // endregion
 
     buildTypes {
-        release {
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
-            minifyEnabled = false
-            shrinkResources = false
-        }
         debug {
-            pseudoLocalesEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.debug
+            // signingConfig signingConfigs.debug
+            applicationIdSuffix ""
+            pseudoLocalesEnabled true
+            debuggable true
             minifyEnabled false
-            shrinkResources = false
+            crunchPngs false
+            shrinkResources false
+            zipAlignEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            ext.alwaysUpdateBuildId = false
+        }
+
+        release {
+            // signingConfig signingConfigs.release
+            pseudoLocalesEnabled false
+            debuggable false
+            minifyEnabled true
+            crunchPngs true
+            shrinkResources true
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            manifestPlaceholders += [crashlyticsEnabled: true]
         }
     }
 
@@ -149,10 +161,14 @@ dependencies {
     implementation libs.recyclerViewPresenter4
 
     implementation libs.supportMultidex
-    implementation libs.supportCardView
+    implementation libs.supportAppCompat
+    implementation libs.appCompatResources
+    implementation libs.androidKtxCore
+    implementation libs.activityKtx
+    implementation libs.fragmentKtx
     implementation libs.supportDesign
-    implementation libs.supportRecyclerview
     implementation libs.constraintLayout2
+    implementation libs.supportRecyclerview
 
     // recyclerview animations
     implementation libs.recyclerviewAnimators
@@ -208,3 +224,11 @@ configurations.all {
 }
 
 // endregion
+
+static def escape(Object value) {
+    return "\"$value\""
+}
+
+static def escape(boolean value) {
+    return "$value"
+}

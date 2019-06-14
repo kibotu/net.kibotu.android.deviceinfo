@@ -1,7 +1,7 @@
 package net.kibotu.android.deviceinfo.ui.java;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.view.View;
 
 import net.kibotu.android.deviceinfo.R;

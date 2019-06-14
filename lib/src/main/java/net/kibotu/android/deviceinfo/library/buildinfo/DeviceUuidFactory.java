@@ -1,10 +1,13 @@
 package net.kibotu.android.deviceinfo.library.buildinfo;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.telephony.TelephonyManager;
+
+import androidx.annotation.RequiresPermission;
 
 import java.io.UnsupportedEncodingException;
 import java.util.UUID;
@@ -18,6 +21,7 @@ public class DeviceUuidFactory {
     protected static final String PREFS_DEVICE_ID = "device_id";
     protected volatile static UUID uuid;
 
+    @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
     public DeviceUuidFactory(@NonNull final Context context) {
         if (uuid != null) {
             return;

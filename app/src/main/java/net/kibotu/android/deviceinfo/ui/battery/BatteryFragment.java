@@ -2,7 +2,7 @@ package net.kibotu.android.deviceinfo.ui.battery;
 
 import android.os.BatteryManager;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.view.View;
 
 import com.orhanobut.hawk.Hawk;

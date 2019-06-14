@@ -2,7 +2,7 @@ package net.kibotu.android.deviceinfo.ui.display;
 
 import android.graphics.Point;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.DisplayMetrics;
 import android.view.View;
 

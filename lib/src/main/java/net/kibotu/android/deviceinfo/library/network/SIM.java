@@ -3,8 +3,10 @@ package net.kibotu.android.deviceinfo.library.network;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
+
+import androidx.annotation.RequiresPermission;
+import androidx.core.content.ContextCompat;
 
 import static net.kibotu.ContextHelper.getApplication;
 import static net.kibotu.android.deviceinfo.library.Device.getContext;
@@ -24,6 +26,7 @@ public class SIM {
         load();
     }
 
+    @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
     public void load() {
 
         final TelephonyManager telephonyManager = (TelephonyManager) getContext().getSystemService(Context.TELEPHONY_SERVICE);

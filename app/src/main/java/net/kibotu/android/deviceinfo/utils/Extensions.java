@@ -1,7 +1,7 @@
 package net.kibotu.android.deviceinfo.utils;
 
 import android.graphics.Point;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.view.View;
 
 import static net.kibotu.android.deviceinfo.library.display.Display.getStatusBarHeight;

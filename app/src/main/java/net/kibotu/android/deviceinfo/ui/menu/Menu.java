@@ -3,7 +3,7 @@ package net.kibotu.android.deviceinfo.ui.menu;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
-import android.support.annotation.DrawableRes;
+import androidx.annotation.DrawableRes;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;

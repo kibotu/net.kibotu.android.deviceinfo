@@ -5,7 +5,7 @@
     android:id="@+id/item_title_id"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textSize="@dimen/textSizeTitle"
+    android:textSize="12sp"
     android:gravity="center"
     android:textAppearance="?android:textAppearanceLargeInverse"
     android:textColor="@android:color/black" />

@@ -1,6 +1,6 @@
 package net.kibotu.android.deviceinfo.ui.list.binder;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import net.kibotu.android.deviceinfo.R;
 import net.kibotu.android.deviceinfo.model.ListItem;
