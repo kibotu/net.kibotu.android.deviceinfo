@@ -1,6 +1,7 @@
 package net.kibotu.android.deviceinfo.model;
 
 import androidx.annotation.Nullable;
+import net.kibotu.android.recyclerviewpresenter.RecyclerViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
 /**
  * Created by Nyaruhodo on 21.02.2016.
  */
-public class ListItem {
+public class ListItem extends RecyclerViewModel<Object> {
 
     public ListItem clear() {
         if (hasChildren()) {

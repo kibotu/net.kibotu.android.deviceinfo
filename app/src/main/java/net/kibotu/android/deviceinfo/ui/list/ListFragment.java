@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
 
+import androidx.recyclerview.widget.RecyclerView;
 import com.common.android.utils.interfaces.TitleProvider;
 
 import net.kibotu.android.deviceinfo.R;
@@ -29,7 +30,7 @@ import static android.text.TextUtils.isEmpty;
 /**
  * Created by Nyaruhodo on 20.02.2016.
  */
-public abstract class ListFragment extends BaseFragment implements TitleProvider {
+public abstract class ListFragment extends BaseFragment  {
 
     @NonNull
     @BindView(R.id.list)
@@ -47,7 +48,6 @@ public abstract class ListFragment extends BaseFragment implements TitleProvider
 
         Menu.setActionBarIcon(getHomeIcon());
 
-        list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         setListItemAnimator();
 
         adapter = new PresenterAdapter<>();
@@ -85,7 +85,7 @@ public abstract class ListFragment extends BaseFragment implements TitleProvider
         if (isEmpty(content))
             return;
 
-        adapter.add(new ListItem()
+        adapter.append(new ListItem()
                         .setLabel(label)
                         .setValue(content)
                         .setDescription(description),
@@ -98,7 +98,7 @@ public abstract class ListFragment extends BaseFragment implements TitleProvider
         if (isEmpty(content))
             return;
 
-        adapter.add(new ListItem()
+        adapter.append(new ListItem()
                         .setLabel(label)
                         .setValue(String.valueOf(value))
                         .setDescription(description),

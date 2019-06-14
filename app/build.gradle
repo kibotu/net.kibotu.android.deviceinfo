@@ -202,6 +202,10 @@ dependencies {
     implementation libs.permissionDispatcher
     kapt libs.permissionDispatcherProcessor
 
+    // butterknife
+    implementation libs.butterknifeX
+    kapt libs.butterknifeCompilerX
+
     // detecting memory leaks
     debugImplementation libs.leakcanaryDebug
     debugImplementation libs.leakcanaryDebugSupportFragments

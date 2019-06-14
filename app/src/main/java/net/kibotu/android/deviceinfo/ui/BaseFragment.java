@@ -2,26 +2,24 @@ package net.kibotu.android.deviceinfo.ui;
 
 import android.content.Context;
 import android.os.Bundle;
-import androidx.annotation.CallSuper;
-import androidx.annotation.LayoutRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.Fragment;
-import androidx.core.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.common.android.utils.ContextHelper;
-import com.common.android.utils.interfaces.DispatchTouchEvent;
-import com.common.android.utils.interfaces.LogTag;
-
+import androidx.annotation.CallSuper;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import com.exozet.android.core.interfaces.DispatchTouchEvent;
+import net.kibotu.ContextHelper;
 
-import static com.common.android.utils.extensions.FragmentExtensions.currentFragment;
-import static com.common.android.utils.extensions.ViewExtensions.hideOnLostFocus;
+import static com.exozet.android.core.utils.FragmentExtensions.currentFragment;
+import static com.exozet.android.core.utils.ViewExtensions.hideOnLostFocus;
+
 
 /**
  * Created by Nyaruhodo on 20.02.2016.
@@ -32,7 +30,7 @@ import static com.common.android.utils.extensions.ViewExtensions.hideOnLostFocus
  * <p>
  * <img src="https://raw.githubusercontent.com/Aracem/android-lifecycle/master/complete_android_fragment_lifecycle.png"/>
  */
-public abstract class BaseFragment extends Fragment implements LogTag, DispatchTouchEvent, FragmentManager.OnBackStackChangedListener {
+public abstract class BaseFragment extends Fragment implements DispatchTouchEvent, FragmentManager.OnBackStackChangedListener {
 
     private Unbinder unbinder;
     /**
@@ -150,7 +148,6 @@ public abstract class BaseFragment extends Fragment implements LogTag, DispatchT
     }
 
     @NonNull
-    @Override
     public String tag() {
         return getClass().getSimpleName();
     }
