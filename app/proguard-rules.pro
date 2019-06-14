@@ -15,18 +15,5 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
--keep class com.canelmas.let.** { *; }
--keepnames class * implements com.canelmas.let.RuntimePermissionListener
 
--keepclassmembers class * implements com.canelmas.let.RuntimePermissionListener {
-    public void onRequestPermissionsResult(***);
-}
-
--keepclasseswithmembernames class * {
-    @com.canelmas.let.* <methods>;
-}
--dontobfuscate
--keepattributes *Annotation*
--keepattributes Signature
--keepattributes InnerClasses
--keepattributes InnerClasses,EnclosingMethod
+-keep class net.kibotu.android.deviceinfo.** { *; }

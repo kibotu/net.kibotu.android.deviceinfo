@@ -16,8 +16,5 @@
 #   public *;
 #}
 
--dontobfuscate
--keepattributes *Annotation*
--keepattributes Signature
--keepattributes InnerClasses
--keepattributes InnerClasses,EnclosingMethod
+
+-keep class net.kibotu.android.deviceinfo.library.** { *; }
