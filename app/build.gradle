@@ -1,3 +1,16 @@
+import java.security.spec.InvalidKeySpecException
+
+ext {
+    VERSION_NAME = simpleReleaseVersionName()
+    VERSION_CODE = commitCount()
+    CANONICAL_VERSION_NAME = canonicalReleaseVersionName()
+    BRANCH_NAME = branchName()
+    COMMIT_HASH = commitHash()
+    isLocal = project.rootProject.file('local.properties').exists()
+    isTesting = false
+    BUILD_TIME = new Date().getTime()
+}
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -5,127 +18,150 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'io.fabric'
 apply plugin: 'com.getkeepsafe.dexcount'
 
-android {    compileSdkVersion compileSdkVer
+android {
+
+    compileSdkVersion compileSdkVer
     buildToolsVersion buildToolsVer
 
     defaultConfig {
-        applicationId "net.kibotu.android.deviceinfo"
+        applicationId APPLICATION_ID
+        multiDexEnabled true
+
         minSdkVersion minSdkVer
         targetSdkVersion targetSdkVer
-        versionCode commitCount()
-        versionName version_name
-        multiDexEnabled = true
+        versionCode VERSION_CODE
+        versionName VERSION_NAME
+        vectorDrawables.useSupportLibrary = true
 
-        buildConfigField "String", "SIMPLE_VERSION_NAME", escape(simpleReleaseVersionName())
-        buildConfigField "String", "CANONICAL_VERSION_NAME", escape(canonicalReleaseVersionName())
-        buildConfigField "String", "COMMIT_HASH", escape(commitHash())
-        buildConfigField "String", "BRANCH", escape(branchNameByGit())
-        buildConfigField "String", "BUILD_DATE", escape(new Date().getTime())
+        buildConfigField "String", "CANONICAL_VERSION_NAME", escape(CANONICAL_VERSION_NAME)
+        buildConfigField "String", "COMMIT_HASH", escape(COMMIT_HASH)
+        buildConfigField "String", "BRANCH", escape(BRANCH_NAME)
+        buildConfigField "String", "BUILD_DATE", escape(BUILD_TIME)
+        buildConfigField "String", "VSC", escape(VSC_PATH)
+        buildConfigField "boolean", "IS_LOCAL", escape(isLocal)
+        buildConfigField "boolean", "IS_CI", escape(isCi)
+        buildConfigField "boolean", "TESTING", escape(isTesting)
+
+        resConfigs "de"
+        manifestPlaceholders += [
+                crashlyticsEnabled: false
+        ]
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunnerArguments clearPackageData: 'true'
     }
 
-//    signingConfigs {
-//        try {
-//            debug {
-//                storeFile file("../debug.jks")
-//                storePassword DEBUG_STORE_PASSWORD
-//                keyAlias DEBUG_KEYSTORE_ALLIAS
-//                keyPassword DEBUG_KEY_PASSWORD
-//            }
-//        }
-//        catch (final ignored) {
-//            throw new InvalidUserDataException("You should define DEBUG_KEYSTORE_ALLIAS, DEBUG_STORE_PASSWORD, DEBUG_KEY_PASSWORD in gradle.properties.")
-//        }
-//        try {
-//            release {
-//                storeFile file("../release.jks")
-//                storePassword RELEASE_STORE_PASSWORD
-//                keyAlias RELEASE_KEYSTORE_ALIAS
-//                keyPassword RELEASE_KEY_PASSWORD
-//            }
-//        } catch (final ignored) {
-//            throw new InvalidUserDataException("You should define RELEASE_KEYSTORE_ALIAS, RELEASE_STORE_PASSWORD, RELEASE_KEY_PASSWORD in gradle.properties.")
-//        }
-//    }
+/// region signing configs
+
+    signingConfigs {
+        try {
+            debug {
+                storeFile file(DEBUG_KEYSYORE_PATH)
+                storePassword DEBUG_STORE_PASSWORD
+                keyAlias DEBUG_KEYSTORE_ALLIAS
+                keyPassword DEBUG_KEY_PASSWORD
+            }
+        }
+        catch (final ignored) {
+            new InvalidKeySpecException('You should define DEBUG_KEYSTORE_ALLIAS, DEBUG_STORE_PASSWORD, DEBUG_KEY_PASSWORD in gradle.properties.').printStackTrace()
+        }
+        try {
+            release {
+                storeFile file(RELEASE_KEYSYORE_PATH)
+                storePassword RELEASE_STORE_PASSWORD
+                keyAlias RELEASE_KEYSTORE_ALIAS
+                keyPassword RELEASE_KEY_PASSWORD
+            }
+        } catch (final ignored) {
+            new InvalidKeySpecException('You should define RELEASE_KEYSTORE_ALIAS, RELEASE_STORE_PASSWORD, RELEASE_KEY_PASSWORD in gradle.properties.').printStackTrace()
+        }
+    }
+
+    // endregion
 
     buildTypes {
         release {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            // signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
             minifyEnabled = false
             shrinkResources = false
         }
         debug {
             pseudoLocalesEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            // signingConfig signingConfigs.debug
+            signingConfig signingConfigs.debug
             minifyEnabled false
             shrinkResources = false
         }
     }
 
-    dexOptions {
-        preDexLibraries = false
-        jumboMode = false
-        javaMaxHeapSize "4g"
-    }
+
+    // region java compiler flags
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    // endregion
+
+    // region lint options
+
     lintOptions {
-        checkReleaseBuilds false
-        abortOnError false
-        ignoreWarnings true
         disable 'InvalidPackage'
+        abortOnError false        // true by default
+        checkAllWarnings false
+        checkReleaseBuilds false
+        ignoreWarnings true       // false by default
+        quiet true                // false by default
     }
 
-    packagingOptions {
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/NOTICE.txt'
-        exclude 'META-INF/ASL2.0'
-        exclude 'META-INF/services/javax.annotation.processing.Processor'  // butterknife
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/notice.txt'
-        exclude 'META-INF/license.txt'
-        exclude 'META-INF/dependencies.txt'
-        exclude 'META-INF/LGPL2.1'
+    // endregion
+
+    // region dex options
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+        maxProcessCount 8
     }
+
+    // endregion
+
+    // region adb options
+
+    adbOptions {
+        timeOutInMs 10 * 60 * 1000 // 10 minutes
+    }
+
+    // endregion
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':lib')
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlinVersion"
+    implementation libs.kotlinJdk8
 
     // frequently used convenient methods
-    implementation 'com.github.kibotu:common.android.utils:0.7.2'
+    implementation libs.exozetCore
 
     // presenter
-    implementation 'com.github.kibotu:RecyclerViewPresenter:1.6.1'
+    implementation libs.recyclerViewPresenter4
 
-    implementation 'com.android.support:multidex:1.0.3'
-    implementation "com.android.support:cardview-v7:$supportVers"
-    implementation "com.android.support:design:$supportVers"
-    implementation "com.android.support:recyclerview-v7:$supportVers"
-
-    // view binding
-    implementation 'com.jakewharton:butterknife:8.8.1'
-    kapt 'com.jakewharton:butterknife-compiler:8.8.1'
+    implementation libs.supportMultidex
+    implementation libs.supportCardView
+    implementation libs.supportDesign
+    implementation libs.supportRecyclerview
+    implementation libs.constraintLayout2
 
     // recyclerview animations
-    implementation 'jp.wasabeef:recyclerview-animators:2.3.0'
+    implementation libs.recyclerviewAnimators
 
     // recyclerview overscroll effect
     implementation 'me.everything:overscroll-decor-android:1.0.3'
 
     // fonts
-    implementation('uk.co.chrisjenx:calligraphy:2.2.0')
+    implementation libs.calligraphy
 
     // crouton notifications
     implementation('de.keyboardsurfer.android.widget:crouton:1.8.5@aar') {
@@ -133,10 +169,10 @@ dependencies {
     }
 
     // chart
-    implementation 'com.github.jjoe64:GraphView:v4.0.1'
+    implementation libs.graphView
 
     // fabric
-    implementation('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
+    implementation(libs.crashlytics) {
         transitive = true
     }
 
@@ -144,223 +180,31 @@ dependencies {
     implementation 'me.grantland:autofittextview:0.2.1'
 
     // fancy time calculations
-    implementation 'joda-time:joda-time:2.9.9'
-
-    // recyclerview fast scrolling
-    implementation 'com.github.kibotu:RecyclerView-FastScroll:1.0.8'
+    implementation libs.joda
 
     // permissions
-    implementation 'com.github.hotchemi:permissionsdispatcher:3.1.0'
-    kapt 'com.github.hotchemi:permissionsdispatcher-processor:3.1.0'
+    implementation libs.permissionDispatcher
+    kapt libs.permissionDispatcherProcessor
 
     // detecting memory leaks
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
-    testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
-    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    debugImplementation libs.leakcanaryDebug
+    debugImplementation libs.leakcanaryDebugSupportFragments
+    releaseImplementation libs.leakcanaryRelease
 
-    // debug menu
-    implementation('com.mikepenz:materialdrawer:6.0.5@aar') {
+    implementation(libs.materialdrawer) {
         transitive = true
     }
 
-    // debugging
-    implementation 'com.facebook.stetho:stetho:1.5.0'
-    implementation 'com.facebook.stetho:stetho-okhttp3:1.3.1'
-    implementation 'com.facebook.stetho:stetho-js-rhino:1.3.1'
-
     // force update
-    implementation 'com.github.kibotu:GooglePlayForceUpdate:1.0.8'
+    implementation libs.googlePlayForceUpdate
 
-    implementation 'com.github.kibotu:StreamingAndroidLogger:2.+'
+    implementation libs.logger
 }
 
 // region override support library version
 
 configurations.all {
-    resolutionStrategy.force 'com.android.support:multidex:1.0.3'
-    resolutionStrategy.force "com.android.support:support-annotations:$supportVers"
-    resolutionStrategy.force "com.android.support:support-v4:$supportVers"
-    resolutionStrategy.force "com.android.support:support-v13:$supportVers"
-    resolutionStrategy.force "com.android.support:appcompat-v7:$supportVers"
-    resolutionStrategy.force "com.android.support:cardview-v7:$supportVers"
-    resolutionStrategy.force "com.android.support:recyclerview-v7:$supportVers"
-    resolutionStrategy.force "com.android.support:design:$supportVers"
+    resolutionStrategy.cacheDynamicVersionsFor 10, 'minutes'
 }
 
 // endregion
-
-// https://github.com/android/platform_packages_apps_settings/blob/master/AndroidManifest.xml
-//noinspection GroovyAssignabilityCheck
-task settings() << {
-    description = "adb shell am start -a android.settings.SETTINGS"
-    println(description)
-    final def stdout = new ByteArrayOutputStream()
-    exec {
-        executable android.getAdbExe().toString()
-        args = ['shell', 'am', 'start', '-a', 'android.settings.SETTINGS']
-        standardOutput = stdout
-    }
-    final def result = stdout.toString().trim()
-
-    println(result)
-}
-
-//noinspection GroovyAssignabilityCheck
-task devSettings() << {
-    description = "adb shell am start -n com.android.settings/.DevelopmentSettings"
-    println(description)
-    final def stdout = new ByteArrayOutputStream()
-    exec {
-        executable android.getAdbExe().toString()
-        args = ['shell', 'am', 'start', '-n', 'com.android.settings/.DevelopmentSettings']
-        standardOutput = stdout
-    }
-    final def result = stdout.toString().trim()
-    println(result)
-}
-
-//noinspection GroovyAssignabilityCheck
-task printCommitCount() << {
-    commitCount()
-}
-
-//noinspection GroovyAssignabilityCheck
-task printBranchname() << {
-    branchName()
-}
-
-def commitHash() {
-    description = "git log -n 1 --format='%h'"
-    println(description)
-    final def stdout = new ByteArrayOutputStream()
-    exec {
-        commandLine 'git', 'log', '-n', '1', "--format='%h'"
-        standardOutput = stdout
-    }
-    println("Git Hash" + stdout.toString())
-    return stdout.toString().trim().replaceAll('\'', '')
-}
-
-def commitCount() {
-    final def stdout = new ByteArrayOutputStream()
-    description = "git rev-list --full-history --all"
-    println(description)
-    exec {
-        commandLine 'git', 'rev-list', '--full-history', '--all'
-        standardOutput = stdout
-    }
-    final String output = stdout.toString()
-    final List<String> commits = output.split("\n")
-    println("Version Code: " + commits.size())
-    return commits.size()
-}
-
-def simpleReleaseVersionName() {
-    description = "Creating release version name. Format: major.minor.build"
-    println(description)
-
-    final def buildNumber = buildNumberByCI()
-    def releaseName = branchName()
-    // remove 'origin' in from branch name
-    if (releaseName != null && releaseName.contains("origin/"))
-        releaseName = releaseName.replace("origin/", "")
-
-    if (releaseName.contains("release"))
-        releaseName = releaseName.replace("release/", "")
-
-    if (buildNumber != null)
-        releaseName += "." + buildNumber
-    else
-        releaseName += "." + 0
-
-    println("Version Name: " + releaseName)
-    return releaseName
-}
-
-def canonicalReleaseVersionName() {
-    description = "Creating release version name. Format: branch/major.minor.build-commithash"
-    println(description)
-    final def buildNumber = buildNumberByCI()
-    def releaseName = branchName()
-
-    // remove 'origin' in from branch name
-    if (releaseName != null && releaseName.contains("origin/"))
-        releaseName = releaseName.replace("origin/", "")
-
-    if (!releaseName.contains("release"))
-        releaseName += "/0.0"
-
-    if (buildNumber != null) {
-        releaseName += "." + buildNumber + "-"
-    } else {
-        releaseName += ".0-"
-    }
-
-    releaseName += commitHash()
-    println("Version Name: " + releaseName)
-    return releaseName
-}
-
-def buildNumberByCI() {
-    description = "Getting build number from Jenkins or Travis."
-    println(description)
-    final def env = System.getenv()
-    if (env.BITRISE_BUILD_NUMBER != null)
-        return Integer.parseInt(env.BITRISE_BUILD_NUMBER)
-    if (env.BUILD_NUMBER != null)
-        return Integer.parseInt(env.BUILD_NUMBER)
-    if (env.TRAVIS_BUILD_NUMBER != null)
-        return Integer.parseInt(env.TRAVIS_BUILD_NUMBER)
-    return 0
-}
-
-def branchName() {
-    description = "Getting branch name from Jenkins or Travis or from git directly."
-    println(description)
-    def branchName = branchNameByCI()
-    if (branchName == null)
-        branchName = branchNameByGit()
-    return branchName
-}
-
-def branchNameByCI() {
-    description = "Getting build number from Jenkins or Travis."
-    println(description)
-    final def env = System.getenv()
-    if (env.BITRISE_GIT_BRANCH != null)
-        return env.BITRISE_GIT_BRANCH
-    if (env.GIT_BRANCH != null)
-        return env.GIT_BRANCH
-    if (env.TRAVIS_BRANCH != null)
-        return env.TRAVIS_BRANCH
-    return null
-}
-
-def branchNameByGit() {
-    final def stdout = new ByteArrayOutputStream()
-    description = "git rev-parse --abbrev-ref HEAD"
-    println(description)
-    exec {
-        commandLine 'git', 'rev-parse', '--abbrev-ref', 'HEAD'
-        standardOutput = stdout
-    }
-    final String output = stdout.toString().trim()
-    println("Branch Name: " + output)
-    return output
-}
-
-def escape(Object value) {
-    return "\"" + value + "\""
-}
-
-afterEvaluate {
-    tasks.matching {
-        it.name.startsWith('dex')
-    }.each { final dx ->
-        if (dx.additionalParameters == null) {
-            dx.additionalParameters = ['--multi-dex']
-        } else {
-            dx.additionalParameters += '--multi-dex'
-        }
-    }
-}

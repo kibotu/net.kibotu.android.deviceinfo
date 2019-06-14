@@ -1,41 +1,38 @@
 buildscript {
 
-    ext.compileSdkVer = 27
-    ext.buildToolsVer = '27.0.3'
-    ext.minSdkVer = 15
-    ext.targetSdkVer = 27
-    ext.kotlin_version = '1.2.31'
-    ext.supportVers = '27.1.1'
-    ext.version_code = 1
-    ext.version_name = '1.0'
-    ext.kotlinVersion = '1.2.31'
+    apply from: "${project.rootDir}/Android-Dependencies/dependencies.gradle"
 
     repositories {
-        jcenter()
         google()
+        // https://storage-download.googleapis.com/maven-central/index.html
+        maven { url 'https://maven-central-eu.storage-download.googleapis.com/repos/central/data/' }
+        maven { url 'https://plugins.gradle.org/m2/' }
         maven { url 'https://maven.fabric.io/public' }
+
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.1'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
-        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.8.2'
-        classpath 'io.fabric.tools:gradle:1.+'
-        classpath 'com.google.gms:google-services:3.2.0'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath plugin.gradleBuildToolsCanary
+        classpath plugin.kotlinGradle
+        classpath plugin.kotlinApt
+        classpath plugin.gms
+        classpath pluginLibrary.mavenGradle
+        classpath plugin.dexcountGradle
     }
 }
 
 allprojects {
-    repositories {
-        jcenter()
-        google()
-        maven { url 'https://maven.fabric.io/public' }
-        maven { url "https://jitpack.io" }
-    }
-}
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.6'
+    apply from: "${project.rootDir}/Android-Dependencies/utils.gradle"
+
+    repositories {
+        google()
+        // https://storage-download.googleapis.com/maven-central/index.html
+        maven { url 'https://maven-central-eu.storage-download.googleapis.com/repos/central/data/' }
+        maven { url 'https://plugins.gradle.org/m2/' }
+        maven { url 'https://jitpack.io' }
+
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+    }
 }
 
 task clean(type: Delete) {

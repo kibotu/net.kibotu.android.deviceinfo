@@ -1,6 +1,18 @@
+ext {
+    VERSION_NAME = simpleReleaseVersionName()
+    VERSION_CODE = commitCount()
+    CANONICAL_VERSION_NAME = canonicalReleaseVersionName()
+    BRANCH_NAME = branchName()
+    COMMIT_HASH = commitHash()
+    isLocal = project.rootProject.file('local.properties').exists()
+    isTesting = false
+    BUILD_TIME = new Date().getTime()
+}
+
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.getkeepsafe.dexcount'
 
 android {
     compileSdkVersion compileSdkVer
@@ -9,8 +21,9 @@ android {
     defaultConfig {
         minSdkVersion minSdkVer
         targetSdkVersion targetSdkVer
-        versionCode version_code
-        versionName version_name
+        versionCode VERSION_CODE
+        versionName VERSION_NAME
+        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {
@@ -24,37 +37,52 @@ android {
         }
     }
 
+    // region dex options
+
     dexOptions {
-        preDexLibraries = false
-        jumboMode = false
         javaMaxHeapSize "4g"
+        maxProcessCount 8
     }
+
+    // endregion
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    // region lint options https://developer.android.com/studio/write/lint#gradle
+
     lintOptions {
+        disable 'InvalidPackage'
+        abortOnError false        // true by default
+        checkAllWarnings false
         checkReleaseBuilds false
-        abortOnError false
-        ignoreWarnings true
+        ignoreWarnings true       // false by default
+        quiet true                // false by default
+        ignoreTestSources true
+        checkDependencies true
+        tasks.lint.enabled = false
     }
+
+    // endregion
+
+    // region exclude duplicated meta inf files
+
+    packagingOptions {
+        exclude 'META-INF/library-core_release.kotlin_module'
+        exclude 'META-INF/lib_release.kotlin_module'
+    }
+
+    // endregion
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlinVersion"
-
-    implementation "com.android.support:support-annotations:$supportVers"
-
+    implementation libs.kotlinJdk8
+    implementation libs.androidKtxCore
     // network connection handling
-    implementation 'com.zplesac:connectionbuddy:2.0.0-beta1'
-
-    implementation 'com.github.kibotu:StreamingAndroidLogger:2.+'
+    implementation libs.connectionBuddy
+    implementation libs.logger
 }
 
-// region javadoc
-
-apply from: 'https://gist.githubusercontent.com/kibotu/994c9cc65fe623b76b76fedfac74b34b/raw/65ee52482ba65050e015f4b00d8d2fc9172a10e8/javadoc.gradle'
-
-// endregion
+apply from: "${project.rootDir}/Android-Dependencies/javadoc.gradle"
