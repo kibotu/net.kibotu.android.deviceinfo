@@ -2,7 +2,7 @@ language: android
 jdk: oraclejdk8
 
 git:
-  depth: 10000
+  depth: 3
 
 env:
   global:
